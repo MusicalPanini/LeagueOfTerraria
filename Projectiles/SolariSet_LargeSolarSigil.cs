@@ -50,7 +50,7 @@ namespace TerraLeague.Projectiles
             {
                 if (projectile.alpha > 0)
                 {
-                    projectile.alpha -= 5;
+                    projectile.alpha -= 15;
                 }
                 if (projectile.alpha < 0)
                 {

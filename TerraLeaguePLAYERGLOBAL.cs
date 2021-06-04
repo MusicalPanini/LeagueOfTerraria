@@ -478,7 +478,7 @@ namespace TerraLeague
 
         // Other
         public bool meleeProjCooldown = false;
-
+        
         // Costume Stuff
         public bool darkinCostume = false;
         public bool darkinCostumeHideVanity = false;
@@ -1505,6 +1505,9 @@ namespace TerraLeague
                 oldUsedInventorySlot = -1;
             }
 
+            // Handles double tapping actions
+            DoubleTapHandler();
+
             // Handles the modded regen
             LinearManaRegen();
 
@@ -1946,22 +1949,6 @@ namespace TerraLeague
             if (lifeToHeal > 0)
             {
                 HealLife();
-            }
-            // Double Tap Actions
-            if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] < 15)
-            {
-                if (player.releaseDown)
-                {
-                    if (solariSet && solariCharge >= solariMaxCharge)
-                    {
-                        if (TerraLeague.instance.debugMode)
-                            solariCharge = solariMaxCharge - 60;
-                        else
-                            solariCharge = 0;
-                        Projectile.NewProjectileDirect(new Vector2(Main.MouseWorld.X, player.MountedCenter.Y - 400), Vector2.Zero, ProjectileType<SolariSet_LargeSolarSigil>(), (int)(100 * player.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep), 0, player.whoAmI);
-                        //player.AddBuff(BuffType<SolarFlareStorm>(), 360);
-                    }
-                }
             }
 
             // Ability and Summoner Spells Handler
@@ -3616,6 +3603,76 @@ namespace TerraLeague
                     Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, velocity, chosenItem.shoot, dam, chosenItem.knockBack, player.whoAmI);
                     proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects = true;
                     Main.PlaySound(chosenItem.UseSound, player.MountedCenter);
+                }
+            }
+        }
+
+        public int[] doubleTap = new int[4];
+        public bool DownControlLastStep = false;
+        public bool UpControlLastStep = false;
+        public bool LeftControlLastStep = false;
+        public bool RightControlLastStep = false;
+        void DoubleTapHandler()
+        {
+            // Double Tap Actions
+            for (int m = 0; m < 4; m++)
+            {
+                bool keyTapped = false;
+                switch (m)
+                {
+                    case 0:
+                        keyTapped = (DownControlLastStep && player.releaseDown);
+                        break;
+                    case 1:
+                        keyTapped = (UpControlLastStep && player.releaseUp);
+                        break;
+                    case 2:
+                        keyTapped = (RightControlLastStep && player.releaseRight);
+                        break;
+                    case 3:
+                        keyTapped = (LeftControlLastStep && player.releaseLeft);
+                        break;
+                }
+                if (keyTapped)
+                {
+                    if (doubleTap[m] > 0 && doubleTap[m] < 15)
+                    {
+                        KeyDoubleTap(m);
+                    }
+                    else
+                    {
+                        doubleTap[m] = 15;
+                    }
+                }
+
+                if (doubleTap[m] > 0)
+                    doubleTap[m]--;
+            }
+
+            DownControlLastStep = player.controlDown;
+            UpControlLastStep = player.controlUp;
+            LeftControlLastStep = player.controlLeft;
+            RightControlLastStep = player.controlRight;
+        }
+        void KeyDoubleTap(int keyDir)
+        {
+            // 0 - down
+            // 1 - up
+            int num = 0;
+            if (Main.ReversedUpDownArmorSetBonuses)
+            {
+                num = 1;
+            }
+            if (keyDir == num)
+            {
+                if ((solariSet && solariCharge >= solariMaxCharge) || TerraLeague.instance.debugMode)
+                {
+                    if (TerraLeague.instance.debugMode)
+                        solariCharge = solariMaxCharge - 60;
+                    else
+                        solariCharge = 0;
+                    Projectile.NewProjectileDirect(new Vector2(Main.MouseWorld.X, player.MountedCenter.Y - 400), Vector2.Zero, ProjectileType<SolariSet_LargeSolarSigil>(), (int)(100 * player.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep), 0, player.whoAmI);
+                    //player.AddBuff(BuffType<SolarFlareStorm>(), 360);
                 }
             }
         }

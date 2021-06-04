@@ -51,7 +51,7 @@ namespace TerraLeague.Items.Armor
         {
             player.setBonus = "Gain improved stats during the day." +
                 "\nCharge up solar energy during the day" +
-                "\nAt full charge double tap " + Terraria.Localization.Language.GetTextValue(Main.ReversedUpDownArmorSetBonuses ? "Key.UP" : "Key.DOWN") + " to summon a Solar Flare Storm";
+                "\nAt full charge double tap " + Terraria.Localization.Language.GetTextValue(Main.ReversedUpDownArmorSetBonuses ? "Key.UP" : "Key.DOWN") + " to summon a Solar Flare";
             player.GetModPlayer<PLAYERGLOBAL>().solariSet = true;
         }
 
