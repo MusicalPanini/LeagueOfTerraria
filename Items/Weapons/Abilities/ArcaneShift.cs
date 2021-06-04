@@ -115,9 +115,9 @@ namespace TerraLeague.Items.Weapons.Abilities
                     if ((Main.tile[blockX, blockY].wall != 87 || !((double)blockY > Main.worldSurface) || NPC.downedPlantBoss) && !Collision.SolidCollision(teleportPos, player.width, player.height))
                     {
                         player.velocity = TerraLeague.CalcVelocityToPoint(player.MountedCenter, teleportPos, player.velocity.Length());
-                        player.Teleport(teleportPos, 1, 0);
-                        NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, (float)player.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
-
+                        player.Teleport(teleportPos, 10, 0);
+                        NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, (float)player.whoAmI, teleportPos.X, teleportPos.Y, 10, 0, 0);
+                        
 
                         Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileType<NezuksGauntlet_ArcaneShift>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, -1);
                         player.CheckMana(GetBaseManaCost(), true);
@@ -127,6 +127,19 @@ namespace TerraLeague.Items.Weapons.Abilities
                     }
                 }
             }
+        }
+
+        public override void Efx(Player player)
+        {
+            TerraLeague.PlaySoundWithPitch(player.position, 2, 72, 0.5f);
+            for (int i = 0; i < 20; i++)
+            {
+                Dust dust = Dust.NewDustDirect(player.position - (Vector2.One * 16), 32, 32, 228, 0, 0, 0, default, 4);
+                dust.noGravity = true;
+                dust.noLight = true;
+                dust.velocity *= 2;
+            }
+            base.Efx(player);
         }
     }
 }
