@@ -64,19 +64,19 @@ namespace TerraLeague.Projectiles
                 Color c = Color.White;
                 origin = start + i * unit;
                 spriteBatch.Draw(texture, origin - Main.screenPosition,
-                    new Rectangle(0, 26, 28, 26), i < transDist ? Color.Transparent : c, r,
-                    new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
+                    new Rectangle(0, 26, 26, 30), i < transDist ? Color.Transparent : c, r,
+                    new Vector2(26 * .5f, 30 * .5f), scale, 0, 0);
             }
             #endregion
 
             #region Draw laser tail
             spriteBatch.Draw(texture, start + unit * (transDist - step) - Main.screenPosition,
-                new Rectangle(0, 0, 28, 26), Color.White, r, new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
+                new Rectangle(0, 0, 26, 22), Color.White, r, new Vector2(26 * .5f, 22 * .5f), scale, 0, 0);
             #endregion
 
             #region Draw laser head
             spriteBatch.Draw(texture, start + (Distance + step) * unit - Main.screenPosition,
-                new Rectangle(0, 52, 28, 26), Color.White, r, new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
+                new Rectangle(0, 56, 26, 22), Color.White, r, new Vector2(26 * .5f, 22 * .5f), scale, 0, 0);
             #endregion
         }
 
@@ -112,15 +112,23 @@ namespace TerraLeague.Projectiles
             #region Set projectile position
             if (projectile.owner == Main.myPlayer)
             {
-                Vector2 diff = mousePos - player.Center;
+                Vector2 startingPosition = Vector2.Normalize(projectile.velocity);
+                Vector2 mousePosition = Vector2.Normalize(mousePos - player.Center);
+
+                float factor = 10;
+                Vector2 targetPosition = (((factor - 1) * startingPosition) + mousePosition) / factor;
+                float finalAngle = targetPosition.ToRotation();
+
+                Vector2 diff = Vector2.UnitX.RotatedBy(finalAngle);
                 diff.Normalize();
+
                 projectile.velocity = diff;
                 projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
                 projectile.netUpdate = true;
             }
             projectile.position = player.Center + projectile.velocity * MoveDistance;
             projectile.timeLeft = 2;
-            int dir = projectile.direction;
+            int dir = projectile.velocity.X > 0 ? 1 : -1;
             player.ChangeDir(dir);
             player.heldProj = projectile.whoAmI;
             player.itemTime = 2;
