@@ -43,6 +43,12 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
+            if (projectile.timeLeft == 3600)
+            {
+                baseDamage = projectile.damage;
+                projectile.damage = 0;
+            }
+
             if (/*Main.mouseLeftRelease */ !Main.player[projectile.owner].channel && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
             {
                 projectile.alpha += 20;
@@ -58,9 +64,6 @@ namespace TerraLeague.Projectiles
 
             if (projectile.ai[0] == 0 && projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                if (projectile.timeLeft == 3600)
-                    baseDamage = projectile.damage;
-
                 float num114 = 14;
 
                 Vector2 vector10 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
