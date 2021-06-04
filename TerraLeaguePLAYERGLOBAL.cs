@@ -1947,7 +1947,6 @@ namespace TerraLeague
             {
                 HealLife();
             }
-
             // Double Tap Actions
             if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] < 15)
             {
@@ -1955,8 +1954,12 @@ namespace TerraLeague
                 {
                     if (solariSet && solariCharge >= solariMaxCharge)
                     {
-                        solariCharge = 0;
-                        player.AddBuff(BuffType<SolarFlareStorm>(), 360);
+                        if (TerraLeague.instance.debugMode)
+                            solariCharge = solariMaxCharge - 60;
+                        else
+                            solariCharge = 0;
+                        Projectile.NewProjectileDirect(new Vector2(Main.MouseWorld.X, player.MountedCenter.Y - 400), Vector2.Zero, ProjectileType<SolariSet_LargeSolarSigil>(), (int)(100 * player.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep), 0, player.whoAmI);
+                        //player.AddBuff(BuffType<SolarFlareStorm>(), 360);
                     }
                 }
             }

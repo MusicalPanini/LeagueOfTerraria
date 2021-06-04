@@ -22,7 +22,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 20;
+            item.damage = 100;
             item.magic = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.width = 40;
@@ -35,7 +35,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 1;
             item.rare = ItemRarityID.Expert;
             item.scale = 0.9f;
-            item.shoot = ProjectileType<SolariSet_SolarSigil>();
+            item.shoot = ProjectileType<SolariSet_LargeSolarSigil>();
             //item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
             item.autoReuse = false;
 

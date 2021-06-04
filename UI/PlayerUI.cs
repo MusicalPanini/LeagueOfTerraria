@@ -218,6 +218,48 @@ namespace TerraLeague.UI
                        );
                 }
             }
+
+            if (modPlayer.solariSet && Main.myPlayer == player.whoAmI)
+            {
+                Texture2D texture = TerraLeague.instance.GetTexture("UI/SolariSetCharge");
+                int frame;
+
+                if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.125f)
+                    frame = 8;
+                else if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.25f)
+                    frame = 7;
+                else if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.375f)
+                    frame = 6;
+                else if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.5f)
+                    frame = 5;
+                else if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.625f)
+                    frame = 4;
+                else if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.75f)
+                    frame = 3;
+                else if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.875f)
+                    frame = 2;
+                else if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge)
+                    frame = 1;
+                else
+                    frame = 0;
+
+                Rectangle rect = new Rectangle(0, frame * texture.Width, texture.Width, texture.Width);
+
+                if (texture != null)
+                {
+                    Main.spriteBatch.Draw
+                       (
+                           texture,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - texture.Width/2), (int)(player.MountedCenter.Y - Main.screenPosition.Y - 100), texture.Width, texture.Width),
+                           rect,
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+                }
+            }
         }
         
     }
