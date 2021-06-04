@@ -460,7 +460,7 @@ namespace TerraLeague
             },
             InterfaceScaleType.UI));
 
-            layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+            layers.Insert(0, new LegacyGameInterfaceLayer(
             "TerraLeague: Player Hud",
             delegate
             {
