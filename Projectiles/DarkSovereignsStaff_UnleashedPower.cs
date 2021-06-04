@@ -38,7 +38,8 @@ namespace TerraLeague.Projectiles
 
             if (projectile.soundDelay == 0)
             {
-                totalProj = Main.player[projectile.owner].ownedProjectileCounts[projectile.type];
+                totalProj = (int)projectile.velocity.X;
+                projectile.velocity *= 0;
                 for (int i = 0; i < 10; i++)
                 {
                     Dust dust = Dust.NewDustDirect(projectile.position, 32, 32, 112, 0, 0, projectile.alpha);
