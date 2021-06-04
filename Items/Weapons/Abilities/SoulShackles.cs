@@ -75,6 +75,11 @@ namespace TerraLeague.Items.Weapons.Abilities
             return true;
         }
 
+        public override bool CanCurrentlyBeCast(Player player)
+        {
+            return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, range);
+        }
+
         public override void DoEffect(Player player, AbilityType type)
         {
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
