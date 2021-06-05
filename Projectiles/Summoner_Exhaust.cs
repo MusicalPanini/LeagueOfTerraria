@@ -78,6 +78,11 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Dig, projectile.Center);
+
+            Vector2 position = projectile.Center;
+            if (Main.npc[(int)projectile.ai[0]].active)
+                position = Main.npc[(int)projectile.ai[0]].Center;
+
             int type = 174;
 
             int arrow1Height = 32;
@@ -92,17 +97,19 @@ namespace TerraLeague.Projectiles
             int arrow3Width = 16;
             int arrow3Dis = -16;
 
-            Vector2 Arrow1BottomLeft = projectile.Center + new Vector2(-arrow1Width, 0 + arrow1Dis);
-            Vector2 Arrow1BottomRight = projectile.Center + new Vector2(arrow1Width, 0 + arrow1Dis);
-            Vector2 Arrow1Top = projectile.Center + new Vector2(0, arrow1Height + arrow1Dis);
+            Vector2 offset = new Vector2(0, -64);
 
-            Vector2 Arrow2BottomLeft = projectile.Center + new Vector2(-arrow2Width, 0 + arrow2Dis);
-            Vector2 Arrow2BottomRight = projectile.Center + new Vector2(arrow2Width, 0 + arrow2Dis);
-            Vector2 Arrow2Top = projectile.Center + new Vector2(0, arrow2Height + arrow2Dis);
+            Vector2 Arrow1BottomLeft = position + new Vector2(-arrow1Width, 0 + arrow1Dis) + offset;
+            Vector2 Arrow1BottomRight = position + new Vector2(arrow1Width, 0 + arrow1Dis) + offset;
+            Vector2 Arrow1Top = position + new Vector2(0, arrow1Height + arrow1Dis) + offset;
 
-            Vector2 Arrow3BottomLeft = projectile.Center + new Vector2(-arrow3Width, 0 + arrow3Dis);
-            Vector2 Arrow3BottomRight = projectile.Center + new Vector2(arrow3Width, 0 + arrow3Dis);
-            Vector2 Arrow3Top = projectile.Center + new Vector2(0, arrow3Height + arrow3Dis);
+            Vector2 Arrow2BottomLeft = position + new Vector2(-arrow2Width, 0 + arrow2Dis) + offset;
+            Vector2 Arrow2BottomRight = position + new Vector2(arrow2Width, 0 + arrow2Dis) + offset;
+            Vector2 Arrow2Top = position + new Vector2(0, arrow2Height + arrow2Dis) + offset;
+
+            Vector2 Arrow3BottomLeft = position + new Vector2(-arrow3Width, 0 + arrow3Dis) + offset;
+            Vector2 Arrow3BottomRight = position + new Vector2(arrow3Width, 0 + arrow3Dis) + offset;
+            Vector2 Arrow3Top = position + new Vector2(0, arrow3Height + arrow3Dis) + offset;
 
             TerraLeague.DustLine(Arrow1BottomLeft, Arrow1Top, type, 1, 2, default, true, 0, 6);
             TerraLeague.DustLine(Arrow1BottomRight, Arrow1Top, type, 1, 2, default, true, 0, 6);
