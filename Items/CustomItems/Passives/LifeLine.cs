@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Lifeline : Passive
     {
-        int cooldown;
+        readonly int cooldown;
 
         public Lifeline(int Cooldown)
         {

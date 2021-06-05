@@ -14,7 +14,7 @@ namespace TerraLeague.Projectiles
 {
     class StoneweaversStaff_ThreadedVolley : ModProjectile
     {
-        Vector2[] stonePos = { new Vector2(-24,-24), new Vector2(24,-16), new Vector2(0,-8), new Vector2(16, -32), new Vector2(-8,-32) };
+        readonly Vector2[] stonePos = { new Vector2(-24,-24), new Vector2(24,-16), new Vector2(0,-8), new Vector2(16, -32), new Vector2(-8,-32) };
 
         public override void SetStaticDefaults()
         {

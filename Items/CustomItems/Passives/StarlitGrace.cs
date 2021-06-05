@@ -9,9 +9,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class StarlitGrace : Passive
     {
-        int heal;
-        int scaling;
-        int maxStacks;
+        readonly int heal;
+        readonly int scaling;
+        readonly int maxStacks;
 
         public StarlitGrace(int Heal, int Scaling, int MaxStacks, int Cooldown)
         {

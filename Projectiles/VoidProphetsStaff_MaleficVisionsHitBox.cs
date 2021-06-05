@@ -55,7 +55,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < (npc.width*npc.height)/200; i++)
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Shadowflame, 0f, 0f, 100, default(Color), 1.5f);
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Shadowflame, 0f, 0f, 100, default, 1.5f);
                 dust.noGravity = true;
                 dust.fadeIn = 1f;
                 dust.velocity = npc.velocity;

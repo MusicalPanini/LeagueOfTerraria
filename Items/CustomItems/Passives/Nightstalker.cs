@@ -9,8 +9,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Nightstalker : Passive
     {
-        double meleeDamageModifier;
-        int proximity;
+        readonly double meleeDamageModifier;
+        readonly int proximity;
 
         public Nightstalker(double MeleeDamageModifier, int Proximity)
         {

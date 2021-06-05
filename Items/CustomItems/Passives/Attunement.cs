@@ -6,9 +6,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Attunement : Passive
     {
-        int maxStacks;
-        decimal magicPerStack;
-        decimal armorPerStack;
+        readonly int maxStacks;
+        readonly decimal magicPerStack;
+        readonly decimal armorPerStack;
 
         public Attunement(int MaxStacks, decimal MagicPerStack, decimal ArmorPerStack)
         {

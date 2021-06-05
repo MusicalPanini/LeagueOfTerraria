@@ -8,9 +8,9 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class VoidCaller : Active
     {
-        int baseDamage;
-        int baseMinions;
-        int sumScaling;
+        readonly int baseDamage;
+        readonly int baseMinions;
+        readonly int sumScaling;
 
         public VoidCaller(int BaseDamage, int BaseMinions, int SumScaling, int Cooldown)
         {

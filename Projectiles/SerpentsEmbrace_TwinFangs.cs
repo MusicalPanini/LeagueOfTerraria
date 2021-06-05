@@ -58,20 +58,11 @@ namespace TerraLeague.Projectiles
             }
         }
 
-        private void AdjustMagnitude(ref Vector2 vector)
-        {
-            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 20f)
-            {
-                vector *= 8f / magnitude;
-            }
-        }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Venom, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Venom, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
                 dust.noGravity = true;
             }
         }

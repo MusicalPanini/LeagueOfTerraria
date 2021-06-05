@@ -42,17 +42,17 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.Next(0, 2) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default(Color), 4f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default, 4f);
                 dust.noGravity = true;
                 dust.velocity = new Vector2(0, -5f);
                 dust.noLight = true;
                 dust.fadeIn = 2;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default(Color), 6f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default, 6f);
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default(Color), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 1f);
                 dust.noLight = true;
 
             }

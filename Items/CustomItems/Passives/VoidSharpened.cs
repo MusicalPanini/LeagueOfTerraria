@@ -5,8 +5,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class VoidSharpened : Passive
     {
-        int baseDamage;
-        int minionScaling;
+        readonly int baseDamage;
+        readonly int minionScaling;
 
         public VoidSharpened(int BaseDamage, int MinionScaling)
         {

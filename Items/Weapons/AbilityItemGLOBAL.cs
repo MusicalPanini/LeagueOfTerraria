@@ -29,9 +29,9 @@ namespace TerraLeague.Items.Weapons
         Ability AbilityR = null;
 
 
-        static string AbilityNameColor = "5cd65c";
-        static string AbilityButtonColor = "2eb82e";
-        static string QuoteColor = "cc9900";
+        static readonly string AbilityNameColor = "5cd65c";
+        static readonly string AbilityButtonColor = "2eb82e";
+        static readonly string QuoteColor = "cc9900";
         public string ChampQuote = "";
         public delegate string GetWeaponTooltip();
         public GetWeaponTooltip getWeaponTooltip;

@@ -121,7 +121,7 @@ namespace TerraLeague.UI
     class UIBar : UIElement
     {
         public Color backgroundColor = Color.Gray;
-        private Texture2D _backgroundTexture;
+        private readonly Texture2D _backgroundTexture;
 
         public UIBar()
         {
@@ -142,7 +142,7 @@ namespace TerraLeague.UI
     class UIInnerBar : UIElement
     {
         public Color backgroundColor = Color.Gray;
-        private Texture2D _backgroundTexture;
+        private readonly Texture2D _backgroundTexture;
 
         public UIInnerBar()
         {
@@ -173,9 +173,9 @@ namespace TerraLeague.UI
         private UIInnerBar physShieldBar;
         private UIText text;
         private UIText regen;
-        private ResourceBarMode stat;
-        private float width;
-        private float height;
+        private readonly ResourceBarMode stat;
+        private readonly float width;
+        private readonly float height;
 
         private UIImage[] markers;
         
@@ -621,7 +621,7 @@ namespace TerraLeague.UI
 
     class UIBuff : UIElement
     {
-        private int buffNumber;
+        private readonly int buffNumber;
         private UIBuffImage buffImage;
         private UIText bufftime;
         bool rightMouseDownLastStep = false;
@@ -748,7 +748,7 @@ namespace TerraLeague.UI
     class UIBuffImage : UIElement
     {
         private Texture2D buffImage;
-        private int buffNumber;
+        private readonly int buffNumber;
 
         public UIBuffImage(int buffNum)
         {

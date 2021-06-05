@@ -78,7 +78,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One * 8), 16, 16, DustID.GoldFlame, 0, 0, 0, default(Color), 3f - (3f* (projectile.alpha/255f)));
+                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One * 8), 16, 16, DustID.GoldFlame, 0, 0, 0, default, 3f - (3f* (projectile.alpha/255f)));
                 dust.noGravity = true;
                 dust.fadeIn = 1.2f;
             }

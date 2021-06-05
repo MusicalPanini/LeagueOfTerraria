@@ -9,8 +9,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Immolate : Passive
     {
-        int effectRadius;
-        bool weaker;
+        readonly int effectRadius;
+        readonly bool weaker;
 
         public Immolate(int EffectRadius, bool Weaker)
         {
@@ -53,7 +53,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 Vector2 vel = new Vector2(13, 0).RotatedBy(MathHelper.ToRadians(20 * i));
 
-                Dust dust = Dust.NewDustPerfect(user.Center, 6, vel, 0, default(Color), 3);
+                Dust dust = Dust.NewDustPerfect(user.Center, 6, vel, 0, default, 3);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

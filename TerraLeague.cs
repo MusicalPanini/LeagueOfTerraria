@@ -399,7 +399,7 @@ namespace TerraLeague
         {
             if (ToggleStats.JustReleased)
             {
-                ItemUI.extraStats = ItemUI.extraStats ? false : true;
+                ItemUI.extraStats = !ItemUI.extraStats;
             }
 
             base.UpdateUI(gameTime);
@@ -686,9 +686,6 @@ namespace TerraLeague
 
         internal static void DustElipce(float width, float height, float rotation,  Vector2 center, int dustType, Color color, float scale, int dustCount = 180, bool noLight = true, float pulseStrength = 0)
         {
-            float avgRadius = (width + height) * 0.5f;
-
-
             for (int i = 0; i < dustCount; i++)
             {
                 float time = MathHelper.TwoPi * i / (dustCount + 1);
@@ -1036,7 +1033,7 @@ namespace TerraLeague
         public static void StopHealthManaMouseOver(Rectangle HealthHitBox, Rectangle ManaHitBox)
         {
             Main.mouseText = HealthHitBox.Contains(Main.mouseX, Main.mouseY) ||
-                ManaHitBox.Contains(Main.mouseX, Main.mouseY) ? true : false;
+                ManaHitBox.Contains(Main.mouseX, Main.mouseY);
         }
 
         public override void PostDrawInterface(SpriteBatch spriteBatch)

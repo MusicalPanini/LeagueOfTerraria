@@ -11,9 +11,9 @@ namespace TerraLeague.Projectiles
 {
     public class Item_Tempest : ModProjectile
     {
-        int spacing = 48;
+        readonly int spacing = 48;
         int number = 0;
-        int numberOfExtraStrikes = 6;
+        readonly int numberOfExtraStrikes = 6;
         public static int randSpread = 64;
 
         bool leftBlocks = true;
@@ -50,7 +50,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Gore gore = Gore.NewGoreDirect(projectile.Center, default(Vector2), Main.rand.Next(61, 64), 1f);
+                    Gore gore = Gore.NewGoreDirect(projectile.Center, default, Main.rand.Next(61, 64), 1f);
                     gore.velocity.Y = gore.velocity.Y + 1.5f;
                 }
             }

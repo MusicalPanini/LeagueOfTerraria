@@ -12,10 +12,10 @@ namespace TerraLeague.Projectiles
 {
     public class XanCrestBlades_DancingBlade : ModProjectile
     {
-        List<int> iFrames = new List<int>();
-        List<Vector2> positions = new List<Vector2>();
-        List<float> angles = new List<float>();
-        List<int> damage = new List<int>();
+        readonly List<int> iFrames = new List<int>();
+        readonly List<Vector2> positions = new List<Vector2>();
+        readonly List<float> angles = new List<float>();
+        readonly List<int> damage = new List<int>();
         int baseDamage = 0;
 
         public override void SetStaticDefaults()

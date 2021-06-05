@@ -12,9 +12,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Energized : Passive
     {
-        int baseDamage = 35;
-        int rangedScaling;
-        bool superCharge = false;
+        readonly int baseDamage = 35;
+        readonly int rangedScaling;
+        readonly bool superCharge = false;
 
         public Energized(int BaseDamage, int RangedScaling, bool SuperCharge = false)
         {

@@ -10,8 +10,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Spellblade : Passive
     {
-        double damageModifier;
-        int type = 0;
+        readonly double damageModifier;
+        readonly int type = 0;
 
         public Spellblade(double DamageModifier)
         {
@@ -126,7 +126,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + User.Center;
 
-                    Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default(Color), 1);
+                    Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default, 1);
                     dustR.noGravity = true;
                 }
             }

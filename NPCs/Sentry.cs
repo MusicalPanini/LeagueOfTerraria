@@ -228,7 +228,7 @@ namespace TerraLeague.NPCs
             {
                 for (int k = 0; k < 20; k++)
                 {
-                    Dust.NewDust(new Vector2(npc.Center.X, npc.Center.Y - 15), 1, 1, DustID.BlueFairy, 0, 0, 0, default(Color), 1.2f);
+                    Dust.NewDust(new Vector2(npc.Center.X, npc.Center.Y - 15), 1, 1, DustID.BlueFairy, 0, 0, 0, default, 1.2f);
                 }
 
                 Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/SentryTop"), 1.5f);

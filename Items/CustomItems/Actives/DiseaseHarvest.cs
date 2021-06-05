@@ -8,9 +8,9 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class DiseaseHarvest : Active
     {
-        int stackDamage;
-        int manaRestore;
-        int magicScaling;
+        readonly int stackDamage;
+        readonly int manaRestore;
+        readonly int magicScaling;
 
         public DiseaseHarvest(int StackDamage, int ManaRestore, int MagicScaling, int Cooldown)
         {

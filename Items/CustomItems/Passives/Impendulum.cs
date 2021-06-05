@@ -6,8 +6,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Impendulum : Passive
     {
-        int lifePerTime;
-        double magicMinionDamage;
+        readonly int lifePerTime;
+        readonly double magicMinionDamage;
         
         public Impendulum(int LifePerTime, double magicMinionDamagePercentPer)
         {

@@ -15,7 +15,6 @@ namespace TerraLeague.Projectiles
     {
         private const float MaxChargeValue = 0;
         private const float MoveDistance = 60f;
-        private float Length = 500;
         public float Distance
         {
             get { return projectile.ai[1]; }
@@ -47,14 +46,20 @@ namespace TerraLeague.Projectiles
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
                 DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], Main.projectile[(int)projectile.ai[0]].Center,
-                    projectile.velocity, 22, projectile.damage, -1.57f, 1f, 1000f, Color.White, (int)MoveDistance);
+                    projectile.velocity, 22, -1.57f, 1f, (int)MoveDistance);
             return false;
         }
 
-        public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, int damage, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default(Color), int transDist = 50)
+        public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, float rotation = 0f, float scale = 1f, int transDist = 50)
         {
+            if (spriteBatch is null)
+                throw new ArgumentNullException(nameof(spriteBatch));
+
+            if (texture is null)
+                throw new ArgumentNullException(nameof(texture));
+
             float r = unit.ToRotation() + rotation;
-            color = Color.White;
+            Color color = Color.White;
             color *= 1 - (projectile.alpha/255f);
 
             #region Draw laser body

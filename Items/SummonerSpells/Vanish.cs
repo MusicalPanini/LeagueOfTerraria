@@ -52,7 +52,7 @@ namespace TerraLeague.Items.SummonerSpells
             for (int i = 0; i < 8; i++)
             {
                 //Gore.NewGorePerfect(new Vector2(player.position.X + (float)(player.width / 2) - 24f), new Vector2(2, 0).RotatedBy(MathHelper.TwoPi * i / 8f), Main.rand.Next(61, 64), 1.5f);
-                Gore gore = Gore.NewGoreDirect(new Vector2(player.position.X, player.position.Y + (float)(player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1.5f);
+                Gore gore = Gore.NewGoreDirect(new Vector2(player.position.X, player.position.Y + (float)(player.height / 2) - 24f), default, Main.rand.Next(61, 64), 1.5f);
                 gore.velocity= new Vector2(2, 0).RotatedBy(MathHelper.TwoPi * i / 8f);
             }
         }

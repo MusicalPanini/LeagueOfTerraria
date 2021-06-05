@@ -13,7 +13,7 @@ namespace TerraLeague.Items.Weapons
 {
     public class RadiantStaff : ModItem
     {
-        int shielding = 20;
+        readonly int shielding = 20;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Radiant Staff");

@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Omniheal : Passive
     {
-        int percentLifesteal;
+        readonly int percentLifesteal;
 
         public Omniheal(int PercentLifesteal)
         {

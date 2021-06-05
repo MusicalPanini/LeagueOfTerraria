@@ -6,8 +6,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Strengthen : Passive
     {
-        int maxStacks;
-        int lifeperStack;
+        readonly int maxStacks;
+        readonly int lifeperStack;
 
         public Strengthen(int MaxStacks, int LifePerStack)
         {

@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class CriticalEdge : Passive
     {
-        int percentIncrease;
+        readonly int percentIncrease;
 
         public CriticalEdge(int PercentCritDamageIncrease)
         {

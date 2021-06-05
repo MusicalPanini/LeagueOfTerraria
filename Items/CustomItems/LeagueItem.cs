@@ -395,9 +395,7 @@ namespace TerraLeague.Items.CustomItems
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -420,9 +418,7 @@ namespace TerraLeague.Items.CustomItems
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -445,9 +441,7 @@ namespace TerraLeague.Items.CustomItems
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -470,9 +464,7 @@ namespace TerraLeague.Items.CustomItems
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -495,9 +487,7 @@ namespace TerraLeague.Items.CustomItems
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -520,9 +510,7 @@ namespace TerraLeague.Items.CustomItems
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -545,9 +533,7 @@ namespace TerraLeague.Items.CustomItems
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -582,9 +568,7 @@ namespace TerraLeague.Items.CustomItems
 
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -603,7 +587,7 @@ namespace TerraLeague.Items.CustomItems
             
             if (doesKill != -1)
             {
-                return doesKill == 0 ? false : true;
+                return doesKill != 0;
             }
             return null;
         }

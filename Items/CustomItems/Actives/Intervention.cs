@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Intervention : Active
     {
-        int baseHeal;
+        readonly int baseHeal;
 
         public Intervention(int BaseHeal, int Cooldown)
         {

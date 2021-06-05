@@ -49,14 +49,20 @@ namespace TerraLeague.Projectiles
             if (AtMaxCharge)
             {
                 DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], Main.player[projectile.owner].Center,
-                    projectile.velocity, 10, projectile.damage, -1.57f, 1f, 1000f, Color.White, (int)MoveDistance);
+                    projectile.velocity, 10, -1.57f, 1f, (int)MoveDistance);
             }
             return false;
         }
 
-        public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, int damage, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default(Color), int transDist = 50)
+        public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, float rotation = 0f, float scale = 1f, int transDist = 50)
         {
-            Vector2 origin = start;
+            if (spriteBatch is null)
+                throw new ArgumentNullException(nameof(spriteBatch));
+
+            if (texture is null)
+                throw new ArgumentNullException(nameof(texture));
+
+            Vector2 origin;
             float r = unit.ToRotation() + rotation;
 
             #region Draw laser body
@@ -164,12 +170,12 @@ namespace TerraLeague.Projectiles
                 }
                 int chargeFact = (int)(Charge / 20f);
                 Vector2 dustVelocity = Vector2.UnitX * 18f;
-                dustVelocity = dustVelocity.RotatedBy(projectile.rotation - 1.57f, default(Vector2));
+                dustVelocity = dustVelocity.RotatedBy(projectile.rotation - 1.57f, default);
                 Vector2 spawnPos = projectile.Center + dustVelocity;
                 for (int k = 0; k < chargeFact + 1; k++)
                 {
                     Vector2 spawn = spawnPos + ((float)Main.rand.NextDouble() * 6.28f).ToRotationVector2() * (12f - chargeFact * 2);
-                    Dust dust = Dust.NewDustDirect(pos, 20, 20, DustID.Clentaminator_Purple, projectile.velocity.X / 2f, projectile.velocity.Y / 2f, 0, default(Color), 1f);
+                    Dust dust = Dust.NewDustDirect(pos, 20, 20, DustID.Clentaminator_Purple, projectile.velocity.X / 2f, projectile.velocity.Y / 2f, 0, default, 1f);
                     dust.velocity = Vector2.Normalize(spawnPos - spawn) * 1.5f * (10f - chargeFact * 2f) / 10f;
                     dust.noGravity = true;
                     dust.scale = Main.rand.Next(10, 20) * 0.05f;
@@ -210,13 +216,13 @@ namespace TerraLeague.Projectiles
             {
                 Vector2 offset = projectile.velocity.RotatedBy(1.57f, new Vector2()) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
                 Dust dust = Dust.NewDustDirect(dustPos + offset - Vector2.One * 4f, 8, 8, DustID.Clentaminator_Purple, 0.0f, 0.0f, 100, new Color(), 1.5f);
-                dust.velocity = dust.velocity * 0.5f;
+                dust.velocity *= 0.5f;
                 dust.velocity.Y = -Math.Abs(dust.velocity.Y);
 
                 unit = dustPos - Main.player[projectile.owner].Center;
                 unit.Normalize();
                 dust = Dust.NewDustDirect(Main.player[projectile.owner].Center + 55 * unit, 8, 8, DustID.Clentaminator_Purple, 0.0f, 0.0f, 100, new Color(), 1.5f);
-                dust.velocity = dust.velocity * 0.5f;
+                dust.velocity *= 0.5f;
                 dust.velocity.Y = -Math.Abs(dust.velocity.Y);
             }
             #endregion

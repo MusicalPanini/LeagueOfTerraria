@@ -31,7 +31,7 @@ namespace TerraLeague
         static public bool TargonArenaDefeated = false;
         static int targonArenaWidth = 100;
         static int targonArenaHeight = 100;
-        static Tile[,] TargonArenaSave = new Tile[100, 100];
+        //static readonly Tile[,] TargonArenaSave = new Tile[100, 100];
 
         int[] floatingIslandHouse_XCord = new int[30];
         int[] floatingIslandHouse_YCord = new int[30];

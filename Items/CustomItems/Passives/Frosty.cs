@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Frosty : Passive
     {
-        int debuffDuration;
+        readonly int debuffDuration;
 
         public Frosty(int DebuffDuration)
         {

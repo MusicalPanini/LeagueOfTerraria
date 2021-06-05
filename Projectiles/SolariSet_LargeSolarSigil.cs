@@ -10,20 +10,7 @@ namespace TerraLeague.Projectiles
     public class SolariSet_LargeSolarSigil : ModProjectile
     {
         const int attackDuration = 300;
-        const int widenDuration = attackDuration - 60;
         const int fadeDuration = 17;
-        const int flareWidth = 16;
-
-        float attackWidth
-        {
-            get
-            {
-                float scale = Math.Min(widenDuration - projectile.timeLeft + 60, 180);
-                scale = (scale / 180);
-
-                return projectile.width * 0.35f * scale;
-            }
-        }
 
         public override void SetStaticDefaults()
         {
@@ -79,7 +66,7 @@ namespace TerraLeague.Projectiles
                     if (projectile.timeLeft == attackDuration)
                     {
                         TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 91, -0.5f);
-                        Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.UnitY, ModContent.ProjectileType<SolariSet_SolarLaser>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI);
+                        Projectile.NewProjectileDirect(projectile.Center, Vector2.UnitY, ModContent.ProjectileType<SolariSet_SolarLaser>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI);
                     }
                 }
             }

@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class CauterizedWounds : Passive
     {
-        int percentDamageReduction;
+        readonly int percentDamageReduction;
 
         public CauterizedWounds(int PercentDamageReduction)
         {

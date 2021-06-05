@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustPos = projectile.position;
                 dustPos -= projectile.velocity * ((float)i * 0.25f);
                 Vector2 position125 = dustPos;
-                Dust dust = Dust.NewDustDirect(position125, 1, 1, DustID.MagnetSphere, 0f, 0f, 0, default(Color), (float)Main.rand.Next(70, 110) * 0.013f);
+                Dust dust = Dust.NewDustDirect(position125, 1, 1, DustID.MagnetSphere, 0f, 0f, 0, default, (float)Main.rand.Next(70, 110) * 0.013f);
                 dust.position = dustPos;
                 dust.position.X += (float)(projectile.width / 2);
                 dust.position.Y += (float)(projectile.height / 2);

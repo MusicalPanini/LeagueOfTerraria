@@ -11,8 +11,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Harmony : Passive
     {
-        int lifeRegen;
-        int preMana;
+        readonly int lifeRegen;
+        readonly int preMana;
 
         public Harmony(int LifeRegenIncrease, int PerMana)
         {

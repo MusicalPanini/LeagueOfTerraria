@@ -12,9 +12,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class SoulTaint : Passive
     {
-        int percentMaxLifeDamage;
-        int minDamage;
-        int maxDamage;
+        readonly int percentMaxLifeDamage;
+        readonly int minDamage;
+        readonly int maxDamage;
 
         public SoulTaint(int PercentMaxLifeDamage, int MinDamage, int MaxDamage)
         {

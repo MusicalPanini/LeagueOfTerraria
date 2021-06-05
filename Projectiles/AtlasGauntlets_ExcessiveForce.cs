@@ -36,19 +36,19 @@ namespace TerraLeague.Projectiles
             if (projectile.soundDelay == 0)
             {
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.Center);
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default(Color), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default, 1f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
             projectile.soundDelay = 100;
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default(Color), 2f);
+            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default, 2f);
             dust.noGravity = true;
             dust.noLight = true;
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default(Color), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 1f);
                 //dust.noLight = true;
             }
         }

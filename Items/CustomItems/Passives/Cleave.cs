@@ -9,8 +9,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Cleave : Passive
     {
-        int baseMeleeDamage;
-        CleaveType type;
+        readonly int baseMeleeDamage;
+        readonly CleaveType type;
 
         public Cleave(int AdditionMeleeDamage, CleaveType Type)
         {

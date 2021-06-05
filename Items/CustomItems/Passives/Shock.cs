@@ -12,8 +12,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Shock : Passive
     {
-        int percentManaUsage;
-        int percentManaDamage;
+        readonly int percentManaUsage;
+        readonly int percentManaDamage;
 
         public Shock(int PercentManaUsage, int PercentManaDamage)
         {

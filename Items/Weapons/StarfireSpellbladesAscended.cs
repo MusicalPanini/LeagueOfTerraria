@@ -75,7 +75,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.TopazBolt, 0, 0, 100, default(Color), 0.7f);
+            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.TopazBolt, 0, 0, 100, default, 0.7f);
             dust.noGravity = true;
             base.MeleeEffects(player, hitbox);
         }

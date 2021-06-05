@@ -65,11 +65,11 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Sand, 0f, 0, 0, default(Color), 3f);
+                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Sand, 0f, 0, 0, default, 3f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 2;
 
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Sand, 0f, 0, 0, default(Color), 2f);
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Sand, 0f, 0, 0, default, 2f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 3;
                 }

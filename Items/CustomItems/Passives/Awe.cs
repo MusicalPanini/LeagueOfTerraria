@@ -5,9 +5,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Awe : Passive
     {
-        int manaReduction;
-        int manaToADConversion;
-        int manaToAPConversion;
+        readonly int manaReduction;
+        readonly int manaToADConversion;
+        readonly int manaToAPConversion;
 
         public Awe(int ManaReduction, int ManaToADConversion, int ManaToAPConversion)
         {

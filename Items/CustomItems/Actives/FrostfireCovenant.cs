@@ -8,8 +8,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class FrostfireCovenant : Active
     {
-        int damage;
-        int effectDuration;
+        readonly int damage;
+        readonly int effectDuration;
 
         public FrostfireCovenant(int Damage, int EffectDuration, int Cooldown)
         {

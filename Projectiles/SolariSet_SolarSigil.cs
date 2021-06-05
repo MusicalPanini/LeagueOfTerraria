@@ -50,7 +50,7 @@ namespace TerraLeague.Projectiles
 
                     float x = Main.rand.NextFloat(projectile.position.X + 12, projectile.position.X + 34);
                     float y = Main.rand.NextFloat(projectile.position.Y + 12, projectile.position.Y + 34);
-                    Projectile proj = Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, 16), ModContent.ProjectileType<SolariSet_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, 16), ModContent.ProjectileType<SolariSet_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
                 }
             }
             else

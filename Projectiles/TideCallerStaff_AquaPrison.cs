@@ -44,7 +44,7 @@ namespace TerraLeague.Projectiles
             dust.noGravity = true;
             dust.scale = 1.4f;
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Dusts.BubbledBubble>(), 0f, 0, 100, default(Color), 2.5f);
+            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Dusts.BubbledBubble>(), 0f, 0, 100, default, 2.5f);
             dust.noGravity = true;
 
             projectile.velocity.Y += 0.4f;
@@ -72,11 +72,11 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 30; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Wet, 0f, -3f, 0, default(Color), 2f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Wet, 0f, -3f, 0, default, 2f);
             }
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Dusts.BubbledBubble>(), -5 + i, 0, 100, default(Color), 4f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Dusts.BubbledBubble>(), -5 + i, 0, 100, default, 4f);
                 dust.noGravity = true;
             }
         }

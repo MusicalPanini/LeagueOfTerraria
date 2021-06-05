@@ -7,8 +7,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class NightsVeil : Active
     {
-        int duration;
-        int shieldAmount;
+        readonly int duration;
+        readonly int shieldAmount;
 
         public NightsVeil(int Duration, int ShieldAmount, int Cooldown)
         {

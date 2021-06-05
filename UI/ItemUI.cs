@@ -33,9 +33,9 @@ namespace TerraLeague.UI
             MainPanel.Width.Set(250, 0f);
             MainPanel.Height.Set(101, 0f);
             
-            ItemPanel = new UIItemPanel(99,0,149,101, new Color(10, 100, 50));
-            SummonerPanel = new UISummonerPanel(0, 47,99,54, new Color(10, 100, 50));
-            StatPanel = new UIStatPanel(66f / Main.screenWidth, (Main.screenHeight - (int)(58 + 48)) / (float)Main.screenHeight, 150, 54, new Color(10, 100, 50));
+            ItemPanel = new UIItemPanel(99, 0, 149, 101);
+            SummonerPanel = new UISummonerPanel(0, 47, 99, 54);
+            StatPanel = new UIStatPanel(66f / Main.screenWidth, (Main.screenHeight - (int)(58 + 48)) / (float)Main.screenHeight, 150, 54);
 
             MainPanel.Append(SummonerPanel);
             MainPanel.Append(ItemPanel);
@@ -88,7 +88,7 @@ namespace TerraLeague.UI
                 Rectangle sourRec2 = new Rectangle(0, 0, 8, 8);
                 Color color;
                 Rectangle ammoBarPos;
-                int ammoBarHeight = 0;
+                int ammoBarHeight;
 
                 // Calibrum
                 color = new Color(141, 252, 245);
@@ -127,11 +127,11 @@ namespace TerraLeague.UI
 
     class UISummonerPanel : UIElement
     {
-        UISummonerSlot Slot1;
-        UISummonerSlot Slot2;
-        Texture2D _backgroundTexture = null;
+        readonly UISummonerSlot Slot1;
+        readonly UISummonerSlot Slot2;
+        readonly Texture2D _backgroundTexture = null;
 
-        public UISummonerPanel(int left, int top, int width, int height, Color color)
+        public UISummonerPanel(int left, int top, int width, int height)
         {
             SetPadding(0);
             Left.Set(left, 0f);
@@ -161,13 +161,13 @@ namespace TerraLeague.UI
 
     class UISummonerSlot : UIElement
     {
-        Texture2D _backgroundTexture = null;
-        Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
+        readonly Texture2D _backgroundTexture = null;
+        readonly Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
         public UIImage sumImage;
         public UIText sumCD;
-        UIText itemKey;
-        UIText toolTip;
-        int slotNum;
+        readonly UIText itemKey;
+        readonly UIText toolTip;
+        readonly int slotNum;
 
         public UISummonerSlot(int SlotNum, int left, int top, int dimentions)
         {
@@ -291,16 +291,15 @@ namespace TerraLeague.UI
 
     class UIItemPanel : UIElement
     {
-        UIItemSlot Item1;
-        UIItemSlot Item2;
-        UIItemSlot Item3;
-        UIItemSlot Item4;
-        UIItemSlot Item5;
-        UIItemSlot Item6;
+        readonly UIItemSlot Item1;
+        readonly UIItemSlot Item2;
+        readonly UIItemSlot Item3;
+        readonly UIItemSlot Item4;
+        readonly UIItemSlot Item5;
+        readonly UIItemSlot Item6;
+        readonly Texture2D _backgroundTexture = null;
 
-        Texture2D _backgroundTexture = null;
-
-        public UIItemPanel(int left, int top, int width, int height, Color color)
+        public UIItemPanel(int left, int top, int width, int height)
         {
             SetPadding(0);
             Left.Set(left, 0f);
@@ -344,12 +343,12 @@ namespace TerraLeague.UI
     class UIItemSlot : UIElement
     {
         Texture2D _backgroundTexture = null;
-        Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
-        UIImage itemImage;
-        UIText itemCooldown;
-        UIText itemStat;
-        UIText itemKey;
-        int slotNum;
+        readonly Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
+        readonly UIImage itemImage;
+        readonly UIText itemCooldown;
+        readonly UIText itemStat;
+        readonly UIText itemKey;
+        readonly int slotNum;
 
         public UIItemSlot(int SlotNum, int left, int top, int dimentions)
         {
@@ -415,9 +414,8 @@ namespace TerraLeague.UI
             }
             itemKey.SetText(itemSlotText);
 
-            LeagueItem legItem = Main.LocalPlayer.armor[slotNum + 2].modItem as LeagueItem;
 
-            if (legItem != null)
+            if (Main.LocalPlayer.armor[slotNum + 2].modItem is LeagueItem legItem)
             {
                 if (legItem.OnCooldown(Main.LocalPlayer))
                 {
@@ -525,8 +523,7 @@ namespace TerraLeague.UI
                         }
                         else
                         {
-                            var bootItem = modItem as LeagueBoot;
-                            if (bootItem != null)
+                            if (modItem is LeagueBoot bootItem)
                             {
                                 primPassiveTip = bootItem.BuildFullTooltip(false).Split('\n');
                                 for (int i = 0; i < primPassiveTip.Length; i++)
@@ -627,24 +624,21 @@ namespace TerraLeague.UI
         public float TopPercent = 0;
 
         public bool extraStats = false;
-
-        UIText meleeStats;
-        UIText rangedStats;
-        UIText magicStats;
-        UIText summonStats;
-        UIText armorStats;
-        UIText resistStats;
-
-        UIText CDRStats;
-        UIText ammoStats;
-        UIText healStats;
-        UIText manaStats;
-
-        UIText tooltip;
+        readonly UIText meleeStats;
+        readonly UIText rangedStats;
+        readonly UIText magicStats;
+        readonly UIText summonStats;
+        readonly UIText armorStats;
+        readonly UIText resistStats;
+        readonly UIText CDRStats;
+        readonly UIText ammoStats;
+        readonly UIText healStats;
+        readonly UIText manaStats;
+        readonly UIText tooltip;
 
         Texture2D _backgroundTexture;
 
-        public UIStatPanel(float left, float top, int width, int height, Color color)
+        public UIStatPanel(float left, float top, int width, int height)
         {
             SetPadding(0);
             Left.Set(0, left);

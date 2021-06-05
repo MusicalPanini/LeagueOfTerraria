@@ -9,8 +9,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class SpectralPursuit : Active
     {
-        int baseDamage;
-        int minionScaling;
+        readonly int baseDamage;
+        readonly int minionScaling;
 
         public SpectralPursuit(int BaseDamage, int MinionScaling, int Cooldown)
         {

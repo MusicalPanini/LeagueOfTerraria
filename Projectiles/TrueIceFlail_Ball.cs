@@ -69,7 +69,7 @@ namespace TerraLeague.Projectiles
         {
             Player player = Main.player[projectile.owner];
 
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default(Color));
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default);
             dust.velocity *= 0.2f;
             dust.scale *= 0.7f;
 
@@ -129,7 +129,7 @@ namespace TerraLeague.Projectiles
                             }
                         }
                         projectile.localAI[1] += 1f;
-                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (projectile.localAI[1] / swingSpeed) * (float)player.direction), default(Vector2));
+                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (projectile.localAI[1] / swingSpeed) * (float)player.direction), default);
                         vector3.Y *= 0.8f;
                         if (vector3.Y * player.gravDir > 0f)
                         {

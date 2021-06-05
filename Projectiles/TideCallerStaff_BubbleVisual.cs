@@ -47,7 +47,7 @@ namespace TerraLeague.Projectiles
             Vector2 truePosition = new Vector2(projectile.Center.X - (trueWidth/2), projectile.Center.Y - (trueHeight/2));
 
             Lighting.AddLight(projectile.Center, 0f, 0f, 0.5f);
-            Dust dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustID.Wet, 0, 2, 150, default(Color), 1.5f);
+            Dust dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustID.Wet, 0, 2, 150, default, 1.5f);
             dust.noGravity = true;
 
             base.AI();
@@ -63,10 +63,10 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustType<Dusts.BubbledBubble>(), -5 + i, 0, 100, default(Color), 4f);
+                Dust dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustType<Dusts.BubbledBubble>(), -5 + i, 0, 100, default, 4f);
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustID.Wet, 0, 0, 150, default(Color), 2.5f);
+                dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustID.Wet, 0, 0, 150, default, 2.5f);
                 dust.noGravity = true;
                 dust.velocity *= 2;
             }

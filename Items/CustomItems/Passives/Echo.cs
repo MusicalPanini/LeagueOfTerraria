@@ -16,8 +16,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Echo : Passive
     {
-        int baseDamage;
-        double magicScaling;
+        readonly int baseDamage;
+        readonly double magicScaling;
 
         public Echo(int BaseDamage, int MagicScaling)
         {

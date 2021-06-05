@@ -7,8 +7,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class StoneSkin : Passive
     {
-        int enemies;
-        int armorResist;
+        readonly int enemies;
+        readonly int armorResist;
 
         public StoneSkin(int EnemyAmount, int ArmorResistBonus)
         {

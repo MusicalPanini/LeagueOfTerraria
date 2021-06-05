@@ -5,9 +5,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Dread : Passive
     {
-        int maxStacks;
-        int lostStacks;
-        double magicMinionDamage;
+        readonly int maxStacks;
+        readonly int lostStacks;
+        readonly double magicMinionDamage;
 
         public Dread(int MaxStacks, int LostStacks, double magicMinionDamageIncrease)
         {

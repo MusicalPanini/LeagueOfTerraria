@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
                 projectile.velocity.Y = 16f;
             }
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 204, Vector2.Zero, 0, default(Color), 0.75f);
+            Dust dust = Dust.NewDustPerfect(projectile.position, 204, Vector2.Zero, 0, default, 0.75f);
             dust.noGravity = true;
             dust.alpha = 100;
         }

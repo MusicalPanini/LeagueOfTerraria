@@ -261,7 +261,7 @@ namespace TerraLeague.NPCs
 
         void GetRandomBlessing()
         {
-            int newBuff = 0;
+            int newBuff;
             while (true)
             {
                 newBuff = Main.rand.Next(0, 16);

@@ -236,7 +236,7 @@ namespace TerraLeague.NPCs
             {
                 int num620;
                 if (i > 10)
-                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Wraith, 0f, 0f, 50, default(Color), 1.5f);
+                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Wraith, 0f, 0f, 50, default, 1.5f);
                 else
                     num620 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
                 Dust dust = Main.dust[num620];

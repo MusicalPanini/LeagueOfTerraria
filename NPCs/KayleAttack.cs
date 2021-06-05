@@ -138,7 +138,7 @@ namespace TerraLeague.NPCs
                 int num437 = 0;
                 while ((double)num437 < damage / (double)npc.lifeMax * 50.0)
                 {
-                    int num438 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, 0f, 0f, 0, default(Color), 1.5f);
+                    int num438 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
                     Main.dust[num438].noGravity = true;
                     int num5 = num437;
                     num437 = num5 + 1;
@@ -149,7 +149,7 @@ namespace TerraLeague.NPCs
                 int num5;
                 for (int num439 = 0; num439 < 20; num439 = num5 + 1)
                 {
-                    int num440 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, 0f, 0f, 0, default(Color), 1.5f);
+                    int num440 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
                     Dust dust115 = Main.dust[num440];
                     Dust dust2 = dust115;
                     dust2.velocity *= 2f;

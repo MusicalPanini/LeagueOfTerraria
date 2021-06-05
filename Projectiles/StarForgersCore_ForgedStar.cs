@@ -81,14 +81,14 @@ namespace TerraLeague.Projectiles
                 projectile.Center = player.MountedCenter + offset.RotatedBy(projectile.ai[1]);
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Cyan, projectile.velocity.X, projectile.velocity.Y, 200, default(Color), 1.5f * (offset.X / 300f + 0.5f));
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Cyan, projectile.velocity.X, projectile.velocity.Y, 200, default, 1.5f * (offset.X / 300f + 0.5f));
             dust.noGravity = true;
             dust.noLight = true;
             dust.velocity *= 0.1f;
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.HeatRay, projectile.velocity.X, projectile.velocity.Y, 124, default(Color), 2.5f * (offset.X / 300f + 0.5f));
+                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.HeatRay, projectile.velocity.X, projectile.velocity.Y, 124, default, 2.5f * (offset.X / 300f + 0.5f));
                 dust2.noGravity = true;
                 dust2.noLight = true;
                 dust2.velocity *= 0.6f;

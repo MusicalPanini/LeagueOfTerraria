@@ -62,7 +62,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 50; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0, 0, 50, default(Color), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0, 0, 50, default, 1.5f);
                 dust.velocity *= 2f;
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -70,7 +70,7 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 50; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0, 0, 50, default(Color), 1);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0, 0, 50, default, 1);
                 dust.velocity *= 2f;
                 dust.noGravity = true;
             }
@@ -81,7 +81,7 @@ namespace TerraLeague.Projectiles
                 {
                     Vector2 pos = new Vector2(350, 0).RotatedBy(MathHelper.ToRadians((20 * i) + (j * 6))) + projectile.Center;
 
-                    Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default(Color), 1);
+                    Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default, 1);
                     dustR.noGravity = true;
                     dustR.fadeIn = 1.5f;
                 }

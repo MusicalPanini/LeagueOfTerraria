@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Phase : Ability
     {
-        LunariGunType gunType;
+        readonly LunariGunType gunType;
 
         public Phase(Terraria.ModLoader.ModItem item, LunariGunType lunariGunType)
         {

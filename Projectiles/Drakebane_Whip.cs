@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
             {
                 vector25.Y *= -1f;
             }
-            vector25 = vector25.RotatedBy((double)projectile.localAI[0], default(Vector2));
+            vector25 = vector25.RotatedBy((double)projectile.localAI[0], default);
             projectile.ai[0] += 1f / projectile.MaxUpdates;
             if (projectile.ai[0] < swingTime)
             {

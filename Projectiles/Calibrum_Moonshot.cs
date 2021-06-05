@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.timeLeft < 896)
             {
-                Dust dust = Dust.NewDustPerfect(projectile.position, 111, Vector2.Zero, 0, default(Color), 2f);
+                Dust dust = Dust.NewDustPerfect(projectile.position, 111, Vector2.Zero, 0, default, 2f);
                 dust.noGravity = true;
                 dust.alpha = 100;
             }

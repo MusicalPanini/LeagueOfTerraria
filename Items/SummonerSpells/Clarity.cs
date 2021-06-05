@@ -13,7 +13,7 @@ namespace TerraLeague.Items.SummonerSpells
 {
     public class ClarityRune : SummonerSpell
     {
-        static int effectRadius = 700;
+        static readonly int effectRadius = 700;
 
         public override void SetStaticDefaults()
         {

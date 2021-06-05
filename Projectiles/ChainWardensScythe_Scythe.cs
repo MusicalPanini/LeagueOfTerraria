@@ -130,7 +130,7 @@ namespace TerraLeague.Projectiles
                             }
                         }
                         projectile.localAI[1] += 1f;
-                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (projectile.localAI[1] / swingSpeed) * (float)player.direction), default(Vector2));
+                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (projectile.localAI[1] / swingSpeed) * (float)player.direction), default);
                         vector3.Y *= 0.8f;
                         if (vector3.Y * player.gravDir > 0f)
                         {

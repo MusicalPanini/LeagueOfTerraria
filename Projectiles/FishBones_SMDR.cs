@@ -80,7 +80,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 80; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, 2f);
                 dust.velocity *= 3f;
                 if (Main.rand.Next(2) == 0)
                 {
@@ -90,30 +90,30 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 120; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 4.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 4.5f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 3f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 3f);
                 dust.velocity *= 3f;
             }
             for (int i = 0; i < 3; i++)
             {
                 float velScale = (i+1) * 1f;
 
-                Gore gore = Gore.NewGoreDirect(projectile.Center, default(Vector2), Main.rand.Next(61, 64), 2f);
+                Gore gore = Gore.NewGoreDirect(projectile.Center, default, Main.rand.Next(61, 64), 2f);
                 gore.velocity.X += 1.5f;
                 gore.velocity.Y += 1.5f;
 
-                gore = Gore.NewGoreDirect(projectile.Center, default(Vector2), Main.rand.Next(61, 64), 2f);
+                gore = Gore.NewGoreDirect(projectile.Center, default, Main.rand.Next(61, 64), 2f);
                 gore.velocity.X -= 1.5f;
                 gore.velocity.Y -= 1.5f;
 
-                gore = Gore.NewGoreDirect(projectile.Center, default(Vector2), Main.rand.Next(61, 64), 2f);
+                gore = Gore.NewGoreDirect(projectile.Center, default, Main.rand.Next(61, 64), 2f);
                 gore.velocity.X += 1.5f;
                 gore.velocity.Y -= 1.5f;
 
-                gore = Gore.NewGoreDirect(projectile.Center, default(Vector2), Main.rand.Next(61, 64), 2f);
+                gore = Gore.NewGoreDirect(projectile.Center, default, Main.rand.Next(61, 64), 2f);
                 gore.velocity.X -= 1.5f;
                 gore.velocity.Y += 1.5f;
             }

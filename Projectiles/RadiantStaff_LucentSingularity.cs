@@ -77,7 +77,7 @@ namespace TerraLeague.Projectiles
                     Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                     int dustBoxWidth = projectile.width - 12;
                     int dustBoxHeight = projectile.height - 12;
-                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.GoldFlame, 0f, 0f, 100, default(Color), 1.5f);
+                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.GoldFlame, 0f, 0f, 100, default, 1.5f);
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
                     dust.velocity += projectile.velocity * 0.1f;
@@ -93,11 +93,11 @@ namespace TerraLeague.Projectiles
                     TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f - (projectile.timeLeft / 300f));
                 }
 
-                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One*8), 16, 16, DustID.GoldFlame, 0, 0, 0, default(Color), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One*8), 16, 16, DustID.GoldFlame, 0, 0, 0, default, 1.5f);
                 dust.velocity *= 0;
                 dust.noGravity = true;
 
-                TerraLeague.DustBorderRing(projectile.width / 2, projectile.Center, 246, default(Color), 1);
+                TerraLeague.DustBorderRing(projectile.width / 2, projectile.Center, 246, default, 1);
 
                 if (projectile.timeLeft % 15 == 0)
                 {
@@ -121,7 +121,7 @@ namespace TerraLeague.Projectiles
 
             TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f);
 
-            TerraLeague.DustRing(246, projectile, default(Color));
+            TerraLeague.DustRing(246, projectile, default);
 
             base.Kill(timeLeft);
         }

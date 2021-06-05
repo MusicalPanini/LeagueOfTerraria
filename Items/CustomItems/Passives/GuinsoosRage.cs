@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class GuinsoosRage : Passive
     {
-        int meleeRangedAttackSpeed;
+        readonly int meleeRangedAttackSpeed;
 
         public GuinsoosRage(int meleeAttacksSpeedAmmoConsumeChance)
         {
@@ -54,18 +54,6 @@ namespace TerraLeague.Items.CustomItems.Passives
             }
 
             base.PostPlayerUpdate(player, modItem);
-        }
-
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
-        {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
-        }
-
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
-        {
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
         }
     }
 }

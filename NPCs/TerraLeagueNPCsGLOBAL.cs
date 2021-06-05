@@ -157,7 +157,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default);
                     dust.velocity *= 0.2f;
                     dust.scale *= 1.2f;
                     dust.alpha *= 200;
@@ -194,14 +194,14 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default(Color));
+                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default);
                 }
             }
             if (abyssalCurse)
             {
                 if (Main.rand.Next(0, 4) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, DustID.Demonite, 0f, 0f, 100, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, DustID.Demonite, 0f, 0f, 100, default);
                     dust.color = new Color(255, 0, 255);
                     dust.alpha = 150;
                     dust.scale = 1f;
@@ -223,7 +223,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, DustID.Teleporter, 0f, 0f, 50, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, DustID.Teleporter, 0f, 0f, 50, default);
                     dust.noGravity = true;
                 }
             }
@@ -231,7 +231,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Demonite, 0f, 0f, 100, default(Color), 1f);
+                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Demonite, 0f, 0f, 100, default, 1f);
                     dust.color = new Color(255, 0, 0);
                     dust.velocity.X = 0;
                     dust.velocity.Y = 0.5f;
@@ -241,7 +241,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, -12f, 100, default(Color), 6);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, -12f, 100, default, 6);
                     dust.noGravity = true;
                 }
             }
@@ -249,13 +249,13 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default(Color), 2f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default, 2f);
                     dust.noGravity = true;
                 }
 
                 if (Main.rand.Next(0, 4) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default(Color), 1f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default, 1f);
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y * 2f);
                 }
             }
@@ -274,17 +274,17 @@ namespace TerraLeague.NPCs
                 {
                     dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, new Color(255, 0, 0), 4);
                     dust.noGravity = true;
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, new Color(255, 0, 0), 1);
+                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, new Color(255, 0, 0), 1);
                 }
             }
             if (infernumMark)
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -2f, 0, default(Color), 2);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -2f, 0, default, 2);
                     dust.noGravity = true;
                     dust.velocity.X *= 0.1f;
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -3f, 0, default(Color), 0.5f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -3f, 0, default, 0.5f);
                     dust.velocity.X *= 0.2f;
                 }
             }
@@ -303,9 +303,9 @@ namespace TerraLeague.NPCs
             }
             if (harbingersInferno)
             {
-                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default(Color), 3);
+                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default, 3);
                 dust.noGravity = true;
-                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default(Color), 1);
+                Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default, 1);
             }
             if (cleaved)
             {
@@ -335,7 +335,7 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Blood, 0, 0, 0, default(Color), 1.25f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Blood, 0, 0, 0, default, 1.25f);
                     dust.velocity.X *= 0f;
                     dust.velocity.Y = System.Math.Abs(dust.velocity.Y);
                 }
@@ -345,7 +345,7 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Plantera_Green, 0, 0, 0, default(Color), 1.25f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Plantera_Green, 0, 0, 0, default, 1.25f);
                     dust.velocity.X *= 0f;
                     dust.velocity.Y = System.Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -353,7 +353,7 @@ namespace TerraLeague.NPCs
             }
             if (illuminated)
             {
-                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.GoldFlame, 0f, 0f, 0, default(Color), 1);
+                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.GoldFlame, 0f, 0f, 0, default, 1);
                 dust.noGravity = true;
                 dust.velocity *= 1.3f;
             }
@@ -372,7 +372,7 @@ namespace TerraLeague.NPCs
             }
             if (calibrumMark)
             {
-                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Clentaminator_Cyan, 0, -2, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Clentaminator_Cyan, 0, -2, 100, default, 1f);
                 dust.noGravity = true;
                 dust.velocity.X *= 0;
             }
@@ -661,7 +661,7 @@ namespace TerraLeague.NPCs
                 damage = (int)(damage * 1.5);
             }
 
-            vesselStriked(player.whoAmI, damage, crit);
+            VesselStriked(player.whoAmI, damage, crit);
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -675,7 +675,7 @@ namespace TerraLeague.NPCs
                 damage = (int)(damage * 1.1);
 
             if (projectile.owner != -1 || projectile.owner != 255)
-                vesselStriked(projectile.owner, damage, crit);
+                VesselStriked(projectile.owner, damage, crit);
 
             if (projectile.type == ProjectileType<EyeofGod_TestofSpirit>())
             {
@@ -762,37 +762,6 @@ namespace TerraLeague.NPCs
             base.NPCLoot(npc);
         }
 
-        public bool CheckJungle(int X, int Y)
-        {
-            int JGrass = 0;
-            int mud = 0;
-
-            for (int x = X - 5; X < X + 5; x++)
-            {
-                for (int y = Y - 5; y < Y + 5; y++)
-                {
-                    if (Framing.GetTileSafely(x, y).type == TileID.Mud)
-                    {
-                        mud++;
-                        return true;
-                    }
-                    if (Framing.GetTileSafely(x, y).type == TileID.JungleGrass)
-                    {
-                        JGrass++;
-                    }
-                }
-            }
-
-            if (JGrass > 0 || mud > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
             if (ignited || ablaze)
@@ -827,7 +796,7 @@ namespace TerraLeague.NPCs
             base.DrawEffects(npc, ref drawColor);
         }
 
-        public double OnHitDamage(NPC npc, Player player, int Damage, float knockBack = 0, int hitDirection = 0, bool crit = false, bool noEffect = false, bool fromNet = false)
+        public double OnHitDamage(NPC npc, Player player, int Damage, float knockBack = 0, int hitDirection = 0, bool crit = false)
         {
             if (!npc.active || npc.life <= 0)
             {
@@ -1196,7 +1165,7 @@ namespace TerraLeague.NPCs
             base.PostDraw(npc, spriteBatch, drawColor);
         }
 
-        public void vesselStriked(int attacker, int damage, bool crit)
+        public void VesselStriked(int attacker, int damage, bool crit)
         {
             if (vessel && vesselTarget != -1)
             {

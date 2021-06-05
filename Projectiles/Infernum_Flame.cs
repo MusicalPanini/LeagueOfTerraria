@@ -35,11 +35,11 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.Next(0, 1) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default(Color), 2.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default, 2.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += projectile.velocity;
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default(Color), 0.75f);
+                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default, 0.75f);
             }
         }
 

@@ -10,7 +10,7 @@ namespace TerraLeague.Projectiles
 {
     public class CrystalStaff_DarkMatter : ModProjectile
     {
-        int radius = 100;
+        readonly int radius = 100;
 
         public override void SetStaticDefaults()
         {
@@ -119,7 +119,7 @@ namespace TerraLeague.Projectiles
                 dust.noGravity = true;
                 dust.velocity *= 1f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default(Color), 3f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default, 3f);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
             }

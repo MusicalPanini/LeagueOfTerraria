@@ -8,8 +8,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class LightningBolt : Active
     {
-        int baseDamage;
-        int magicMinionScaling;
+        readonly int baseDamage;
+        readonly int magicMinionScaling;
 
         public LightningBolt(int BaseDamage, int MagicMinionScaling, int Cooldown)
         {

@@ -1161,8 +1161,10 @@ namespace TerraLeague
             }
             else if (player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBoss>()) > 0)
             {
-                var ded = new PlayerDeathReason();
-                ded.SourceCustomReason = player.name + " tried to run from Targon's Challenge";
+                var ded = new PlayerDeathReason
+                {
+                    SourceCustomReason = player.name + " tried to run from Targon's Challenge"
+                };
                 player.KillMe(ded, 999999, 0);
             }
         }
@@ -1170,9 +1172,7 @@ namespace TerraLeague
         #region Multiplayer Stuff
         public override void clientClone(ModPlayer clientClone)
         {
-            PLAYERGLOBAL clone = clientClone as PLAYERGLOBAL;
-
-            if (clone != null)
+            if (clientClone is PLAYERGLOBAL clone)
             {
                 clone.accessoryStat = accessoryStat;
                 clone.accessoryStat = accessoryStat;
@@ -1637,7 +1637,7 @@ namespace TerraLeague
 
                     for (int i = 0; i < 10; i++)
                     {
-                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Shadowflame, 0, -3);
+                        Dust.NewDustDirect(player.position, player.width, player.height, DustID.Shadowflame, 0, -3);
                     }
 
                     prophetTimer = 60 * 6;
@@ -1717,7 +1717,7 @@ namespace TerraLeague
                         Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
                         for (int num225 = 0; num225 < 12; num225++)
                         {
-                            int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.AmberBolt, 0f, 0f, 0, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
+                            int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.AmberBolt, 0f, 0f, 0, default, (float)Main.rand.Next(20, 26) * 0.1f);
                             Main.dust[num226].noGravity = true;
                             Dust obj2 = Main.dust[num226];
                             obj2.velocity *= 0.5f;
@@ -1882,7 +1882,7 @@ namespace TerraLeague
                 {
                     Vector2 pos = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians((30 * i) + displacement)) + player.Center;
 
-                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Fire, Vector2.Zero, 0, default(Color), 2f);
+                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Fire, Vector2.Zero, 0, default, 2f);
                     dustR.noGravity = true;
                 }
             }
@@ -1901,13 +1901,13 @@ namespace TerraLeague
                 for (int i = 0; i < 1; i++)
                 {
                     Vector2 pos = new Vector2(player.position.X, player.position.Y + (player.height * 0.9f));
-                    Dust dustIndex = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, 12f, -1f, 100, default(Color), 1.25f);
+                    Dust dustIndex = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, 12f, -1f, 100, default, 1.25f);
                     dustIndex.noGravity = true;
                     dustIndex.velocity.Y *= 0.4f;
                     dustIndex.velocity.X *= 0.6f;
                     dustIndex.velocity.X += player.velocity.X;
                     dustIndex.noLight = true;
-                    Dust dustIndex2 = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, -12f, -1f, 100, default(Color), 1.5f);
+                    Dust dustIndex2 = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, -12f, -1f, 100, default, 1.5f);
                     dustIndex2.noGravity = true;
                     dustIndex2.noLight = true;
                     dustIndex2.velocity.Y *= 0.4f;
@@ -1923,8 +1923,10 @@ namespace TerraLeague
             // Cauterized Wounds damage Handler
             if (Main.time % 60 == 1 && cauterizedDamage > 0)
             {
-                PlayerDeathReason ded = new PlayerDeathReason();
-                ded.SourceCustomReason = player.name + " died to their wounds";
+                PlayerDeathReason ded = new PlayerDeathReason
+                {
+                    SourceCustomReason = player.name + " died to their wounds"
+                };
 
                 if (cauterizedDamage < 6)
                 {
@@ -1958,43 +1960,37 @@ namespace TerraLeague
                 {
                     if (TerraLeague.Item1.JustPressed)
                     {
-                        LeagueItem item = player.armor[3].modItem as LeagueItem;
-                        if (item != null)
+                        if (player.armor[3].modItem is LeagueItem item)
                             if (item.Active != null)
                                 item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item2.JustPressed)
                     {
-                        LeagueItem item = player.armor[4].modItem as LeagueItem;
-                        if (item != null)
+                        if (player.armor[4].modItem is LeagueItem item)
                             if (item.Active != null)
                                 item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item3.JustPressed)
                     {
-                        LeagueItem item = player.armor[5].modItem as LeagueItem;
-                        if (item != null)
+                        if (player.armor[5].modItem is LeagueItem item)
                             if (item.Active != null)
                                 item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item4.JustPressed)
                     {
-                        LeagueItem item = player.armor[6].modItem as LeagueItem;
-                        if (item != null)
+                        if (player.armor[6].modItem is LeagueItem item)
                             if (item.Active != null)
                                 item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item5.JustPressed)
                     {
-                        LeagueItem item = player.armor[7].modItem as LeagueItem;
-                        if (item != null)
+                        if (player.armor[7].modItem is LeagueItem item)
                             if (item.Active != null)
                                 item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item6.JustPressed)
                     {
-                        LeagueItem item = player.armor[8].modItem as LeagueItem;
-                        if (item != null)
+                        if (player.armor[8].modItem is LeagueItem item)
                             if (item.Active != null)
                                 item.Active.DoActive(player, item);
                     }
@@ -2286,13 +2282,11 @@ namespace TerraLeague
                         target.AddBuff(BuffType<GrievousWounds>(), 120);
                 }
                 if (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects)
-                    FlashOfBrillianceEffect(player, damage, target);
+                    FlashOfBrillianceEffect(player, target);
 
                 // Performs Winds Fury (Runanns Hurricane)
                 if (proj.ranged && (windsFury || windFuryReplicator) && !TerraLeague.DoNotCountRangedDamage(proj) && windsFuryCooldown == 0)
                 {
-                    int shotsfired = 0;
-
                     int target1 = TerraLeague.GetClosestNPC(player.Center, 520, target.whoAmI);
                     int target2 = -1;
                     if (target1 != -1)
@@ -2326,7 +2320,6 @@ namespace TerraLeague
                     }
 
                     Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 24);
-                    shotsfired++;
 
                     if (target1 != -1)
                         windsFuryCooldown = (int)(15 / rangedAttackSpeed);
@@ -2481,7 +2474,7 @@ namespace TerraLeague
                     Projectile.NewProjectileDirect(target.Center, new Vector2(12, 0).RotatedBy(angle + MathHelper.ToRadians((-30 + (5 * i)))), ProjectileType<AtlasGauntlets_ExcessiveForce>(), damage, knockback/2, player.whoAmI, target.whoAmI);
                 }
             }
-            FlashOfBrillianceEffect(player, damage, target);
+            FlashOfBrillianceEffect(player, target);
 
             // Lifesteal calculation
             if (lifeStealMelee > 0 && !target.immortal)
@@ -2546,7 +2539,7 @@ namespace TerraLeague
                 //    damage -= (int)(armor * 0.5);
             }
 
-            OnHitByEnemy(npc, ref damage, crit);
+            OnHitByEnemy();
             base.ModifyHitByNPC(npc, ref damage, ref crit);
         }
 
@@ -2578,7 +2571,7 @@ namespace TerraLeague
             //    damage -= (int)(resist * 0.5) / 2;
 
 
-            OnHitByEnemy(Main.npc[0], ref damage, crit);
+            OnHitByEnemy();
             base.ModifyHitByProjectile(proj, ref damage, ref crit);
         }
 
@@ -2727,9 +2720,7 @@ namespace TerraLeague
         /// <summary>
         /// Runs when the player is hit by anything
         /// </summary>
-        /// <param name="damage"></param>
-        /// <param name="crit"></param>
-        public void OnHitByEnemy(NPC npc, ref int damage, bool crit)
+        public void OnHitByEnemy()
         {
             //if (GetTotalShield() <= 0)
                 player.AddBuff(BuffType<GrievousWounds>(), 180); // 3 seconds
@@ -2832,8 +2823,6 @@ namespace TerraLeague
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                ModPacket packet = mod.GetPacket();
-
                 PacketHandler.SendMana(toWho, fromWho, manaAmount, manaTarget);
             }
         }
@@ -3226,8 +3215,10 @@ namespace TerraLeague
 
             if (GetRealHeathWithoutShield() <= 0 && !player.dead && player.active && Main.LocalPlayer.whoAmI == player.whoAmI && GetTotalShield() > 0)
             {
-                var ded = new PlayerDeathReason();
-                ded.SourceCustomReason = "The shield around " + player.name + " couldn't save them";
+                var ded = new PlayerDeathReason
+                {
+                    SourceCustomReason = "The shield around " + player.name + " couldn't save them"
+                };
 
                 ClearShields();
                 player.KillMe(ded, 0, 0);
@@ -3346,9 +3337,7 @@ namespace TerraLeague
             {
                 for (int i = 3; i < 9; i++)
                 {
-                    LeagueItem item = player.armor[i].modItem as LeagueItem;
-
-                    if (item != null)
+                    if (player.armor[i].modItem is LeagueItem item)
                     {
                         if (item.Passives != null)
                         {
@@ -3376,9 +3365,7 @@ namespace TerraLeague
             {
                 for (int i = 3; i < 9; i++)
                 {
-                    LeagueItem item = player.armor[i].modItem as LeagueItem;
-
-                    if (item != null)
+                    if (player.armor[i].modItem is LeagueItem item)
                     {
                         if (item.Active != null)
                         {
@@ -3402,9 +3389,7 @@ namespace TerraLeague
         {
             for (int i = 3; i < 9; i++)
             {
-                LeagueItem item = player.armor[i].modItem as LeagueItem;
-
-                if (item != null)
+                if (player.armor[i].modItem is LeagueItem item)
                 {
                     if (item.Passives != null)
                     {
@@ -3473,9 +3458,7 @@ namespace TerraLeague
 
             for (int i = 0; i < 6; i++)
             {
-                LeagueItem legItem = player.armor[i + 3].modItem as LeagueItem;
-
-                if (legItem != null)
+                if (player.armor[i + 3].modItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -3537,7 +3520,7 @@ namespace TerraLeague
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 27, -0.5f);
             for (int i = 0; i < 20; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Ice, 0, -2, 0, default(Color), 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Ice, 0, -2, 0, default, 1.5f);
                 dustIndex.velocity *= 2;
             }
             if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.LocalPlayer.whoAmI)
@@ -3549,7 +3532,7 @@ namespace TerraLeague
             Main.PlaySound(new LegacySoundStyle(2, 122), target.Center);
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustDirect(target.position, 8, 8, DustID.Clentaminator_Purple, 0, 0, 0, new Color(59, 0, 255), 1f);
+                Dust.NewDustDirect(target.position, 8, 8, DustID.Clentaminator_Purple, 0, 0, 0, new Color(59, 0, 255), 1f);
             }
         }
 
@@ -3569,7 +3552,7 @@ namespace TerraLeague
                 Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
                 for (int num225 = 0; num225 < 5; num225++)
                 {
-                    int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.ManaRegeneration, 0f, 0f, 255, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
+                    int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.ManaRegeneration, 0f, 0f, 255, default, (float)Main.rand.Next(20, 26) * 0.1f);
                     Main.dust[num226].noLight = true;
                     Main.dust[num226].noGravity = true;
                     Dust obj2 = Main.dust[num226];
@@ -3579,7 +3562,7 @@ namespace TerraLeague
             }
         }
 
-        public void FlashOfBrillianceEffect(Player player, int Damage, NPC target)
+        public void FlashOfBrillianceEffect(Player player, NPC target)
         {
             if (flashofBrilliance && flashofBrillianceCooldown <= 0)
             {

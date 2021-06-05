@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class TheVow : Passive
     {
-        int effectRadius;
+        readonly int effectRadius;
 
         public TheVow(int EffectRadius)
         {

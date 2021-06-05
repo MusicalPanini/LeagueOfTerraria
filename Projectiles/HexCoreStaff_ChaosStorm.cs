@@ -40,7 +40,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 0, default(Color), 2);
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 0, default, 2);
                     dust.noGravity = true;
                 }
             }
@@ -48,7 +48,7 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.Next(3) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 8, DustID.Electric, 0, 0, 0, default(Color), 0.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 8, DustID.Electric, 0, 0, 0, default, 0.5f);
             }
 
             if (!Main.player[projectile.owner].channel && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)

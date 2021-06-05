@@ -11,9 +11,9 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class SolarisProtection : Active
     {
-        int percentLifeShield;
-        int effectRadius = 500;
-        int shieldDuration;
+        readonly int percentLifeShield;
+        readonly int effectRadius = 500;
+        readonly int shieldDuration;
 
         public SolarisProtection(int PercentLifeShield, int EffectRadius, int ShieldDuration, int Cooldown)
         {

@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Damnation : Active
     {
-        int damage;
+        readonly int damage;
 
         public Damnation(int Damage, int Cooldown)
         {

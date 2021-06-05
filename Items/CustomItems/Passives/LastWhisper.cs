@@ -6,8 +6,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class LastWhisper : Passive
     {
-        int percentArmorReduction;
-        bool includeMeleeDamage;
+        readonly int percentArmorReduction;
+        readonly bool includeMeleeDamage;
 
         public LastWhisper(int PercentArmorReduction, bool IncludeMeleeDamage)
         {

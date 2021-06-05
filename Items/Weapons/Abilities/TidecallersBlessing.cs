@@ -103,8 +103,8 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 21).WithPitchVariance(-0.5f), player.Center);
-            TerraLeague.DustBorderRing(300, player.MountedCenter, DustType<BubbledBubble>(), default(Color), 2);
-            TerraLeague.DustRing(DustType<BubbledBubble>(), player, default(Color));
+            TerraLeague.DustBorderRing(300, player.MountedCenter, DustType<BubbledBubble>(), default, 2);
+            TerraLeague.DustRing(DustType<BubbledBubble>(), player, default);
 
             var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 300, -1, player.team);
             for (int i = 0; i < players.Count; i++)

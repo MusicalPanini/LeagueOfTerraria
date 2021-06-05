@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Dreadnought : Passive
     {
-        float statModifier;
+        readonly float statModifier;
 
         public Dreadnought(float StatIncreaseModifier)
         {

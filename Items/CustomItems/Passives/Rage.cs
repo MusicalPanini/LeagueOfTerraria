@@ -6,7 +6,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Rage : Passive
     {
-        int duration;
+        readonly int duration;
 
         public Rage(int SecondsDuration)
         {

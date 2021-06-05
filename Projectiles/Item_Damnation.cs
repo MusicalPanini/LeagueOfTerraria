@@ -44,7 +44,7 @@ namespace TerraLeague.Projectiles
             projectile.velocity = (10 * projectile.velocity + move) / 11f;
             AdjustMagnitude(ref projectile.velocity);
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 156, null, 50, default(Color), 1f);
+            Dust dust = Dust.NewDustPerfect(projectile.position, 156, null, 50, default, 1f);
             dust.noGravity = true;
             dust.velocity *= 0;
 

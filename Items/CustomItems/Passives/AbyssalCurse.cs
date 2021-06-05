@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class AbyssalCurse : Passive
     {
-        int effectRadius = 400;
+        readonly int effectRadius = 400;
 
         public override string Tooltip(Player player, ModItem modItem)
         {

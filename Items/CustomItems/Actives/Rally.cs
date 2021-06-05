@@ -8,8 +8,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Rally : Active
     {
-        int duration;
-        int minionScaling;
+        readonly int duration;
+        readonly int minionScaling;
 
         public Rally(int Duration, int MinionScaling, int Cooldown)
         {

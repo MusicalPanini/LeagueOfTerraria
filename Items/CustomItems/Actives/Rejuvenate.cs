@@ -7,8 +7,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Rejuvenate : Active
     {
-        int baseHeal;
-        int effectRadius = 500;
+        readonly int baseHeal;
+        readonly int effectRadius = 500;
 
         public Rejuvenate(int BaseHeal, int EffectRadius, int Cooldown)
         {

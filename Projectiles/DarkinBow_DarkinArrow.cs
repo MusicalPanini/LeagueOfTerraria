@@ -40,7 +40,7 @@ namespace TerraLeague.Projectiles
                 projectile.alpha += 26;
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 0, default(Color), projectile.scale + 0.2f);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 0, default, projectile.scale + 0.2f);
             dust.noGravity = true;
             dust.velocity.Y *= 0.1f;
         }

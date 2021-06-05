@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class TouchOfDeath : Passive
     {
-        int magicArmorPen;
+        readonly int magicArmorPen;
 
         public TouchOfDeath(int MagicArmorPen)
         {

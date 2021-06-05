@@ -108,7 +108,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             for (int i = 0; i < 20; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, 32, 32, DustID.Blood, 0f, -2f, 100, default(Color), 3f);
+                Dust dust = Dust.NewDustDirect(player.position, 32, 32, DustID.Blood, 0f, -2f, 100, default, 3f);
                 dust.velocity *= 2;
             }
         }

@@ -10,7 +10,7 @@ namespace TerraLeague.Projectiles
 {
     public class LightCannon_PiercingDarkness : ModProjectile
     {
-        bool[] hasHitPlayer = new bool[200];
+        readonly bool[] hasHitPlayer = new bool[200];
 
         public override void SetStaticDefaults()
         {
@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
                     Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                     int dustBoxWidth = projectile.width - 12;
                     int dustBoxHeight = projectile.height - 12;
-                    dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Smoke, 0f, 0f, 100, default(Color), 2);
+                    dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Smoke, 0f, 0f, 100, default, 2);
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
                     dust.velocity += projectile.velocity * 0.1f;
@@ -86,7 +86,7 @@ namespace TerraLeague.Projectiles
                     }
                     
                     Vector2 position = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
-                    Dust dust = Dust.NewDustDirect(position - Vector2.One * 8f, 16, 16, type, 0, 0, 0, default(Color), scale);
+                    Dust dust = Dust.NewDustDirect(position - Vector2.One * 8f, 16, 16, type, 0, 0, 0, default, scale);
                     dust.velocity = Vector2.Normalize(projectile.Center - position) * 1.5f * (10f - (float)2 * 2f) / 10f;
                     dust.noGravity = true;
                     dust.customData = player;

@@ -100,7 +100,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 }
                 else
                 {
-                    TerraLeague.DustBorderRing(16 * 30, player.MountedCenter, 6, default(Color), 1);
+                    TerraLeague.DustBorderRing(16 * 30, player.MountedCenter, 6, default, 1);
                 }
             }
         }

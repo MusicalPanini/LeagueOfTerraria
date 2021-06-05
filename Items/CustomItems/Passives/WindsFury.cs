@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class WindsFury : Passive
     {
-        bool CloneProj;
+        readonly bool CloneProj;
 
         public WindsFury(bool cloneProj)
         {

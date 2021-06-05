@@ -8,9 +8,9 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class FleetFoot : Active
     {
-        int effectRadius = 500;
-        int effectDuration = 6;
-        int onHitDamage = 20;
+        readonly int effectRadius = 500;
+        readonly int effectDuration = 6;
+        readonly int onHitDamage = 20;
 
         public FleetFoot(int EffectRadius, int EffectDuration, int Cooldown)
         {

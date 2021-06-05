@@ -33,7 +33,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.DiamondBolt, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.DiamondBolt, projectile.velocity.X, projectile.velocity.Y, 50, default, 1f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0.3f;
@@ -57,7 +57,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 5; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.DiamondBolt, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 50, default(Color), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.DiamondBolt, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 50, default, 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0.6f;

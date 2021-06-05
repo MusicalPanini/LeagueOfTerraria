@@ -39,8 +39,6 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override void DoEffect(Player player, int spellSlot)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
             bool pathBlocked = false;
             for (int x = (int)((Main.mouseX + Main.screenPosition.X) / 16) - 1; x < (int)((Main.mouseX + Main.screenPosition.X) / 16) + 1; x++)
             {

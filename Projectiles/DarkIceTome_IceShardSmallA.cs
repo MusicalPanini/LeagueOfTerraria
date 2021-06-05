@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default(Color), 1f);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default, 1f);
                 dustIndex.noGravity = true;
             }
         }
@@ -71,7 +71,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, projectile.velocity.X / 1.5f, projectile.velocity.Y / 1.5f, 100, default(Color), 1f);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, projectile.velocity.X / 1.5f, projectile.velocity.Y / 1.5f, 100, default, 1f);
                 dustIndex.noGravity = true;
             }
         }

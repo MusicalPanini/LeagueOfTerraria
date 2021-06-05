@@ -10,7 +10,7 @@ namespace TerraLeague.Projectiles
 {
     public class HexCoreStaff_GravityField : ModProjectile
     {
-        int radius = 200;
+        readonly int radius = 200;
 
         public override void SetStaticDefaults()
         {

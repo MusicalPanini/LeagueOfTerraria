@@ -16,8 +16,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class TempestEcho : Passive
     {
-        int baseDamage;
-        double magicScaling;
+        readonly int baseDamage;
+        readonly double magicScaling;
 
         public TempestEcho(int BaseDamage, int MagicScaling, int Cooldown)
         {

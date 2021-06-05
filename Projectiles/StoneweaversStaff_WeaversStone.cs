@@ -80,7 +80,7 @@ namespace TerraLeague.Projectiles
                 Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
                 for (int g = 0; g < 4; g++)
                 {
-                    Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+                    Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
                 }
 
                 Dust dust;

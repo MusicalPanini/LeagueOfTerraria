@@ -126,10 +126,10 @@ public abstract class WormClass : ModNPC
                             {
                                 WorldGen.KillTile(num184, num185, true, true, false);
                             }
-                            if (Main.netMode != NetmodeID.MultiplayerClient && Main.tile[num184, num185].type == 2)
-                            {
-                                ushort arg_BFCA_0 = Main.tile[num184, num185 - 1].type;
-                            }
+                            //if (Main.netMode != NetmodeID.MultiplayerClient && Main.tile[num184, num185].type == 2)
+                            //{
+                            //    ushort arg_BFCA_0 = Main.tile[num184, num185 - 1].type;
+                            //}
                         }
                     }
                 }

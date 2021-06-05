@@ -7,10 +7,10 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class ManaShield : Active
     {
-        int duration;
-        int percentMana;
-        int manaScaling;
-        int baseShield;
+        readonly int duration;
+        readonly int percentMana;
+        readonly int manaScaling;
+        readonly int baseShield;
 
         public ManaShield(int Duration, int PercentMana, int ManaScaling, int BaseShield, int Cooldown)
         {

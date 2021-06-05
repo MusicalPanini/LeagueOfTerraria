@@ -14,7 +14,7 @@ namespace TerraLeague.Backgrounds
         private float _opacity;
         private bool _isLeaving;
 
-        private UnifiedRandom _random = new UnifiedRandom();
+        private readonly UnifiedRandom _random = new UnifiedRandom();
         private Texture2D _bgTexture;
         private Texture2D[] _starTextures;
         private Star[] _stars;

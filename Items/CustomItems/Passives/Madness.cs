@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Madness : Passive
     {
-        int minionDamagePerStack;
+        readonly int minionDamagePerStack;
 
         public Madness(int MinionDamagePerStack)
         {

@@ -25,8 +25,7 @@ namespace TerraLeague.UI
         AbilitySlotUI abilityPanel2;
         AbilitySlotUI abilityPanel3;
         AbilitySlotUI abilityPanel4;
-
-        UIText toolTip = new UIText("", 1);
+        readonly UIText toolTip = new UIText("", 1);
 
         public override void OnInitialize()
         {
@@ -99,8 +98,10 @@ namespace TerraLeague.UI
         {
             if (ability != null)
             {
-                List<string> tooltip = new List<string>();
-                tooltip.Add(TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, ability.GetAbilityName()));
+                List<string> tooltip = new List<string>
+                {
+                    TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, ability.GetAbilityName())
+                };
                 if (ability.GetDamageTooltip(Main.LocalPlayer) != "")
                     tooltip.AddRange(ability.GetDamageTooltip(Main.LocalPlayer).Split('\n'));
                 tooltip.AddRange(ability.GetAbilityTooltip().Split('\n'));
@@ -113,17 +114,16 @@ namespace TerraLeague.UI
 
     public class AbilitySlotUI : UIElement
     {
-        Texture2D nullImage;
-        Texture2D clear;
-        Texture2D _backgroundTexture;
-
-        AbilityType abilityType;
-        UIText slotNum;
-        UIText slotMana;
-        UIText slotCD;
-        UIImage slotIcon;
-        UIImage slotOOM;
-        UIImage slotSpecialCast;
+        readonly Texture2D nullImage;
+        readonly Texture2D clear;
+        readonly Texture2D _backgroundTexture;
+        readonly AbilityType abilityType;
+        readonly UIText slotNum;
+        readonly UIText slotMana;
+        readonly UIText slotCD;
+        readonly UIImage slotIcon;
+        readonly UIImage slotOOM;
+        readonly UIImage slotSpecialCast;
 
         public AbilitySlotUI(int left, int top, int length, AbilityType type)
         {

@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
                 projectile.tileCollide = true;
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 4, 150, default(Color), 3f);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 4, 150, default, 3f);
             dust.velocity.X *= 0;
             dust.noGravity = true;
         }
@@ -58,7 +58,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 4; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, -4, 150, default(Color), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, -4, 150, default, 2f);
                 dust.velocity.X *= 3;
                 dust.noGravity = true;
             }

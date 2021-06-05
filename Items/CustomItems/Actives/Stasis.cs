@@ -8,8 +8,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Stasis : Active
     {
-        int duration;
-        bool stopWatch;
+        readonly int duration;
+        readonly bool stopWatch;
 
         public Stasis(int Duration, int Cooldown, bool StopWatch = false)
         {

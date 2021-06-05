@@ -10,8 +10,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class FrostBolt : Active
     {
-        int baseDamage;
-        int magicMinionScaling;
+        readonly int baseDamage;
+        readonly int magicMinionScaling;
 
         public FrostBolt(int BaseDamage, int MagicMinionScaling, int Cooldown)
         {

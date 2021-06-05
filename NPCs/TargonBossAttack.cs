@@ -26,14 +26,13 @@ namespace TerraLeague.NPCs
         const int State_DianaAttack = 5;
         const int State_TaricAttack = 6;
         const int State_ZoeAttack = 7;
-
-        int PanthAttackTimer = 120 + 80;
-        int MorgAttackTimer = 240 + 120 + 80;
-        int KayleAttackTimer = 60 + 80;
-        int LeonaAttackTimer = 270 + 80;
-        int DianaAttackTimer = 150 + 80;
-        int TaricAttackTimer = 60 + 80;
-        int ZoeAttackTimer = 30 + 80;
+        readonly int PanthAttackTimer = 120 + 80;
+        readonly int MorgAttackTimer = 240 + 120 + 80;
+        readonly int KayleAttackTimer = 60 + 80;
+        readonly int LeonaAttackTimer = 270 + 80;
+        readonly int DianaAttackTimer = 150 + 80;
+        readonly int TaricAttackTimer = 60 + 80;
+        readonly int ZoeAttackTimer = 30 + 80;
 
         // Projectile deal 2x damage (4x in expert)
         public static int PanthDamage = 34/2;
@@ -41,8 +40,7 @@ namespace TerraLeague.NPCs
         public static int LeonaDamage = 24/2;
         public static int DianaDamage = 50/2;
         public static int ZoeDamage = 30/2;
-
-        int starGoreLifeExt = 30;
+        readonly int starGoreLifeExt = 30;
 
         public override void SetStaticDefaults()
         {

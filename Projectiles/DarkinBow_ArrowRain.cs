@@ -44,7 +44,7 @@ namespace TerraLeague.Projectiles
             if (projectile.velocity.Y > 16f)
                 projectile.velocity.Y = 16f;
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 0, default(Color), 1f);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 0, default, 1f);
             dust.noGravity = true;
             dust.velocity *= 0f;
         }

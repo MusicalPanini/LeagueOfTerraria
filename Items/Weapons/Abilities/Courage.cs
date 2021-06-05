@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             {
                 Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f)))) + player.MountedCenter;
 
-                Dust dustR = Dust.NewDustPerfect(pos, DustID.Iron, Vector2.Zero, 0, default(Color), 1.5f);
+                Dust dustR = Dust.NewDustPerfect(pos, DustID.Iron, Vector2.Zero, 0, default, 1.5f);
                 dustR.noGravity = true;
                 dustR.velocity = (dustR.position - player.MountedCenter) * -0.1f + player.velocity;
             }

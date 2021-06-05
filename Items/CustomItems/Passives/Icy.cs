@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Icy : Passive
     {
-        int debuffDuration;
+        readonly int debuffDuration;
 
         public Icy(int DebuffDuration)
         {

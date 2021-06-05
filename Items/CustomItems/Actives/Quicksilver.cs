@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Quicksilver : Active
     {
-        int effectDuration;
+        readonly int effectDuration;
 
         public Quicksilver(int EffectDuration, int Cooldown)
         {

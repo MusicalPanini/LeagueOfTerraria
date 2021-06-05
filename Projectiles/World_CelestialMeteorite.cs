@@ -60,10 +60,10 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default(Color), 4f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default, 4f);
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default(Color), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 1f);
             }
 
 
@@ -107,26 +107,26 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 75; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.Smoke, 0f, 0f, 100, default, 2f);
                 dust.velocity.X *= Main.rand.NextFloat(3f);
                 dust.fadeIn = Main.rand.NextFloat(2, 4);
-                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.Smoke, 0f, 0f, 100, default, 2f);
                 dust.velocity.X *= Main.rand.NextFloat(6, 10);
                 dust.velocity.Y *= 0.5f;
                 dust.fadeIn = Main.rand.NextFloat(2, 4);
-                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.Smoke, 0f, 0f, 100, default, 2f);
                 dust.velocity.Y *= -Main.rand.NextFloat(6, 10);
                 ///dust.velocity.Y *= 0.5f;
                 dust.fadeIn = Main.rand.NextFloat(2, 4);
-                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.BlueTorch, 0f, -3f, 100, default(Color), 3f);
+                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.BlueTorch, 0f, -3f, 100, default, 3f);
                 dust.velocity.Y = -Main.rand.NextFloat(1, 4);
-                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.InfernoFork, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.InfernoFork, 0f, 0f, 100, default, 2f);
                 dust.noGravity = true;
                 dust.fadeIn = 3;
             }
             for (int i = 0; i < 500; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.InfernoFork, 0f, Main.rand.NextFloat(-10f, -3f), 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(projectile.position + new Vector2(projectile.width * 0.4f, projectile.height * 0.4f), (int)(projectile.width * 0.2), (int)(projectile.height * 0.2), DustID.InfernoFork, 0f, Main.rand.NextFloat(-10f, -3f), 100, default, 1f);
                 //dust.noGravity = true;
                 dust.velocity.X *= Main.rand.NextFloat(3f);
                 dust.velocity *= 1.5f;

@@ -103,8 +103,8 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
-            TerraLeague.DustBorderRing(300, player.MountedCenter, 226, default(Color), 2);
-            TerraLeague.DustRing(226, player, default(Color));
+            TerraLeague.DustBorderRing(300, player.MountedCenter, 226, default, 2);
+            TerraLeague.DustRing(226, player, default);
         }
     }
 }

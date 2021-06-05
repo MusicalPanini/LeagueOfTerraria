@@ -39,7 +39,7 @@ namespace TerraLeague.Projectiles
         {
             if (Main.rand.Next(0, 1) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One * 64), 128, 128, DustID.IceRod, 0, 0, 50, default(Color), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One * 64), 128, 128, DustID.IceRod, 0, 0, 50, default, 1.5f);
                 dust.velocity *= 5f;
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -51,7 +51,7 @@ namespace TerraLeague.Projectiles
             {
                 Vector2 pos = new Vector2(256, 0).RotatedBy(MathHelper.ToRadians((20 * i) + displacement)) + projectile.Center;
 
-                Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default(Color), 1);
+                Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default, 1);
                 dustR.noGravity = true;
             }
 
@@ -78,7 +78,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.friendly = true;
 
-            TerraLeague.DustRing(67, projectile, default(Color));
+            TerraLeague.DustRing(67, projectile, default);
             TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
 
             base.Kill(timeLeft);

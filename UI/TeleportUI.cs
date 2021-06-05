@@ -18,8 +18,8 @@ namespace TerraLeague.UI
 {
     public class TeleportUI : UIState
     {
-        int width = 262;
-        int height = 140;
+        readonly int width = 262;
+        readonly int height = 140;
 
         public float LeftPercent = 0;
         public float TopPercent = 0;

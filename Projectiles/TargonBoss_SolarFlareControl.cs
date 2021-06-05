@@ -73,7 +73,7 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default(Color), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default, 2f);
                 dust.velocity *= 0;
                 dust.noGravity = true;
                 dust.fadeIn = 0;
@@ -82,7 +82,7 @@ namespace TerraLeague.Projectiles
                 {
                     Vector2 vel = new Vector2(16, 0).RotatedBy(MathHelper.PiOver4 * i);
 
-                    dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default(Color), 1f);
+                    dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default, 1f);
                     dust.velocity = vel;
                     dust.noGravity = true;
                 }

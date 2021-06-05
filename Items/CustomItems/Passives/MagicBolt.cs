@@ -9,8 +9,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class MagicBolt : Passive
     {
-        int extraDamage;
-        int magicMinionScaling;
+        readonly int extraDamage;
+        readonly int magicMinionScaling;
 
         public MagicBolt(int Damage, int MagicMinionScaling, int Cooldown)
         {

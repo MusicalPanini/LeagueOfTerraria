@@ -40,7 +40,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SandstormInABottle, 0, 0, 0, default(Color), 2);
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SandstormInABottle, 0, 0, 0, default, 2);
                     dust.noGravity = true;
                 }
             }
@@ -129,7 +129,7 @@ namespace TerraLeague.Projectiles
             {
                 if (!projectile.Colliding(projectile.Hitbox, new Rectangle((int)player.MountedCenter.X, (int)player.MountedCenter.Y - 32, 1, 1)) && attacking )
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.ai[0], projectile.ai[1]), 1, 1, DustID.SandstormInABottle, 0, 0, 0, default(Color), 2);
+                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.ai[0], projectile.ai[1]), 1, 1, DustID.SandstormInABottle, 0, 0, 0, default, 2);
                     dust.noGravity = true;
                     dust.velocity *= 0;
                 }

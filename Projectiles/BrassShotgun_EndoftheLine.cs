@@ -80,11 +80,11 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 2; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default(Color), 3f);
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default, 3f);
                     dust.noGravity = true;
                     dust.noLight = true;
 
-                    dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default(Color), 2f);
+                    dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 2f);
                     dust.noLight = true;
 
                 }
@@ -153,18 +153,18 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < (size == 200 ? 40f : 20f); i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), size == 200 ? 2f : 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, size == 200 ? 2f : 1f);
                 dust.velocity *= 0.5f;
 
             }
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), size == 200 ? 4f : 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, size == 200 ? 4f : 2f);
                 dust.noGravity = true;
                 dust.velocity *= 3f;
                 dust.color = new Color(255, 0, 220);
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), size == 200 ? 3f : 1.5f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, size == 200 ? 3f : 1.5f);
                 dust.color = new Color(255, 0, 220);
                 dust.noGravity = true;
             }

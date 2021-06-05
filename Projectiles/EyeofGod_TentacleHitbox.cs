@@ -50,7 +50,7 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 20; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, DustID.Smoke, 0f, -3f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, DustID.Smoke, 0f, -3f, 100, default, 1f);
                 dust.velocity *= 0.5f;
             }
             for (int i = 0; i < 10; i++)

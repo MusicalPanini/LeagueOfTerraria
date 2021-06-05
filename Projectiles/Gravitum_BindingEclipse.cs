@@ -56,12 +56,12 @@ namespace TerraLeague.Projectiles
                 dust.noGravity = true;
                 dust.velocity = (dust.position - projectile.Center) * -0.1f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default, 1f);
                 dust.noGravity = true;
                 dust.velocity *= 3f;
                 dust.velocity = (dust.position - projectile.Center) * -0.01f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default, 1f);
                 dust.noGravity = true;
                 dust.velocity = (dust.position - projectile.Center) * -0.05f;
             }

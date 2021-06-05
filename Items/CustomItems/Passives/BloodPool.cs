@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class BloodPool : Passive
     {
-        int BloodPoolMaxStack;
+        readonly int BloodPoolMaxStack;
 
         public BloodPool(int bloodPoolMaxStacks)
         {

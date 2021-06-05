@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class PoltergeistsAscension : Active
     {
-        int effectDuration;
+        readonly int effectDuration;
 
         public PoltergeistsAscension(int EffectDuration, int Cooldown)
         {

@@ -15,8 +15,8 @@ namespace TerraLeague.Projectiles
 {
     class Item_CleanseField : ModProjectile
     {
-        int effectRadius = 16 * 16;
-        int nodeFrames = 20;
+        readonly int effectRadius = 16 * 16;
+        readonly int nodeFrames = 20;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cleanse Field");

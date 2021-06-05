@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class SoulReave : Passive
     {
-        int manaRestore;
+        readonly int manaRestore;
 
         public SoulReave(int ManaReave)
         {

@@ -32,7 +32,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.timeLeft < 896)
             {
-                Dust dust = Dust.NewDustPerfect(projectile.position, 111, Vector2.Zero, 0, default(Color), projectile.timeLeft <= 575 ? 1.5f : 1);
+                Dust dust = Dust.NewDustPerfect(projectile.position, 111, Vector2.Zero, 0, default, projectile.timeLeft <= 575 ? 1.5f : 1);
                 dust.noGravity = true;
                 dust.alpha = 100;
             }
@@ -52,7 +52,7 @@ namespace TerraLeague.Projectiles
 
                     Vector2 pos = new Vector2((float)X, (float)Y) + projectile.Center;
 
-                    Dust dust = Dust.NewDustPerfect(pos, 111, Vector2.Zero, 0, default(Color), 1.5f);
+                    Dust dust = Dust.NewDustPerfect(pos, 111, Vector2.Zero, 0, default, 1.5f);
                     dust.noGravity = true;
                 }
             }

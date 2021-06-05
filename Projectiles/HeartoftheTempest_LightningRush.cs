@@ -48,7 +48,7 @@ namespace TerraLeague.Projectiles
 
             Lighting.AddLight(projectile.Center, 0f, 1f, 1f);
 
-            Dust dust = Dust.NewDustPerfect(projectile.Center, 226, null, 0, default(Color), 2);
+            Dust dust = Dust.NewDustPerfect(projectile.Center, 226, null, 0, default, 2);
             dust.noGravity = true;
         }
 

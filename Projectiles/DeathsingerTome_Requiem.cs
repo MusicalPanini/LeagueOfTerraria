@@ -46,7 +46,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Gore gore = Gore.NewGoreDirect(projectile.Center + new Vector2(0, -500), default(Vector2), Main.rand.Next(61, 64), 1f);
+                    Gore gore = Gore.NewGoreDirect(projectile.Center + new Vector2(0, -500), default, Main.rand.Next(61, 64), 1f);
                     gore.velocity.Y = gore.velocity.Y + 1.5f;
                 }
             }

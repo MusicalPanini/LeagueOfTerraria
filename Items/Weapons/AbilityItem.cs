@@ -27,8 +27,8 @@ namespace TerraLeague.Items.Weapons
         internal AbilitiesPacketHandler PacketHandler = new AbilitiesPacketHandler(7);
 
         public Ability[] Abilities = new Ability[Enum.GetNames(typeof(AbilityType)).Length];
-        static string AbilityNameColor = "5cd65c";
-        static string AbilityButtonColor = "2eb82e";
+        static readonly string AbilityNameColor = "5cd65c";
+        static readonly string AbilityButtonColor = "2eb82e";
         static string QuoteColor = "2eb82e";
         
 

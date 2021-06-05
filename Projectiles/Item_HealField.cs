@@ -15,7 +15,7 @@ namespace TerraLeague.Projectiles
 {
     class Item_HealField : ModProjectile
     {
-        int effectRadius = 16 * 20;
+        readonly int effectRadius = 16 * 20;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Item_HealField");

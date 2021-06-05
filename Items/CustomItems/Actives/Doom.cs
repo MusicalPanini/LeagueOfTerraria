@@ -7,8 +7,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Doom : Active
     {
-        int percentMaxLife;
-        int damageCap;
+        readonly int percentMaxLife;
+        readonly int damageCap;
 
         public Doom(int PercentMaxLife, int DamageCap, int Cooldown)
         {

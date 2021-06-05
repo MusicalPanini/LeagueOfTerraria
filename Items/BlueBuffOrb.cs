@@ -38,7 +38,7 @@ namespace TerraLeague.Items
         public override bool GrabStyle(Player player)
         {
             Vector2 vectorItemToPlayer = player.Center - item.Center;
-            Vector2 movement = vectorItemToPlayer.SafeNormalize(default(Vector2));
+            Vector2 movement = vectorItemToPlayer.SafeNormalize(default);
             item.velocity = item.velocity + movement;
             item.velocity = Collision.TileCollision(item.position, item.velocity, item.width, item.height);
             return true;
@@ -56,7 +56,7 @@ namespace TerraLeague.Items
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 29), player.Center);
             for (int k = 0; k < 20; k++)
             {
-                Dust.NewDust(player.position, player.width, player.height, DustID.BlueFairy, 0, -2, 0, default(Color), 1.2f);
+                Dust.NewDust(player.position, player.width, player.height, DustID.BlueFairy, 0, -2, 0, default, 1.2f);
             }
             player.AddBuff(BuffType<BlueBuff>(), 240 * 60);
             CombatText.NewText(player.Hitbox, new Color(50, 50, 255), "Blue Buff");

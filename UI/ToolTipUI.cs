@@ -16,8 +16,8 @@ namespace TerraLeague.UI
         public static int MaxLines = 16;
         public int itemType;
         public bool drawText = false;
-        UIToolTipLine[] uiLines = new UIToolTipLine[MaxLines];
-        string[] tooltip = new string[16];
+        readonly UIToolTipLine[] uiLines = new UIToolTipLine[MaxLines];
+        readonly string[] tooltip = new string[16];
 
         public ToolTipUI()
         {

@@ -13,8 +13,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class PowersBane : Passive
     {
-        int damageThreshold;
-        int damageReduction;
+        readonly int damageThreshold;
+        readonly int damageReduction;
 
         public PowersBane(int DamageThreshold, int DamageReduction)
         {

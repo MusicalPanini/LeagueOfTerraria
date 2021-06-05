@@ -5,8 +5,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Dissonance : Passive
     {
-        int magicMinionDamage;
-        int perMana;
+        readonly int magicMinionDamage;
+        readonly int perMana;
         
         public Dissonance(int magicMinionDamageIncrease, int PerMana)
         {

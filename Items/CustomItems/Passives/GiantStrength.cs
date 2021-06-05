@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class GiantStrength : Passive
     {
-        int meleeScaling;
+        readonly int meleeScaling;
 
         public GiantStrength(int MeleeScaling)
         {

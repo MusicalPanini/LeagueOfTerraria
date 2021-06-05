@@ -93,7 +93,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 float newX = xDis + player.position.X;
                 float newY = yDis + player.position.Y;
 
-                Vector2 teleportPos = default(Vector2);
+                Vector2 teleportPos = default;
                 teleportPos.X = newX;
                 if (player.gravDir == 1f)
                 {

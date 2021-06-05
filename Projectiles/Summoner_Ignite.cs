@@ -52,18 +52,18 @@ namespace TerraLeague.Projectiles
                     AdjustMagnitude(ref projectile.velocity);
                     projectile.localAI[0] = 1f;
                 }
-                Vector2 move = Vector2.Zero;
+                Vector2 move;
 
                 NPC npc = Main.npc[(int)projectile.ai[0]];
 
                 Vector2 newMove = npc.Center - projectile.Center;
-                float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
+                //float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                 move = newMove;
                 AdjustMagnitude(ref move);
                 projectile.velocity = (10 * projectile.velocity + move) / 20f;
                 AdjustMagnitude(ref projectile.velocity);
 
-                Dust dust = Dust.NewDustPerfect(projectile.position, DustID.Fire, Vector2.Zero, 0, default(Color), 1f);
+                Dust dust = Dust.NewDustPerfect(projectile.position, DustID.Fire, Vector2.Zero, 0, default, 1f);
                 dust.noGravity = true;
             }
         }
@@ -80,7 +80,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire,0,0,0,default(Color),2);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire,0,0,0,default,2);
                 dust.noGravity = true;
             }
             Main.PlaySound(SoundID.Dig, projectile.Center);

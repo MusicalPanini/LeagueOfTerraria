@@ -6,7 +6,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Torment : Passive
     {
-        int debuffDuration;
+        readonly int debuffDuration;
 
         public Torment(int DebuffDuration)
         {

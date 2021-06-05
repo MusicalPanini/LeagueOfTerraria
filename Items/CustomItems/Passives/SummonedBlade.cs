@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class SummonedBlade : Passive
     {
-        int minionScaling;
+        readonly int minionScaling;
 
         public SummonedBlade(int MinionScaling)
         {

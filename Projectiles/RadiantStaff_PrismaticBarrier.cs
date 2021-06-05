@@ -13,7 +13,7 @@ namespace TerraLeague.Projectiles
 {
     public class RadiantStaff_PrismaticBarrier : ModProjectile
     {
-        List<int> hitPlayers = new List<int>();
+        readonly List<int> hitPlayers = new List<int>();
 
         public override void SetStaticDefaults()
         {

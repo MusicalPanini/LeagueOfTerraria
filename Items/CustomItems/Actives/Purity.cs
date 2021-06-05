@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Purity : Active
     {
-        int effectDuration;
+        readonly int effectDuration;
 
         public Purity(int EffectDuration, int Cooldown)
         {

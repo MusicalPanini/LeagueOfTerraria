@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Executioner : Passive
     {
-        int debuffDuration;
+        readonly int debuffDuration;
 
         public Executioner(int DebuffDuration)
         {

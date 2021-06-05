@@ -9,7 +9,7 @@ namespace TerraLeague.Projectiles
 {
     public class ChainWardensScythe_Lantern : ModProjectile
     {
-        int effectRadius = 200;
+        readonly int effectRadius = 200;
 
         public override void SetStaticDefaults()
         {

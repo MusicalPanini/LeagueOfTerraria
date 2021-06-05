@@ -5,10 +5,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Afterburn : Passive
     {
-        int minionScaling;
-        int meleeScaling;
-        int rangedScaling;
-        int magicScaling;
+        readonly int minionScaling;
+        readonly int meleeScaling;
+        readonly int rangedScaling;
+        readonly int magicScaling;
 
         public Afterburn(int MinionScaling, int MeleeScaling, int RangedScaling, int MagicScaling)
         {

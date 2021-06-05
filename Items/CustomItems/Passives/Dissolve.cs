@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Dissolve : Passive
     {
-        int armorReduction;
+        readonly int armorReduction;
 
         public Dissolve(int percentArmorPen)
         {

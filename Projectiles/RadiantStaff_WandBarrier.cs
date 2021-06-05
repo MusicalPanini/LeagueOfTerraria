@@ -11,7 +11,7 @@ namespace TerraLeague.Projectiles
 {
     public class RadiantStaff_WandBarrier : ModProjectile
     {
-        bool[] hasHitPlayer = new bool[200];
+        readonly bool[] hasHitPlayer = new bool[200];
 
         public override void SetStaticDefaults()
         {

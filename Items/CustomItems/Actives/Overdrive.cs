@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Overdrive : Active
     {
-        int effectDuration;
+        readonly int effectDuration;
 
         public Overdrive(int EffectDuration, int Cooldown)
         {

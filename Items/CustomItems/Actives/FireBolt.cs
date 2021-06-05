@@ -10,8 +10,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class FireBolt : Active
     {
-        int baseDamage;
-        int magicMinionScaling;
+        readonly int baseDamage;
+        readonly int magicMinionScaling;
 
         public FireBolt(int BaseDamage, int MagicMinionScaling, int Cooldown)
         {

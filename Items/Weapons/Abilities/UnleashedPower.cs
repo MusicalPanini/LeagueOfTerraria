@@ -87,7 +87,6 @@ namespace TerraLeague.Items.Weapons.Abilities
                     for (int i = 0; i < numberProjectiles; i++)
                     {
                         Vector2 position = player.MountedCenter;
-                        Vector2 velocity = Vector2.Zero;
 
                         Projectile.NewProjectile(position, new Vector2(numberProjectiles, 0), projType, damage, knockback, player.whoAmI, target, i);
                     }
