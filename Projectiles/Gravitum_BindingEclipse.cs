@@ -52,16 +52,16 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 20; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X + projectile.width / 4, projectile.position.Y + projectile.width / 4), projectile.width / 2, projectile.height / 2, 54, 0f, 0f, 100, new Color(0, 0, 0), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X + projectile.width / 4, projectile.position.Y + projectile.width / 4), projectile.width / 2, projectile.height / 2, DustID.Wraith, 0f, 0f, 100, new Color(0, 0, 0), 2f);
                 dust.noGravity = true;
                 dust.velocity = (dust.position - projectile.Center) * -0.1f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 71, 0f, 0f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default(Color), 1f);
                 dust.noGravity = true;
                 dust.velocity *= 3f;
                 dust.velocity = (dust.position - projectile.Center) * -0.01f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 71, 0f, 0f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default(Color), 1f);
                 dust.noGravity = true;
                 dust.velocity = (dust.position - projectile.Center) * -0.05f;
             }

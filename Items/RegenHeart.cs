@@ -63,7 +63,7 @@ namespace TerraLeague.Items
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 29), player.Center);
             for (int k = 0; k < 20; k++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 263, 0, -6, 0, k % 2 == 0 ? new Color(248, 137, 89) : new Color(237, 137, 164), 3f);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PortalBolt, 0, -6, 0, k % 2 == 0 ? new Color(248, 137, 89) : new Color(237, 137, 164), 3f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

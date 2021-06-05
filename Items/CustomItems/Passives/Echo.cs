@@ -77,7 +77,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 player.AddBuff(BuffType<Buffs.Echo>(), 1);
                 if (Main.rand.Next(0, 6) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0, new Color(255, 0, 255, 150));
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(255, 0, 255, 150));
                     dust.noGravity = true;
                 }
             }

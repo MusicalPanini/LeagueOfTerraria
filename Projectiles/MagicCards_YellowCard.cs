@@ -27,7 +27,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0));
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0));
             dust.noGravity = true;
             dust.scale = 1f;
             dust.velocity *= 0.1f;
@@ -47,7 +47,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 261, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, new Color(255, 255, 0));
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.AncientLight, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, new Color(255, 255, 0));
             }
             base.Kill(timeLeft);
         }

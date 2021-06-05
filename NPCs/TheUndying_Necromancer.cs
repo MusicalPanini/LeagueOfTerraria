@@ -60,7 +60,7 @@ namespace TerraLeague.NPCs
                 Main.PlaySound(SoundID.Item8, npc.position);
                 for (int i = 0; i < 50; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 160, 0f, 0f, 100, new Color(5, 245, 150), 3);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.MagnetSphere, 0f, 0f, 100, new Color(5, 245, 150), 3);
                     dust.velocity *= 3f;
                     dust.fadeIn = 3;
                     dust.noGravity = true;
@@ -74,7 +74,7 @@ namespace TerraLeague.NPCs
                 Main.PlaySound(SoundID.Item8, npc.position);
                 for (int i = 0; i < 50; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 160, 0f, 0f, 100, new Color(5, 245, 150), 3);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.MagnetSphere, 0f, 0f, 100, new Color(5, 245, 150), 3);
                     dust.velocity *= 3f;
                     dust.fadeIn = 3;
                     dust.noGravity = true;
@@ -148,7 +148,7 @@ namespace TerraLeague.NPCs
 
             if (Main.rand.Next(2) == 0)
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 160, 0f, 0f, 0, new Color(5, 245, 150), 1f);
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.MagnetSphere, 0f, 0f, 0, new Color(5, 245, 150), 1f);
                 dust.velocity.X *= 0.5f;
                 dust.velocity.Y *= 0.5f;
                 dust.fadeIn = 3;
@@ -236,9 +236,9 @@ namespace TerraLeague.NPCs
             {
                 int num620;
                 if (i > 10)
-                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 50, default(Color), 1.5f);
+                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Wraith, 0f, 0f, 50, default(Color), 1.5f);
                 else
-                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
+                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
                 Dust dust = Main.dust[num620];
                 dust.velocity *= 2f;
                 Main.dust[num620].noGravity = true;

@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 1; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color), 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default(Color), 1.5f);
                 dustIndex.noGravity = true;
                 dustIndex.velocity *= 0.3f;
             }

@@ -78,7 +78,7 @@ namespace TerraLeague.Projectiles
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 122), projectile.Center);
                 for (int i = 0; i < 8; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
+                    Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, DustID.Clentaminator_Purple, 0, 0, 0, new Color(59, 0, 255), 1f);
                 }
             }
 

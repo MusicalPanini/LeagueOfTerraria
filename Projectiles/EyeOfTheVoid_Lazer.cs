@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -168,7 +169,7 @@ namespace TerraLeague.Projectiles
                 for (int k = 0; k < chargeFact + 1; k++)
                 {
                     Vector2 spawn = spawnPos + ((float)Main.rand.NextDouble() * 6.28f).ToRotationVector2() * (12f - chargeFact * 2);
-                    Dust dust = Dust.NewDustDirect(pos, 20, 20, 112, projectile.velocity.X / 2f, projectile.velocity.Y / 2f, 0, default(Color), 1f);
+                    Dust dust = Dust.NewDustDirect(pos, 20, 20, DustID.Clentaminator_Purple, projectile.velocity.X / 2f, projectile.velocity.Y / 2f, 0, default(Color), 1f);
                     dust.velocity = Vector2.Normalize(spawnPos - spawn) * 1.5f * (10f - chargeFact * 2f) / 10f;
                     dust.noGravity = true;
                     dust.scale = Main.rand.Next(10, 20) * 0.05f;
@@ -202,19 +203,19 @@ namespace TerraLeague.Projectiles
                 float num1 = projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
                 float num2 = (float)(Main.rand.NextDouble() * 0.8f + 1.0f);
                 Vector2 dustVel = new Vector2((float)Math.Cos(num1) * num2, (float)Math.Sin(num1) * num2);
-                Dust dust = Dust.NewDustDirect(dustPos, 0, 0, 112, dustVel.X, dustVel.Y, 0, new Color(59, 0, 255), 3f);
+                Dust dust = Dust.NewDustDirect(dustPos, 0, 0, DustID.Clentaminator_Purple, dustVel.X, dustVel.Y, 0, new Color(59, 0, 255), 3f);
                 dust.noGravity = true;
             }
             if (Main.rand.NextBool(5))
             {
                 Vector2 offset = projectile.velocity.RotatedBy(1.57f, new Vector2()) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
-                Dust dust = Dust.NewDustDirect(dustPos + offset - Vector2.One * 4f, 8, 8, 112, 0.0f, 0.0f, 100, new Color(), 1.5f);
+                Dust dust = Dust.NewDustDirect(dustPos + offset - Vector2.One * 4f, 8, 8, DustID.Clentaminator_Purple, 0.0f, 0.0f, 100, new Color(), 1.5f);
                 dust.velocity = dust.velocity * 0.5f;
                 dust.velocity.Y = -Math.Abs(dust.velocity.Y);
 
                 unit = dustPos - Main.player[projectile.owner].Center;
                 unit.Normalize();
-                dust = Dust.NewDustDirect(Main.player[projectile.owner].Center + 55 * unit, 8, 8, 112, 0.0f, 0.0f, 100, new Color(), 1.5f);
+                dust = Dust.NewDustDirect(Main.player[projectile.owner].Center + 55 * unit, 8, 8, DustID.Clentaminator_Purple, 0.0f, 0.0f, 100, new Color(), 1.5f);
                 dust.velocity = dust.velocity * 0.5f;
                 dust.velocity.Y = -Math.Abs(dust.velocity.Y);
             }

@@ -52,7 +52,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 4; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, i < 3 ? new Color(0, 255, 255, 150) : new Color(255, 0, 226), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, i < 3 ? new Color(0, 255, 255, 150) : new Color(255, 0, 226), 1f);
                 dust.velocity *= Main.rand.Next(6) == 0 ? 2 : 0.3f;
                 dust.noGravity = true;
             }
@@ -75,7 +75,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, projectile.oldVelocity.X, projectile.oldVelocity.Y, 0, i < 5 ? new Color(0, 255, 255, 150) : new Color(255, 0, 226), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, projectile.oldVelocity.X, projectile.oldVelocity.Y, 0, i < 5 ? new Color(0, 255, 255, 150) : new Color(255, 0, 226), 1f);
                 dust.velocity *= 3;
                 dust.noGravity = true;
             }

@@ -69,7 +69,7 @@ namespace TerraLeague.Projectiles
         {
             Player player = Main.player[projectile.owner];
 
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 113, 0f, 0f, 100, default(Color));
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default(Color));
             dust.velocity *= 0.2f;
             dust.scale *= 0.7f;
 

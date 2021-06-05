@@ -33,7 +33,7 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, TargonBoss.ZoeColor.ToVector3());
             if (Main.rand.Next(0, 2) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, 0, 0, 1, TargonBoss.ZoeColor, 2);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 1, TargonBoss.ZoeColor, 2);
                 dust.velocity *= 0f;
                 dust.noGravity = true;
             }
@@ -80,7 +80,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, projectile.velocity.X, projectile.velocity.Y, 1, TargonBoss.ZoeColor);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, projectile.velocity.X, projectile.velocity.Y, 1, TargonBoss.ZoeColor);
                 dust.noGravity = true;
                 base.Kill(timeLeft);
             }

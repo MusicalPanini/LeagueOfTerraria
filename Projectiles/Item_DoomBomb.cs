@@ -83,11 +83,11 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 110, 0, 0, 0, new Color(0, 255, 201), 2.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Green, 0, 0, 0, new Color(0, 255, 201), 2.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 110, 0, -3, 0, new Color(0, 255, 201), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Green, 0, -3, 0, new Color(0, 255, 201), 1f);
                 dust.noLight = true;
                 dust.noGravity = true;
             }
@@ -123,19 +123,19 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 110, 0f, 0f, 100, new Color(0, 255, 201), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Green, 0f, 0f, 100, new Color(0, 255, 201), 2f);
                 dust.velocity *= 1.4f;
                 dust.noGravity = true;
             }
             for (int i = 0; i < 80; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 110, 0, 0, 0, new Color(0, 255, 201), 2f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Green, 0, 0, 0, new Color(0, 255, 201), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
                 dust.color = new Color(255, 0, 220);
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 110, 0f, 0f, 100, new Color(0, 255, 201), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Green, 0f, 0f, 100, new Color(0, 255, 201), 2f);
                 dust.velocity *= 3f;
                 dust.color = new Color(255, 0, 220);
                 dust.noGravity = true;

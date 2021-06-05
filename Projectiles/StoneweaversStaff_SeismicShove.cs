@@ -35,7 +35,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.timeLeft > 31)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 16, 4, 0, -1, 100, new Color(255, 125, 0));
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 16, DustID.t_Slime, 0, -1, 100, new Color(255, 125, 0));
 
                 if (projectile.soundDelay == 0 && projectile.type != 383)
                 {
@@ -53,7 +53,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 4, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.t_Slime, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
                 }
 
                 projectile.alpha = 0;
@@ -101,7 +101,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), projectile.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 67, projectile.velocity.X / 1.5f, projectile.velocity.Y / 1.5f, 100, default(Color), 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, projectile.velocity.X / 1.5f, projectile.velocity.Y / 1.5f, 100, default(Color), 1.5f);
                 dustIndex.noGravity = true;
             }
             base.Kill(timeLeft);

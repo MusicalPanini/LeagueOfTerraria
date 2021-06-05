@@ -80,9 +80,9 @@ namespace TerraLeague.Projectiles
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        Dust.NewDust(projectile.position, projectile.width, projectile.height, 18, projectile.velocity.X * 0.025f, projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
+                        Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Vile, projectile.velocity.X * 0.025f, projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
                     }
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 14, 0f, 0f, 170, default(Color), 1.1f);
+                    Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Demonite, 0f, 0f, 170, default(Color), 1.1f);
                 }
 
                 projectile.alpha += 7;

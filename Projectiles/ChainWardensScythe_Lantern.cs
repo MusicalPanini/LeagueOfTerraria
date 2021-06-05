@@ -52,7 +52,7 @@ namespace TerraLeague.Projectiles
 
                     for (int j = 0; j < 50; j++)
                     {
-                        Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 188);
+                        Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.FartInAJar);
                         dust.noGravity = true;
                         dust.scale = 2;
                     }
@@ -95,7 +95,7 @@ namespace TerraLeague.Projectiles
 
             projectile.position.Y += (float)Math.Sin(projectile.timeLeft * 0.05) * 0.4f;
 
-            Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 188, 0, -3);
+            Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.FartInAJar, 0, -3);
             dust2.scale = 0.75f;
             dust2.alpha = 150;
             dust2.velocity /= 3;

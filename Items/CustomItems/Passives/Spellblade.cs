@@ -91,7 +91,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0);
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0);
                     dust.velocity = Vector2.Zero;
                     dust.noGravity = true;
                     if (modPlayer.triForce)
@@ -133,7 +133,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             for (int k = 0; k < 15; k++)
             {
-                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, 261, 0, 0, 0);
+                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, DustID.AncientLight, 0, 0, 0);
                 dust.velocity = Vector2.Zero;
                 dust.noGravity = true;
                 if (modPlayer.summonedBlade)

@@ -51,7 +51,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 87, 0, -4, 200, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.TopazBolt, 0, -4, 200, default(Color), 1f);
                 dust.noGravity = true;
             }
             
@@ -82,11 +82,11 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 20; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 87, 0, -4, 200, default(Color), 3f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.TopazBolt, 0, -4, 200, default(Color), 3f);
                 dust.noGravity = true;
                 dust.velocity *= 1f;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 87, 0, -4, 200, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.TopazBolt, 0, -4, 200, default(Color), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
             }

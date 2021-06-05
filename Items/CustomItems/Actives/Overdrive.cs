@@ -48,7 +48,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), user.Center);
             for (int j = 0; j < 18; j++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)user.position.X - 8, (int)user.position.X + 8), user.position.Y + 16), user.width, user.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(255, 0, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));
+                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)user.position.X - 8, (int)user.position.X + 8), user.position.Y + 16), user.width, user.height, DustID.AncientLight, 0, -Main.rand.Next(6, 18), 0, new Color(255, 0, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));
                 dust.noGravity = true;
             }
         }

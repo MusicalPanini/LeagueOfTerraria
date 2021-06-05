@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using TerraLeague.Items;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -25,7 +26,7 @@ namespace TerraLeague.Tiles
             name.SetDefault("Harmonic Bar");
             AddMapEntry(new Color(179, 0, 237), name);
 
-            dustType = 27;
+            dustType = DustID.Shadowflame;
         }
 
         public override bool Drop(int i, int j)

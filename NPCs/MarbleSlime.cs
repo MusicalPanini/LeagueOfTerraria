@@ -54,7 +54,7 @@ namespace TerraLeague.NPCs
         {
             for (int k = 0; k < 60; k++)
             {
-                Dust.NewDust(npc.position, npc.width, npc.height, 4, hitDirection, -2, 150, new Color(50, 50, 50), 1f);
+                Dust.NewDust(npc.position, npc.width, npc.height, DustID.t_Slime, hitDirection, -2, 150, new Color(50, 50, 50), 1f);
             }
 
             base.HitEffect(hitDirection, damage);

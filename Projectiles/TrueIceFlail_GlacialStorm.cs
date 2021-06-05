@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -38,7 +39,7 @@ namespace TerraLeague.Projectiles
         {
             if (Main.rand.Next(0, 1) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One * 64), 128, 128, 67, 0, 0, 50, default(Color), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One * 64), 128, 128, DustID.IceRod, 0, 0, 50, default(Color), 1.5f);
                 dust.velocity *= 5f;
                 dust.noGravity = true;
                 dust.noLight = true;

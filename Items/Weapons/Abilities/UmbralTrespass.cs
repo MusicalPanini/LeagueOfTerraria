@@ -119,10 +119,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 186, player.velocity.X / 5, player.velocity.Y / 5, 150);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedsWingsRun, player.velocity.X / 5, player.velocity.Y / 5, 150);
                 dust.scale = 1.5f;
                 dust.color = new Color(255, 0, 0);
-                dust = Dust.NewDustDirect(player.position, player.width, player.height, 186, player.velocity.X / 5, player.velocity.Y / 5, 150);
+                dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedsWingsRun, player.velocity.X / 5, player.velocity.Y / 5, 150);
 
                 dust.scale = 1.5f;
             }

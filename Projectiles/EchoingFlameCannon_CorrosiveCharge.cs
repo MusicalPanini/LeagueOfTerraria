@@ -91,7 +91,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 40; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 75, 0, 0, 0, default(Color), 0.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.CursedTorch, 0, 0, 0, default(Color), 0.5f);
                 dust.noLight = true;
                 dust.velocity *= 3;
                 dust.velocity.X *= 2;

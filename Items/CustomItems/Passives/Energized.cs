@@ -75,7 +75,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (Main.rand.Next(0, 6) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0, new Color(255, 255, 0, 150));
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0, 150));
                     dust.noGravity = true;
                 }
                 player.AddBuff(BuffType<Buffs.EnergizedStrike>(), 1);
@@ -215,7 +215,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             Main.PlaySound(new LegacySoundStyle(3, 53), HitNPC.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 1.5f);
+                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0, 150), 1.5f);
                 dust.velocity *= 3;
                 dust.noGravity = true;
             }

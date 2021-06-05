@@ -109,7 +109,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
             for (int i = 0; i < 40; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 248, 0, 0, 0, new Color(159, 0, 255), 1.5f);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.EnchantedNightcrawler, 0, 0, 0, new Color(159, 0, 255), 1.5f);
                 dust.velocity *= 2f;
                 dust.noGravity = true;
             }

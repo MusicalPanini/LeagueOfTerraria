@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                 int dustBoxWidth = projectile.width - 12;
                 int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 137, 0f, 0f, 100, default(Color), 1.5f);
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.IcyMerman, 0f, 0f, 100, default(Color), 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += projectile.velocity * 0.1f;
@@ -53,7 +53,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                 int dustBoxWidth = projectile.width - 12;
                 int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 172, 0f, 0f, 100, default(Color), 0.5f);
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.DungeonWater, 0f, 0f, 100, default(Color), 0.5f);
                 dust.velocity *= 0.25f;
                 dust.velocity += projectile.velocity * 0.5f;
             }
@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 17; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Wet, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
             }
         }
 

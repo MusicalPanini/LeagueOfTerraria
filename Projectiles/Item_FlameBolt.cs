@@ -31,7 +31,7 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             projectile.rotation = projectile.velocity.ToRotation();
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 132);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Firework_Blue);
             dust.color = new Color(0, 125, 255);
             dust.noGravity = true;
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
@@ -42,13 +42,13 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 24; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 132, 0f, 0f, 100, default(Color), 1);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Firework_Blue, 0f, 0f, 100, default(Color), 1);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
             }
             for (int i = 0; i < 8; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 132, 0f, 0f, 100, default(Color), 1);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Firework_Blue, 0f, 0f, 100, default(Color), 1);
                 dust.velocity *= 1f;
             }
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14, Terraria.Audio.SoundType.Sound), projectile.position);

@@ -117,7 +117,7 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 3; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 63, 0f, 0f, 0, new Color(5, 245, 150), 2.5f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.WhiteTorch, 0f, 0f, 0, new Color(5, 245, 150), 2.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += projectile.velocity * 0.1f;
@@ -125,7 +125,7 @@ namespace TerraLeague.Projectiles
                 dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
             }
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 54, 0, 0, 50, Color.DarkSeaGreen, 2f);
+            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Wraith, 0, 0, 50, Color.DarkSeaGreen, 2f);
             dust.noGravity = true;
             dust.velocity /= 2f;
 
@@ -149,7 +149,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 54, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, Color.DarkSeaGreen, 1f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Wraith, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, Color.DarkSeaGreen, 1f);
             }
 
             base.Kill(timeLeft);

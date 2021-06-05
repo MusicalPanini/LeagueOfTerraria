@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using TerraLeague.Items;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -24,7 +25,7 @@ namespace TerraLeague.Tiles
             name.SetDefault("Petricite Slab");
             AddMapEntry(new Color(200, 200, 200), name);
 
-            dustType = 51;
+            dustType = DustID.SnowBlock;
         }
 
         public override bool Drop(int i, int j)

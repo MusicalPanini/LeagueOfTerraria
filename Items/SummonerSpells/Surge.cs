@@ -3,6 +3,7 @@ using TerraLeague.Buffs;
 using Terraria;
 using Terraria.Audio;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Items.SummonerSpells
 {
@@ -87,7 +88,7 @@ namespace TerraLeague.Items.SummonerSpells
 
             for (int j = 0; j < 18; j++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(255, 0, 0, 0), Main.rand.Next(2, 3));
+                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, DustID.AncientLight, 0, -Main.rand.Next(6, 18), 0, new Color(255, 0, 0, 0), Main.rand.Next(2, 3));
                 dust.noGravity = true;
             }
         }

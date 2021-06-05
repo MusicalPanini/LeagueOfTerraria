@@ -58,7 +58,7 @@ namespace TerraLeague.Projectiles
             }
             
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 16);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Cloud);
             if (projectile.timeLeft < 30)
             {
                 projectile.alpha += 9;

@@ -77,7 +77,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                         player.armorEffectDrawShadow = true;
                         if (Main.rand.Next(0, 5) == 0)
                         {
-                            Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 16, 0, 0, 0, new Color(255, 0, 255, 150));
+                            Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Cloud, 0, 0, 0, new Color(255, 0, 255, 150));
                             dust.velocity.X = 0;
                             dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                             dust.noGravity = true;

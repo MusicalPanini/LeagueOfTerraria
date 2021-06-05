@@ -75,7 +75,7 @@ namespace TerraLeague.NPCs
                 int num262 = 0;
                 while ((double)num262 < damage / (double)npc.lifeMax * 100.0)
                 {
-                    Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, Color.RosyBrown, 1f);
+                    Dust.NewDust(npc.position, npc.width, npc.height, DustID.t_Slime, (float)hitDirection, -1f, npc.alpha, Color.RosyBrown, 1f);
                     int num5 = num262;
                     num262 = num5 + 1;
                 }
@@ -84,7 +84,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust.NewDust(npc.position, npc.width, npc.height, 4, (float)hitDirection, -1f, npc.alpha, Color.RosyBrown, 1f);
+                    Dust.NewDust(npc.position, npc.width, npc.height, DustID.t_Slime, (float)hitDirection, -1f, npc.alpha, Color.RosyBrown, 1f);
                 }
             }
             base.HitEffect(hitDirection, damage);

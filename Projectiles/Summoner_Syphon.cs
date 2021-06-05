@@ -45,7 +45,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust2 = Dust.NewDustDirect(Main.npc[(int)projectile.ai[0]].position, Main.npc[(int)projectile.ai[0]].width, Main.npc[(int)projectile.ai[0]].height, 263, 0, 0, 0, new Color(255, 0, 0), 2);
+                    Dust dust2 = Dust.NewDustDirect(Main.npc[(int)projectile.ai[0]].position, Main.npc[(int)projectile.ai[0]].width, Main.npc[(int)projectile.ai[0]].height, DustID.PortalBolt, 0, 0, 0, new Color(255, 0, 0), 2);
                     dust2.noGravity = true;
                 }
             }
@@ -119,7 +119,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, projectile.velocity.X, projectile.velocity.Y, 0, new Color(255, 0, 0), 2);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, projectile.velocity.X, projectile.velocity.Y, 0, new Color(255, 0, 0), 2);
                 dust.noGravity = true;
             }
 

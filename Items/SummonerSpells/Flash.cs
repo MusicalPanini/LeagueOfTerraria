@@ -73,7 +73,7 @@ namespace TerraLeague.Items.SummonerSpells
             TerraLeague.PlaySoundWithPitch(teleportPoint, 2, 72, 0.5f);
             for (int i = 0; i < 20; i++)
             {
-                Dust dust = Dust.NewDustDirect(teleportPoint - (Vector2.One * 16), 32, 32, 228, 0, 0, 0, default, 4);
+                Dust dust = Dust.NewDustDirect(teleportPoint - (Vector2.One * 16), 32, 32, DustID.GoldFlame, 0, 0, 0, default, 4);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 2;

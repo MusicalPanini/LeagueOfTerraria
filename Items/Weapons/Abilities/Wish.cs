@@ -113,7 +113,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 Player targetPlayer = Main.player[players[i]];
                 for (int j = 0; j < 18; j++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)targetPlayer.position.X - 8, (int)targetPlayer.position.X + 8), targetPlayer.position.Y + 16), targetPlayer.width, targetPlayer.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 0, 0), Main.rand.Next(2, 6));
+                    Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)targetPlayer.position.X - 8, (int)targetPlayer.position.X + 8), targetPlayer.position.Y + 16), targetPlayer.width, targetPlayer.height, DustID.AncientLight, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 0, 0), Main.rand.Next(2, 6));
                     dust.noGravity = true;
                 }
             }

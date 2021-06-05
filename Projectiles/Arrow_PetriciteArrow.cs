@@ -42,11 +42,11 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 5; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 255, 255), 0.7f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ghost, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 255, 255), 0.7f);
             }
             for (int i = 0; i < 5; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 215, 215), 0.7f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ghost, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 215, 215), 0.7f);
             }
         }
 

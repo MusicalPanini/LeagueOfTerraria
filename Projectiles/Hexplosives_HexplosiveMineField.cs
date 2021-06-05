@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -39,7 +40,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
             for (int i = 0; i < 20; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1f);
                 dust.velocity *= 0.5f;
             }
 

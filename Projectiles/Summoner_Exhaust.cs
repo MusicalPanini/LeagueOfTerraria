@@ -122,7 +122,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 262, 0, 0, 0, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 0, default(Color), 1f);
                 dust.noGravity = true;
                 dust.alpha = 100;
             }

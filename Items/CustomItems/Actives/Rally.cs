@@ -55,7 +55,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             TerraLeague.PlaySoundWithPitch(user.Center, 2, 117, -1f);
             for (int j = 0; j < 18; j++)
             {
-                int num2 = Dust.NewDust(user.position, user.width, user.height, 218, 0, -Main.rand.NextFloat(3, 5), 0, new Color(255, 0, 0),Main.rand.NextFloat(2, 3));
+                int num2 = Dust.NewDust(user.position, user.width, user.height, DustID.Rain_BloodMoon, 0, -Main.rand.NextFloat(3, 5), 0, new Color(255, 0, 0),Main.rand.NextFloat(2, 3));
                 Main.dust[num2].noGravity = true;
             }
         }

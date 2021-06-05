@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color), 1f);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default(Color), 1f);
                 dustIndex.noGravity = true;
             }
         }

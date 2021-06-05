@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using TerraLeague.Items;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -24,7 +25,7 @@ namespace TerraLeague.Tiles
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Brass Bar");
             AddMapEntry(new Color(185, 165, 112), name);
-            dustType = 190;
+            dustType = DustID.Hay;
         }
 
         public override bool Drop(int i, int j)

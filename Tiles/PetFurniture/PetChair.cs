@@ -13,7 +13,7 @@ namespace TerraLeague.Tiles.PetFurniture
     {
         public override void SetDefaults()
         {
-            dustType = 192;
+            dustType = DustID.Ghost;
 
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;

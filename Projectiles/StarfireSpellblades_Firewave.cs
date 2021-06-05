@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
             }
             projectile.soundDelay = 100;
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 87, 0, 0, 0, default(Color), 2f);
+            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.TopazBolt, 0, 0, 0, default(Color), 2f);
             dust.noGravity = true;
             dust.velocity = projectile.velocity * 2;
         }

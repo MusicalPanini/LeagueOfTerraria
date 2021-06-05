@@ -72,7 +72,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 225, projectile.velocity.X / 5, projectile.velocity.Y / 5, 0, default(Color), 0.7f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Coralstone, projectile.velocity.X / 5, projectile.velocity.Y / 5, 0, default(Color), 0.7f);
             }
         }
 

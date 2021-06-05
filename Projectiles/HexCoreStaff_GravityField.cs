@@ -36,11 +36,11 @@ namespace TerraLeague.Projectiles
             if (projectile.timeLeft <= 360 - 60)
             {
                 TerraLeague.DustBorderRing(radius, new Vector2(projectile.Center.X - 2, projectile.Top.Y), 21, new Color(255, 0, 255), 2);
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 8, projectile.Top.Y - 8), 16, 16, 21, 0, 0, 0, new Color(255, 0, 255), 2);
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 8, projectile.Top.Y - 8), 16, 16, DustID.VilePowder, 0, 0, 0, new Color(255, 0, 255), 2);
                 dust.velocity *= 0.1f;
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - radius, projectile.Top.Y - radius), radius * 2, radius * 2, 21, 0, 0, 0, new Color(255, 0, 255), 2);
+                dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - radius, projectile.Top.Y - radius), radius * 2, radius * 2, DustID.VilePowder, 0, 0, 0, new Color(255, 0, 255), 2);
                 dust.velocity = TerraLeague.CalcVelocityToPoint(dust.position, new Vector2(projectile.Center.X - 2, projectile.Top.Y), 10);
                 dust.noGravity = true;
 
@@ -73,7 +73,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, new Color(255, 192, 0), 0.5f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ghost, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, new Color(255, 192, 0), 0.5f);
             }
 
             base.Kill(timeLeft);

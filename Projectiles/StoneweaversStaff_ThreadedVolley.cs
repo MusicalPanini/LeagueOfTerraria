@@ -68,7 +68,7 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                Dust.NewDustDirect(projectile.position, 16, 16, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+                Dust.NewDustDirect(projectile.position, 16, 16, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
             }
         }
 
@@ -78,10 +78,10 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
                 dust.velocity *= 1.5f;
 
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1f);
             }
             
             base.Kill(timeLeft);

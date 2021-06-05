@@ -111,7 +111,7 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 4; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0, 150), 1f);
                 dust.velocity *= i == 3? 3 : 0.3f;
                 dust.scale = i == 4 ? 1.25f : 1;
                 dust.noGravity = true;

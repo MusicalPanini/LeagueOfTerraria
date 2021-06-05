@@ -72,7 +72,7 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 231, 0f, 0f, 100, default(Color), 1);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.ViciousPowder, 0f, 0f, 100, default(Color), 1);
             dust.noGravity = true;
             Lighting.AddLight(projectile.position, 1f, 0.5f, 0.05f);
         }

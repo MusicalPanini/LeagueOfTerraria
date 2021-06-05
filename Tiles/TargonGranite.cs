@@ -20,7 +20,7 @@ namespace TerraLeague.Tiles
             Main.tileBlendAll[Type] = true;
 
             soundType = SoundID.Tink;
-            dustType = 172;
+            dustType = DustID.DungeonWater;
             drop = ItemType<TargonGraniteBlock>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Celstial Silicate");

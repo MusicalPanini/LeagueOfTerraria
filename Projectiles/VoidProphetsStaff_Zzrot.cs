@@ -31,7 +31,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, 27);
+                Dust dust = Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, DustID.Shadowflame);
                 dust.velocity *= 0.2f;
             }
             base.Kill(timeLeft);

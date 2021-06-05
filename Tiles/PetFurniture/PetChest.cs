@@ -16,7 +16,7 @@ namespace TerraLeague.Tiles.PetFurniture
     {
         public override void SetDefaults()
         {
-            dustType = 192;
+            dustType = DustID.Ghost;
 
             Main.tileSpelunker[Type] = true;
             Main.tileContainer[Type] = true;

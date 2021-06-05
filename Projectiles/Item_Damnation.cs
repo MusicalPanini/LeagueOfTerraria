@@ -75,7 +75,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 156, 0, -2, 0);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Ultrabright, 0, -2, 0);
                 dust.noGravity = true;
             }
 

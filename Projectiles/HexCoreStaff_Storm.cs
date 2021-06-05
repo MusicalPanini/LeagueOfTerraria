@@ -53,12 +53,12 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
             for (int i = 0; i < 30; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - projectile.width/4, projectile.Center.Y - projectile.height / 4), projectile.width / 2, projectile.height / 2, 261, 0, 0, 50, new Color(0, 255, 255), 1.5f);
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - projectile.width/4, projectile.Center.Y - projectile.height / 4), projectile.width / 2, projectile.height / 2, DustID.AncientLight, 0, 0, 50, new Color(0, 255, 255), 1.5f);
                 dust.velocity *= 7f;
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.fadeIn = 2;
-                dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - projectile.width / 4, projectile.Center.Y - projectile.height /4), projectile.width / 2, projectile.height / 2, 226, 0, 0, 50, new Color(0, 255, 255), 0.5f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - projectile.width / 4, projectile.Center.Y - projectile.height /4), projectile.width / 2, projectile.height / 2, DustID.Electric, 0, 0, 50, new Color(0, 255, 255), 0.5f);
                 dust.velocity *= 5f;
             }
             

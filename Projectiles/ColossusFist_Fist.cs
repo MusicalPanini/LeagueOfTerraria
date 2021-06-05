@@ -129,7 +129,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(2, 10), projectile.Center);
             for (int i = 0; i < 6; i++)
             {
-                Dust.NewDustDirect(projectile.Center, 8, 8, 51,0,0,0,default(Color), 0.75f);
+                Dust.NewDustDirect(projectile.Center, 8, 8, DustID.SnowBlock,0,0,0,default(Color), 0.75f);
             }
             projectile.ai[0] = 1f;
             return false;

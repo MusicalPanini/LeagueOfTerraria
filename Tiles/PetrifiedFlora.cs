@@ -15,7 +15,7 @@ namespace TerraLeague.Tiles
             Main.tileSolid[Type] = false;
             Main.tileMergeDirt[Type] = true;
             soundType = SoundID.Grass;
-            dustType = 192;
+            dustType = DustID.Ghost;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.newTile.WaterDeath = false;

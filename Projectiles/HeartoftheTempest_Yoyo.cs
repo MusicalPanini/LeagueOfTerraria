@@ -35,7 +35,7 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.NextBool())
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 226, 0, 0, 0, new Color(0, 255, 255), 0.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 0, new Color(0, 255, 255), 0.5f);
                 dust.noGravity = true;
             }
 

@@ -25,7 +25,7 @@ namespace TerraLeague.Tiles
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Celestial Bar");
             AddMapEntry(new Color(0, 165, 255), name);
-            dustType = 172;
+            dustType = DustID.DungeonWater;
         }
 
         public override bool Drop(int i, int j)

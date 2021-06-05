@@ -40,7 +40,7 @@ namespace TerraLeague.Projectiles
 
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
 
-            Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 97, 0f, 0f, projectile.alpha, default(Color));
+            Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Moss_Purple, 0f, 0f, projectile.alpha, default(Color));
             dustIndex.noGravity = true;
 
             if (projectile.velocity.Y < -16f)
@@ -57,7 +57,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 97, projectile.velocity.X / 2, projectile.velocity.Y / 2);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Moss_Purple, projectile.velocity.X / 2, projectile.velocity.Y / 2);
             }
 
             base.Kill(timeLeft);

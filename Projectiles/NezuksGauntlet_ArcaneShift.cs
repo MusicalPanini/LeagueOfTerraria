@@ -77,7 +77,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 133, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 0.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Firework_Yellow, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 0.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
@@ -115,7 +115,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
                 dust.noGravity = true;
             }
         }

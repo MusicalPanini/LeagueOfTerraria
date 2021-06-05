@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using TerraLeague.Items;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -24,7 +25,7 @@ namespace TerraLeague.Tiles
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Darksteel Bar");
             AddMapEntry(new Color(25, 25, 50), name);
-            dustType = 96;
+            dustType = DustID.Moss_Blue;
         }
 
         public override bool Drop(int i, int j)

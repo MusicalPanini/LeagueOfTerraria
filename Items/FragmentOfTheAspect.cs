@@ -36,7 +36,7 @@ namespace TerraLeague.Items
 
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust.NewDustDirect(item.position, item.width, item.height, 59);
+                    Dust.NewDustDirect(item.position, item.width, item.height, DustID.BlueTorch);
                 }
             }
         }

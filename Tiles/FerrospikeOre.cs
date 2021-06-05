@@ -18,7 +18,7 @@ namespace TerraLeague.Tiles
             Main.tileValue[Type] = 420;
             Main.tileLighted[Type] = true;
             soundType = SoundID.Tink;
-            dustType = 96;
+            dustType = DustID.Moss_Blue;
             drop = ItemType<Ferrospike>();
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ferrospike");

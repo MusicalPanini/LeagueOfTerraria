@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position + Vector2.One * 4, projectile.width - 8, projectile.height- 8, 71, 0f, 0f, 100, default(Color), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position + Vector2.One * 4, projectile.width - 8, projectile.height- 8, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default(Color), 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
                 dust.velocity += projectile.velocity * 0.3f;
@@ -95,17 +95,17 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X + projectile.width / 4, projectile.position.Y + projectile.width / 4), projectile.width / 2, projectile.height / 2, 54, 0f, 0f, 100, new Color(0, 0, 0), 3f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X + projectile.width / 4, projectile.position.Y + projectile.width / 4), projectile.width / 2, projectile.height / 2, DustID.Wraith, 0f, 0f, 100, new Color(0, 0, 0), 3f);
                 dust.noGravity = true;
                 dust.velocity = (dust.position - projectile.Center) * -0.1f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X + projectile.width / 4, projectile.position.Y + projectile.width / 4), projectile.width / 2, projectile.height / 2, 71, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X + projectile.width / 4, projectile.position.Y + projectile.width / 4), projectile.width / 2, projectile.height / 2, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default(Color), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 3f;
                 dust.velocity = (dust.position - projectile.Center) * 0.1f;
                 dust.fadeIn = 2.5f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 71, 0f, 0f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, default(Color), 1f);
                 dust.noGravity = true;
                 dust.velocity = (dust.position - projectile.Center) * -0.05f;
             }

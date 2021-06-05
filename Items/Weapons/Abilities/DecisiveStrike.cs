@@ -64,7 +64,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
             for (int j = 0; j < 10; j++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 64, 0, -10);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.YellowTorch, 0, -10);
                 dust.velocity.X *= 0;
                 dust.velocity.Y -= 4;
                 dust.noGravity = true;

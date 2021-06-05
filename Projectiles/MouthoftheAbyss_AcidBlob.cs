@@ -48,7 +48,7 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 167, 0, 0, 50);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Plantera_Green, 0, 0, 50);
                 dustIndex.velocity *= 0.3f;
             }
 
@@ -67,7 +67,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(3, 13), projectile.Center);
             for (int i = 0; i < 6; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 167, projectile.velocity.X * 0.35f, projectile.velocity.Y * 0.35f, 50);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Plantera_Green, projectile.velocity.X * 0.35f, projectile.velocity.Y * 0.35f, 50);
             }
             base.Kill(timeLeft);
         }

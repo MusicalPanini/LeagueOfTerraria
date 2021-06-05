@@ -57,7 +57,7 @@ namespace TerraLeague.Projectiles
             projectile.knockBack = 30 * (projectile.velocity.Length() / 16);
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 32, 0, 0, projectile.alpha);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Sand, 0, 0, projectile.alpha);
             }
             if (projectile.timeLeft < 30)
             {

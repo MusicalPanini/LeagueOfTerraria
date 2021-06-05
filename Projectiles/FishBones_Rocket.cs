@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 134, 0,0,0,default(Color), 1.2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Firework_Pink, 0,0,0,default(Color), 1.2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
@@ -76,17 +76,17 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
                 dust.velocity *= 1.4f;
             }
             for (int i = 0; i < 80; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 2f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0, 150), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
                 dust.color = new Color(255,0,220);
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 2f);
                 dust.velocity *= 3f;
                 dust.color = new Color(255, 0, 220);
             }

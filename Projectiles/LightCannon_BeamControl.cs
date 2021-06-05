@@ -54,7 +54,7 @@ namespace TerraLeague.Projectiles
                     }
 
                     Vector2 postion = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
-                    Dust dust = Dust.NewDustDirect(postion - Vector2.One * 8f, 16, 16, 66, 0, 0, 0, default(Color), scale);
+                    Dust dust = Dust.NewDustDirect(postion - Vector2.One * 8f, 16, 16, DustID.Rainbow, 0, 0, 0, default(Color), scale);
                     dust.velocity = Vector2.Normalize(projectile.Center - postion) * 1.5f * (10f - (float)2 * 2f) / 10f;
                     dust.noGravity = true;
                     dust.customData = player;

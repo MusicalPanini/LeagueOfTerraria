@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 80; i++)
                 {
-                    dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 248, 0, 0, 0, new Color(159, 0, 255), 2);
+                    dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.EnchantedNightcrawler, 0, 0, 0, new Color(159, 0, 255), 2);
                     dust.noGravity = true;
                 }
             }
@@ -52,7 +52,7 @@ namespace TerraLeague.Projectiles
             int num = Main.rand.Next(0, 2);
             if (num == 0)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 248, 0, -1, 150);
+                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.EnchantedNightcrawler, 0, -1, 150);
                 Main.dust[dustIndex].velocity.X *= 0.3f;
                 Main.dust[dustIndex].color = new Color(159, 0, 255);
                 Main.dust[dustIndex].noGravity = false;

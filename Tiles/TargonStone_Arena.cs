@@ -18,7 +18,7 @@ namespace TerraLeague.Tiles
             Main.tileBlendAll[Type] = true;
 
             soundType = SoundID.Tink;
-            dustType = 1;
+            dustType = DustID.Stone;
             drop = ItemType<TargonStoneBlock>(); 
             ModTranslation name = CreateMapEntryName();
             AddMapEntry(new Color(172, 154, 138), name); 

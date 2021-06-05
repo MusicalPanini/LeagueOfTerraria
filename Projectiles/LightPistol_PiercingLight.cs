@@ -39,7 +39,7 @@ namespace TerraLeague.Projectiles
                     Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                     int dustBoxWidth = projectile.width - 12;
                     int dustBoxHeight = projectile.height - 12;
-                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 66, 0f, 0f, 100, default(Color), 1 * (projectile.timeLeft/50f) + 1);
+                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Rainbow, 0f, 0f, 100, default(Color), 1 * (projectile.timeLeft/50f) + 1);
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
                     dust.velocity += projectile.velocity * 0.1f;
@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
                     }
                     
                     Vector2 position = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
-                    Dust dust = Dust.NewDustDirect(position - Vector2.One * 8f, 16, 16, 66, 0, 0, 0, default(Color), scale);
+                    Dust dust = Dust.NewDustDirect(position - Vector2.One * 8f, 16, 16, DustID.Rainbow, 0, 0, 0, default(Color), scale);
                     dust.velocity = Vector2.Normalize(projectile.Center - position) * 1.5f * (10f - (float)2 * 2f) / 10f;
                     dust.noGravity = true;
                     dust.customData = player;
@@ -91,7 +91,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 12; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 66, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0);
+                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Rainbow, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0);
                     dust.noGravity = true;
                     dust.scale = 1 * (timeLeft / 80f) + 1;
                 }

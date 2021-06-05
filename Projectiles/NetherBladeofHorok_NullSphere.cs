@@ -132,7 +132,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, projectile.velocity.X * 0.3f, projectile.velocity.Y * 0.3f, 255, new Color(59, 0, 255), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, DustID.Clentaminator_Purple, projectile.velocity.X * 0.3f, projectile.velocity.Y * 0.3f, 255, new Color(59, 0, 255), 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

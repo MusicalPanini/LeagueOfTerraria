@@ -60,8 +60,8 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 3; i++)
             {
-                Dust dust1 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height/2, 6);
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height/2, 6);
+                Dust dust1 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height/2, DustID.Fire);
+                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height/2, DustID.Fire);
                 dust1.scale = 2 * (projectile.velocity.Length() / 25);
                 dust1.noGravity = true;
                 dust2.scale = 2 * (projectile.velocity.Length() / 50);
@@ -80,7 +80,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 80; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
                 dust.velocity *= 3f;
                 if (Main.rand.Next(2) == 0)
                 {
@@ -90,11 +90,11 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 120; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 4.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 4.5f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 3f);
                 dust.velocity *= 3f;
             }
             for (int i = 0; i < 3; i++)

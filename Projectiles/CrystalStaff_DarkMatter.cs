@@ -51,7 +51,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 2; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, 0, 3, 0, default, 3f);
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 3, 0, default, 3f);
                     dust.noGravity = true;
                     dust.noLight = true;
                     dust.velocity *= 0.3f;
@@ -110,16 +110,16 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 30; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, new Color(110,70,200), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, new Color(110,70,200), 2f);
                 dust.velocity *= 1.4f;
             }
             for (int i = 0; i < 20; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 112, 0f, 0f, 100, default, 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Purple, 0f, 0f, 100, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 1f;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 113, 0f, 0f, 100, default(Color), 3f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default(Color), 3f);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
             }

@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -42,7 +43,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 1; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color), 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default(Color), 1.5f);
                 dustIndex.noGravity = true;
                 dustIndex.velocity *= 0.3f;
             }
@@ -82,7 +83,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), projectile.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 67, projectile.velocity.X / 1.5f, projectile.velocity.Y / 1.5f, 100, default(Color), 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, projectile.velocity.X / 1.5f, projectile.velocity.Y / 1.5f, 100, default(Color), 1.5f);
                 dustIndex.noGravity = true;
             }
             base.Kill(timeLeft);

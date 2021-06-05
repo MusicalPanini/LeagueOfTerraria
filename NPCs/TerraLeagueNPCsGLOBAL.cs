@@ -157,7 +157,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 113, 0f, 0f, 100, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default(Color));
                     dust.velocity *= 0.2f;
                     dust.scale *= 1.2f;
                     dust.alpha *= 200;
@@ -168,14 +168,14 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 10);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RedsWingsRun, 0, -1, 150);
                     dust.velocity.X *= 0.3f;
                     dust.color = new Color(255, 0, 0);
                     dust.noGravity = false;
                 }
                 else if (num == 2)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RedsWingsRun, 0, -1, 150);
                     dust.velocity.X *= 0.3f;
 
                     dust.noGravity = false;
@@ -185,7 +185,7 @@ namespace TerraLeague.NPCs
             if (requiem)
             {
                 Color color = Main.rand.NextBool() ? new Color(0, 255, 140) : new Color(0, 255, 0);
-                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 4, npc.position.Y - 320 + npc.height / 3f), 1, 300 + npc.height / 2, 186, 0f, 2f, 197, color, 2f);
+                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 4, npc.position.Y - 320 + npc.height / 3f), 1, 300 + npc.height / 2, DustID.RedsWingsRun, 0f, 2f, 197, color, 2f);
                 dust.noGravity = true;
                 dust.velocity.X *= 0.1f;
                 dust.fadeIn = 2.6f;
@@ -194,14 +194,14 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
+                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default(Color));
                 }
             }
             if (abyssalCurse)
             {
                 if (Main.rand.Next(0, 4) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, 14, 0f, 0f, 100, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, DustID.Demonite, 0f, 0f, 100, default(Color));
                     dust.color = new Color(255, 0, 255);
                     dust.alpha = 150;
                     dust.scale = 1f;
@@ -213,7 +213,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 255, new Color(59, 0, 255));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Purple, 0f, 0f, 255, new Color(59, 0, 255));
                     dust.alpha = 150;
                     dust.noGravity = true;
                     dust.noLight = true;
@@ -223,7 +223,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, 159, 0f, 0f, 50, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, DustID.Teleporter, 0f, 0f, 50, default(Color));
                     dust.noGravity = true;
                 }
             }
@@ -231,7 +231,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 14, 0f, 0f, 100, default(Color), 1f);
+                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Demonite, 0f, 0f, 100, default(Color), 1f);
                     dust.color = new Color(255, 0, 0);
                     dust.velocity.X = 0;
                     dust.velocity.Y = 0.5f;
@@ -241,7 +241,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, -12f, 100, default(Color), 6);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, -12f, 100, default(Color), 6);
                     dust.noGravity = true;
                 }
             }
@@ -249,13 +249,13 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 2f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default(Color), 2f);
                     dust.noGravity = true;
                 }
 
                 if (Main.rand.Next(0, 4) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 1f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default(Color), 1f);
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y * 2f);
                 }
             }
@@ -263,7 +263,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 100, new Color(59, 0, 255));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Purple, 0f, 0f, 100, new Color(59, 0, 255));
                     dust.noGravity = true;
                     dust.velocity *= 0;
                 }
@@ -272,19 +272,19 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, new Color(255, 0, 0), 4);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, new Color(255, 0, 0), 4);
                     dust.noGravity = true;
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, new Color(255, 0, 0), 1);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, new Color(255, 0, 0), 1);
                 }
             }
             if (infernumMark)
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 88, 0f, -2f, 0, default(Color), 2);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -2f, 0, default(Color), 2);
                     dust.noGravity = true;
                     dust.velocity.X *= 0.1f;
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 88, 0f, -3f, 0, default(Color), 0.5f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -3f, 0, default(Color), 0.5f);
                     dust.velocity.X *= 0.2f;
                 }
             }
@@ -292,27 +292,27 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 2);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Green, 0f, 0f, 0, new Color(0, 255, 201), 2);
                     dust.noGravity = true;
                     dust.velocity *= 0;
 
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 1);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Green, 0f, 0f, 0, new Color(0, 255, 201), 1);
                     dust.noGravity = true;
                     dust.velocity *= 0;
                 }
             }
             if (harbingersInferno)
             {
-                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 3);
+                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default(Color), 3);
                 dust.noGravity = true;
-                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 1);
+                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default(Color), 1);
             }
             if (cleaved)
             {
                 int num = Main.rand.Next(0, 8);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, 1, 200, new Color(50, 0, 20));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RedsWingsRun, 0, 1, 200, new Color(50, 0, 20));
                     dust.velocity.X *= 0.1f;
                     dust.velocity.Y -= 3f;
                     dust.noGravity = false;
@@ -323,7 +323,7 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 167, 0f, -1f, 125, new Color(0, 192, 255), 1f);
+                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Plantera_Green, 0f, -1f, 125, new Color(0, 192, 255), 1f);
                     dust.velocity.X *= 0.1f;
                     dust.velocity.Y = -System.Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -335,7 +335,7 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 5, 0, 0, 0, default(Color), 1.25f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Blood, 0, 0, 0, default(Color), 1.25f);
                     dust.velocity.X *= 0f;
                     dust.velocity.Y = System.Math.Abs(dust.velocity.Y);
                 }
@@ -345,7 +345,7 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 167, 0, 0, 0, default(Color), 1.25f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Plantera_Green, 0, 0, 0, default(Color), 1.25f);
                     dust.velocity.X *= 0f;
                     dust.velocity.Y = System.Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -353,7 +353,7 @@ namespace TerraLeague.NPCs
             }
             if (illuminated)
             {
-                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 228, 0f, 0f, 0, default(Color), 1);
+                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.GoldFlame, 0f, 0f, 0, default(Color), 1);
                 dust.noGravity = true;
                 dust.velocity *= 1.3f;
             }
@@ -361,24 +361,24 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 59, 0f, -2f, 200, new Color(0, 255, 201), 3f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.BlueTorch, 0f, -2f, 200, new Color(0, 255, 201), 3f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 2;
 
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 59, 0f, -1f, 200, new Color(0, 255, 201), 3f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.BlueTorch, 0f, -1f, 200, new Color(0, 255, 201), 3f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 2;
                 }
             }
             if (calibrumMark)
             {
-                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 111, 0, -2, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Clentaminator_Cyan, 0, -2, 100, default(Color), 1f);
                 dust.noGravity = true;
                 dust.velocity.X *= 0;
             }
             if (gravitumMark)
             {
-                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 16, npc.position.Y - 16), 32, 32, 71, 0f, 0f, 100, new Color(0, 0, 0), 1f);
+                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 16, npc.position.Y - 16), 32, 32, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, new Color(0, 0, 0), 1f);
                 dust.noGravity = true;
                 dust.fadeIn = 1.2f;
                 dust.velocity = (dust.position - npc.Center) * -0.05f;

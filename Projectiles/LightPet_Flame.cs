@@ -37,12 +37,12 @@ namespace TerraLeague.Projectiles
         {
             if (Main.rand.Next(3) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, 0, 0, 0, new Color(0, 255, 180), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(0, 255, 180), 2f);
                 dust.velocity *= 0.1f;
                 dust.velocity.X = projectile.velocity.X;
                 dust.fadeIn = 0.1f;
                 dust.noGravity = true;
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, 0, 0, 0, new Color(0, 255, 180), 1.5f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(0, 255, 180), 1.5f);
                 dust.velocity.X = projectile.velocity.X;
                 dust.velocity.Y = Main.rand.NextFloat(-2, 0);
                 dust.fadeIn = 0.5f;

@@ -55,7 +55,7 @@ namespace TerraLeague.Projectiles
             projectile.rotation += (Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y)) * 0.03f * (float)projectile.direction;
 
             if (projectile.velocity.Length() > 2)
-                Dust.NewDustDirect(projectile.position, 16, 16, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+                Dust.NewDustDirect(projectile.position, 16, 16, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
             
             base.AI();
         }
@@ -86,10 +86,10 @@ namespace TerraLeague.Projectiles
                 Dust dust;
                 for (int i = 0; i < 20; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1f);
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1f);
                     dust.velocity *= 2f;
 
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1.5f);
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1.5f);
                     dust.velocity *= 1.5f;
                 }
             }
@@ -99,7 +99,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 12; i++)
                 {
-                    Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 4, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
+                    Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.t_Slime, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
                 }
             }
             base.Kill(timeLeft);

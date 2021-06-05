@@ -95,7 +95,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     for (int i = 0; i < 4; i++)
                     {
                         player.armorEffectDrawShadow = true;
-                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 5, 0, 0, 0, new Color(255, 0, 0, 150), 0.2f * player.velocity.Length());
+                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Blood, 0, 0, 0, new Color(255, 0, 0, 150), 0.2f * player.velocity.Length());
                         dust.velocity *= 0;
                         dust.noGravity = true;
                     }
@@ -113,7 +113,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             Main.PlaySound(new LegacySoundStyle(2, 38).WithVolume(1.2f), effectedNPC.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDustDirect(effectedNPC.position, effectedNPC.width, effectedNPC.height, 5, 0, 0, 0, new Color(255, 0, 0, 150), 1.5f);
+                Dust.NewDustDirect(effectedNPC.position, effectedNPC.width, effectedNPC.height, DustID.Blood, 0, 0, 0, new Color(255, 0, 0, 150), 1.5f);
             }
         }
     }

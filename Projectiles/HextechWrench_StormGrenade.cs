@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -36,7 +37,7 @@ namespace TerraLeague.Projectiles
                 projectile.rotation = Main.rand.NextFloat(0, 6.282f);
             projectile.soundDelay = 100;
 
-            Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0,0,0, new Color(0,255, 255));
+            Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0,0,0, new Color(0,255, 255));
 
             projectile.rotation += projectile.velocity.X * 0.05f;
 
@@ -71,12 +72,12 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 10; i++)
             {
-                dust = Dust.NewDustDirect(projectile.Center, 1, 1, 31, 0f, 0f, 100, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.Center, 1, 1, DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
                 dust.velocity *= 2f;
             }
             for (int i = 0; i < 40; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(0, 220, 220), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 220, 220), 1f);
                 dust.noGravity = true;
                 dust.velocity = (dust.position - projectile.Center) * 0.1f;
             }
@@ -92,7 +93,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 30; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 226, 0, 0, 0, new Color(0, 220, 220), 0.6f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 0, new Color(0, 220, 220), 0.6f);
                 dust.velocity = (dust.position - projectile.Center) * 0.075f;
                 dust.velocity.Y -= 1f;
                 dust.noLight = true;

@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -59,7 +60,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 5; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(0, 255, 255, 150), 1f);
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 255, 255, 150), 1f);
                     dust.velocity *= i == 4 ? 2 : 0.3f;
                     dust.scale = i == 4 ? 1.25f : 1;
                     dust.noGravity = true;
@@ -78,7 +79,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(0, 255, 255, 150), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 255, 255, 150), 1.5f);
                 dust.velocity *= 3;
                 dust.noGravity = true;
             }

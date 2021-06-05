@@ -118,19 +118,19 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 25; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 172, 0, 0, 0, default, 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.DungeonWater, 0, 0, 0, default, 2f);
                 dust.velocity *= 1.4f;
                 dust.noGravity = true;
             }
             for (int i = 0; i < 40; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 173, 0, 0, 0, default, 2f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.ShadowbeamStaff, 0, 0, 0, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
                 dust.color = new Color(255, 0, 220);
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 172, 0, 0, 0, default, 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.DungeonWater, 0, 0, 0, default, 2f);
                 dust.velocity *= 3f;
                 dust.color = new Color(255, 0, 220);
                 dust.noGravity = true;

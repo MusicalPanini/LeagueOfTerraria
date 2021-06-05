@@ -31,14 +31,14 @@ namespace TerraLeague.Projectiles
         {
             Dust dust;
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 137, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
+            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IcyMerman, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
             dust.noGravity = true;
             dust.noLight = true;
             dust.velocity *= 0.1f;
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 229, projectile.velocity.X, projectile.velocity.Y, 124, default(Color), 1.25f);
+                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Vortex, projectile.velocity.X, projectile.velocity.Y, 124, default(Color), 1.25f);
                 dust2.noGravity = true;
                 dust2.noLight = true;
                 dust2.velocity *= 0.6f;

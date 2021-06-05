@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -49,12 +50,12 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, 0, 0, 0, new Color(248, 137, 89), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 1.5f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, 0, 0, 0, new Color(237, 137, 164), 1.5f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 1.5f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -100,11 +101,11 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 40; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 263, 0, 0, 0, new Color(237, 137, 164), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
 
-                dust = Dust.NewDustDirect(projectile.Center, 1,1, 263, 0, 0, 0, new Color(248, 137, 89), 2f);
+                dust = Dust.NewDustDirect(projectile.Center, 1,1, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 4f;
             }

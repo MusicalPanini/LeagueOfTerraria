@@ -4,6 +4,7 @@ using TerraLeague.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -80,14 +81,14 @@ namespace TerraLeague.Projectiles
                 projectile.Center = player.MountedCenter + offset.RotatedBy(projectile.ai[1]);
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 111, projectile.velocity.X, projectile.velocity.Y, 200, default(Color), 1.5f * (offset.X / 300f + 0.5f));
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Cyan, projectile.velocity.X, projectile.velocity.Y, 200, default(Color), 1.5f * (offset.X / 300f + 0.5f));
             dust.noGravity = true;
             dust.noLight = true;
             dust.velocity *= 0.1f;
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 162, projectile.velocity.X, projectile.velocity.Y, 124, default(Color), 2.5f * (offset.X / 300f + 0.5f));
+                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.HeatRay, projectile.velocity.X, projectile.velocity.Y, 124, default(Color), 2.5f * (offset.X / 300f + 0.5f));
                 dust2.noGravity = true;
                 dust2.noLight = true;
                 dust2.velocity *= 0.6f;
@@ -108,7 +109,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, 92, 0, 0, 50, new Color(255, 180, 0), 1.2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, DustID.Frost, 0, 0, 50, new Color(255, 180, 0), 1.2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

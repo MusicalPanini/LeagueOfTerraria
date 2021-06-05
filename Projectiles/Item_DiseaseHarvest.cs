@@ -88,7 +88,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 200, 0, 0, 0, new Color(0, 192, 255), 2);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Worm, 0, 0, 0, new Color(0, 192, 255), 2);
                 dust.noGravity = true;
             }
             Main.PlaySound(SoundID.Dig, projectile.Center);

@@ -39,13 +39,13 @@ namespace TerraLeague.Projectiles
             }
             projectile.soundDelay = 100;
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 75, 0, 0, 0, default(Color), 4f);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.CursedTorch, 0, 0, 0, default(Color), 4f);
             dust.noGravity = true;
             dust.noLight = true;
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 75, 0, 3, 0, default(Color), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.CursedTorch, 0, 3, 0, default(Color), 1f);
                 //dust.noLight = true;
             }
         }

@@ -3,6 +3,7 @@ using TerraLeague.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -32,7 +33,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 228, 0, 0, 0, default(Color), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.GoldFlame, 0, 0, 0, default(Color), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
@@ -62,7 +63,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 17; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 228, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
                 dust.noGravity = true;
             }
         }

@@ -64,7 +64,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X/2, projectile.velocity.Y/2, 100, new Color(0, 255, 0), 0.5f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ghost, projectile.velocity.X/2, projectile.velocity.Y/2, 100, new Color(0, 255, 0), 0.5f);
             }
 
             Main.PlaySound(SoundID.Item10, projectile.position);
@@ -76,13 +76,13 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1f);
                 dust.velocity *= 0.5f;
             }
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 75);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.CursedTorch);
                 dust.noGravity = true;
             }
 

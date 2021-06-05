@@ -55,7 +55,7 @@ namespace TerraLeague.NPCs
             Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 100, new Color(5, 245, 150), 1.5f);
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 100, new Color(5, 245, 150), 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += npc.velocity * 0.1f;
@@ -214,7 +214,7 @@ namespace TerraLeague.NPCs
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                     count++;
@@ -224,7 +224,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }

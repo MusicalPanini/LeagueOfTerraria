@@ -57,7 +57,7 @@ namespace TerraLeague.Items
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 29), player.Center);
             for (int k = 0; k < 20; k++)
             {
-                Dust.NewDust(player.position, player.width, player.height, 56, 0, -2, 0, default(Color), 1.2f);
+                Dust.NewDust(player.position, player.width, player.height, DustID.BlueFairy, 0, -2, 0, default(Color), 1.2f);
             }
             CombatText.NewText(player.Hitbox, new Color(50, 50, 255), "Blue Buff");
             return false;

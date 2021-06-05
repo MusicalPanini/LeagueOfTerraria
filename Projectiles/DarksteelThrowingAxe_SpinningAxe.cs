@@ -39,7 +39,7 @@ namespace TerraLeague.Projectiles
             projectile.rotation += 0.5f * projectile.spriteDirection;
 
             Lighting.AddLight(projectile.position, 0.75f, 0, 0);
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 211, 0, 0, 0, new Color(255, 0, 0), 1.4f);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Wet, 0, 0, 0, new Color(255, 0, 0), 1.4f);
             dust.noGravity = true;
 
             if (projectile.timeLeft < 270 && projectile.velocity.Y < 15)
@@ -60,7 +60,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 6; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
 
             base.Kill(timeLeft);
@@ -76,7 +76,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
             TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 4, -0.5f);
             return true;

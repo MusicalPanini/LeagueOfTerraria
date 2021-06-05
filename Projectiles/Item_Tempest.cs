@@ -71,7 +71,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                 int dustBoxWidth = projectile.width - 12;
                 int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 261, 0f, 0f, 100, new Color(0, 0, 255, 150), 1f);
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.AncientLight, 0f, 0f, 100, new Color(0, 0, 255, 150), 1f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += projectile.velocity * 0.1f;
@@ -79,7 +79,7 @@ namespace TerraLeague.Projectiles
                 dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
             }
 
-            Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 106, 0, 150), 1f);
+            Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 106, 0, 150), 1f);
             dust2.noGravity = true;
             dust2.velocity *= 3f;
             Lighting.AddLight(projectile.position, 0f, 0f, 1f);
@@ -122,7 +122,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
             for (int i = 0; i < 50; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(0, 0, 255, 150), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 0, 255, 150), 2f);
                 dust.velocity *= 3f;
                 dust.noGravity = true;
             }

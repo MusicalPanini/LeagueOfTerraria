@@ -4,6 +4,7 @@ using TerraLeague.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -40,7 +41,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 5; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 87, 0, -4, 200, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.TopazBolt, 0, -4, 200, default(Color), 1f);
                 dust.noGravity = true;
             }
 

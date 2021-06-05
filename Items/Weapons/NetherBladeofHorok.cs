@@ -54,7 +54,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, 112, 0,0, 255, new Color(59, 0, 255), 1f);
+            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.Clentaminator_Purple, 0,0, 255, new Color(59, 0, 255), 1f);
             dust.noGravity = true;
             dust.noLight = true;
 

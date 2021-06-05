@@ -3,6 +3,7 @@ using TerraLeague.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -58,12 +59,12 @@ namespace TerraLeague.Projectiles
 
             if (projectile.friendly)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 1);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Stone);
                 dust.velocity /= 3;
             }
             else
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(0, -2) + projectile.BottomLeft, projectile.width, 3, 133);
+                Dust dust = Dust.NewDustDirect(new Vector2(0, -2) + projectile.BottomLeft, projectile.width, 3, DustID.Firework_Yellow);
                 dust.noGravity = true;
                 dust.velocity.X *= 2;
                 dust.velocity.Y = 0;

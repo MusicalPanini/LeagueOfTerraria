@@ -115,7 +115,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(2, 92), projectile.Center);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(24, 86, 69, 150), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(24, 86, 69, 150), 2f);
                 dust.velocity *= 3f;
                 dust.noGravity = true;
             }

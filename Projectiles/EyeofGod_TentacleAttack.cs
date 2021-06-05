@@ -46,7 +46,7 @@ namespace TerraLeague.Projectiles
             projectile.spriteDirection = (int)projectile.ai[0];
             Lighting.AddLight(projectile.Center, 0, 0.1f, 0.05f);
 
-            Dust dust2 = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Bottom.Y - 4), projectile.width, 4, 257, 0f, 0, 100, new Color(0, 255, 201), 1f);
+            Dust dust2 = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Bottom.Y - 4), projectile.width, 4, DustID.BubbleBlock, 0f, 0, 100, new Color(0, 255, 201), 1f);
             dust2.fadeIn = 1.3f;
             dust2.noGravity = true;
             dust2.velocity.Y *= 0.2f;

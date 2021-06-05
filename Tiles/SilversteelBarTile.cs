@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using TerraLeague.Items;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -25,7 +26,7 @@ namespace TerraLeague.Tiles
             name.SetDefault("Silver-Steel Bar");
             AddMapEntry(new Color(180, 180, 195), name);
 
-            dustType = 1;
+            dustType = DustID.Stone;
         }
 
         public override bool Drop(int i, int j)

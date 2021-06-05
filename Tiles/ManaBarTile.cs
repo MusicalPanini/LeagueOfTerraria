@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using TerraLeague.Items;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -25,7 +26,7 @@ namespace TerraLeague.Tiles
             name.SetDefault("Mana Bar");
             AddMapEntry(new Color(0, 78, 200), name);
 
-            dustType = 172;
+            dustType = DustID.DungeonWater;
         }
 
         public override bool Drop(int i, int j)

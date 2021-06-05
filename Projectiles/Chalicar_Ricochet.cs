@@ -163,7 +163,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 11, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 157, new Color(234, 255, 0));
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Silver, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 157, new Color(234, 255, 0));
             }
 
             base.Kill(timeLeft);

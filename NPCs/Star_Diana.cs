@@ -137,7 +137,7 @@ namespace TerraLeague.NPCs
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 263, 0, 0, 150, TargonBoss.DianaColor);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBoss.DianaColor);
                     dust.noGravity = true;
                     dust.velocity *= 2;
                 }
@@ -158,7 +158,7 @@ namespace TerraLeague.NPCs
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 263, 0f, 0f, 0, TargonBoss.DianaColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.DianaColor, 1.5f);
                     dust.noGravity = true;
                     count++;
                     break;
@@ -168,7 +168,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 263, 0f, 0f, 0, TargonBoss.DianaColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.DianaColor, 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }

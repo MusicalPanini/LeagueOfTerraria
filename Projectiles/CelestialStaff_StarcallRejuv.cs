@@ -46,12 +46,12 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, 0, 0, 0, new Color(248, 137, 89), 1.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 1.5f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, 0, 0, 0, new Color(237, 137, 164), 1.5f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 1.5f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -78,10 +78,10 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 263, 0, -2, 0, new Color(237, 137, 164));
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PortalBolt, 0, -2, 0, new Color(237, 137, 164));
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(player.position, player.width, player.height, 263, 0, -2, 0, new Color(248, 137, 89));
+                dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PortalBolt, 0, -2, 0, new Color(248, 137, 89));
                 dust.noGravity = true;
             }
 

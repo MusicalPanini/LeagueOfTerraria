@@ -62,7 +62,7 @@ namespace TerraLeague.NPCs
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 54, 0f, 0f, 50, default(Color), 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Wraith, 0f, 0f, 50, default(Color), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                     count++;
@@ -74,9 +74,9 @@ namespace TerraLeague.NPCs
                 {
                     Dust dust;
                     if (i > 10)
-                        dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 54, 0f, 0f, 50, default(Color), 1.5f);
+                        dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Wraith, 0f, 0f, 50, default(Color), 1.5f);
                     else
-                        dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
+                        dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }

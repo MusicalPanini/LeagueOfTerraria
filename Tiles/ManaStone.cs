@@ -21,7 +21,7 @@ namespace TerraLeague.Tiles
             Main.tileLighted[Type] = true; 
             Main.tileBlockLight[Type] = true; 
             
-            dustType = 48;
+            dustType = DustID.Cobalt;
             drop = ItemType<Items.Placeable.ManaStone>();
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Mana Infused Earth");

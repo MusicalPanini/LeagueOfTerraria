@@ -137,7 +137,7 @@ namespace TerraLeague.Projectiles
             Color color = projectile.ranged ? new Color(250, 114, 247) : new Color(59, 0, 255);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, 0f, 0f, 255, color, 3.5f);
+                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, DustID.Clentaminator_Purple, 0f, 0f, 255, color, 3.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

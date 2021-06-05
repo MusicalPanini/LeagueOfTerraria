@@ -20,7 +20,7 @@ namespace TerraLeague.Tiles
             Main.tileLighted[Type] = true;
             Main.tileBlockLight[Type] = true; 
             
-            dustType = 65;
+            dustType = DustID.DemonTorch;
             drop = ItemType<Items.VoidFragment>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Void Matter");
@@ -30,7 +30,7 @@ namespace TerraLeague.Tiles
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            dustType = 65;
+            dustType = DustID.DemonTorch;
             r = bLast;
             g = 0.0f;
             b = bLast;

@@ -43,7 +43,7 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0.75f, 0.75f, 0.75f);
             for (int i = 0; i < 1; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, 16, 0f, 0f, 0, new Color(255, 255, 255), 2f);
+                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, DustID.Cloud, 0f, 0f, 0, new Color(255, 255, 255), 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

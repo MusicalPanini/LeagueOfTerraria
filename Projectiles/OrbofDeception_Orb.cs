@@ -43,7 +43,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X, projectile.position.Y);
                 int dustBoxWidth = projectile.width;
                 int dustBoxHeight = projectile.height;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 263, 0f, 0f, 100, new Color(229, 242, 249), 1.5f);
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.PortalBolt, 0f, 0f, 100, new Color(229, 242, 249), 1.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0.1f;
@@ -152,7 +152,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 16, 0f, 0f, 0, new Color(255, 255, 255), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, DustID.Cloud, 0f, 0f, 0, new Color(255, 255, 255), 1f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

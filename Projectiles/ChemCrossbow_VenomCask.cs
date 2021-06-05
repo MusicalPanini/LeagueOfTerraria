@@ -32,7 +32,7 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0, 255, 0));
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, new Color(0, 255, 0));
             dust.noLight = true;
             dust.alpha = 0;
             dust.noLight = false;
@@ -80,17 +80,17 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, new Color(0, 255, 0), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, new Color(0, 255, 0), 1f);
                 dust.velocity *= 1.4f;
                 dust.noLight = true;
             }
             for (int i = 0; i < 80; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0, 255, 0), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, new Color(0, 255, 0), 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0, 255, 0),1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, new Color(0, 255, 0),1f);
                 dust.noLight = true;
             }
 

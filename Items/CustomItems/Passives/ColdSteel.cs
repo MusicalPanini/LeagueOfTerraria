@@ -64,11 +64,11 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             for (int i = 0; i < 30; i++)
             {
-                Dust dust = Dust.NewDustDirect(user.position, user.width, user.height, 67, 0, 0, 0, default(Color), 2f);
+                Dust dust = Dust.NewDustDirect(user.position, user.width, user.height, DustID.IceRod, 0, 0, 0, default(Color), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
 
-                dust = Dust.NewDustDirect(new Vector2(user.position.X, user.position.Y), user.width, user.height, 67, 0f, 0f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(user.position.X, user.position.Y), user.width, user.height, DustID.IceRod, 0f, 0f, 100, default(Color), 1f);
                 dust.velocity *= 3f;
             }
 

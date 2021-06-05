@@ -63,7 +63,7 @@ namespace TerraLeague.Tiles
 
             Main.tileLighted[Type] = true; 
 
-            dustType = 51;
+            dustType = DustID.SnowBlock;
             drop = ItemType<PetWood>(); 
             AddMapEntry(new Color(170, 170, 170)); 
             minPick = 0; 

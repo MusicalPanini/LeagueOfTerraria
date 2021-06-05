@@ -50,17 +50,17 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 20; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, 31, 0f, -3f, 100, default(Color), 1f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, DustID.Smoke, 0f, -3f, 100, default(Color), 1f);
                 dust.velocity *= 0.5f;
             }
             for (int i = 0; i < 10; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, 59, 0f, -6f, 200, new Color(0, 255, 201), 2f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, DustID.BlueTorch, 0f, -6f, 200, new Color(0, 255, 201), 2f);
                 dust.noGravity = true;
                 dust.velocity.Y -= 3f;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, 59, 0f, -6f, 200, new Color(0, 255, 201), 3f);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Center.Y + 48), projectile.width, 2, DustID.BlueTorch, 0f, -6f, 200, new Color(0, 255, 201), 3f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

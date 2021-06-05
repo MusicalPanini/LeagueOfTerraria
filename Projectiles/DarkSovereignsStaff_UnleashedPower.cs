@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
                 projectile.velocity *= 0;
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, 32, 32, 112, 0, 0, projectile.alpha);
+                    Dust dust = Dust.NewDustDirect(projectile.position, 32, 32, DustID.Clentaminator_Purple, 0, 0, projectile.alpha);
                     dust.noGravity = true;
                     dust.noLight = true;
                 }
@@ -66,7 +66,7 @@ namespace TerraLeague.Projectiles
             }
             if ((int)projectile.localAI[1] == 1)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 32, 32, 112, 0, 0, projectile.alpha);
+                Dust dust = Dust.NewDustDirect(projectile.position, 32, 32, DustID.Clentaminator_Purple, 0, 0, projectile.alpha);
                 dust.noGravity = true;
                 dust.noLight = true;
 
@@ -120,7 +120,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 32, 32, 112, projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f, projectile.alpha);
+                Dust dust = Dust.NewDustDirect(projectile.position, 32, 32, DustID.Clentaminator_Purple, projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f, projectile.alpha);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

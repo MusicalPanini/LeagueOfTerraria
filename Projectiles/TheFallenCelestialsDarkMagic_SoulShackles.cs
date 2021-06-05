@@ -53,7 +53,7 @@ namespace TerraLeague.Projectiles
                     }
                     projectile.Center = npc.Center;
 
-                    Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.Bottom.Y - npc.height / 4f), npc.width, npc.height / 4, 248, 0, -2, 0, new Color(159, 0, 255), 1.5f);
+                    Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.Bottom.Y - npc.height / 4f), npc.width, npc.height / 4, DustID.EnchantedNightcrawler, 0, -2, 0, new Color(159, 0, 255), 1.5f);
                     dust.noGravity = true;
 
                     if (projectile.timeLeft == 1)
@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
 
                         for (int i = 0; i < 20; i++)
                         {
-                            dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 248, 0, 0, 0, new Color(159, 0, 255), 1.5f);
+                            dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.EnchantedNightcrawler, 0, 0, 0, new Color(159, 0, 255), 1.5f);
                             dust.noGravity = true;
                         }
 
@@ -126,7 +126,7 @@ namespace TerraLeague.Projectiles
                 int distance = Main.rand.Next((int)projectile.Distance(player.Center));
                 Vector2 dustPoint = ChainLine * distance;
 
-                Dust dust = Dust.NewDustDirect(dustPoint + player.Center, 1, 1, 248, 0, 0, 100, new Color(159, 0, 255), scale);
+                Dust dust = Dust.NewDustDirect(dustPoint + player.Center, 1, 1, DustID.EnchantedNightcrawler, 0, 0, 100, new Color(159, 0, 255), scale);
                 dust.noGravity = true;
             }
         }

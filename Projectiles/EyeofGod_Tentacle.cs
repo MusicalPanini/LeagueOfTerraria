@@ -41,17 +41,17 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, 59, 0f, -2f, 200, new Color(0, 255, 201), 5f);
+                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.BlueTorch, 0f, -2f, 200, new Color(0, 255, 201), 5f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 2;
 
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, 59, 0f, -1f, 200, new Color(0, 255, 201), 4f);
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.BlueTorch, 0f, -1f, 200, new Color(0, 255, 201), 4f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 3;
                 }
             }
 
-            Dust dust2 = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Bottom.Y - 4), projectile.width, 4, 257, 0f, 0, 100, new Color(0, 255, 201), 1f);
+            Dust dust2 = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.Bottom.Y - 4), projectile.width, 4, DustID.BubbleBlock, 0f, 0, 100, new Color(0, 255, 201), 1f);
             dust2.fadeIn = 1.3f;
             dust2.noGravity = true;
             dust2.velocity.Y *= 0.2f;

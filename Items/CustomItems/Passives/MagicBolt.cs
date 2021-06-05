@@ -63,7 +63,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             Main.PlaySound(new LegacySoundStyle(2, 30).WithPitchVariance(0.3f), HitNPC.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, 15, 0, 0, 0, new Color(0, 0, 255, 150), 1.5f);
+                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, DustID.MagicMirror, 0, 0, 0, new Color(0, 0, 255, 150), 1.5f);
             }
         }
     }

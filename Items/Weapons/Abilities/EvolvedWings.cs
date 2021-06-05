@@ -65,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 97, -3 * player.direction, -2);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Moss_Purple, -3 * player.direction, -2);
                 dust.scale = 2;
             }
         }

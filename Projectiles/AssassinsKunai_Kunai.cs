@@ -52,7 +52,7 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(SoundID.Dig, projectile.Center);
             for (int i = 0; i < 6; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust dustIndex = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
             base.Kill(timeLeft);
         }

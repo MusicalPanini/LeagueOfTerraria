@@ -1440,7 +1440,7 @@ namespace TerraLeague
             {
                 Lighting.AddLight(player.Center, 0f, 0.75f, 0.3f);
                 Color color = Main.rand.NextBool() ? new Color(0, 255, 140) : new Color(0, 255, 0);
-                Dust dust = Dust.NewDustDirect(new Vector2(player.position.X, player.Center.Y - 320), player.width, 400, 186, 0f, -5f, 197, color, 2.5f);
+                Dust dust = Dust.NewDustDirect(new Vector2(player.position.X, player.Center.Y - 320), player.width, 400, DustID.RedsWingsRun, 0f, -5f, 197, color, 2.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity.X *= 0.3f;
@@ -1637,7 +1637,7 @@ namespace TerraLeague
 
                     for (int i = 0; i < 10; i++)
                     {
-                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 27, 0, -3);
+                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Shadowflame, 0, -3);
                     }
 
                     prophetTimer = 60 * 6;
@@ -1793,7 +1793,7 @@ namespace TerraLeague
             {
                 for (int i = 0; i < player.velocity.Length()/7f; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 111, 0, 0, 0, default, player.velocity.Length() / 5f);
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Clentaminator_Cyan, 0, 0, 0, default, player.velocity.Length() / 5f);
                     dust.noLight = true;
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
@@ -1806,7 +1806,7 @@ namespace TerraLeague
                 Lighting.AddLight(player.Center, new Vector3(0.1f, 0.6f, 0.8f));
                 if (Main.rand.Next(0,6) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0, new Color(15, 170, 200));
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(15, 170, 200));
                     dust.velocity.X = 0;
                     dust.velocity.Y -= 2;
                     dust.noGravity = true;
@@ -1817,7 +1817,7 @@ namespace TerraLeague
                 player.armorEffectDrawShadow = true;
                 if (Main.rand.Next(0, 5) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 16, 0, 0, 0, new Color(255, 255, 255, 150));
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Cloud, 0, 0, 0, new Color(255, 255, 255, 150));
                     dust.noGravity = true;
                 }
             }
@@ -1825,7 +1825,7 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 5) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 117, 0, 0, 0, new Color(50, 0, 0, 200), 1.3f);
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Crimstone, 0, 0, 0, new Color(50, 0, 0, 200), 1.3f);
                     dust.velocity *= 0.5f;
                     dust.alpha = 40;
                     dust.noGravity = true;
@@ -1835,7 +1835,7 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0, new Color(255, 0, 0, 255));
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(255, 0, 0, 255));
                     dust.velocity.X = 0;
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -1846,7 +1846,7 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0, new Color(131, 234, 46, 255));
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(131, 234, 46, 255));
                     dust.velocity.X = 0;
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -1857,12 +1857,12 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 263, 0, 0, 0, new Color(248, 137, 89), 1f);
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 1f);
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
                     dust.noLight = true;
 
-                    dust = Dust.NewDustDirect(player.position, player.width, player.height, 263, 0, 0, 0, new Color(237, 137, 164), 1);
+                    dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 1);
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
                     dust.noLight = true;
@@ -1870,7 +1870,7 @@ namespace TerraLeague
             }
             if (spinningAxe)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 211, 0, 0, 0, new Color(255, 0, 0));
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Wet, 0, 0, 0, new Color(255, 0, 0));
                 dust.noGravity = true;
                 dust.scale = 1.4f;
             }
@@ -1888,12 +1888,12 @@ namespace TerraLeague
             }
             if (bioBarrage)
             {
-                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, 167, 0, -4, 50);
+                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Plantera_Green, 0, -4, 50);
                 dustIndex.velocity *= 0.3f;
             }
             if (toxicShot)
             {
-                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, 186, 0, -4, 50);
+                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedsWingsRun, 0, -4, 50);
                 dustIndex.velocity *= 0.3f;
             }
             if (immolate)
@@ -1901,13 +1901,13 @@ namespace TerraLeague
                 for (int i = 0; i < 1; i++)
                 {
                     Vector2 pos = new Vector2(player.position.X, player.position.Y + (player.height * 0.9f));
-                    Dust dustIndex = Dust.NewDustDirect(pos, player.width, player.height / 10, 6, 12f, -1f, 100, default(Color), 1.25f);
+                    Dust dustIndex = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, 12f, -1f, 100, default(Color), 1.25f);
                     dustIndex.noGravity = true;
                     dustIndex.velocity.Y *= 0.4f;
                     dustIndex.velocity.X *= 0.6f;
                     dustIndex.velocity.X += player.velocity.X;
                     dustIndex.noLight = true;
-                    Dust dustIndex2 = Dust.NewDustDirect(pos, player.width, player.height / 10, 6, -12f, -1f, 100, default(Color), 1.5f);
+                    Dust dustIndex2 = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, -12f, -1f, 100, default(Color), 1.5f);
                     dustIndex2.noGravity = true;
                     dustIndex2.noLight = true;
                     dustIndex2.velocity.Y *= 0.4f;
@@ -3537,7 +3537,7 @@ namespace TerraLeague
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 27, -0.5f);
             for (int i = 0; i < 20; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, 80, 0, -2, 0, default(Color), 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Ice, 0, -2, 0, default(Color), 1.5f);
                 dustIndex.velocity *= 2;
             }
             if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.LocalPlayer.whoAmI)
@@ -3549,7 +3549,7 @@ namespace TerraLeague
             Main.PlaySound(new LegacySoundStyle(2, 122), target.Center);
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustDirect(target.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
+                Dust dust = Dust.NewDustDirect(target.position, 8, 8, DustID.Clentaminator_Purple, 0, 0, 0, new Color(59, 0, 255), 1f);
             }
         }
 
@@ -3569,7 +3569,7 @@ namespace TerraLeague
                 Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
                 for (int num225 = 0; num225 < 5; num225++)
                 {
-                    int num226 = Dust.NewDust(player.position, player.width, player.height, 45, 0f, 0f, 255, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
+                    int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.ManaRegeneration, 0f, 0f, 255, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
                     Main.dust[num226].noLight = true;
                     Main.dust[num226].noGravity = true;
                     Dust obj2 = Main.dust[num226];

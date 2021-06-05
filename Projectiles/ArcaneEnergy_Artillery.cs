@@ -70,7 +70,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X + 12, projectile.position.Y + 12);
                 int dustBoxWidth = projectile.width - 24;
                 int dustBoxHeight = projectile.height - 24;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 113, 0f, 0f, 124, default(Color), 2.5f);
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Clentaminator_Blue, 0f, 0f, 124, default(Color), 2.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += projectile.velocity * 0.1f;
@@ -99,7 +99,7 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, 0, 0, 0, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 0, 0, default(Color), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
 

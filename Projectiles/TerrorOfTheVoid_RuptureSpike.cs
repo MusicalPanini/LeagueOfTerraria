@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    Dust dustIndex = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + projectile.height), projectile.width, 32, 97, 0f, 0f, 0, default(Color), 1.5f);
+                    Dust dustIndex = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + projectile.height), projectile.width, 32, DustID.Moss_Purple, 0f, 0f, 0, default(Color), 1.5f);
                 }
             }
 
@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
                 projectile.extraUpdates = 0;
                 for (int i = 0; i < 3; i++)
                 {
-                    Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 97, 0f, -4f, projectile.alpha, default(Color), 2);
+                    Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Moss_Purple, 0f, -4f, projectile.alpha, default(Color), 2);
                 }
 
                 if ((int)projectile.ai[1] != 0)

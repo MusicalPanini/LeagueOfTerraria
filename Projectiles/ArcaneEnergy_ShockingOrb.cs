@@ -3,6 +3,7 @@ using TerraLeague.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -35,7 +36,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, 0, 0, 124, default(Color), 2.5f);
+                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 0, 124, default(Color), 2.5f);
                 dust2.noGravity = true;
                 dust2.noLight = true;
                 dust2.velocity *= 0.6f;
@@ -58,11 +59,11 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 80; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, 0, 0, 0, default(Color), 2f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 0, 0, default(Color), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, 0, 0, 0, default(Color), 3f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 0, 0, default(Color), 3f);
                 dust.velocity *= 1f;
                 dust.noGravity = true;
                 dust.color = new Color(0, 220, 220);
