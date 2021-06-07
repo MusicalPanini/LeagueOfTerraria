@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    class TideCallerStaff_EbbandFlow : ModProjectile
+    class TideCallerStaff_EbbandFlowHostile : HomingProjectile
     {
         int healing { get { return (int)projectile.ai[1]; } }
 
@@ -33,9 +33,12 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.friendly = true;
             projectile.hostile = false;
-            projectile.tileCollide = true;
+            projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.netImportant = true;
+
+            CanRetarget = true;
+            TurningFactor = 0.93f;
         }
 
         public override void AI()
@@ -45,6 +48,11 @@ namespace TerraLeague.Projectiles
                 Main.PlaySound(new LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound));
             }
             projectile.soundDelay = 100;
+
+            if (projectile.timeLeft < 84)
+            {
+                HomingAI();
+            }
 
             Dust dust;
             for (int i = 0; i < 5; i++)
@@ -72,28 +80,6 @@ namespace TerraLeague.Projectiles
             }
 
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            projectile.netUpdate = true;
-
-            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().stunned || target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled)
-            {
-                for (int i = 0; i < 12; i++)
-                {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IcyMerman, 0, 0, 50, new Color(100, 100, 255), 1.2f);
-                    dust.noGravity = true;
-                    Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Wet, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default, 1f);
-                }
-
-                Projectile.NewProjectileDirect(projectile.Center, new Vector2((Math.Abs(projectile.velocity.X) / projectile.velocity.X) * 11.3137f, -11.3137f),
-                    ModContent.ProjectileType<TideCallerStaff_EbbandFlowFriendly>(), projectile.damage, projectile.knockBack, projectile.owner, -2, projectile.ai[1]);
-            }
-            else
-            {
-                projectile.Kill();
-            }
         }
 
         public override void Kill(int timeLeft)
