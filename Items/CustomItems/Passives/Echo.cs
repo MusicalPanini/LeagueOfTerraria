@@ -51,7 +51,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 for (int i = 0; i < 8; i++)
                 {
-                    Projectile.NewProjectileDirect(target.position, new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(45 * i)), ProjectileType<Item_Echo>(), bonusDamage, 0, player.whoAmI, target.whoAmI);
+                    Projectile.NewProjectileDirect(target.position, new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(45 * i)), ProjectileType<Item_Echo>(), bonusDamage, 0, player.whoAmI, -2, target.whoAmI);
                 }
                 passiveStat = 0;
                 modPlayer.echo = false;
