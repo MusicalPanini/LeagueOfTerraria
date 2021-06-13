@@ -94,7 +94,7 @@ namespace TerraLeague.Projectiles
                     {
                         if (Main.rand.Next(3) == 0)
                         {
-                            Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedByRandom(MathHelper.TwoPi) / 12, ProjectileType<Bullet_HextechChloroShotSplit>(), projectile.damage / 2, 0, projectile.owner, num == -1 ? 255 : num);
+                            Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedByRandom(MathHelper.TwoPi) / 12, ProjectileType<Bullet_HextechChloroShotSplit>(), projectile.damage / 2, 0, projectile.owner, -2, num == -1 ? 255 : num);
                         }
                         else
                         {
@@ -108,7 +108,7 @@ namespace TerraLeague.Projectiles
                     {
                         if (Main.rand.Next(3) == 0)
                         {
-                            Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedBy(MathHelper.ToRadians(-15 + (15 * i))) / 12, ProjectileType<Bullet_HextechChloroShotSplit>(), projectile.damage / 2, 0, projectile.owner, num == -1 ? 255 : num);
+                            Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedBy(MathHelper.ToRadians(-15 + (15 * i))) / 12, ProjectileType<Bullet_HextechChloroShotSplit>(), projectile.damage / 2, 0, projectile.owner, -2, num == -1 ? 255 : num);
 
                         }
                         else
