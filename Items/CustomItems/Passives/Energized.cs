@@ -111,7 +111,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (projID != -1)
                 {
                     if (projID == ProjectileType<Item_EnergizedBolt>())
-                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, -1, modPlayer.EnergizedStorm ? 1 : 0);
+                        Projectile.NewProjectile(target.Center, Vector2.UnitX * 6, projID, bonusDamage, 0, player.whoAmI, -2, modPlayer.EnergizedStorm ? 1 : 0);
                     else if (projID == ProjectileType<Item_RapidfireExplosion>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
@@ -165,7 +165,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (projID != -1)
                 {
                     if (projID == ProjectileType<Item_EnergizedBolt>())
-                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, -1, modPlayer.EnergizedStorm ? 1 : 0);
+                        Projectile.NewProjectile(target.Center, Vector2.UnitX * 6, projID, bonusDamage, 0, player.whoAmI, -2, modPlayer.EnergizedStorm ? 1 : 0);
                     else if (projID == ProjectileType<Item_RapidfireExplosion>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
