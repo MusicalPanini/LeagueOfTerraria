@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using TerraLeague.Projectiles.Homing;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -8,11 +9,12 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-	public class Item_Heal : ModProjectile
+	public class Item_Heal : HomingProjectile
 	{
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heal");
+            base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
@@ -26,6 +28,10 @@ namespace TerraLeague.Projectiles
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.alpha = 255;
+
+            CanOnlyHitTarget = true;
+            TargetPlayers = true;
+            TurningFactor = 0.93f;
         }
 
         public override void AI()
@@ -43,40 +49,20 @@ namespace TerraLeague.Projectiles
                 dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
             }
 
-            Player targetPlayer = Main.player[(int)projectile.ai[0]];
+            HomingAI();
 
-            if (!targetPlayer.active)
+            if (TargetPlayers && TargetWhoAmI >= 0)
             {
-                projectile.Kill();
-                return;
-            }
-
-            Vector2 move = targetPlayer.MountedCenter - projectile.Center;
-            AdjustMagnitude(ref move);
-            projectile.velocity = (10 * projectile.velocity + move) / 11f;
-            AdjustMagnitude(ref projectile.velocity);
-
-            if (projectile.Hitbox.Intersects(targetPlayer.Hitbox))
-            {
-                HitPlayer(targetPlayer);
-                projectile.Kill();
-                return;
+                if (projectile.Hitbox.Intersects(TargetEntity.Hitbox))
+                {
+                    OnHitFriendlyPlayer(Main.player[TargetWhoAmI]);
+                }
             }
         }
 
-        private void AdjustMagnitude(ref Vector2 vector)
-        {
-            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 15f)
-            {
-                vector *= 15f / magnitude;
-            }
-        }
-
-        public void HitPlayer(Player player)
+        public override void OnHitFriendlyPlayer(Player player)
         {
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 4, 0);
-            //Main.PlaySound(new LegacySoundStyle(2, 21), player.Center);
 
             projectile.netUpdate = true;
             if (projectile.owner == Main.LocalPlayer.whoAmI)
@@ -94,11 +80,7 @@ namespace TerraLeague.Projectiles
                 dust.noGravity = true;
             }
 
-            projectile.velocity.Y = -8;
-            projectile.timeLeft = 90;
-            projectile.friendly = true;
-            projectile.tileCollide = false;
-            projectile.penetrate--;
+            base.OnHitFriendlyPlayer(player);
         }
 
         public override void Kill(int timeLeft)

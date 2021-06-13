@@ -1118,7 +1118,7 @@ namespace TerraLeague
             {
                 return true;
             }
-            else if (hitbox.Intersects(new Rectangle((int)startingPoint.X, (int)startingPoint.X, 1, 1)))
+            else if (hitbox.Intersects(new Rectangle((int)startingPoint.X, (int)startingPoint.Y, 1, 1)))
             {
                 return true;
             }

@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
         {
             if (!target.immortal)
             {
-                Projectile proj = Projectile.NewProjectileDirect(target.Center, new Vector2(0, 6).RotatedByRandom(MathHelper.TwoPi), ProjectileType<Item_Echo>(), projectile.damage/2, 0, projectile.owner, target.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(target.Center, new Vector2(0, 6).RotatedByRandom(MathHelper.TwoPi), ProjectileType<Item_Echo>(), projectile.damage/2, 0, projectile.owner, -2, target.whoAmI);
             }
 
             base.OnHitNPC(target, damage, knockback, false);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using TerraLeague.Projectiles.Homing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,12 +8,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Projectiles
 {
-    public class Item_DoomBomb : ModProjectile
+    public class Item_DoomBomb : HomingProjectile
     {
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Doom");
+            base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
@@ -27,6 +29,11 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.magic = true;
             projectile.alpha = 255;
+
+            CanOnlyHitTarget = true;
+            CanRetarget = false;
+            MaxVelocity = 0;
+            TurningFactor = 0.93f;
         }
 
 
@@ -38,48 +45,13 @@ namespace TerraLeague.Projectiles
             }
             projectile.soundDelay = 100;
 
-            if (projectile.ai[0] != -2)
-            {
-                projectile.friendly = true;
+            MaxVelocity = 16 * (1 - (projectile.timeLeft / 300f));
+            MaxVelocity *= 8;
+            if (MaxVelocity > 16)
+                MaxVelocity = 16;
 
-                NPC npc = Main.npc[(int)projectile.ai[0]];
-
-                if (!npc.active && projectile.owner == Main.LocalPlayer.whoAmI)
-                    projectile.Kill();
-
-                float MaxSpeed = 18;
-
-                float XDist = (float)npc.Center.X - projectile.Center.X;
-                float YDist = (float)npc.Center.Y - projectile.Center.Y;
-
-                float TrueDist = (float)System.Math.Sqrt((double)(XDist * XDist + YDist * YDist));
-                if (TrueDist > MaxSpeed)
-                {
-                    TrueDist = MaxSpeed / TrueDist;
-                    XDist *= TrueDist;
-                    YDist *= TrueDist;
-                    int num118 = (int)(XDist * 1000f);
-                    int num119 = (int)(projectile.velocity.X * 1000f);
-                    int num120 = (int)(YDist * 1000f);
-                    int num121 = (int)(projectile.velocity.Y * 1000f);
-                    if (num118 != num119 || num120 != num121)
-                    {
-                        projectile.netUpdate = true;
-                    }
-
-                    if (projectile.timeLeft > 270)
-                    {
-                        projectile.velocity.X = XDist * (1 - ((projectile.timeLeft - 270) / 30f));
-                        projectile.velocity.Y = YDist * (1 - ((projectile.timeLeft - 270) / 30f));
-                    }
-                    else
-                    {
-                        projectile.velocity.X = XDist;
-                        projectile.velocity.Y = YDist;
-                    }
-
-                }
-            }
+            HomingAI();
+            
 
             for (int i = 0; i < 2; i++)
             {
@@ -104,14 +76,6 @@ namespace TerraLeague.Projectiles
         {
             crit = false;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if ((int)projectile.ai[0] == target.whoAmI || (int)projectile.ai[0] == -2)
-                return base.CanHitNPC(target);
-            else
-                return false;
         }
 
 
@@ -145,7 +109,7 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.ai[0] = -2;
+            CanOnlyHitTarget = false;
             projectile.tileCollide = false;
             projectile.velocity = Vector2.Zero;
             projectile.alpha = 255;

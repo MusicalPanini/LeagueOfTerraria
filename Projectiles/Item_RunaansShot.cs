@@ -33,11 +33,6 @@ namespace TerraLeague.Projectiles
         {
             Lighting.AddLight(projectile.position, 0.5f, 0.45f, 0.30f);
 
-            if (projectile.velocity.Y > 16f)
-            {
-                projectile.velocity.Y = 16f;
-            }
-
             Dust dust = Dust.NewDustPerfect(projectile.position, 204, Vector2.Zero, 0, default, 0.75f);
             dust.noGravity = true;
             dust.alpha = 100;
@@ -55,8 +50,8 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)projectile.ai[0] == target.whoAmI)
-                return true;
+            if ((int)projectile.ai[0] != target.whoAmI)
+                return base.CanHitNPC(target);
             else
                 return false;
         }

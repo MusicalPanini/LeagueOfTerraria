@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using TerraLeague.Buffs;
 using TerraLeague.NPCs;
+using TerraLeague.Projectiles.Homing;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -14,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Projectiles
 {
-    public class BurningVengance_Pyroclasm : ModProjectile
+    public class BurningVengance_Pyroclasm : RichochetProjectile
     {
 
         public override void SetStaticDefaults()
@@ -35,104 +36,35 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.alpha = 255;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+
+            SetHomingDefaults(false, 480, 310);
+            CanOnlyHitTarget = true;
+            NPC_CanTargetCritters = true;
+            MaxVelocity = 0;
         }
 
 
         public override void AI()
         {
-            if (projectile.timeLeft > 300)
+            if (projectile.timeLeft <= 300)
             {
-                if (projectile.timeLeft == 314)
+                if (hitCounter != 0 && projectile.timeLeft == 300)
                 {
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
+                    projectile.netUpdate = true;
+                    GetNewTarget();
                 }
 
-                projectile.friendly = false;
-
-                if ((int)projectile.ai[0] == -1)
-                {
-                    projectile.velocity = Vector2.Zero;
-                }
-                else
-                {
-                    NPC npc = Main.npc[(int)projectile.ai[0]];
-
-                    projectile.Center = npc.Center;
-                }
-
-                if (projectile.timeLeft == 301)
-                {
-                    projectile.ai[1] = FindNewTarget();
-
-                    if ((int)projectile.ai[1] == -1)
-                        projectile.Kill();
-                    else
-                        projectile.ai[0] = (int)projectile.ai[1];
-                }
+                MaxVelocity = 16 * (1 - (projectile.timeLeft / 300f));
+                MaxVelocity *= 6;
+                if (MaxVelocity > 16)
+                    MaxVelocity = 16;
+                base.AI();
             }
             else
             {
-                projectile.friendly = true;
-
-                if ((int)projectile.ai[0] >= 0)
-                {
-
-                    NPC npc = Main.npc[(int)projectile.ai[0]];
-
-                    if (!npc.active && projectile.owner == Main.LocalPlayer.whoAmI)
-                    {
-                        projectile.ai[0] = FindNewTarget();
-
-                        if (projectile.ai[0] == -1)
-                        {
-                            projectile.Kill();
-                            return;
-                        }
-                    }
-
-                    float MaxSpeed = 18;
-
-                    float XDist = (float)npc.Center.X - projectile.Center.X;
-                    float YDist = (float)npc.Center.Y - projectile.Center.Y;
-
-                    float TrueDist = (float)System.Math.Sqrt((double)(XDist * XDist + YDist * YDist));
-                    if (TrueDist > MaxSpeed)
-                    {
-                        TrueDist = MaxSpeed / TrueDist;
-                        XDist *= TrueDist;
-                        YDist *= TrueDist;
-                        int num118 = (int)(XDist * 1000f);
-                        int num119 = (int)(projectile.velocity.X * 1000f);
-                        int num120 = (int)(YDist * 1000f);
-                        int num121 = (int)(projectile.velocity.Y * 1000f);
-                        if (num118 != num119 || num120 != num121)
-                        {
-                            projectile.netUpdate = true;
-                        }
-
-                        if (projectile.timeLeft > 270)
-                        {
-                            projectile.velocity.X = XDist * (1 - ((projectile.timeLeft - 270) / 30f));
-                            projectile.velocity.Y = YDist * (1 - ((projectile.timeLeft - 270) / 30f));
-                        }
-                        else
-                        {
-                            projectile.velocity.X = XDist;
-                            projectile.velocity.Y = YDist;
-                        }
-                    }
-                }
-                else
-                {
-                    projectile.ai[0] = FindNewTarget();
-
-                    if (projectile.ai[0] == -1)
-                    {
-                        projectile.Kill();
-                        return;
-                    }
-                }
-
+                NPC npc = Main.npc[TargetWhoAmI];
+                projectile.Center = npc.Center;
+                MaxVelocity = 0;
             }
 
             for (int i = 0; i < 2; i++)
@@ -143,7 +75,6 @@ namespace TerraLeague.Projectiles
 
                 dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 1f);
                 dust.noLight = true;
-
             }
         }
 
@@ -164,13 +95,9 @@ namespace TerraLeague.Projectiles
             {
                 target.AddBuff(BuffID.OnFire, 1200);
             }
-
-            projectile.friendly = false;
-            
-            projectile.timeLeft = 315;
-
-            if (target.life <= 0)
-                projectile.ai[0] = -1;
+            projectile.timeLeft = PostHitTimeLeft;
+            hitCounter++;
+            //base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -185,27 +112,16 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)projectile.ai[0] == target.whoAmI && projectile.timeLeft < 300)
-                return true;
+            if (projectile.timeLeft < 300)
+                return base.CanHitNPC(target);
             else
                 return false;
         }
 
-        public int FindNewTarget()
+        public override void GetNewTarget()
         {
             projectile.netUpdate = true;
-
-            int npc = TerraLeague.GetClosestNPC(projectile.Center, 600, (int)projectile.ai[0]);
-
-            if (npc != -1)
-            {
-                Main.npc[npc].immune[projectile.owner] = 0;
-                return npc;
-            }
-            else
-            {
-                return -1;
-            }
+            TargetWhoAmI = TerraLeague.GetClosestNPC(projectile.Center, targetingRange, TargetWhoAmI, -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
         }
 
         public override void Kill(int timeLeft)

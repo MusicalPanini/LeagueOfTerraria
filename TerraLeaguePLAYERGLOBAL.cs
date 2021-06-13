@@ -2298,10 +2298,10 @@ namespace TerraLeague
                     {
                         if (target1 != -1)
                         {
-                            Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target1].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target1);
+                            Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target1].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
                             if (target2 != -1)
                             {
-                                Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target2].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target2);
+                                Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target2].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
                             }
                         }
                     }

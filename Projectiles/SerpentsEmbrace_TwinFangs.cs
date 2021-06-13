@@ -5,21 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Projectiles.Homing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    class SerpentsEmbrace_TwinFangs : ModProjectile
+    class SerpentsEmbrace_TwinFangs : HomingProjectile
     {
         
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 4;
-            ProjectileID.Sets.Homing[projectile.type] = true;
             DisplayName.SetDefault("Twin Fangs");
+            base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
@@ -34,6 +35,10 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.magic = true;
             projectile.scale = 1.5f;
+
+            CanOnlyHitTarget = true;
+            CanRetarget = false;
+            TurningFactor = 0.93f;
         }
 
         public override void AI()
@@ -45,17 +50,7 @@ namespace TerraLeague.Projectiles
                 TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 23, -0.5f);
             projectile.soundDelay = 100;
 
-            if (!Main.npc[(int)projectile.ai[0]].active)
-            {
-                projectile.Kill();
-            }
-            else
-            {
-                NPC npc = Main.npc[(int)projectile.ai[0]];
-
-                projectile.velocity = TerraLeague.CalcVelocityToPoint(projectile.Center, npc.Center, projectile.velocity.Length());
-                Lighting.AddLight(projectile.position, 0, 1, 0);
-            }
+            HomingAI();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -69,14 +64,6 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (target.whoAmI == (int)projectile.ai[0] && !target.immortal && !target.townNPC)
-                return true;
-            else
-                return false;
         }
 
         public void AnimateProjectile()

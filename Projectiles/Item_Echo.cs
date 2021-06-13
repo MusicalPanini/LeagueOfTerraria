@@ -5,18 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Projectiles.Homing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    class Item_Echo : ModProjectile
+    class Item_Echo : HomingProjectile
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
             DisplayName.SetDefault("Echo");
+            base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
@@ -24,51 +25,26 @@ namespace TerraLeague.Projectiles
             projectile.width = 8;
             projectile.height = 8;
             projectile.alpha = 255;
-            projectile.timeLeft = 90;
+            projectile.timeLeft = 240;
             projectile.penetrate = 1;
             projectile.friendly = false;
             projectile.hostile = false;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+
+            CanRetarget = true;
+            TurningFactor = 0.93f;
+            MaxVelocity = 12;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft < 75)
+            if (projectile.timeLeft < 240 - 15)
             {
+                HomingAI();
+
                 projectile.friendly = true;
-
-                if (projectile.localAI[0] == 0f)
-                {
-                    AdjustMagnitude(ref projectile.velocity);
-                    projectile.localAI[0] = 1f;
-                }
-                Vector2 move = Vector2.Zero;
-                float distance = 700f;
-                bool target = false;
-                for (int k = 0; k < 200; k++)
-                {
-                    NPC npc = Main.npc[k];
-
-                    if (npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.immortal && k != projectile.ai[0])
-                    {
-                        Vector2 newMove = Main.npc[k].Center - projectile.Center;
-                        float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                        if (distanceTo < distance)
-                        {
-                            move = newMove;
-                            distance = distanceTo;
-                            target = true;
-                        }
-                    }
-                }
-                if (target)
-                {
-                    AdjustMagnitude(ref move);
-                    projectile.velocity += move;
-                    AdjustMagnitude(ref projectile.velocity);
-                }
             }
             if (projectile.timeLeft < 15)
             {
@@ -91,13 +67,10 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
         }
 
-        private void AdjustMagnitude(ref Vector2 vector)
+        public override void GetNewTarget()
         {
-            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 14f)
-            {
-                vector *= 14f / magnitude;
-            }
+            projectile.netUpdate = true;
+            TargetWhoAmI = TerraLeague.GetClosestNPC(projectile.Center, targetingRange, (int)projectile.ai[1], -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -111,14 +84,6 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (target.whoAmI != (int)projectile.ai[0] && !target.immortal && !target.townNPC)
-                return true;
-            else
-                return false;
         }
     }
 }

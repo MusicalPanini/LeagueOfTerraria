@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using System;
 using TerraLeague.Items.Weapons.Abilities;
+using TerraLeague.Projectiles.Homing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,12 +10,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Projectiles
 {
-    class NezuksGauntlet_ArcaneShift : ModProjectile
+    class NezuksGauntlet_ArcaneShift : HomingProjectile
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
             DisplayName.SetDefault("Arcane Shift");
+            base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
@@ -31,49 +32,16 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.extraUpdates = 1;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+
+            CanOnlyHitTarget = true;
+            CanRetarget = true;
+            TurningFactor = 0.93f;
+            MaxVelocity = 16;
         }
 
         public override void AI()
         {
-            if ((int)projectile.ai[0] == -1)
-            {
-                projectile.ai[0] = FindNewTarget();
-
-                if ((int)projectile.ai[0] == -1)
-                {
-                    projectile.Kill();
-                    return;
-                }
-            }
-            else
-            {
-                projectile.friendly = true;
-
-                if (projectile.localAI[0] == 0f)
-                {
-                    AdjustMagnitude(ref projectile.velocity);
-                    projectile.localAI[0] = 1f;
-                }
-                Vector2 move = Vector2.Zero;
-                float distance = 400;
-
-                NPC npc = Main.npc[(int)projectile.ai[0]];
-
-                Vector2 newMove = npc.Center - projectile.Center;
-                float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                if (distanceTo < distance)
-                {
-                    move = newMove;
-                    distance = distanceTo;
-                }
-
-                AdjustMagnitude(ref move);
-                projectile.velocity = move;
-            }
-            if (projectile.timeLeft < 15)
-            {
-                projectile.alpha += 10;
-            }
+            HomingAI();
 
             for (int i = 0; i < 2; i++)
             {
@@ -85,43 +53,18 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
         }
 
-        private void AdjustMagnitude(ref Vector2 vector)
-        {
-            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 12f)
-            {
-                vector *= 12f / magnitude;
-            }
-        }
-
-        private int FindNewTarget()
-        {
-            projectile.netUpdate = true;
-
-            int npc = TerraLeague.GetClosestNPC(projectile.Center, 480);
-
-            if (npc != -1)
-            {
-                Main.npc[npc].immune[projectile.owner] = 0;
-                return npc;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            for (int i = 0; i < 12; i++)
-            {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
-                dust.noGravity = true;
-            }
+            
         }
 
         public override void Kill(int timeLeft)
         {
+            for (int i = 0; i < 12; i++)
+            {
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Firework_Yellow, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
+                dust.noGravity = true;
+            }
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -140,14 +83,6 @@ namespace TerraLeague.Projectiles
             }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (target.whoAmI == (int)projectile.ai[0])
-                return true;
-            else
-                return false;
         }
     }
     public class ArcaneShiftGlobalNPC : GlobalNPC

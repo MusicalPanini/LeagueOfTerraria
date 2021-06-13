@@ -48,7 +48,7 @@ namespace TerraLeague.Items.Weapons
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             item.useTime = 32;
-            Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(speedX, speedY), type, damage, 0, player.whoAmI, -1);
+            Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(speedX, speedY), type, damage, 0, player.whoAmI, -2);
             return false;
         }
 

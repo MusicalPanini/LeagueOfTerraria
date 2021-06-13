@@ -2,6 +2,7 @@
 using System;
 using TerraLeague.Buffs;
 using TerraLeague.NPCs;
+using TerraLeague.Projectiles.Homing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,13 +10,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Projectiles
 {
-    public class Item_SpookyGhost : ModProjectile
+    public class Item_SpookyGhost : HomingProjectile
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spooky Ghost");
-            ProjectileID.Sets.Homing[projectile.type] = true;
             Main.projFrames[projectile.type] = 3;
+            base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
@@ -31,41 +32,17 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.minion = true;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+
+            targetingRange = 700;
+            CanRetarget = true;
+            TurningFactor = 0.95f;
         }
 
         public override void AI()
         {
             if(projectile.timeLeft < 1170)
             {
-                if (projectile.localAI[0] == 0f)
-                {
-                    AdjustMagnitude(ref projectile.velocity);
-                    projectile.localAI[0] = 1f;
-                }
-                Vector2 move = Vector2.Zero;
-                float distance = 700f;
-                bool target = false;
-                for (int k = 0; k < 200; k++)
-                {
-                    NPC npc = Main.npc[k];
-                    if (npc.active && !npc.immortal && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage)
-                    {
-                        Vector2 newMove = Main.npc[k].Center - projectile.Center;
-                        float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                        if (distanceTo < distance)
-                        {
-                            move = newMove;
-                            distance = distanceTo;
-                            target = true;
-                        }
-                    }
-                }
-                if (target)
-                {
-                    AdjustMagnitude(ref move);
-                    projectile.velocity = (10 * projectile.velocity + move) / 11f;
-                    AdjustMagnitude(ref projectile.velocity);
-                }
+                HomingAI();
             }
             
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(-90);
@@ -74,15 +51,6 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
 
             AnimateProjectile();
-        }
-
-        private void AdjustMagnitude(ref Vector2 vector)
-        {
-            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 6f)
-            {
-                vector *= 6f / magnitude;
-            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

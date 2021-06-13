@@ -39,14 +39,17 @@ namespace TerraLeague.Items.CustomItems.Actives
 
                 if (player.whoAmI == Main.myPlayer)
                 {
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 600);
+
                     for (int i = 0; i < modPlayer.maxMinionsLastStep; i++)
                     {
                         float hSpeed = 5;
                         if (modPlayer.maxMinionsLastStep > 1)
                             hSpeed = 10 * ((i) / (float)(modPlayer.maxMinionsLastStep - 1));
 
+                        
 
-                        Projectile.NewProjectile(player.position.X, player.position.Y, hSpeed-5, -4, ProjectileType<Item_SpookyGhost>(), baseDamage + (int)(modPlayer.SUM * minionScaling / 100d), 0, player.whoAmI);
+                        Projectile.NewProjectile(player.position.X, player.position.Y, hSpeed-5, -4, ProjectileType<Item_SpookyGhost>(), baseDamage + (int)(modPlayer.SUM * minionScaling / 100d), 0, player.whoAmI, npcs[Main.rand.Next(npcs.Count)]);
                     }
                 }
 
