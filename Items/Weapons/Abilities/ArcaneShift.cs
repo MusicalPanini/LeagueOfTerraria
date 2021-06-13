@@ -119,7 +119,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                         NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, (float)player.whoAmI, teleportPos.X, teleportPos.Y, 10, 0, 0);
                         
 
-                        Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileType<NezuksGauntlet_ArcaneShift>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, -1);
+                        Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileType<NezuksGauntlet_ArcaneShift>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, -2);
                         player.CheckMana(GetBaseManaCost(), true);
 
                         DoEfx(player, type);
