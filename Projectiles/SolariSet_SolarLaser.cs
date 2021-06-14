@@ -5,32 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Projectiles.Beam;
 using Terraria;
 using Terraria.Enums;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    public class SolariSet_SolarLaser : ModProjectile
+    public class SolariSet_SolarLaser : UncenteredPlayerBeamProjectile
     {
-        private const float MaxChargeValue = 0;
-        private const float MoveDistance = 60f;
-        public float Distance
-        {
-            get { return projectile.ai[1]; }
-            set { projectile.ai[1] = value; }
-        }
-
-        public float Charge
-        {
-            get { return projectile.localAI[0]; }
-            set { projectile.localAI[0] = value; }
-        }
-
-        public bool IsAtMaxCharge => Charge == MaxChargeValue;
-
-        public bool AtMaxCharge { get { return Charge >= MaxChargeValue; } }
-
         public override void SetDefaults()
         {
             projectile.width = 88;
@@ -41,133 +25,54 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.hide = false;
             projectile.timeLeft = 300;
+
+            dust1 = DustID.AmberBolt;
+            dust2 = DustID.AmberBolt;
+            dustScale = 3;
+
+            soundID = 2;
+            soundStyle = 15;
+            soundPitch = 0;
+            soundDelay = 25;
+
+            trackMouse = false;
+            turningFactor = 70;
+            TargetImmunityFrames = 10;
+
+            SpriteStart = new Rectangle(0, 0, 88, 22);
+            SpriteMid = new Rectangle(0, 24, 88, 22);
+            SpriteEnd = new Rectangle(0, 56, 88, 22);
+
+            MaxDistance = 2000;
+            maxCharge = 0;
+            moveDistance = 30;
+            lightColor = Color.Yellow;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void AI()
         {
-                DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], Main.projectile[(int)projectile.ai[0]].Center,
-                    projectile.velocity, 22, -1.57f, 1f, (int)MoveDistance);
-            return false;
-        }
-
-        public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, float rotation = 0f, float scale = 1f, int transDist = 50)
-        {
-            if (spriteBatch is null)
-                throw new ArgumentNullException(nameof(spriteBatch));
-
-            if (texture is null)
-                throw new ArgumentNullException(nameof(texture));
-
-            float r = unit.ToRotation() + rotation;
-            Color color = Color.White;
-            color *= 1 - (projectile.alpha/255f);
-
-            #region Draw laser body
-            for (float i = transDist; i <= Distance + 24; i += step)
-            {
-                Color c = color;
-                Vector2 origin = start + (i - 24) * unit;
-                spriteBatch.Draw(texture, origin - Main.screenPosition,
-                    new Rectangle(0, 24, 88, 22), i < transDist ? Color.Transparent : c, r,
-                    new Vector2(88 * .5f, 30 * .5f), scale, 0, 0);
-
-                if (Main.rand.NextBool(5))
-                {
-                    Dust dust = Dust.NewDustDirect(origin - new Vector2(44, 0), 88, 10, Terraria.ID.DustID.AmberBolt, 0, -3, 0, default, 1.5f * (1 - (projectile.alpha / 255f)));
-                    dust.noGravity = true;
-                }
-            }
-            #endregion
-
-            #region Draw laser tail
-            spriteBatch.Draw(texture, start - Main.screenPosition + (unit * 10),
-                new Rectangle(0, 0, 88, 22), color, r, new Vector2(88 * .5f, 22 * .5f), scale, 0, 0f);
-
-            
-            #endregion
-
-            #region Draw laser head
-            spriteBatch.Draw(texture, start + (Distance + step - 22) * unit - Main.screenPosition,
-                new Rectangle(0, 44, 88, 34), color, r, new Vector2(88 * .5f, 34 * .5f), scale, 0, 0);
-            for (int i = 0; i < 2; i++)
-            {
-                Dust dust = Dust.NewDustDirect(start + (Distance + step) * unit - new Vector2(44, 10), 88, 10, Terraria.ID.DustID.AmberBolt, 0, -3, 0, default, 4 * (1 - (projectile.alpha / 255f)));
-                dust.noGravity = true;
-            }
-
-            #endregion
-
             Projectile sigil = Main.projectile[(int)projectile.ai[0]];
-            texture = Main.projectileTexture[sigil.type];
-            spriteBatch.Draw
-            (
-                texture,
-                new Vector2
-                (
-                    sigil.position.X - Main.screenPosition.X + sigil.width * 0.5f,
-                    sigil.position.Y - Main.screenPosition.Y + sigil.height - (texture.Height) * 0.5f
-                ),
-                new Rectangle(0, (texture.Height) * sigil.frame, texture.Width, texture.Height),
-                color,
-                sigil.rotation,
-                new Vector2(texture.Width, texture.Width) * 0.5f,
-                sigil.scale,
-                SpriteEffects.None,
-                1f
-            );
-        }
+            projectile.Center = sigil.Center;
 
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            if (AtMaxCharge)
-            {
-                Projectile sigil = Main.projectile[(int)projectile.ai[0]];
-                Vector2 unit = projectile.velocity;
-                float point = 0f;
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), sigil.Center,
-                    sigil.Center + unit * Distance, 88, ref point);
-            }
-            return false;
+            if (projectile.timeLeft <= 17)
+                projectile.alpha += 15;
+
+            BeamAI(projectile.Center, projectile.Center + Vector2.UnitY);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(ModContent.BuffType<Buffs.Stunned>(), 60);
-            target.immune[projectile.owner] = 10;
+            base.OnHitNPC(target, damage, knockback, crit);
         }
 
-        public override void AI()
+        protected override void SetLaserPosition(Vector2 Center)
         {
-            if (projectile.timeLeft <= 17)
-                projectile.alpha += 15;
+            bool enableTileCollision = false;
 
-            if (projectile.soundDelay == 0)
+            for (Distance = moveDistance; Distance <= MaxDistance; Distance += 5f)
             {
-                projectile.soundDelay = 25;
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 15), projectile.Center);
-            }
-
-            Vector2 mousePos = Main.MouseWorld;
-            Projectile sigil = Main.projectile[(int)projectile.ai[0]];
-
-            projectile.velocity = new Vector2(0, 1);
-            projectile.netUpdate = true;
-            projectile.Center = sigil.Center;
-
-            Vector2 start = projectile.Left + new Vector2(4, 0);
-            Vector2 unit = projectile.velocity;
-            unit *= -1;
-
-            bool enableTileCollision = true;
-
-            if (!Collision.CanHitLine(sigil.Center, 0, 0, sigil.Center + projectile.velocity * MoveDistance, 0, 0))
-            {
-                enableTileCollision = false;
-            }
-
-            for (Distance = MoveDistance; Distance <= 5000; Distance += 4f)
-            {
-                start = projectile.Left + projectile.velocity * Distance;
+                var start = projectile.Left + projectile.velocity * Distance;
                 if (enableTileCollision)
                 {
                     if (Collision.SolidCollision(start, 80, 1))
@@ -188,22 +93,54 @@ namespace TerraLeague.Projectiles
                     }
                 }
             }
-
-            DelegateMethods.v3_1 = new Vector3(0.8f, 0.8f, 1f);
-            Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - MoveDistance), 26,
-                DelegateMethods.CastLight);
         }
 
-        public override bool ShouldUpdatePosition()
+        protected override void SpawnDusts(Vector2 Center)
         {
-            return false;
+            for (float i = moveDistance; i <= Distance; i += 4)
+            {
+                Vector2 origin = projectile.Center + i * projectile.velocity;
+                if (Main.rand.NextBool(5))
+                {
+                    Dust dust = Dust.NewDustDirect(origin - new Vector2(44, 0), 88, 10, DustID.AmberBolt, 0, -3, 0, default, 1.5f * (1 - (projectile.alpha / 255f)));
+                    dust.noGravity = true;
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                Dust dust = Dust.NewDustDirect(projectile.Left + (Distance + 4) * projectile.velocity, 88, 10, dust1, 0, -3, 0, default, 4 * (1 - (projectile.alpha / 255f)));
+                dust.noGravity = true;
+            }
         }
 
-        public override void CutTiles()
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-            Vector2 unit = projectile.velocity;
-            Utils.PlotTileLine(projectile.Center, projectile.Center + unit * Distance, (projectile.width + 16) * projectile.scale, DelegateMethods.CutTiles);
+            bool preDraw = base.PreDraw(spriteBatch, lightColor);
+
+            Projectile sigil = Main.projectile[(int)projectile.ai[0]];
+            Texture2D texture = Main.projectileTexture[sigil.type];
+            if (texture != null)
+            {
+                spriteBatch.Draw
+                (
+                    texture,
+                    new Vector2
+                    (
+                        sigil.position.X - Main.screenPosition.X + sigil.width * 0.5f,
+                        sigil.position.Y - Main.screenPosition.Y + sigil.height - (texture.Height) * 0.5f
+                    ),
+                    new Rectangle(0, (texture.Height) * sigil.frame, texture.Width, texture.Height),
+                    Color.White * (1 - (projectile.alpha / 255f)),
+                    sigil.rotation,
+                    new Vector2(texture.Width, texture.Width) * 0.5f,
+                    sigil.scale,
+                    SpriteEffects.None,
+                    1f
+                );
+            }
+
+            return preDraw;
         }
     }
 }
