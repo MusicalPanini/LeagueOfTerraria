@@ -87,7 +87,8 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Prime();
+            if (projectile.timeLeft > 2)
+                Prime();
 
             return false;
         }
