@@ -9,7 +9,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace TerraLeague.NPCs
+namespace TerraLeague.NPCs.TargonBoss
 {
     public class TargonBossAttack : ModNPC
     {
@@ -206,7 +206,11 @@ namespace TerraLeague.NPCs
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ProjectileType<TargonBoss_SolarFlareControl>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(npc.Center, new Vector2(0, 1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(npc.Center, new Vector2(0, -1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(npc.Center, new Vector2(1, 0), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(npc.Center, new Vector2(-1, 0), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        //Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ProjectileType<TargonBoss_SolarFlareControl>(), LeonaDamage, 0);
                     }
                     TerraLeague.PlaySoundWithPitch(npc.Center, 2, 34, 0);
                 }

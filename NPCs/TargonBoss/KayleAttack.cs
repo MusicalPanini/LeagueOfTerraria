@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TerraLeague.NPCs
+namespace TerraLeague.NPCs.TargonBoss
 {
     public class KayleAttack : ModNPC
     {

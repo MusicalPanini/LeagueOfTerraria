@@ -325,8 +325,8 @@ namespace TerraLeague
                     new List<int>() { ModContent.ItemType<Items.CelestialBar>(), ModContent.ItemType<Items.Placeable.TargonMonolith>(), ModContent.ItemType<Items.Accessories.BottleOfStardust>() }, // Drops
                     "Climb Mount Targon and accept the challenge at its peak", // Spawn Info
                     "",
-                    "TerraLeague/NPCs/TargonBoss_Checklist",
-                    "TerraLeague/NPCs/TargonBoss_Head");
+                    "TerraLeague/NPCs/TargonBoss/TargonBoss_Checklist",
+                    "TerraLeague/NPCs/TargonBoss/TargonBoss_Head");
 
 
                 bossChecklist.Call(

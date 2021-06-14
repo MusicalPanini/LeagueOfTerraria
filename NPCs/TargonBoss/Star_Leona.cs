@@ -11,11 +11,10 @@ using TerraLeague.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Dusts;
 using Terraria.Audio;
-using System.Linq;
 
-namespace TerraLeague.NPCs
+namespace TerraLeague.NPCs.TargonBoss
 {
-    public class Star_Morg : ModNPC
+    public class Star_Leona : ModNPC
     {
         const int State_Charging = 0;
         const int State_Attack = 1;
@@ -74,7 +73,7 @@ namespace TerraLeague.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shimmer of Redemption");
+            DisplayName.SetDefault("Shimmer of Dawn");
         }
         public override void SetDefaults()
         {
@@ -106,8 +105,7 @@ namespace TerraLeague.NPCs
                 npc.active = false;
             }
 
-            Lighting.AddLight(npc.Center, TargonBoss.MorgColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
-
+            Lighting.AddLight(npc.Center, TargonBoss.LeonaColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
             return base.PreAI();
         }
 
@@ -136,19 +134,14 @@ namespace TerraLeague.NPCs
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 pos = new Vector2(TerraLeagueWORLDGLOBAL.TargonCenterX * 16 + 8, (float)(Main.worldSurface + 50) * 16);
-
-                    Projectile proj = Projectile.NewProjectileDirect(pos, TerraLeague.CalcVelocityToPoint(pos, npc.position, 24), ProjectileType<TargonBoss_SoulShackles>(), TargonBossAttack.MorgDamage, 0, 255, Main.npc.First(x => x.type == NPCType<TargonBoss>()).whoAmI, -1);
-                    proj.ai[0] = Main.npc.First(x => x.type == NPCType<TargonBoss>()).whoAmI;
-                    proj.ai[1] = -1;
-                    proj.netUpdate = true;
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileType<TargonBoss_SmallFlareControl>(), TargonBossAttack.LeonaDamage, 0);
                 }
+                    TerraLeague.PlaySoundWithPitch(npc.Center, 2, 27, 0);
                     npc.active = false;
-                TerraLeague.PlaySoundWithPitch(npc.Center, 2, 27, 0);
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBoss.MorgColor);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBoss.LeonaColor);
                     dust.noGravity = true;
                     dust.velocity *= 2;
                 }
@@ -169,7 +162,7 @@ namespace TerraLeague.NPCs
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.MorgColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.LeonaColor, 1.5f);
                     dust.noGravity = true;
                     count++;
                     break;
@@ -179,7 +172,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.MorgColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.LeonaColor, 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }

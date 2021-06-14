@@ -9,7 +9,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace TerraLeague.NPCs
+namespace TerraLeague.NPCs.TargonBoss
 {
     [AutoloadBossHead]
     public class TargonBoss : ModNPC

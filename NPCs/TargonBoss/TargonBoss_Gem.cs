@@ -13,7 +13,7 @@ using TerraLeague.Dusts;
 using Terraria.Audio;
 using System.Linq;
 
-namespace TerraLeague.NPCs
+namespace TerraLeague.NPCs.TargonBoss
 {
     public class TargonBoss_Gem : ModNPC
     {
