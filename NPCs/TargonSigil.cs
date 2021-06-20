@@ -8,6 +8,7 @@ using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Buffs;
 using TerraLeague.Items.BossBags;
+using TerraLeague.NPCs.TargonBoss;
 
 namespace TerraLeague.NPCs
 {
@@ -39,7 +40,7 @@ namespace TerraLeague.NPCs
             npc.netAlways = true;
             npc.dontTakeDamageFromHostiles = true;
             npc.dontCountMe = true;
-            bossBag = ItemType<TargonBossBag>();
+            
         }
 
         public override bool PreAI()
@@ -104,10 +105,10 @@ namespace TerraLeague.NPCs
             }
             else if (!TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
             {
-                if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+                if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
                 {
                     return text + "\n\nThe whispers offer you a challenge with rewards of strength." +
-                        "\n\n(Accepting the challenge will teleport all players into the Targon Arena)";
+                        "\n\nBring a " + GetModItem(ItemType<TargonMedallion>()).Name + " to the Arena to initiate the challenge";
                 }
                 else
                 {
@@ -137,8 +138,8 @@ namespace TerraLeague.NPCs
         {
             if (TerraLeagueWORLDGLOBAL.TargonUnlocked && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
             {
-                if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
-                    button = "Accept Challenge";
+                if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
+                    button = "Teleport to Arena";
             }
             else if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
             {
@@ -150,7 +151,7 @@ namespace TerraLeague.NPCs
                 string seconds = "" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown % 3600 / 60;
                 seconds = seconds.Length == 1 ? "0" + seconds : seconds;
                 button = "Time Remaining: " + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown / 3600 + ":" + seconds;
-                button2 = "Challenge Arena Again";
+                button2 = "Teleport to Arena";
             }
         }
 
@@ -160,14 +161,10 @@ namespace TerraLeague.NPCs
             {
                 if (firstButton)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.NewNPC((int)npc.position.X, (int)npc.position.Y + 64, NPCType<TargonBoss>());
-                    }
-                    else
-                    {
-                        npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
-                    }
+                    Vector2 teleportPos = new Vector2((TerraLeagueWORLDGLOBAL.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
+
+                    Main.LocalPlayer.Teleport(teleportPos, 1, 0);
+                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, Main.LocalPlayer.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
                 }
             }
             else if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
@@ -201,14 +198,10 @@ namespace TerraLeague.NPCs
             {
                 if (!firstButton)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.NewNPC((int)npc.position.X, (int)npc.position.Y + 64, NPCType<TargonBoss>());
-                    }
-                    else
-                    {
-                        npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
-                    }
+                    Vector2 teleportPos = new Vector2((TerraLeagueWORLDGLOBAL.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
+
+                    Main.LocalPlayer.Teleport(teleportPos, 1, 0);
+                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, Main.LocalPlayer.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
                 }
                 else
                 {

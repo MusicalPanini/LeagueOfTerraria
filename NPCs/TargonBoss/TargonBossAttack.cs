@@ -90,25 +90,25 @@ namespace TerraLeague.NPCs.TargonBoss
             switch ((int)GetMainBoss().ai[1])
             {
                 case 1:
-                    dustColor = TargonBoss.PanthColor;
+                    dustColor = TargonBossNPC.PanthColor;
                     break;
                 case 2:
-                    dustColor = TargonBoss.MorgColor;
+                    dustColor = TargonBossNPC.MorgColor;
                     break;
                 case 3:
-                    dustColor = TargonBoss.KayleColor;
+                    dustColor = TargonBossNPC.KayleColor;
                     break;
                 case 4:
-                    dustColor = TargonBoss.LeonaColor;
+                    dustColor = TargonBossNPC.LeonaColor;
                     break;
                 case 5:
-                    dustColor = TargonBoss.DianaColor;
+                    dustColor = TargonBossNPC.DianaColor;
                     break;
                 case 6:
-                    dustColor = TargonBoss.TaricColor;
+                    dustColor = TargonBossNPC.TaricColor;
                     break;
                 case 7:
-                    dustColor = TargonBoss.ZoeColor;
+                    dustColor = TargonBossNPC.ZoeColor;
                     break;
                 default:
                     dustColor = default;
@@ -903,19 +903,19 @@ namespace TerraLeague.NPCs.TargonBoss
                 switch (GetState())
                 {
                     case 1:
-                        return TargonBoss.PanthColor;
+                        return TargonBossNPC.PanthColor;
                     case 2:
-                        return TargonBoss.MorgColor;
+                        return TargonBossNPC.MorgColor;
                     case 3:
-                        return TargonBoss.KayleColor;
+                        return TargonBossNPC.KayleColor;
                     case 4:
-                        return TargonBoss.LeonaColor;
+                        return TargonBossNPC.LeonaColor;
                     case 5:
-                        return TargonBoss.DianaColor;
+                        return TargonBossNPC.DianaColor;
                     case 6:
-                        return TargonBoss.TaricColor;
+                        return TargonBossNPC.TaricColor;
                     case 7:
-                        return TargonBoss.ZoeColor;
+                        return TargonBossNPC.ZoeColor;
                     default:
                         return Color.White;
                 }

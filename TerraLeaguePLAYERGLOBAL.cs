@@ -21,6 +21,7 @@ using TerraLeague.Items.CustomItems.Passives;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items;
 using TerraLeague.Items.Weapons.Abilities;
+using TerraLeague.NPCs.TargonBoss;
 
 namespace TerraLeague
 {
@@ -1129,7 +1130,7 @@ namespace TerraLeague
                 if (sigil != null)
                 {
                     zoneTargonPeak = sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.3 * 16;
-                    if (sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.4 * 16 && !Main.hardMode && NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+                    if (sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.4 * 16 && !Main.hardMode)
                     {
                         player.AddBuff(BuffType<CelestialFrostbite>(), 2);
                     }
@@ -1159,7 +1160,7 @@ namespace TerraLeague
             {
                 player.AddBuff(BuffType<InTargonArena>(), 5);
             }
-            else if (player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBoss>()) > 0)
+            else if (player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
             {
                 var ded = new PlayerDeathReason
                 {
@@ -1307,7 +1308,7 @@ namespace TerraLeague
                 else
                     player.lifeRegen = -20;
             }
-            if (targonArena && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated && NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+            if (targonArena && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated && NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
             {
                 player.lifeRegenTime = 0;
                 if (player.lifeRegen < 0)

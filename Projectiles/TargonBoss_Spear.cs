@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using TerraLeague.NPCs;
+using TerraLeague.NPCs.TargonBoss;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, TargonBoss.PanthColor.ToVector3() * (1 - (projectile.alpha / 255f)));
+            Lighting.AddLight(projectile.Center, TargonBossNPC.PanthColor.ToVector3() * (1 - (projectile.alpha / 255f)));
 
             if (projectile.ai[0] == 0)
             {

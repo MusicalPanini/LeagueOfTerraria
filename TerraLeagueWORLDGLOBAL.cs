@@ -1268,35 +1268,10 @@ namespace TerraLeague
                 }
                 else if (targonBossActive && !TargonArenaActive)
                 {
-                    //TargonArenaSave = new Tile[100, 100];
-                    for (int i = 0; i < Main.player.Length; i++)
-                    {
-                        if (Main.player[i].active && !Main.player[i].dead)
-                        {
-                            Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
-
-                            Main.player[i].Teleport(teleportPos, 1, 0);
-                            NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);
-                        }
-                    }
-
                     TargonArenaActive = true;
                 }
                 else if (!targonBossActive && TargonArenaActive)
                 {
-                    for (int i = 0; i < Main.player.Length; i++)
-                    {
-                        if (Main.player[i].active && !Main.player[i].dead)
-                        {
-                            if (Main.player[i].GetModPlayer<PLAYERGLOBAL>().targonArena)
-                            {
-                                Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, 40 * 16);
-
-                                Main.player[i].Teleport(teleportPos, 1, 0);
-                                NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);
-                            }
-                        }
-                    }
                     TargonArenaActive = false;
                 }
             }

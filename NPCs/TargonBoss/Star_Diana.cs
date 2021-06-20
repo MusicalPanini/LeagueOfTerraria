@@ -100,7 +100,7 @@ namespace TerraLeague.NPCs.TargonBoss
 
         public override bool PreAI()
         {
-            Lighting.AddLight(npc.Center, TargonBoss.DianaColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
+            Lighting.AddLight(npc.Center, TargonBossNPC.DianaColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
             return base.PreAI();
         }
 
@@ -129,7 +129,7 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileType<TargonBoss_Moonsmall>(), TargonBossAttack.DianaDamage/2, 0);
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileType<TargonBoss_Moonsmall>(), TargonBossNPC.DianaDamage /2, 0);
                 }
 
                 npc.active = false;
@@ -137,7 +137,7 @@ namespace TerraLeague.NPCs.TargonBoss
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBoss.DianaColor);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBossNPC.DianaColor);
                     dust.noGravity = true;
                     dust.velocity *= 2;
                 }
@@ -158,7 +158,7 @@ namespace TerraLeague.NPCs.TargonBoss
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.DianaColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.DianaColor, 1.5f);
                     dust.noGravity = true;
                     count++;
                     break;
@@ -168,7 +168,7 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.DianaColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.DianaColor, 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }

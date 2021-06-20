@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.NPCs.TargonBoss;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace TerraLeague.Walls
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            if (NPC.CountNPCS(ModContent.NPCType<NPCs.TargonBoss>()) > 0)
+            if (NPC.CountNPCS(ModContent.NPCType<TargonBossNPC>()) > 0)
             {
                 r = 0.2f;
                 g = 0.1f;

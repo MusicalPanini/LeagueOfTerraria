@@ -46,12 +46,12 @@ namespace TerraLeague.NPCs.TargonBoss
 
         public override bool PreAI()
         {
-            if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+            if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
             {
                 npc.active = false;
             }
 
-            Lighting.AddLight(npc.Center, TargonBoss.KayleColor.ToVector3());
+            Lighting.AddLight(npc.Center, TargonBossNPC.KayleColor.ToVector3());
 
             return base.PreAI();
         }

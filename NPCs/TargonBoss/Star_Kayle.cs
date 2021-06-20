@@ -100,12 +100,12 @@ namespace TerraLeague.NPCs.TargonBoss
 
         public override bool PreAI()
         {
-            if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+            if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
             {
                 npc.active = false;
             }
 
-            Lighting.AddLight(npc.Center, TargonBoss.KayleColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
+            Lighting.AddLight(npc.Center, TargonBossNPC.KayleColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
             return base.PreAI();
         }
 
@@ -142,7 +142,7 @@ namespace TerraLeague.NPCs.TargonBoss
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBoss.KayleColor);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBossNPC.KayleColor);
                     dust.noGravity = true;
                     dust.velocity *= 2;
                 }
@@ -163,7 +163,7 @@ namespace TerraLeague.NPCs.TargonBoss
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.KayleColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.KayleColor, 1.5f);
                     dust.noGravity = true;
                     count++;
                     break;
@@ -173,7 +173,7 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.KayleColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.KayleColor, 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }

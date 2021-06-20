@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
 using TerraLeague.NPCs;
+using TerraLeague.NPCs.TargonBoss;
 
 namespace TerraLeague.Projectiles
 {
@@ -17,8 +18,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
+            projectile.width = 28;
+            projectile.height = 28;
             projectile.alpha = 0;
             projectile.timeLeft = 600;
             projectile.penetrate = -1;
@@ -30,11 +31,11 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.position, TargonBoss.ZoeColor.ToVector3());
-            if (Main.rand.Next(0, 2) == 0)
+            Lighting.AddLight(projectile.position, TargonBossNPC.ZoeColor.ToVector3());
+            for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 1, TargonBoss.ZoeColor, 2);
-                dust.velocity *= 0f;
+                Dust dust = Dust.NewDustDirect(projectile.position + new Vector2(6, 6), 16, 16, DustID.PortalBolt, 0, 0, 1, TargonBossNPC.ZoeColor, 2f);
+                dust.velocity = projectile.velocity/2f;
                 dust.noGravity = true;
             }
 
@@ -80,7 +81,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, projectile.velocity.X, projectile.velocity.Y, 1, TargonBoss.ZoeColor);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, projectile.velocity.X, projectile.velocity.Y, 1, TargonBossNPC.ZoeColor);
                 dust.noGravity = true;
                 base.Kill(timeLeft);
             }
