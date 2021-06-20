@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks++;
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 2, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks);
+                    TerraLeagueNPCsGLOBAL.PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 2, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks);
             }
 
             target.AddBuff(BuffType<Cleaved>(), 360);

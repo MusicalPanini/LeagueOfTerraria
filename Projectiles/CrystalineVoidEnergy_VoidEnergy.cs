@@ -80,7 +80,7 @@ namespace TerraLeague.Projectiles
             }
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
-                modNPC.PacketHandler.SendSyncStats(-1, Main.LocalPlayer.whoAmI, 1, target.whoAmI, modNPC.CausticStacks);
+                TerraLeagueNPCsGLOBAL.PacketHandler.SendSyncStats(-1, Main.LocalPlayer.whoAmI, 1, target.whoAmI, modNPC.CausticStacks);
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }

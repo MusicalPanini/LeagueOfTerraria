@@ -15,7 +15,7 @@ namespace TerraLeague.NPCs
 {
     public class TerraLeagueNPCsGLOBAL : GlobalNPC
     {
-        internal NPCPacketHandler PacketHandler = new NPCPacketHandler(2);
+        internal static NPCPacketHandler PacketHandler = new NPCPacketHandler(2);
         public float initialSpeed = 1;
 
         public override bool InstancePerEntity
