@@ -32,7 +32,8 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Fire a rain of arrows that slow enemies for 2 seconds";
+            return "Fire a rain of arrows that slow enemies and apply 'Grievous Wounds'" +
+                "\nThe arrows will remain stuck in the ground for 6 seconds";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -53,7 +54,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetRawCooldown()
         {
-            return 6;
+            return 13;
         }
 
         public override int GetBaseManaCost()
@@ -80,14 +81,24 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG);
                 int knockback = 0;
 
-                int arrows = Main.rand.Next(15, 19);
+                int arrows = Main.rand.Next(30, 41);
                 for (int i = 0; i < arrows; i++)
                 {
-                    Vector2 velocity = new Vector2(Main.rand.NextFloat(-3, 0), Main.rand.NextFloat(-6, -5) * 1.5f);
-                    Vector2 velocity2 = new Vector2(Main.rand.NextFloat(0, 3), Main.rand.NextFloat(-6, -5) * 1.5f);
+                    Vector2 VirtualMousePos;
+
+                    if (Main.MouseWorld.X < player.MountedCenter.X)
+                        VirtualMousePos = new Vector2(Math.Max(Main.MouseWorld.X, player.MountedCenter.X - 200) + Main.rand.NextFloat(-80, 80), player.MountedCenter.Y - 600);
+                    else
+                        VirtualMousePos = new Vector2(Math.Min(Main.MouseWorld.X, player.MountedCenter.X + 200) + Main.rand.NextFloat(-80, 80), player.MountedCenter.Y - 600);
+
+
+                    Vector2 velocity = TerraLeague.CalcVelocityToPoint(player.MountedCenter, VirtualMousePos, Main.rand.NextFloat(14, 16));
+
+                    //Vector2 velocity = new Vector2(Main.rand.NextFloat(-3, 0), Main.rand.NextFloat(-6, -5) * 1.5f);
+                    //Vector2 velocity2 = new Vector2(Main.rand.NextFloat(0, 3), Main.rand.NextFloat(-6, -5) * 1.5f);
 
                     Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
-                    Projectile.NewProjectileDirect(position, velocity2, projType, damage, knockback, player.whoAmI);
+                    //Projectile.NewProjectileDirect(position, velocity2, projType, damage, knockback, player.whoAmI);
                 }
 
                 SetAnimation(player, 30, 30, new Vector2(player.MountedCenter.X, player.MountedCenter.Y - 30));
