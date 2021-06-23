@@ -143,11 +143,14 @@ namespace TerraLeague.Projectiles
                 {
                     if (positions.Count >= (6 * i))
                     {
-                        proj = Main.projectile.Where(x => (int)x.ai[0] == i && x.owner == projectile.owner && projectile.type == x.type).First();
-                        proj.Center = positions[positions.Count - (6 * i)];
-                        proj.rotation = angles[angles.Count - (6 * i)];
-                        proj.damage = damage[damage.Count - (6 * i)];
-                        proj.ai[1] = iFrames[iFrames.Count - (6 * i)];
+                        proj = Main.projectile.FirstOrDefault(x => (int)x.ai[0] == i && x.owner == projectile.owner && projectile.type == x.type);
+                        if (proj != null)
+                        {
+                            proj.Center = positions[positions.Count - (6 * i)];
+                            proj.rotation = angles[angles.Count - (6 * i)];
+                            proj.damage = damage[damage.Count - (6 * i)];
+                            proj.ai[1] = iFrames[iFrames.Count - (6 * i)];
+                        }
                     }
 
 
