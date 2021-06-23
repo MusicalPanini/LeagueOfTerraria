@@ -18,7 +18,8 @@ namespace TerraLeague.Items.Weapons
 
         string GetWeaponTooltip()
         {
-            return "Charge an arrow that gains damage and velocity the longer you charge, up to 1.5 seconds";
+            return "Charge an arrow that gains damage and velocity the longer you charge" +
+                "\nCharges faster with ranged attack speed";
         }
 
 
