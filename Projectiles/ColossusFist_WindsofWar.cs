@@ -27,6 +27,8 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.tileCollide = true;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()
