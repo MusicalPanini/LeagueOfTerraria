@@ -49,7 +49,7 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 5; i++)
             {
-                Color color = new Color(0, 255, 100);
+                Color color = new Color(0, 255, 255);
 
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                 int dustBoxWidth = projectile.width - 12;
@@ -66,7 +66,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                 int dustBoxWidth = projectile.width - 12;
                 int dustBoxHeight = projectile.height - 12;
-                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.DungeonWater, 0f, 0f, 100, default, 0.8f);
+                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.DungeonWater, 0f, 0f, 100, default, 1f);
                 dust.velocity *= 0.25f;
                 dust.velocity += projectile.velocity * 0.5f;
             }

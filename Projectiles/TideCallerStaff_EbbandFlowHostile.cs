@@ -57,7 +57,9 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 5; i++)
             {
-                Color color = new Color(0, 255, 100);
+                Color color = new Color(0, 255, 255);
+                if (i > 3)
+                    color = new Color(100, 100, 255);
 
                 Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                 int dustBoxWidth = projectile.width - 12;
