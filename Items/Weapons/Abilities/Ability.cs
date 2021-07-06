@@ -228,24 +228,53 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         protected virtual void SetAnimation(Player player, int useTime, int animationTime, Vector2 target)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.item.type);
+            if (!player.channel)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.item.type);
 
-            float xDist = player.MountedCenter.X - target.X;
-            float yDist = player.MountedCenter.Y - target.Y;
+                float xDist = player.MountedCenter.X - target.X;
+                float yDist = player.MountedCenter.Y - target.Y;
 
-            int facing = -1;
-            if (target.X < player.MountedCenter.X)
-                facing = 1;
+                int facing = -1;
+                if (target.X < player.MountedCenter.X)
+                    facing = 1;
 
-            player.itemRotation = (float)Math.Atan2((double)(yDist * (float)facing), (double)(xDist * (float)facing));
+                player.itemRotation = (float)Math.Atan2((double)(yDist * (float)facing), (double)(xDist * (float)facing));
 
-            player.ChangeDir(-facing);
-            player.itemLocation = Vector2.Zero;
-            player.itemAnimationMax = animationTime + 1;
-            player.itemAnimation = animationTime;
-            player.itemTime = useTime;
-            NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+                player.ChangeDir(-facing);
+                player.itemLocation = Vector2.Zero;
+                player.itemAnimationMax = animationTime + 1;
+                player.itemAnimation = animationTime;
+                player.itemTime = useTime;
+                NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+            }
+        }
 
+        protected virtual void SetAnimation(Player player, Vector2 target)
+        {
+            if (!player.channel)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.item.type);
+
+                float xDist = player.MountedCenter.X - target.X;
+                float yDist = player.MountedCenter.Y - target.Y;
+
+                int facing = -1;
+                if (target.X < player.MountedCenter.X)
+                    facing = 1;
+
+                player.itemRotation = (float)Math.Atan2((double)(yDist * (float)facing), (double)(xDist * (float)facing));
+
+                int useTime = TerraLeague.ScaleWithUseTimeMulti(abilityItem.item.useTime, abilityItem.item, player);
+                int useAnimation = TerraLeague.ScaleWithUseTimeMulti(abilityItem.item.useAnimation, abilityItem.item, player);
+
+                player.ChangeDir(-facing);
+                player.itemLocation = Vector2.Zero;
+                player.itemAnimationMax = useAnimation + 1;
+                player.itemAnimation = useAnimation;
+                player.itemTime = useTime;
+                NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+            }
         }
 
         protected int GetPositionOfAbilityInArray(ModItem modItem)
