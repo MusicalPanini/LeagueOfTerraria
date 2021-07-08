@@ -77,6 +77,11 @@ namespace TerraLeague.Items.Weapons.Abilities
             return true;
         }
 
+        public override bool CanBeCastWhileChanneling()
+        {
+            return true;
+        }
+
         public override void DoEffect(Player player, AbilityType type)
         {
             if (CheckIfNotOnCooldown(player, type) && player.HasBuff(BuffType<Buffs.CelestialExpansion>()))

@@ -41,7 +41,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return false;
+            return true;
         }
 
         public override int GetRawCooldown()

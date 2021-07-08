@@ -91,6 +91,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                         Projectile.NewProjectile(position, new Vector2(numberProjectiles, 0), projType, damage, knockback, player.whoAmI, target, i);
                     }
                     SetCooldowns(player, type);
+                    SetAnimation(player, new Vector2(Main.MouseWorld.X, player.MountedCenter.Y));
                 }
             }
         }

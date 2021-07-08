@@ -83,7 +83,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
 
                 Projectile.NewProjectile(position, velocity, projType, damage, 0, player.whoAmI);
-                SetAnimation(player, 10, 10, Main.MouseWorld);
+                SetAnimation(player, position + velocity);
                 SetCooldowns(player, type);
             }
         }

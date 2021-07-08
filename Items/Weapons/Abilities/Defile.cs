@@ -80,7 +80,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int projType = ProjectileType<DeathsingerTome_Defile>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 0;
-
+                SetAnimation(player, player.MountedCenter + (Vector2.UnitX * player.direction));
                 Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);
             }

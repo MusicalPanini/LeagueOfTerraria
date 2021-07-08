@@ -82,7 +82,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return false;
+            return true;
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -105,7 +105,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI, healing);
 
-                SetAnimation(player, 30, 30, position + velocity);
+                SetAnimation(player, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }

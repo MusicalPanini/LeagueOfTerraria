@@ -32,17 +32,28 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            projectile.localAI[0] = 1 - projectile.timeLeft / 90f;
-
-            for (int i = 0; i < 2; i++)
-            {
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 0, 124, default, 2.5f);
-                dust2.noGravity = true;
-                dust2.noLight = true;
-                dust2.velocity *= 0.6f;
-            }
             if (projectile.timeLeft == 2)
+            {
                 Prime();
+            }
+            else if (projectile.timeLeft > 2)
+            {
+                projectile.localAI[0] = 1 - projectile.timeLeft / 90f;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 dustBoxPosition = new Vector2(projectile.position.X + 0, projectile.position.Y + 0);
+                    int dustBoxWidth = projectile.width - 8;
+                    int dustBoxHeight = projectile.height - 8;
+                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Clentaminator_Blue, 0f, 0f, 100, default, 1.5f + (1.5f * projectile.localAI[0]));
+                    dust.noGravity = true;
+                    dust.velocity *= 0.1f;
+                    dust.velocity += projectile.velocity * 1.4f;
+                    dust.position.X -= projectile.velocity.X / 3f * (float)i;
+                    dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                }
+
+            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -56,14 +67,20 @@ namespace TerraLeague.Projectiles
         {
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 53), projectile.position);
 
-            Dust dust;
-            for (int i = 0; i < 80; i++)
-            {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 0, 0, default, 2f);
-                dust.noGravity = true;
-                dust.velocity *= 2f;
+            TerraLeague.DustBorderRing(projectile.width / 2, projectile.Center, DustID.Clentaminator_Blue, default, 2f, true, true, 1);
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, 0, 0, 0, default, 3f);
+            Dust dust;
+            for (int i = 0; i < 80 * projectile.localAI[0]; i++)
+            {
+                Vector2 dustBoxPosition = new Vector2(projectile.position.X + (projectile.width/6), projectile.position.Y + (projectile.height / 6));
+                int dustBoxWidth = projectile.width - (projectile.width / 3);
+                int dustBoxHeight = projectile.height - (projectile.height / 3);
+
+                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Clentaminator_Blue, 0, 0, 0, default, 2f);
+                dust.noGravity = true;
+                dust.velocity = TerraLeague.CalcVelocityToPoint(projectile.Center, dust.position,  10 * Vector2.Distance(dust.position, projectile.Center)/(projectile.width / 2));
+
+                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Clentaminator_Blue, 0, 0, 0, default, 3f);
                 dust.velocity *= 1f;
                 dust.noGravity = true;
                 dust.color = new Color(0, 220, 220);

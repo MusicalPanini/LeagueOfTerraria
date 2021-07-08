@@ -90,6 +90,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                 }
+                SetAnimation(player, player.MountedCenter + TerraLeague.CalcVelocityToMouse(player.MountedCenter, 1));
                 SetCooldowns(player, type);
             }
         }

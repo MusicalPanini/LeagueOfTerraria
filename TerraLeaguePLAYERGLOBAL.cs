@@ -516,10 +516,12 @@ namespace TerraLeague
         // Abilities
         public Ability[] Abilities = new Ability[4];
         public int[] AbilityCooldowns = new int[4];
+        public bool AbilityChannel = false;
 
         // Actives and Passives
         public bool[] PassivesAreActive = new bool[12];
         public bool[] ActivesAreActive = new bool[6];
+
 
         // Custom Armor Set Bonuses
         public bool pirateSet = false;
@@ -2015,6 +2017,8 @@ namespace TerraLeague
                     if (Abilities[3].CanCurrentlyBeCast(player))
                         Abilities[3].DoEffect(player, AbilityType.R);
                 //UseAbility(AbilityType.R);
+                AbilityChannel = false;
+
 
                 if (!player.silence)
                 {

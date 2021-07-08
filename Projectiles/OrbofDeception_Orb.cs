@@ -53,7 +53,7 @@ namespace TerraLeague.Projectiles
             }
 
 
-            player.itemTime = 5;
+            //player.itemTime = 5;
             if (projectile.timeLeft > 210)
             {
                 if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))

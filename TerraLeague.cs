@@ -1601,6 +1601,11 @@ namespace TerraLeague
             return text;
         }
 
+        public static int ScaleWithUseTimeMulti(int value, Item item, Player player)
+        {
+            return (int)Math.Max(value * (2 - item.GetGlobalItem<Items.TerraLeagueITEMGLOBAL>().UseTimeMultiplier(item, player)), 1);
+        }
+
         public static Color ConvertHexToColor(string hexValue)
         {
             if (hexValue != null)

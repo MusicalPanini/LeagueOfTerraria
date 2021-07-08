@@ -37,6 +37,7 @@ namespace TerraLeague.Buffs
             player.silence = true;
             player.ChangeDir(player.oldDirection);
             player.GetModPlayer<PLAYERGLOBAL>().rightoftheArcaneChannel = true;
+            player.GetModPlayer<PLAYERGLOBAL>().AbilityChannel = true;
 
             if (player.buffTime[buffIndex] % 5 == 0 && Main.LocalPlayer.whoAmI == player.whoAmI)
             {

@@ -69,10 +69,15 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return CurrentlyHasSpecialCast(Main.LocalPlayer);
+            return true;
         }
 
         public override bool CanBeCastWhileCCd()
+        {
+            return CurrentlyHasSpecialCast(Main.LocalPlayer);
+        }
+
+        public override bool CanBeCastWhileChanneling()
         {
             return CurrentlyHasSpecialCast(Main.LocalPlayer);
         }

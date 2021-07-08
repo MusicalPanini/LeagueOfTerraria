@@ -149,11 +149,17 @@ namespace TerraLeague.Items.Weapons.Abilities
             return false;
         }
 
+        virtual public bool CanBeCastWhileChanneling()
+        {
+            return false;
+        }
+
         virtual public bool CanCurrentlyBeCast(Player player)
         {
             if (CanBeCastWhileCCd() || !CanBeCastWhileCCd() && !player.noItems && !player.silence)
                 if (CanBeCastWhileUsingItem() || !CanBeCastWhileUsingItem() && player.itemAnimation <= 0)
-                    return true;
+                    if (CanBeCastWhileChanneling() || !CanBeCastWhileChanneling() && /*!player.channel &&*/ !player.GetModPlayer<PLAYERGLOBAL>().AbilityChannel)
+                        return true;
 
             return false;
         }

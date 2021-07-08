@@ -100,6 +100,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 }
 
                 DoEfx(player, type);
+                SetAnimation(player, new Vector2(player.MountedCenter.X, player.MountedCenter.Y - 10));
                 SetCooldowns(player, type);
             }
         }
