@@ -71,7 +71,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (!modPlayer.nightStalker)
             {
-                bool Prox = TerraLeague.IsThereAnNPCInRange(player.MountedCenter, proximity * 16);
+                bool Prox = Targeting.IsThereAnNPCInRange(player.MountedCenter, proximity * 16);
 
                 if (!Prox || player.invis)
                 {

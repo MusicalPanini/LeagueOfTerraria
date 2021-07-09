@@ -57,7 +57,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    var npcs = TerraLeague.GetAllNPCsInRange(npc.Center, effectRadius);
+                    var npcs = Targeting.GetAllNPCsInRange(npc.Center, effectRadius);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {

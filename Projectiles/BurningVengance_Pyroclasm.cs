@@ -121,7 +121,7 @@ namespace TerraLeague.Projectiles
         public override void GetNewTarget()
         {
             projectile.netUpdate = true;
-            TargetWhoAmI = TerraLeague.GetClosestNPC(projectile.Center, targetingRange, TargetWhoAmI, -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
+            TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, targetingRange, TargetWhoAmI, -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
         }
 
         public override void Kill(int timeLeft)

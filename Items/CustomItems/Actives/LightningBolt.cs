@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             if (cooldownCount <= 0)
             {
-                int npc = TerraLeague.NPCMouseIsHovering();
+                int npc = Targeting.NPCMouseIsHovering();
                 if (npc != -1)
                 {
                     int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);

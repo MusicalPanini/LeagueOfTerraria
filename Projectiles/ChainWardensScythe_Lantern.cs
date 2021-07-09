@@ -59,7 +59,7 @@ namespace TerraLeague.Projectiles
 
                     if (Main.LocalPlayer.whoAmI == player.whoAmI)
                     {
-                        var players = TerraLeague.GetAllPlayersInRange(projectile.Center, effectRadius, -1, player.team);
+                        var players = Targeting.GetAllPlayersInRange(projectile.Center, effectRadius, -1, player.team);
 
                         for (int i = 0; i < players.Count; i++)
                         {

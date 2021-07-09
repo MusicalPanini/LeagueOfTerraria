@@ -34,7 +34,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override void DoEffect(Player player, int spellSlot)
         {
-            int npc = TerraLeague.NPCMouseIsHovering();
+            int npc = Targeting.NPCMouseIsHovering();
             if (npc != -1)
             {
                 Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Exhaust>(), 1, 0, player.whoAmI, npc);

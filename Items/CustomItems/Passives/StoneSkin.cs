@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 500);
+            var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 500);
             if (npcs.Count >= enemies)
             {
                 player.AddBuff(BuffType<StonePlating>(), 5);

@@ -58,7 +58,7 @@ namespace TerraLeague.Items.SummonerSpells
             // For Server
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                int healTarget = TerraLeague.GetClosestPlayer(player.MountedCenter, effectRadius, player.whoAmI, player.team, TerraLeague.PlayerMouseIsHovering(30, player.whoAmI, player.team));
+                int healTarget = Targeting.GetClosestPlayer(player.MountedCenter, effectRadius, player.whoAmI, player.team, Targeting.PlayerMouseIsHovering(30, player.whoAmI, player.team));
 
                 if (healTarget != -1)
                 {

@@ -73,7 +73,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void DoEffect(Player player, AbilityType type)
         {
-            int target = TerraLeague.NPCMouseIsHovering();
+            int target = Targeting.NPCMouseIsHovering();
             if (target != -1)
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))

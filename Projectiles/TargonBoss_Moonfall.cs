@@ -59,7 +59,7 @@ namespace TerraLeague.Projectiles
 
         public override bool CanHitPlayer(Player target)
         {
-            if (!TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, effectRadius))
+            if (!Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, effectRadius))
                 return false;
             return base.CanHitPlayer(target);
         }

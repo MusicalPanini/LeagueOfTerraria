@@ -88,7 +88,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 // For Server
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 300, player.whoAmI, player.team);
+                    var players = Targeting.GetAllPlayersInRange(player.MountedCenter, 300, player.whoAmI, player.team);
 
                     for (int i = 0; i < players.Count; i++)
                     {
@@ -106,7 +106,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             TerraLeague.DustBorderRing(300, player.MountedCenter, DustType<BubbledBubble>(), default, 2);
             TerraLeague.DustRing(DustType<BubbledBubble>(), player, default);
 
-            var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 300, -1, player.team);
+            var players = Targeting.GetAllPlayersInRange(player.MountedCenter, 300, -1, player.team);
             for (int i = 0; i < players.Count; i++)
             {
                 for (int j = 0; j < 10; j++)

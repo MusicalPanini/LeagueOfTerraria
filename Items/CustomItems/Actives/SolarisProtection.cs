@@ -48,7 +48,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 {
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
 
-                    var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
+                    var players = Targeting.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
 
                     for (int i = 0; i < players.Count; i++)
                     {
@@ -69,7 +69,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             //TerraLeague.DustRing(261, user, new Color(255, 106, 0, 0));
             Main.PlaySound(new LegacySoundStyle(2, 28).WithPitchVariance(-0.3f), user.Center);
             TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 263, new Color(255, 106, 0, 0), 2);
-            List<int> players = TerraLeague.GetAllPlayersInRange(user.MountedCenter, effectRadius, -1, user.team);
+            List<int> players = Targeting.GetAllPlayersInRange(user.MountedCenter, effectRadius, -1, user.team);
 
             for (int i = 0; i < players.Count; i++)
             {

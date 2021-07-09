@@ -66,7 +66,7 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
             if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                var players = TerraLeague.GetAllPlayersInRange(projectile.Center, effectRadius, -1, player.team);
+                var players = Targeting.GetAllPlayersInRange(projectile.Center, effectRadius, -1, player.team);
 
                 for (int i = 0; i < players.Count; i++)
                 {
@@ -76,7 +76,7 @@ namespace TerraLeague.Projectiles
                         player.GetModPlayer<PLAYERGLOBAL>().SendHealPacket(projectile.damage, players[i], -1, player.whoAmI);
                 }
 
-                var npcs = TerraLeague.GetAllNPCsInRange(projectile.Center, effectRadius, true, true);
+                var npcs = Targeting.GetAllNPCsInRange(projectile.Center, effectRadius, true, true);
                 for (int i = 0; i < npcs.Count; i++)
                 {
                     player.ApplyDamageToNPC(Main.npc[npcs[i]], projectile.damage * 2, 0, 0, false);

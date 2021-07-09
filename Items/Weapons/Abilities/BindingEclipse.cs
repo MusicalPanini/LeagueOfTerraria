@@ -75,7 +75,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override bool CanCurrentlyBeCast(Player player)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo >= 10)
-                return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 999999, BuffType<GravitumMark>());
+                return Targeting.IsThereAnNPCInRange(player.MountedCenter, 999999, BuffType<GravitumMark>());
 
             return false;
         }
@@ -86,7 +86,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             {
                 player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo -= 10;
                 player.CheckMana(GetBaseManaCost(), true);
-                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 999999, true, true);
+                var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 999999, true, true);
 
                 for (int i = 0; i < npcs.Count; i++)
                 {

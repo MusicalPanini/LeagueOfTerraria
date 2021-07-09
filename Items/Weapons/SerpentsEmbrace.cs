@@ -54,12 +54,12 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 500, BuffID.Venom))
+            if (Targeting.IsThereAnNPCInRange(player.MountedCenter, 500, BuffID.Venom))
             {
                 int tfDamage = item.damage + (MAGScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100);
                 Vector2 center = player.MountedCenter;
 
-                var targets = TerraLeague.GetAllNPCsInRange(center, 500, true);
+                var targets = Targeting.GetAllNPCsInRange(center, 500, true);
                 for (int i = 0; i < targets.Count; i++)
                 {
                     if (Main.npc[targets[i]].HasBuff(BuffID.Venom))

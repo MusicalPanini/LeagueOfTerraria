@@ -60,7 +60,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
                 if (modPlayer.icyZone)
                 {
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 120 + 2 * (modPlayer.armor), true, true);
+                    var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 120 + 2 * (modPlayer.armor), true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {

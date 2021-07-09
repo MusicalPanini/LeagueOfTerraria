@@ -46,7 +46,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 700, true);
+            var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 700, true);
 
             for (int i = 0; i < npcs.Count; i++)
             {

@@ -77,7 +77,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanCurrentlyBeCast(Player player)
         {
-            return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, range);
+            return Targeting.IsThereAnNPCInRange(player.MountedCenter, range);
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -93,7 +93,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 DoEfx(player, type);
                 player.CheckMana(GetBaseManaCost(), true);
 
-                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, range, true, true);
+                var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, range, true, true);
 
                 for (int i = 0; i < npcs.Count; i++)
                 {

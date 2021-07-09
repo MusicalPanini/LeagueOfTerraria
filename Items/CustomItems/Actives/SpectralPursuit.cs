@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 600);
+                    var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 600);
 
                     for (int i = 0; i < modPlayer.maxMinionsLastStep; i++)
                     {

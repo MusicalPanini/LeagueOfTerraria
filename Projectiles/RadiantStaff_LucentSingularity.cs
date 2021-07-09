@@ -101,7 +101,7 @@ namespace TerraLeague.Projectiles
 
                 if (projectile.timeLeft % 15 == 0)
                 {
-                    TerraLeague.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2f, BuffType<Buffs.Slowed>(), 15, true, true);
+                    Targeting.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2f, BuffType<Buffs.Slowed>(), 15, true, true);
                 }
             }
 
@@ -142,7 +142,7 @@ namespace TerraLeague.Projectiles
         public override bool? CanHitNPC(NPC target)
         {
             if (projectile.friendly && !target.townNPC)
-                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+                return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
             else
                 return false;
         }

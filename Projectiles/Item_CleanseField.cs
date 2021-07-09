@@ -64,7 +64,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.timeLeft % 15 == 0)
             {
-                List<int> playersInRange = TerraLeague.GetAllPlayersInRange(projectile.Center, effectRadius * projectile.ai[0] / nodeFrames, -1, Main.player[projectile.owner].team);
+                List<int> playersInRange = Targeting.GetAllPlayersInRange(projectile.Center, effectRadius * projectile.ai[0] / nodeFrames, -1, Main.player[projectile.owner].team);
 
                 for (int i = 0; i < playersInRange.Count; i++)
                 {

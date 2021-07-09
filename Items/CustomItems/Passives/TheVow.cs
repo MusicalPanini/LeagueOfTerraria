@@ -44,7 +44,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
+                    var players = Targeting.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
 
                     for (int i = 0; i < players.Count; i++)
                     {

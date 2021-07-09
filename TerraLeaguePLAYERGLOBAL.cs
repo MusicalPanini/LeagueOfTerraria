@@ -1450,7 +1450,7 @@ namespace TerraLeague
                 player.velocity = Vector2.Zero;
                 if (requiemChannelTime == 1 && player == Main.LocalPlayer)
                 {
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.Center, 999999, true, true);
+                    var npcs = Targeting.GetAllNPCsInRange(player.Center, 999999, true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {
@@ -2287,11 +2287,11 @@ namespace TerraLeague
                 // Performs Winds Fury (Runanns Hurricane)
                 if (proj.ranged && (windsFury || windFuryReplicator) && !TerraLeague.DoNotCountRangedDamage(proj) && windsFuryCooldown == 0)
                 {
-                    int target1 = TerraLeague.GetClosestNPC(player.Center, 520, target.whoAmI);
+                    int target1 = Targeting.GetClosestNPC(player.Center, 520, target.whoAmI);
                     int target2 = -1;
                     if (target1 != -1)
                     {
-                        target2 = TerraLeague.GetClosestNPC(player.Center, 520, new int[] { target.whoAmI, target1 });
+                        target2 = Targeting.GetClosestNPC(player.Center, 520, new int[] { target.whoAmI, target1 });
                     }
 
                     if (windsFury)
@@ -2419,7 +2419,7 @@ namespace TerraLeague
             if ((cleaveLifesteal || cleaveMaxLife || cleaveBasic) && cleaveCooldown == 0)
             {
                 int cleaveDamage = 0;
-                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 200, true, true);
+                var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 200, true, true);
 
                 if (cleaveLifesteal)
                 {

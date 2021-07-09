@@ -55,7 +55,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override void DoEffect(Player player, int spellSlot)
         {
-            List<int> npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 600);
+            List<int> npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 600);
 
             if (npcs.Count != 0)
             {

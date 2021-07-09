@@ -27,7 +27,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             if (cooldownCount <= 0)
             {
-                int npc = TerraLeague.NPCMouseIsHovering(30, true);
+                int npc = Targeting.NPCMouseIsHovering(30, true);
                 if (npc != -1)
                 {
                     DoAction(npc, player, modItem);

@@ -30,7 +30,7 @@ namespace TerraLeague.Buffs
 
             if (player.buffTime[buffIndex] % 10 == 0 && Main.LocalPlayer.whoAmI == player.whoAmI)
             {
-                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 300, true);
+                var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 300, true);
 
                 for (int i = 0; i < npcs.Count; i++)
                 {

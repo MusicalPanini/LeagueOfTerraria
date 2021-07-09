@@ -48,7 +48,7 @@ namespace TerraLeague.Projectiles
         public override void GetNewTarget()
         {
             projectile.netUpdate = true;
-            TargetWhoAmI = TerraLeague.GetClosestNPC(projectile.Center, targetingRange, (int)projectile.ai[1], -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
+            TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, targetingRange, (int)projectile.ai[1], -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

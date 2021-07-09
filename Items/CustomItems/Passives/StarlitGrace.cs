@@ -71,7 +71,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (Main.LocalPlayer.whoAmI == player.whoAmI)
                 {
-                    List<int> players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 200, player.whoAmI, player.team);
+                    List<int> players = Targeting.GetAllPlayersInRange(player.MountedCenter, 200, player.whoAmI, player.team);
 
                     int lowestLife = 99999;
                     int chosen = -1;

@@ -54,7 +54,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 Efx(player);
                 SendEfx(player, modItem);
 
-                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, radius, BuffType<Buffs.Slowed>(), SlowDuration * 60, true, true);
+                Targeting.GiveNPCsInRangeABuff(player.MountedCenter, radius, BuffType<Buffs.Slowed>(), SlowDuration * 60, true, true);
             }
         }
 

@@ -87,7 +87,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 // For Server
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 300, player.whoAmI, player.team);
+                    var players = Targeting.GetAllPlayersInRange(player.MountedCenter, 300, player.whoAmI, player.team);
 
                     for (int i = 0; i < players.Count; i++)
                     {
