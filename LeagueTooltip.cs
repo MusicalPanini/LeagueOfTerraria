@@ -20,6 +20,7 @@ namespace TerraLeague
         public static string SentriesColor{ get { return scalingColor[ScaleType.Sentries]; } }
         public static string ArmorColor{ get { return scalingColor[ScaleType.Armor]; } }
         public static string ResistColor{ get { return scalingColor[ScaleType.Resist]; } }
+        public static string DefenceColor{ get { return scalingColor[ScaleType.Defence]; } }
         public static string MaxLifeColor{ get { return scalingColor[ScaleType.MaxLife]; } }
         public static string CurLifeColor{ get { return scalingColor[ScaleType.CurLife]; } }
         public static string MaxManaColor{ get { return scalingColor[ScaleType.MaxMana]; } }
@@ -106,6 +107,7 @@ namespace TerraLeague
             {ScaleType.Sentries, "SNTs"},
             {ScaleType.Armor, "ARM"},
             {ScaleType.Resist, "RST"},
+            {ScaleType.Defence, "DEF"},
             {ScaleType.MaxLife, "MAXLIFE"},
             {ScaleType.CurLife, "LIFE"},
             {ScaleType.MaxMana, "MAXMANA"},
@@ -124,6 +126,7 @@ namespace TerraLeague
             {ScaleType.Sentries, "4682b4"},
             {ScaleType.Armor, "FFFF00"},
             {ScaleType.Resist, "B0C4DE"},
+            {ScaleType.Defence, "A0A0A0"},
             {ScaleType.MaxLife, "A43741"},
             {ScaleType.CurLife, "A43741"},
             {ScaleType.MaxMana, "2E4372"},
@@ -296,6 +299,9 @@ namespace TerraLeague
                 case ScaleType.Resist:
                     value = modPlayer.resistLastStep;
                     break;
+                case ScaleType.Defence:
+                    value = modPlayer.defenceLastStep;
+                    break;
                 case ScaleType.MaxLife:
                     value = modPlayer.maxLifeLastStep;
                     break;
@@ -329,6 +335,7 @@ namespace TerraLeague
         Sentries,
         Armor,
         Resist,
+        Defence,
         MaxLife,
         CurLife,
         MaxMana,
