@@ -43,7 +43,7 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<OrbofDeception_Orb>();
             item.noMelee = true;
             item.useTurn = true;
-            item.autoReuse = true;
+            item.autoReuse = false;
             item.noUseGraphic = true;
 
             AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();

@@ -94,7 +94,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 {
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, i, 100 / (4 + player.maxMinions));
                 }
-                SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
+                SetAnimation(player, position + velocity);
                 SetCooldowns(player, type);
             }
         }

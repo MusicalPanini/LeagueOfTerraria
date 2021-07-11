@@ -25,6 +25,7 @@ namespace TerraLeague.Projectiles
             projectile.alpha = 0;
             projectile.timeLeft = 360;
             projectile.tileCollide = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
         }
 
         public override void AI()

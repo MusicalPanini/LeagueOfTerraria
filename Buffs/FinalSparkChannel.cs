@@ -23,6 +23,7 @@ namespace TerraLeague.Buffs
             player.noItems = true;
             player.silence = true;
             player.GetModPlayer<PLAYERGLOBAL>().finalsparkChannel = true;
+            player.GetModPlayer<PLAYERGLOBAL>().AbilityChannel = true;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

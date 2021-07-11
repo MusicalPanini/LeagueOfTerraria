@@ -516,10 +516,13 @@ namespace TerraLeague
         // Abilities
         public Ability[] Abilities = new Ability[4];
         public int[] AbilityCooldowns = new int[4];
+        public int[] AbilityBuffer = new int[4];
+        public bool AbilityChannel = false;
 
         // Actives and Passives
         public bool[] PassivesAreActive = new bool[12];
         public bool[] ActivesAreActive = new bool[6];
+
 
         // Custom Armor Set Bonuses
         public bool pirateSet = false;
@@ -1996,25 +1999,59 @@ namespace TerraLeague
                     }
                 }
 
-                if (TerraLeague.QAbility.Current && Abilities[0] != null)
+                if (TerraLeague.QAbility.JustPressed)
+                    AbilityBuffer[0] = 15;
+                if (TerraLeague.WAbility.JustPressed)
+                    AbilityBuffer[1] = 15;
+                if (TerraLeague.EAbility.JustPressed)
+                    AbilityBuffer[2] = 15;
+                if (TerraLeague.RAbility.JustPressed)
+                    AbilityBuffer[3] = 15;
+
+                if (Abilities[0] != null && AbilityBuffer[0] > 0)
+                {
                     if (Abilities[0].CanCurrentlyBeCast(player))
+                    {
                         Abilities[0].DoEffect(player, AbilityType.Q);
-                        //UseAbility(AbilityType.Q);
-
-                if (TerraLeague.WAbility.Current && Abilities[1] != null)
+                        AbilityBuffer[0] = 0;
+                    }
+                }
+                if (Abilities[1] != null && AbilityBuffer[1] > 0)
+                {
                     if (Abilities[1].CanCurrentlyBeCast(player))
+                    {
                         Abilities[1].DoEffect(player, AbilityType.W);
-                //UseAbility(AbilityType.W);
-
-                if (TerraLeague.EAbility.Current && Abilities[2] != null)
+                        AbilityBuffer[1] = 0;
+                    }
+                }
+                if (Abilities[2] != null && AbilityBuffer[2] > 0)
+                {
                     if (Abilities[2].CanCurrentlyBeCast(player))
+                    {
                         Abilities[2].DoEffect(player, AbilityType.E);
-                //UseAbility(AbilityType.E);
-
-                if (TerraLeague.RAbility.Current && Abilities[3] != null)
+                        AbilityBuffer[2] = 0;
+                    }
+                }
+                if (Abilities[3] != null && AbilityBuffer[3] > 0)
+                {
                     if (Abilities[3].CanCurrentlyBeCast(player))
+                    {
                         Abilities[3].DoEffect(player, AbilityType.R);
-                //UseAbility(AbilityType.R);
+                        AbilityBuffer[3] = 0;
+                    }
+                }
+
+                if (AbilityBuffer[0] > 0)
+                    AbilityBuffer[0]--;
+                if (AbilityBuffer[1] > 0)
+                    AbilityBuffer[1]--;
+                if (AbilityBuffer[2] > 0)
+                    AbilityBuffer[2]--;
+                if (AbilityBuffer[3] > 0)
+                    AbilityBuffer[3]--;
+
+                AbilityChannel = false;
+
 
                 if (!player.silence)
                 {
@@ -3538,7 +3575,9 @@ namespace TerraLeague
 
         public void SetTempUseItem(int itemToUse)
         {
-            oldUsedInventorySlot = player.selectedItem;
+            if (oldUsedInventorySlot == -1)
+                oldUsedInventorySlot = player.selectedItem;
+
             player.selectedItem = player.FindItem(itemToUse);
 
             if (oldUsedInventorySlot == 58 && player.selectedItem == -1)

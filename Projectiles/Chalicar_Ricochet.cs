@@ -32,6 +32,11 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = false;
             projectile.alpha = 0;
             projectile.netImportant = true;
+            //projectile.usesIDStaticNPCImmunity = true;
+            //projectile.idStaticNPCHitCooldown = 30;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = -2;
+
 
             SetHomingDefaults(true, 480, 301);
             CanOnlyHitTarget = false;

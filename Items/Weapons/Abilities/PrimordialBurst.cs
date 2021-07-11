@@ -88,7 +88,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                     int knockback = 3;
 
-                    SetAnimation(player, 10, 10, Main.npc[npc].Center);
+                    SetAnimation(player, Main.npc[npc].Center);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, npc, -1);
                     SetCooldowns(player, type);
                 }

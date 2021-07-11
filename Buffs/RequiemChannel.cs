@@ -20,7 +20,7 @@ namespace TerraLeague.Buffs
             player.noKnockback = true;
             player.jump = 0;
             player.noItems = true;
-            player.silence = true;
+            player.GetModPlayer<PLAYERGLOBAL>().AbilityChannel = true;
             player.GetModPlayer<PLAYERGLOBAL>().requiemChannel = true;
             player.GetModPlayer<PLAYERGLOBAL>().requiemChannelTime = player.buffTime[buffIndex];
         }

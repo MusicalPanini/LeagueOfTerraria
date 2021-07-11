@@ -97,7 +97,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
                     startingAngle -= baseAngle * 2 / (numberProjectiles - 1);
                 }
-                SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
+                SetAnimation(player, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }

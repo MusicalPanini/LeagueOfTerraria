@@ -65,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return false;
+            return true;
         }
 
         public override int GetRawCooldown()
@@ -83,7 +83,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 0;
 
-                SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
+                SetAnimation(player, position + velocity);
                 DoEfx(player, type);
                 Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);

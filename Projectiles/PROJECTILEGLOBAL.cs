@@ -54,6 +54,14 @@ namespace TerraLeague.Projectiles
             base.OnHitNPC(projectile, target, damage, knockback, crit);
         }
 
+        public override bool PreAI(Projectile projectile)
+        {
+            if (channelProjectile)
+                Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().AbilityChannel = true;
+
+            return base.PreAI(projectile);
+        }
+
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (abilitySpell)

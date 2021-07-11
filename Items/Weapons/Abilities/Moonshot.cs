@@ -72,7 +72,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return false;
+            return true;
         }
 
         public override bool CanCurrentlyBeCast(Player player)
@@ -95,7 +95,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                 DoEfx(player, type);
-                SetAnimation(player, 40, 40, position + velocity);
+                SetAnimation(player, position + velocity);
                 SetCooldowns(player, type);
             }
         }

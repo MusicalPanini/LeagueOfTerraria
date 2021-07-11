@@ -95,7 +95,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                         modPlayer.SendBuffPacket(BuffType<Buffs.CommandProtect>(), duration, players[i], -1, player.whoAmI);
                     }
                 }
-
+                SetAnimation(player, player.MountedCenter + (Vector2.UnitX * player.direction));
                 SetCooldowns(player, type);
             }
         }

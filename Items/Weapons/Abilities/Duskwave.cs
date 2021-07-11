@@ -95,7 +95,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 }
 
                 player.GetModPlayer<PLAYERGLOBAL>().infernumAmmo -= 10;
-                SetAnimation(player, 30, 30, position + velocity);
+                SetAnimation(player, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }

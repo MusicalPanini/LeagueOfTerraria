@@ -51,10 +51,14 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0.75f, 0f, 0.75f);
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, DustID.Clentaminator_Purple, 0f, 0f, 255, new Color(59, 0, 255), 2f);
+                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 0, projectile.position.Y + 0);
+                int dustBoxWidth = projectile.width - 8;
+                int dustBoxHeight = projectile.height - 8;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Clentaminator_Purple, 0f, 0f, 255, new Color(59, 0, 255), 2f);
                 dust.noGravity = true;
-                dust.noLight = true;
-                dust.velocity *= 0;
+                dust.velocity *= 0.1f;
+                dust.position.X -= projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
             }
         }
 

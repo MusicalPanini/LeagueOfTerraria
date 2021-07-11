@@ -85,6 +85,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
 
                 Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                SetAnimation(player, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }

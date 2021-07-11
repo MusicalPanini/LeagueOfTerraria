@@ -24,6 +24,7 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.alpha = 255;
             projectile.tileCollide = false;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
         }
 
         public override void AI()

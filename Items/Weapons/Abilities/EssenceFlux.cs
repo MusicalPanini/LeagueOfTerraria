@@ -87,7 +87,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = (int)(1);
                 int knockback = 0;
 
-                SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
+                SetAnimation(player, position + velocity);
                 Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                 DoEfx(player, type);
                 SetCooldowns(player, type);

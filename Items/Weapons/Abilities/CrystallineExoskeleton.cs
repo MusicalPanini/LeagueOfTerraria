@@ -55,6 +55,11 @@ namespace TerraLeague.Items.Weapons.Abilities
             return true;
         }
 
+        public override bool CanBeCastWhileChanneling()
+        {
+            return true;
+        }
+
         public override int GetRawCooldown()
         {
             return 12;

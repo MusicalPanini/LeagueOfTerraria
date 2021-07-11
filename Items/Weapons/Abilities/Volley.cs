@@ -70,7 +70,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return false;
+            return true;
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -92,7 +92,9 @@ namespace TerraLeague.Items.Weapons.Abilities
                     startingAngle -= 7.5f;
                 }
 
-                SetAnimation(player, 20, 20, position + velocity);
+                int useAnimation = TerraLeague.ScaleWithUseTimeMulti(abilityItem.item.useAnimation, abilityItem.item, player);
+
+                SetAnimation(player, useAnimation, useAnimation, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }

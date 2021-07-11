@@ -72,7 +72,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return CurrentlyHasSpecialCast(Main.LocalPlayer);
+            return true;
         }
 
         public override bool CanBeCastWhileCCd()
@@ -112,7 +112,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 93, -1f);
+            //TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 93, -0.5f);
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 43, -0.5f);
         }
     }
