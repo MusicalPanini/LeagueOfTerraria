@@ -12,6 +12,21 @@ namespace TerraLeague
 {
     public static class LeagueTooltip
     {
+        public static string MeleeColor{ get { return scalingColor[ScaleType.Melee]; } }
+        public static string RangedColor{ get { return scalingColor[ScaleType.Ranged]; } }
+        public static string MagicColor{ get { return scalingColor[ScaleType.Magic]; } }
+        public static string SummonColor{ get { return scalingColor[ScaleType.Summon]; } }
+        public static string MinionsColor{ get { return scalingColor[ScaleType.Minions]; } }
+        public static string SentriesColor{ get { return scalingColor[ScaleType.Sentries]; } }
+        public static string ArmorColor{ get { return scalingColor[ScaleType.Armor]; } }
+        public static string ResistColor{ get { return scalingColor[ScaleType.Resist]; } }
+        public static string MaxLifeColor{ get { return scalingColor[ScaleType.MaxLife]; } }
+        public static string CurLifeColor{ get { return scalingColor[ScaleType.CurLife]; } }
+        public static string MaxManaColor{ get { return scalingColor[ScaleType.MaxMana]; } }
+        public static string CurManaColor{ get { return scalingColor[ScaleType.CurMana]; } }
+        public static string HasteColor{ get { return scalingColor[ScaleType.Haste]; } }
+        public static string HealPowerColor{ get { return scalingColor[ScaleType.HealPower]; } }
+
         private static readonly Dictionary<string, string> keys = new Dictionary<string, string>()
             {
                 {"Escape", "Esc"},
