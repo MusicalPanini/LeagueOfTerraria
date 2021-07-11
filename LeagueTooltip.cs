@@ -27,6 +27,8 @@ namespace TerraLeague
         public static string CurManaColor{ get { return scalingColor[ScaleType.CurMana]; } }
         public static string HasteColor{ get { return scalingColor[ScaleType.Haste]; } }
         public static string HealPowerColor{ get { return scalingColor[ScaleType.HealPower]; } }
+        public static string RngAtkSpdColor{ get { return "808080"; } }
+        public static string ManaReductionColor{ get { return "4169E1"; } }
 
         private static readonly Dictionary<string, string> keys = new Dictionary<string, string>()
             {
