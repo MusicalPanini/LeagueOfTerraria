@@ -458,7 +458,7 @@ namespace TerraLeague
             TerraLeague.Log("[DEBUG] - Received Retarget", new Color(80, 80, 0));
             if (Main.netMode == NetmodeID.Server)
             {
-                TerraLeague.ForceNPCStoRetarget(Main.player[player]);
+                Targeting.ForceNPCStoRetarget(Main.player[player]);
             }
         }
 

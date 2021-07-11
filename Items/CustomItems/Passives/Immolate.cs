@@ -20,7 +20,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("IMMOLATE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Set near by enemies on fire and deal " + (weaker ? 10 : 50) + " damage per second");
+            return TooltipName("IMMOLATE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Set near by enemies on fire and deal " + (weaker ? 10 : 50) + " damage per second");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (Main.time % 240 == 0)
             {
-                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, (weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240, true, true);
+                Targeting.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, (weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240, true, true);
 
                 Efx(player);
                 SendEfx(player, modItem);

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("GIANT STRENGTH") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee attacks deal ") + TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, meleeScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra damage");
+            return TooltipName("GIANT STRENGTH") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Melee attacks deal ") + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(meleeScaling, ScaleType.Melee)) + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " extra damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

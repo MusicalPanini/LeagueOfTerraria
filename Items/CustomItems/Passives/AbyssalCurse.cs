@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("ABYSSAL CURSE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Debuff nearby enemies to make them take 8% more magic damage");
+            return TooltipName("ABYSSAL CURSE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Debuff nearby enemies to make them take 8% more magic damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (Main.time % 240 == 120)
             {
-                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, BuffType<Buffs.AbyssalCurse>(), 240, true, true);
+                Targeting.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, BuffType<Buffs.AbyssalCurse>(), 240, true, true);
 
                 Efx(player);
                 SendEfx(player, modItem);

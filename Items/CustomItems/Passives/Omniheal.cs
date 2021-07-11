@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("OMNIHEAL") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain +" + percentLifesteal + " life steal"/* +
+            return TooltipName("OMNIHEAL") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain +" + percentLifesteal + " life steal"/* +
                 "\n" + percentLifesteal * 3 + "% decreased maximum life" +
                 "\n" + percentLifesteal * 3 + "% increased damage taken"*/);
         }

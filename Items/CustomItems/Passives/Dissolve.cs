@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("DISSOLVE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Magic attacks ignore " + armorReduction + "% of enemy armor");
+            return TooltipName("DISSOLVE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Magic attacks ignore " + armorReduction + "% of enemy armor");
         }
 
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)

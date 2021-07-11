@@ -53,7 +53,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.timeLeft % 15 == 0)
             {
-                TerraLeague.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2, BuffType<Buffs.Slowed>(), 15, true, true);
+                Targeting.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2, BuffType<Buffs.Slowed>(), 15, true, true);
             }
 
             AnimateProjectile();
@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
             {
                 if (target.townNPC)
                     return false;
-                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2f);
+                return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2f);
             }
             else
                 return false;

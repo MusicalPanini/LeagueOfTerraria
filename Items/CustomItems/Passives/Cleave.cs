@@ -27,22 +27,24 @@ namespace TerraLeague.Items.CustomItems.Passives
             switch (type)
             {
                 case CleaveType.Basic:
-                    text = TerraLeague.CreateColorString(PassiveSecondaryColor, "deal") + " " + TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, baseMeleeDamage) + TerraLeague.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies");
+                    text = LeagueTooltip.CreateColorString(PassiveSecondaryColor, "deal") + " " + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(baseMeleeDamage, ScaleType.Melee)) + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies");
                     break;
                 case CleaveType.MaxLife:
-                    text = TerraLeague.CreateColorString(PassiveSecondaryColor, "deal ") + TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, baseMeleeDamage) + " + "
-                     + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep, 5)
-                     + TerraLeague.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies");
+                    text = LeagueTooltip.CreateColorString(PassiveSecondaryColor, "deal ")
+                        + LeagueTooltip.TooltipValue(0, false, "",
+                        new System.Tuple<int, ScaleType>(baseMeleeDamage, ScaleType.Melee),
+                        new System.Tuple<int, ScaleType>(5, ScaleType.MaxLife))
+                        + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies");
                     break;
                 case CleaveType.Lifesteal:
-                    text = TerraLeague.CreateColorString(PassiveSecondaryColor, "deal ") + TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, baseMeleeDamage) 
-                        + TerraLeague.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies\nHeal for 10% of the damage");
+                    text = LeagueTooltip.CreateColorString(PassiveSecondaryColor, "deal ") + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(baseMeleeDamage, ScaleType.Melee))
+                        + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies\nHeal for 10% of the damage");
                     break;
                 default:
                     break;
             }
 
-            return TooltipName("CLEAVE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your melee attacks will periodically ") + text;
+            return TooltipName("CLEAVE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Your melee attacks will periodically ") + text;
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

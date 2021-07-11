@@ -10,7 +10,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("POX") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Magic attacks will apply stacks of 'Pox' stacking 5 times");
+            return TooltipName("POX") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Magic attacks will apply stacks of 'Pox' stacking 5 times");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

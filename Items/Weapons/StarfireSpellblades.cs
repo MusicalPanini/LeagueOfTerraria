@@ -21,7 +21,11 @@ namespace TerraLeague.Items.Weapons
         {
             return "Gains attack speed and damage each half second in combat" +
                 "\nAfter 6 seconds, the sword will ascend and fire waves of starfire" +
-                "\nThe wave deals " + (int)(item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
+                "\nThe wave deals " + LeagueTooltip.TooltipValue((int)(item.damage * 1.5), false, "",
+                new System.Tuple<int, ScaleType>(30, ScaleType.Melee),
+                new System.Tuple<int, ScaleType>(50, ScaleType.Summon)
+                ) + " melee damage";
+           // "\nThe wave deals " + (int)(item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
         }
 
         public override void SetDefaults()

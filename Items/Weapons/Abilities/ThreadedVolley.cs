@@ -32,7 +32,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Prepare  " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)Main.LocalPlayer.maxMinions, 100) + " + 4 rock shards and throw them in the original cast direction";
+            return "Prepare " + LeagueTooltip.TooltipValue(4, false, "",
+              new Tuple<int, ScaleType>(100, ScaleType.Minions)
+              ) + " rock shards and throw them in the original cast direction";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -65,7 +67,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " + " + GetScalingTooltip(player, DamageType.SUM) + " magic damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic),
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
+              ) + " magic damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

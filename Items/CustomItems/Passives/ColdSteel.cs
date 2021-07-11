@@ -19,7 +19,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("COLD STEEL") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Chance to slow near by enemies upon taking damage");
+            return TooltipName("COLD STEEL") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Chance to slow near by enemies upon taking damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -54,7 +54,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 Efx(player);
                 SendEfx(player, modItem);
 
-                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, radius, BuffType<Buffs.Slowed>(), SlowDuration * 60, true, true);
+                Targeting.GiveNPCsInRangeABuff(player.MountedCenter, radius, BuffType<Buffs.Slowed>(), SlowDuration * 60, true, true);
             }
         }
 

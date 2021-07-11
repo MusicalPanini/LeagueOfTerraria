@@ -49,7 +49,10 @@ namespace TerraLeague.Items.Weapons
         string GetWeaponTooltip()
         {
             return "Call down stars that have a chance to drop Rejuvenation Hearts on hit" +
-                "\nDrop Chance: " + TerraLeague.CreateScalingTooltip(DamageType.NONE, (int)(baseRejuvChance * 100), 100, true, "%") + " + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, 15, true, "%");
+                "\nDrop Chance: " +
+                LeagueTooltip.TooltipValue((int)(baseRejuvChance * 100), true, "%",
+                new System.Tuple<int, ScaleType>(15, ScaleType.Magic)
+                );
         }
 
         public static float RejuvDropChance(Player player)

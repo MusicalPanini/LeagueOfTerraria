@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("SPELLBLADE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "After using an ability, your next melee attack will deal " + (damageModifier) * 100 + "% damage");
+            return TooltipName("SPELLBLADE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "After using an ability, your next melee attack will deal " + (damageModifier) * 100 + "% damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -60,7 +60,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
                 if (modPlayer.icyZone)
                 {
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 120 + 2 * (modPlayer.armor), true, true);
+                    var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 120 + 2 * (modPlayer.armor), true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {

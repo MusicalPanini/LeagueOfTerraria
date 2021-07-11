@@ -100,7 +100,7 @@ namespace TerraLeague.UI
             {
                 List<string> tooltip = new List<string>
                 {
-                    TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, ability.GetAbilityName())
+                    LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, ability.GetAbilityName())
                 };
                 if (ability.GetDamageTooltip(Main.LocalPlayer) != "")
                     tooltip.AddRange(ability.GetDamageTooltip(Main.LocalPlayer).Split('\n'));
@@ -204,16 +204,16 @@ namespace TerraLeague.UI
             switch (abilityType)
             {
                 case AbilityType.Q:
-                    slotNumText = TerraLeague.ConvertKeyString(TerraLeague.QAbility);
+                    slotNumText = LeagueTooltip.ConvertKeyString(TerraLeague.QAbility);
                     break;
                 case AbilityType.W:
-                    slotNumText = TerraLeague.ConvertKeyString(TerraLeague.WAbility);
+                    slotNumText = LeagueTooltip.ConvertKeyString(TerraLeague.WAbility);
                     break;
                 case AbilityType.E:
-                    slotNumText = TerraLeague.ConvertKeyString(TerraLeague.EAbility);
+                    slotNumText = LeagueTooltip.ConvertKeyString(TerraLeague.EAbility);
                     break;
                 case AbilityType.R:
-                    slotNumText = TerraLeague.ConvertKeyString(TerraLeague.RAbility);
+                    slotNumText = LeagueTooltip.ConvertKeyString(TerraLeague.RAbility);
                     break;
                 default:
                     break;

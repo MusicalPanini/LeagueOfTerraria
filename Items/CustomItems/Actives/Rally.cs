@@ -21,8 +21,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("RALLY") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Your minions deal ") + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling, false, "%") + TerraLeague.CreateColorString(ActiveSecondaryColor, " increased damage for " + duration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("RALLY") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Your minions deal ") + LeagueTooltip.TooltipValue(0, false, "%", new System.Tuple<int, ScaleType>(minionScaling, ScaleType.Summon)) + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " increased damage for " + duration + " seconds") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

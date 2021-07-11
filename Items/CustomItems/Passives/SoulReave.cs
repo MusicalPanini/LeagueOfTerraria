@@ -23,7 +23,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("SOUL REAVE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Ranged critical hits will restore " + manaRestore + "% of your missing mana");
+            return TooltipName("SOUL REAVE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Ranged critical hits will restore " + manaRestore + "% of your missing mana");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

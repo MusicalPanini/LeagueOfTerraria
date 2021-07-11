@@ -67,9 +67,9 @@ namespace TerraLeague.Projectiles.Homing
             projectile.netUpdate = true;
 
             if (exlusiveTargeting)
-                TargetWhoAmI = TerraLeague.GetClosestNPC(projectile.Center, 480, HaveHit, true, true);
+                TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, 480, HaveHit, true, true);
             else
-                TargetWhoAmI = TerraLeague.GetClosestNPC(projectile.Center, 480);
+                TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, 480);
 
             if (!CouldNotFindTarget)
             {

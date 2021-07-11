@@ -20,9 +20,9 @@ namespace TerraLeague.Items.Weapons
         string GetWeaponTooltip()
         {
             return "Has a chance to throw a special card" +
-                "\n" + TerraLeague.CreateColorString("0066ff", "Blue Card") + " - Restore 25 mana on hit" +
-                "\n" + TerraLeague.CreateColorString("ffff4d", "Yellow Card") + " - Applies 'Stunned'" +
-                "\n" + TerraLeague.CreateColorString("ff1a1a", "Red Card") + " - Explodes on contact";
+                "\n" + LeagueTooltip.CreateColorString("0066ff", "Blue Card") + " - Restore 25 mana on hit" +
+                "\n" + LeagueTooltip.CreateColorString("ffff4d", "Yellow Card") + " - Applies 'Stunned'" +
+                "\n" + LeagueTooltip.CreateColorString("ff1a1a", "Red Card") + " - Explodes on contact";
         }
 
         public override void SetDefaults()

@@ -22,7 +22,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("HARMONY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain " + lifeRegen + " life regen per " + preMana + " current mana");
+            return TooltipName("HARMONY") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain " + lifeRegen + " life regen per " + preMana + " current mana");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

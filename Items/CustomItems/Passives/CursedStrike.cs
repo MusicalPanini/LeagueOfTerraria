@@ -11,7 +11,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("Affliction") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Magic attacks apply 'Greivous Wounds'");
+            return TooltipName("Affliction") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Magic attacks apply 'Greivous Wounds'");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

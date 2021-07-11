@@ -65,7 +65,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return "Enemies with 'Deadly Venom' take " + GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.RNG) + " + " + GetScalingTooltip(player, DamageType.MAG) + " ranged damage per stack";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+                new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged),
+                new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+                ) + " ranged damage per stack";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -75,7 +78,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanCurrentlyBeCast(Player player)
         {
-            return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 700, BuffType<DeadlyVenom>());
+            return Targeting.IsThereAnNPCInRange(player.MountedCenter, 700, BuffType<DeadlyVenom>());
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -83,7 +86,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost()))
             {
                 player.CheckMana(GetBaseManaCost(), true);
-                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 700, true);
+                var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 700, true);
 
                 for (int i = 0; i < npcs.Count; i++)
                 {

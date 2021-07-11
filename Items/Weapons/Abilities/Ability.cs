@@ -204,25 +204,25 @@ namespace TerraLeague.Items.Weapons.Abilities
         protected string GetScalingTooltip(Player player, DamageType dam, bool useHealpower = false, string extraText = "")
         {
             string line = "";
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            //PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            switch (dam)
-            {
-                case DamageType.MEL:
-                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.MEL, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
-                    break;
-                case DamageType.RNG:
-                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.RNG, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
-                    break;
-                case DamageType.MAG:
-                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.MAG, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
-                    break;
-                case DamageType.SUM:
-                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.SUM, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
-                    break;
-                default:
-                    break;
-            }
+            //switch (dam)
+            //{
+            //    case DamageType.MEL:
+            //        line = TerraLeague.CreateScalingTooltip(dam, modPlayer.MEL, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
+            //        break;
+            //    case DamageType.RNG:
+            //        line = TerraLeague.CreateScalingTooltip(dam, modPlayer.RNG, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
+            //        break;
+            //    case DamageType.MAG:
+            //        line = TerraLeague.CreateScalingTooltip(dam, modPlayer.MAG, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
+            //        break;
+            //    case DamageType.SUM:
+            //        line = TerraLeague.CreateScalingTooltip(dam, modPlayer.SUM, GetAbilityScalingAmount(player, dam), useHealpower, extraText);
+            //        break;
+            //    default:
+            //        break;
+            //}
             return line;
         }
 

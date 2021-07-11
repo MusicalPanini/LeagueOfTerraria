@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("STONE SKIN") + TerraLeague.CreateColorString(PassiveSecondaryColor, "While near at least " + enemies + " enemies, gain " + armorResist + " armor and resist");
+            return TooltipName("STONE SKIN") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "While near at least " + enemies + " enemies, gain " + armorResist + " armor and resist");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 500);
+            var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 500);
             if (npcs.Count >= enemies)
             {
                 player.AddBuff(BuffType<StonePlating>(), 5);

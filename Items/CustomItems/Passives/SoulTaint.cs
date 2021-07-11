@@ -25,8 +25,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("Mist's edge") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee and ranged attack will deal " + percentMaxLifeDamage + "% of their max life as On Hit damage")
-                + "\n" + TerraLeague.CreateColorString(PassiveSubColor, "(Max damage: " + maxDamage + ")");
+            return TooltipName("Mist's edge") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Melee and ranged attack will deal " + percentMaxLifeDamage + "% of their max life as On Hit damage")
+                + "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, "(Max damage: " + maxDamage + ")");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

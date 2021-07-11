@@ -20,8 +20,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("REBIRTH") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Upon taking fatal damage, heal for 50% of your max life\nYou will gain 'Cursed' for a short period after")
-                + "\n" + TerraLeague.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("REBIRTH") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Upon taking fatal damage, heal for 50% of your max life\nYou will gain 'Cursed' for a short period after")
+                + "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player, ModItem modItem)

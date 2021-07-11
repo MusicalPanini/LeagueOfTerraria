@@ -76,7 +76,7 @@ namespace TerraLeague.Projectiles
                 {
                     //Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileType<HexCoreStaff_Storm>(), projectile.damage, projectile.knockBack, projectile.owner);\
                     TerraLeague.DustBorderRing(224, projectile.Center, 226, default, 0.75f);
-                    List<int> npcs = TerraLeague.GetAllNPCsInRange(projectile.Center, 224, true);
+                    List<int> npcs = Targeting.GetAllNPCsInRange(projectile.Center, 224, true);
                     for (int i = 0; i < npcs.Count; i++)
                     {
                         NPC npc = Main.npc[npcs[i]];
