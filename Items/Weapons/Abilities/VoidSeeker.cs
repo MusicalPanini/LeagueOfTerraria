@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override string GetAbilityTooltip()
         {
             return "Launch a void blast that applies 2 stacks of 'Caustic Wounds' to the hit enemy." +
-                    "\nAt [c/" + TerraLeague.MAGColor + ":50 MAG], Void Seeker will deal magic damage instead and apply 3 stacks.";
+                    "\nAt [c/" + LeagueTooltip.MagicColor + ":50 MAG], Void Seeker will deal magic damage instead and apply 3 stacks.";
         }
 
         public override int GetAbilityBaseDamage(Player player)

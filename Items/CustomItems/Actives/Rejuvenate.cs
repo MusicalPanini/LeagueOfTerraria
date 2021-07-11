@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             if (UI.ItemUI.extraStats)
             {
-                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), value + "") + " + " + LeagueTooltip.CreateColorString(TerraLeague.HEALColor, "HEAL(" + (((int)(value * modifiedhealPower)) - (value)) + ")");
+                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), value + "") + " + " + LeagueTooltip.CreateColorString(LeagueTooltip.HealPowerColor, "HEAL(" + (((int)(value * modifiedhealPower)) - (value)) + ")");
             }
             else
             {

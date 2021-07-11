@@ -29,7 +29,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             int value = modifiedHealPower(player);
 
             if (UI.ItemUI.extraStats)
-                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), baseHeal + "") + " + " + LeagueTooltip.CreateColorString(TerraLeague.HEALColor, "HEAL(" + (value - baseHeal) + ")");
+                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), baseHeal + "") + " + " + LeagueTooltip.CreateColorString(LeagueTooltip.HealPowerColor, "HEAL(" + (value - baseHeal) + ")");
             else
                 statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), value + "");
 

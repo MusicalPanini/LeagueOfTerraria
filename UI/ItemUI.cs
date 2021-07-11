@@ -210,10 +210,10 @@ namespace TerraLeague.UI
             switch (slotNum)
             {
                 case 1:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Sum1);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Sum1);
                     break;
                 case 2:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Sum2);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Sum2);
                     break;
                 default:
                     break;
@@ -392,22 +392,22 @@ namespace TerraLeague.UI
             switch (slotNum)
             {
                 case 1:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Item1);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Item1);
                     break;
                 case 2:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Item2);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Item2);
                     break;
                 case 3:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Item3);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Item3);
                     break;
                 case 4:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Item4);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Item4);
                     break;
                 case 5:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Item5);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Item5);
                     break;
                 case 6:
-                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Item6);
+                    itemSlotText = LeagueTooltip.ConvertKeyString(TerraLeague.Item6);
                     break;
                 default:
                     break;
@@ -683,7 +683,7 @@ namespace TerraLeague.UI
             CDRStats = new UIText("CDR: 40%", 0.65f);
             CDRStats.Left.Pixels = 8;
             CDRStats.Top.Pixels = 54;
-            CDRStats.TextColor = LeagueTooltip.ConvertHexToColor(TerraLeague.CDRColor);
+            CDRStats.TextColor = LeagueTooltip.ConvertHexToColor(LeagueTooltip.HasteColor);
 
             healStats = new UIText("HEAL: 000%", 0.65f);
             healStats.Left.Pixels = 80;
@@ -785,25 +785,25 @@ namespace TerraLeague.UI
             {
                 if (armorStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.ARMORColor, "Armor") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.ArmorColor, "Armor") +
                         "\nReduces damage from contact by " + Math.Round(100 - (modPlayer.ArmorDamageReduction * 100f), 2) + "%" +
                         "\nCurrent Armor consists of" +
-                        "\n" + LeagueTooltip.CreateColorString(TerraLeague.ARMORColor, "From Armor increases: " + modPlayer.armorLastStep);
+                        "\n" + LeagueTooltip.CreateColorString(LeagueTooltip.ArmorColor, "From Armor increases: " + modPlayer.armorLastStep);
                     if (TerraLeague.UseCustomDefenceStat)
-                        text += "\n" + LeagueTooltip.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
+                        text += "\n" + LeagueTooltip.CreateColorString(LeagueTooltip.DefenceColor, "From Defence increases: " + modPlayer.defenceLastStep);
                 }
                 else if (resistStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.RESISTColor, "Resist") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.ResistColor, "Resist") +
                         "\nReduces damage from projectiles by " + Math.Round(100 - (modPlayer.ResistDamageReduction * 100f), 2) + "%" +
                         "\nCurrent Resist consists of" +
-                        "\n" + LeagueTooltip.CreateColorString(TerraLeague.RESISTColor, "From Resist increases: " + modPlayer.resistLastStep);
+                        "\n" + LeagueTooltip.CreateColorString(LeagueTooltip.ResistColor, "From Resist increases: " + modPlayer.resistLastStep);
                     if (TerraLeague.UseCustomDefenceStat)
-                        text += "\n" + LeagueTooltip.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
+                        text += "\n" + LeagueTooltip.CreateColorString(LeagueTooltip.DefenceColor, "From Defence increases: " + modPlayer.defenceLastStep);
                 }
                 else if (meleeStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.MELColor, "Melee Damage") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.MeleeColor, "Melee Damage") +
                         "\nUsed for Abilities and Items scaling damage. Gain a flat amount that increases throughout the game plus 1.5 per 1% melee damage" +
                         "\nMelee Weapons Deal " + (int)(modPlayer.meleeDamageLastStep * 100) + "% damage." +
                         "\nExtra Damage: +" + modPlayer.meleeFlatDamage +
@@ -814,7 +814,7 @@ namespace TerraLeague.UI
                 }
                 else if (rangedStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.RNGColor, "Ranged Damage") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.RangedColor, "Ranged Damage") +
                         "\nUsed for Abilities and Items scaling damage. Gain 2 per 1% ranged damage" +
                         "\nRanged Weapons Deal " + (int)(modPlayer.rangedDamageLastStep * 100) + "% damage." +
                         "\nExtra Damage: +" + modPlayer.rangedFlatDamage +
@@ -825,7 +825,7 @@ namespace TerraLeague.UI
                 }
                 else if (magicStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.MAGColor, "Magic Damage") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.MagicColor, "Magic Damage") +
                         "\nUsed for Abilities and Items scaling damage. Gain 2.5 per 1% magic damage" +
                         "\nMagic Weapons Deal " + (int)(modPlayer.magicDamageLastStep * 100) + "% damage." +
                         "\nExtra Damage: +" + modPlayer.magicFlatDamage +
@@ -836,7 +836,7 @@ namespace TerraLeague.UI
                 }
                 else if (summonStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.SUMColor, "Summon Damage") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.SummonColor, "Summon Damage") +
                         "\nUsed for Abilities and Items scaling damage. Gain 1.75 per 1% minion damage" +
                         "\nSummoner Weapons Deal " + (int)(modPlayer.minionDamageLastStep * 100) + "% damage." +
                         "\nExtra Damage: +" + modPlayer.minionFlatDamage +
@@ -848,7 +848,7 @@ namespace TerraLeague.UI
                 }
                 else if (CDRStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.CDRColor, "Haste") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.HasteColor, "Haste") +
                         "\nThe percent increase in spell/item casts" +
                         "\nAbility Haste: " + modPlayer.abilityHaste + " (" + Math.Round(100 - (modPlayer.Cdr * 100), 2) + "% reduction)" +
                         "\nItem Haste: " + modPlayer.itemHaste + " (" + Math.Round(100 - (modPlayer.ItemCdr * 100), 2) + "% reduction)" +
@@ -856,7 +856,7 @@ namespace TerraLeague.UI
                 }
                 else if (ammoStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.RNGATSColor, "Ranged Attack Speed") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.RngAtkSpdColor, "Ranged Attack Speed") +
                         "\nThe percent increase in ranged weapons attack speed";
 
                     Item item = Main.LocalPlayer.HeldItem;
@@ -872,12 +872,12 @@ namespace TerraLeague.UI
                 }
                 else if (healStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.HEALColor, "Heal Power") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.HealPowerColor, "Heal Power") +
                         "\nThe percent increase in all your outgoing healing and shielding";
                 }
                 else if (manaStats.IsMouseHovering)
                 {
-                    text = LeagueTooltip.CreateColorString(TerraLeague.MANAREDUCTColor, "Mana Cost Reduction") +
+                    text = LeagueTooltip.CreateColorString(LeagueTooltip.ManaReductionColor, "Mana Cost Reduction") +
                         "\nThe percent reduction of all mana costs";
                 }
             }
