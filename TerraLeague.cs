@@ -28,29 +28,7 @@ namespace TerraLeague
 {
     public class TerraLeague : Mod
     {
-        internal static string MELColor = "FFA500";
-        internal static string RNGColor = "20B2AA";
-        internal static string MAGColor = "8E70DB";
-        internal static string SUMColor = "6495ed";//"87CEEB";
-
-        internal static string DEFColor = "A0A0A0";
-        internal static string ARMORColor = "FFFF00";
-        internal static string RESISTColor = "B0C4DE";
-        internal static string HEALColor = "008000";
-        internal static string CDRColor = "E51647";
-        internal static string RNGATSColor = "808080";
-        internal static string MANAREDUCTColor = "4169E1";
-        internal static string MINIONMAXColor = "4682b4";
-
         internal static string TooltipHeadingColor = "0099cc";
-
-        internal static string PassiveMainColor = "0099cc";
-        internal static string PassiveSecondaryColor = "99e6ff";
-        internal static string PassiveSubColor = "007399";
-
-        internal static string ActiveMainColor = "ff4d4d";
-        internal static string ActiveSecondaryColor = "ff8080";
-        internal static string ActiveSubColor = "cc0000";
 
         internal static TerraLeague instance;
         internal StatUI statUI;
@@ -90,7 +68,6 @@ namespace TerraLeague
         public static float fogIntensity;
         //public static ModHotKey Trinket;
         public static PlayerLayer ShieldEffect;
-        private static Dictionary<string, string> Keys;
 
         public static bool StopHealthandManaText = true;
 
@@ -106,74 +83,6 @@ namespace TerraLeague
         {
             Logger.InfoFormat("{0} logging", Name);
 
-            Keys = new Dictionary<string, string>()
-            {
-                {"Escape", "Esc"},
-                {"PrintScreen", "PrtSc"},
-                {"OemTilde", "`"},
-                {"D1", "1"},
-                {"D2", "2"},
-                {"D3", "3"},
-                {"D4", "4"},
-                {"D5", "5"},
-                {"D6", "6"},
-                {"D7", "7"},
-                {"D8", "8"},
-                {"D9", "9"},
-                {"D0", "0"},
-                {"OemPlus", "="},
-                {"OemMinus", "_"},
-                {"Insert", "Ins"},
-                {"PageUp", "PgUp"},
-                {"NumLock", "NumLk"},
-                {"Divide", "/"},
-                {"Multiply", "*"},
-                {"Minus", "-"},
-
-                {"OemOpenBracket", "["},
-                {"OemCloseBracket", "]"},
-                {"OemPipe", "\\"},
-                {"Delete", "Dlt"},
-                {"PageDown", "PgDw"},
-                {"Plus", "+"},
-
-                {"CapsLock", "Caps"},
-                {"OemSemicolon", ";"},
-                {"OemQuotes", "'"},
-
-                {"RightShift", "ShiftR"},
-                {"OemComma", ","},
-                {"OemPeriod", "."},
-                {"OemQuestion", "?"},
-
-                {"LeftControl", "CtrlL"},
-                {"LeftAlt", "AltL"},
-                {"Space", "Spc"},
-
-                {"Mouse1", "M1"},
-                {"Mouse2", "M2"},
-                {"Mouse3", "M3"},
-                {"Mouse4", "M4"},
-                {"Mouse5", "M5"},
-                {"RightAlt", "AltR"},
-                {"RightControl", "CtrlR"},
-                {"RightWindows", "WinR"},
-                {"LeftWindows", "WinL"},
-                {"LeftShift", "ShiftL"},
-                {"NumPad1", "NP1"},
-                {"NumPad2", "NP2"},
-                {"NumPad3", "NP3"},
-                {"NumPad4", "NP4"},
-                {"NumPad5", "NP5"},
-                {"NumPad6", "NP6"},
-                {"NumPad7", "NP7"},
-                {"NumPad8", "NP8"},
-                {"NumPad9", "NP9"},
-                {"NumPad0", "NP0"},
-                {"Decimal", "NP."},
-                {"Scroll", "ScrLk"},
-                {"Pause", "PsBrk"},
-            };
             ToggleStats = RegisterHotKey("Toggle Stats Page", "L");
             Item1 = RegisterHotKey("Active item 1", "1");
             Item2 = RegisterHotKey("Active item 2", "2");
@@ -217,7 +126,7 @@ namespace TerraLeague
 
                 if (modPlayer.currentShieldColor.A != 0 && drawPlayer.active)
                 {
-                    
+
                     Color color = modPlayer.currentShieldColor;
                     color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
                     color.A = 100;
@@ -232,38 +141,14 @@ namespace TerraLeague
                 }
             });
 
-            MELColor = "FFA500";
-            RNGColor = "20B2AA";
-            MAGColor = "8E70DB";
-            SUMColor = "6495ed";//"87CEEB";
-
-            DEFColor = "A0A0A0";
-            ARMORColor = "FFFF00";
-            RESISTColor = "B0C4DE";
-            HEALColor = "008000";
-            CDRColor = "FFDD8F";
-            RNGATSColor = "808080";
-            MANAREDUCTColor = "4169E1";
-            MINIONMAXColor = "4682b4";
-
-            TooltipHeadingColor = "0099cc";
-
-            PassiveMainColor = "0099cc";
-            PassiveSecondaryColor = "99e6ff";
-            PassiveSubColor = "007399";
-
-            ActiveMainColor = "ff4d4d";
-            ActiveSecondaryColor = "ff8080";
-            ActiveSubColor = "cc0000";
-
             if (!Main.dedServ)
             {
                 AddEquipTexture(new Items.Accessories.DarkinHead(), null, EquipType.Head, "DarkinHead", "TerraLeague/Items/Accessories/Darkin_Head");
                 AddEquipTexture(new Items.Accessories.DarkinBody(), null, EquipType.Body, "DarkinBody", "TerraLeague/Items/Accessories/Darkin_Body", "TerraLeague/Items/Accessories/Darkin_Arms");
                 AddEquipTexture(new Items.Accessories.DarkinLegs(), null, EquipType.Legs, "DarkinLegs", "TerraLeague/Items/Accessories/Darkin_Legs");
 
-                Filters.Scene["TerraLeague:TheBlackMist"] = new Filter(new BlackMistShaderData("FilterSandstormForeground").UseColor(0,2,1).UseSecondaryColor(0,0,0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(3.5f).UseOpacity(0.2f).UseImageScale(new Vector2(8, 8)), EffectPriority.High);
-                Overlays.Scene["TerraLeague:TheBlackMist"] = new SimpleOverlay("Images/Misc/Perlin", new BlackMistShaderData("FilterSandstormBackground").UseColor(0,1,0).UseSecondaryColor(0,0,0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(5).UseOpacity(1f).UseImageScale(new Vector2(4, 4)), EffectPriority.High, RenderLayers.Landscape);
+                Filters.Scene["TerraLeague:TheBlackMist"] = new Filter(new BlackMistShaderData("FilterSandstormForeground").UseColor(0, 2, 1).UseSecondaryColor(0, 0, 0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(3.5f).UseOpacity(0.2f).UseImageScale(new Vector2(8, 8)), EffectPriority.High);
+                Overlays.Scene["TerraLeague:TheBlackMist"] = new SimpleOverlay("Images/Misc/Perlin", new BlackMistShaderData("FilterSandstormBackground").UseColor(0, 1, 0).UseSecondaryColor(0, 0, 0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(5).UseOpacity(1f).UseImageScale(new Vector2(4, 4)), EffectPriority.High, RenderLayers.Landscape);
                 SkyManager.Instance["TerraLeague:TheBlackMist"] = new BlackMistSky();
 
                 Filters.Scene["TerraLeague:Targon"] = new Filter(new TargonShaderData("FilterMiniTower").UseColor(0.0f, 0.3f, 0.8f).UseOpacity(0.7f), EffectPriority.VeryHigh);
@@ -353,7 +238,6 @@ namespace TerraLeague
         /// </summary>
         public override void Unload()
         {
-            Keys = null;
             instance = null;
             ShieldEffect = null;
             ToggleStats = null;
@@ -370,26 +254,6 @@ namespace TerraLeague
             EAbility = null;
             RAbility = null;
             //Trinket = null;
-
-            MELColor = null;
-            RNGColor = null;
-            MAGColor = null;
-            SUMColor = null;
-            DEFColor = null;
-            ARMORColor = null;
-            RESISTColor = null;
-            HEALColor = null;
-            CDRColor = null;
-            RNGATSColor = null;
-            MANAREDUCTColor = null;
-            MINIONMAXColor = null;
-            TooltipHeadingColor = null;
-            PassiveMainColor = null;
-            PassiveSecondaryColor = null;
-            PassiveSubColor = null;
-            ActiveMainColor = null;
-            ActiveSecondaryColor = null;
-            ActiveSubColor = null;
 
             StopHealthandManaText = false;
             base.Unload();
@@ -464,8 +328,8 @@ namespace TerraLeague
             "TerraLeague: Player Hud",
             delegate
             {
-                    PlayerInterface.Update(Main._drawInterfaceGameTime);
-                    playerUI.Draw(Main.spriteBatch);
+                PlayerInterface.Update(Main._drawInterfaceGameTime);
+                playerUI.Draw(Main.spriteBatch);
                 return true;
             },
             InterfaceScaleType.Game));
@@ -629,7 +493,7 @@ namespace TerraLeague
                 RecipeEditor editor = new RecipeEditor(recipe);
                 editor.DeleteRecipe();
             }
-            
+
             ModRecipe leather1 = new ModRecipe(this);
             leather1.AddRecipeGroup("TerraLeague:EvilDropGroup", 3);
             leather1.AddTile(TileID.WorkBenches);
@@ -684,7 +548,7 @@ namespace TerraLeague
             }
         }
 
-        internal static void DustElipce(float width, float height, float rotation,  Vector2 center, int dustType, Color color, float scale, int dustCount = 180, bool noLight = true, float pulseStrength = 0)
+        internal static void DustElipce(float width, float height, float rotation, Vector2 center, int dustType, Color color, float scale, int dustCount = 180, bool noLight = true, float pulseStrength = 0)
         {
             for (int i = 0; i < dustCount; i++)
             {
@@ -944,23 +808,6 @@ namespace TerraLeague
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        internal static string ConvertKeyString(ModHotKey key)
-        {
-            string keyConvertedString;
-            string keyString = "N/A";
-            if (key.GetAssignedKeys().Count > 0)
-                keyString = key.GetAssignedKeys().First();
-                
-
-            if (Keys.ContainsKey(keyString))
-                keyConvertedString = Keys[keyString];
-            else
-                keyConvertedString = keyString;
-
-            return keyConvertedString;
-
-        }
-
 
         public static void HealthAndManaHitBoxes()
         {
@@ -1020,138 +867,6 @@ namespace TerraLeague
                 sound.Pitch = pitch;
 
             return sound;
-        }
-
-        public static string CreateColorString(string hexValue, string text)
-        {
-            var splitText = text.Split('\n');
-            string rejoinedText = "";
-            for (int i = 0; i < splitText.Length; i++)
-            {
-                if (i != 0)
-                    rejoinedText += "\n";
-                rejoinedText += "[c/" + PulseText(ConvertHexToColor(hexValue)).Hex3() + ":" + splitText[i] + "]";
-            }
-
-            return rejoinedText;
-        }
-
-        public static string CreateColorString(Color color, string text)
-        {
-            var splitText = text.Split('\n');
-            string rejoinedText = "";
-            for (int i = 0; i < splitText.Length; i++)
-            {
-                if (i != 0)
-                    rejoinedText += "\n";
-                rejoinedText += "[c/" + PulseText(color).Hex3() + ":" + splitText[i] + "]";
-            }
-
-            return rejoinedText;
-        }
-
-        public static string CreateScalingTooltip(DamageType type, int valueToScale, int percentScaling, bool affectedByHealPower = false, string extraText = "")
-        {
-            string text = "";
-            Color textColor;
-
-            switch (type)
-            {
-                case DamageType.MEL:
-                    textColor = ConvertHexToColor(MELColor);
-                    break;
-                case DamageType.RNG:
-                    textColor = ConvertHexToColor(RNGColor);
-                    break;
-                case DamageType.MAG:
-                    textColor = ConvertHexToColor(MAGColor);
-                    break;
-                case DamageType.SUM:
-                    textColor = ConvertHexToColor(SUMColor);
-                    break;
-                default:
-                    textColor = Color.White;
-                    break;
-            }
-            int value = (int)(valueToScale * percentScaling * 0.01);
-            
-            if (ItemUI.extraStats)
-            {
-                switch (type)
-                {
-                    case DamageType.MEL:
-                        text += percentScaling + "% MEL(" + value + extraText + ")";
-                        break;
-                    case DamageType.RNG:
-                        text += percentScaling + "% RNG(" + value + extraText + ")";
-                        break;
-                    case DamageType.MAG:
-                        text += percentScaling + "% MAG(" + value + extraText + ")";
-                        break;
-                    case DamageType.SUM:
-                        text += percentScaling + "% SUM(" + value + extraText + ")";
-                        break;
-                    default:
-                        text += value + extraText;
-                        break;
-                }
-                text = CreateColorString(textColor, text);
-                if (affectedByHealPower)
-                    text += " + " + CreateColorString(ConvertHexToColor(HEALColor), "HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + extraText + ")");
-            }
-            else
-            {
-                if (affectedByHealPower)
-                    value = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true);
-                text += value + extraText;
-                text = CreateColorString(textColor, text);
-            }
-
-            return text;
-        }
-
-        public static string CreateScalingTooltip(string color, string valueName, int valueToScale, int percentScaling, bool affectedByHealPower = false, string extraText = "")
-        {
-            string text = "[c/" + PulseText(ConvertHexToColor(color)).Hex3() + ":";
-
-            int value = (int)(valueToScale * percentScaling * 0.01);
-            
-
-            if (ItemUI.extraStats)
-            {
-                text += percentScaling + "% " + valueName + "(" + value + extraText + ")]";
-                if (affectedByHealPower)
-                    text += " + [c/" + PulseText(ConvertHexToColor(HEALColor)).Hex3() + ":HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")]";
-            }
-            else
-            {
-                if (affectedByHealPower)
-                    value = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true);
-                text += value + extraText + "]";
-            }
-
-            return text;
-        }
-
-        public static Color ConvertHexToColor(string hexValue)
-        {
-            if (hexValue != null)
-            {
-                if (hexValue.Length >= 6)
-                {
-                    int red = Int32.Parse(hexValue[0] + "" + hexValue[1], System.Globalization.NumberStyles.HexNumber);
-                    int green = Int32.Parse(hexValue[2] + "" + hexValue[3], System.Globalization.NumberStyles.HexNumber);
-                    int blue = Int32.Parse(hexValue[4] + "" + hexValue[5], System.Globalization.NumberStyles.HexNumber);
-                    return new Color(red, green, blue);
-                }
-            }
-            return Color.White;
-        }
-
-        public static Color PulseText(Color color)
-        {
-            float pulse = (float)(int)Main.mouseTextColor / 255f;
-            return new Color((byte)(color.R * pulse), (byte)(color.G * pulse), (byte)(color.B * pulse), Main.mouseTextColor);
         }
     }
 }
