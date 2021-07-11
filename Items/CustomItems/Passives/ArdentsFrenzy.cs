@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("FRENZY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Healing an ally will give you both 20% melee and " +
+            return TooltipName("FRENZY") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Healing an ally will give you both 20% melee and " +
                 "\nranged attack speed and deal 20 melee and ranged On Hit damage");
         }
 

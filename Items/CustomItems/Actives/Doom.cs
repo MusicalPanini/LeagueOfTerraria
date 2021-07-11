@@ -19,16 +19,16 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
-            return TooltipName("DOOM") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Target an enemy and deal " + percentMaxLife + "% of their max life as magic damage to it and all near by enemies (Max: " + damageCap + ")" +
+            return TooltipName("DOOM") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Target an enemy and deal " + percentMaxLife + "% of their max life as magic damage to it and all near by enemies (Max: " + damageCap + ")" +
                 "\nAll hit enemies will take 20% more magic damage for 4 seconds")
-                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+                + "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
             if (cooldownCount <= 0)
             {
-                int npc = TerraLeague.NPCMouseIsHovering();
+                int npc = Targeting.NPCMouseIsHovering();
                 if (npc != -1)
                 {
                     int damage = (int)(Main.npc[npc].lifeMax * percentMaxLife * 0.01);

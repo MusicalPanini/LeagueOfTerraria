@@ -25,10 +25,10 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("MANA Barrier") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Consume ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, percentMana) 
-                + TerraLeague.CreateColorString(ActiveSecondaryColor, " mana\nGain a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseShield, 100, true) + " + " + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, (int)(percentMana * manaScaling * 0.01), true)
-                + TerraLeague.CreateColorString(ActiveSecondaryColor, " shield for " + duration + " seconds")
-                +"\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown"); ;
+            return TooltipName("MANA Barrier") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Consume ") + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(percentMana, ScaleType.CurMana))
+                + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " mana\nGain a ") + LeagueTooltip.TooltipValue(baseShield, true, "", new System.Tuple<int, ScaleType>(manaScaling, ScaleType.CurMana))
+                + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " shield for " + duration + " seconds")
+                +"\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown"); ;
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

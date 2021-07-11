@@ -15,8 +15,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("TORMENT") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Minion and magic damage sets the target on fire for " + debuffDuration + " seconds, dealing increased damage to high health targets")
-                + "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "Burn damage is doubled against slowed targets");
+            return TooltipName("TORMENT") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Minion and magic damage sets the target on fire for " + debuffDuration + " seconds, dealing increased damage to high health targets")
+                + "\n" + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Burn damage is doubled against slowed targets");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

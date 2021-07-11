@@ -23,7 +23,9 @@ namespace TerraLeague.Items.Weapons
 
             return "Shots apply stacks of 'Caustic Wounds'" +
                 "\nAt 5 stacks, the enemy will take 25% of their missing life as magic damage" +
-                "\n(Capped at 50 + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, 100) + ")";
+                "\nMax damage: " + LeagueTooltip.TooltipValue(50, false, "",
+              new System.Tuple<int, ScaleType>(100, ScaleType.Magic)
+              ) + "";
         }
 
         public override void SetDefaults()

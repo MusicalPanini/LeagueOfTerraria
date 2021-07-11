@@ -261,7 +261,7 @@ namespace TerraLeague.Items
             if (set == "Cannoneer")
             {
                 player.GetModPlayer<PLAYERGLOBAL>().cannonSet = true;
-                player.setBonus = "Ranged weapons periodically fire a cannon ball dealing " + TerraLeague.CreateScalingTooltip(DamageType.RNG, player.GetModPlayer<PLAYERGLOBAL>().RNG, 150) + " ranged damage";
+                player.setBonus = "Ranged weapons periodically fire a cannon ball dealing " + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(150, ScaleType.Ranged)) + " ranged damage";
             }
             if (set == "Spiritual")
             {

@@ -25,12 +25,12 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, magicMinionScaling);
+                scaleText = LeagueTooltip.TooltipValue(extraDamage, false, "", new Tuple<int, ScaleType>(magicMinionScaling, ScaleType.Summon));
             else
-                scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
+                scaleText = LeagueTooltip.TooltipValue(extraDamage, false, "", new Tuple<int, ScaleType>(magicMinionScaling, ScaleType.Magic));
 
-            return TooltipName("Revved") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your next magic or minion attack will deal ") + extraDamage + " + " + scaleText + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra damage") +
-                "\n" + TerraLeague.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with the highest of either MAG or SUM");
+            return TooltipName("Revved") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Your next magic or minion attack will deal ") + scaleText + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " extra damage") +
+                "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with the highest of either MAG or SUM");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

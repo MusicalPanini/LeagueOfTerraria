@@ -73,7 +73,7 @@ namespace TerraLeague.Projectiles
                 TerraLeague.DustBorderRing(500, projectile.Center, 204, default, 2, true, true, 0.075f);
             }
 
-            var players = TerraLeague.GetAllPlayersInRange(projectile.Center, 500, -1, Main.player[projectile.owner].team);
+            var players = Targeting.GetAllPlayersInRange(projectile.Center, 500, -1, Main.player[projectile.owner].team);
             for (int i = 0; i < players.Count; i++)
             {
                 Player target = Main.player[players[i]];

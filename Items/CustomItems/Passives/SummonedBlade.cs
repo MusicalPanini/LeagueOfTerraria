@@ -18,8 +18,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("SUMMONED BLADE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "SPELLBLADE summons ") + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)modPlayer.maxMinionsLastStep, 200) 
-                + TerraLeague.CreateColorString(PassiveSecondaryColor," etheral blades that rapidily orbit around where the enemy was struck dealing ") + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " damage");
+            return TooltipName("SUMMONED BLADE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "SPELLBLADE summons ") + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(200, ScaleType.Minions))
+                + LeagueTooltip.CreateColorString(PassiveSecondaryColor," etheral blades around the struck enemy.\nThe blades deal ") + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(minionScaling, ScaleType.Summon)) + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

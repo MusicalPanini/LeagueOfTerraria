@@ -46,7 +46,8 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", GetAbilityBaseDamage(player), 100, true) + " shielding";
+            return LeagueTooltip.TooltipValue(0, true, "", new Tuple<int, ScaleType>(10, ScaleType.MaxLife)) + " shielding";
+            //return LeagueTooltip.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", GetAbilityBaseDamage(player), 100, true) + " shielding";
         }
 
         public override bool CanBeCastWhileUsingItem()

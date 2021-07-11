@@ -89,7 +89,7 @@ namespace TerraLeague.Projectiles
         public override bool? CanHitNPC(NPC target)
         {
             if (projectile.friendly && !target.townNPC)
-                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, radius);
+                return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, radius);
             else
                 return false;
         }

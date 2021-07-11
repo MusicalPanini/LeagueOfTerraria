@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 text += "attacks ignore " + percentArmorReduction + "% of enemy armor";
 
-            return TooltipName("LAST WHISPER") + TerraLeague.CreateColorString(PassiveSecondaryColor, text);
+            return TooltipName("LAST WHISPER") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, text);
         }
 
         public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)

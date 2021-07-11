@@ -66,7 +66,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MEL) + " + " + GetScalingTooltip(player, DamageType.SUM) + " summon damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+                new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MEL), ScaleType.Melee),
+                new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
+                ) + " minion damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -76,7 +79,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void DoEffect(Player player, AbilityType type)
         {
-            int target = TerraLeague.PlayerMouseIsHovering(30, -1, player.team);
+            int target = Targeting.PlayerMouseIsHovering(30, -1, player.team);
             if (target != -1)
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))

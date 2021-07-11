@@ -135,9 +135,9 @@ namespace TerraLeague.Projectiles.Homing
         {
             projectile.netUpdate = true;
             if (TargetPlayers)
-                TargetWhoAmI = TerraLeague.GetClosestPlayer(projectile.Center, targetingRange, -1, -1);
+                TargetWhoAmI = Targeting.GetClosestPlayer(projectile.Center, targetingRange, -1, -1);
             else
-                TargetWhoAmI = TerraLeague.GetClosestNPC(projectile.Center, targetingRange, -1, -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
+                TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, targetingRange, -1, -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
         }
 
         public override bool? CanHitNPC(NPC target)

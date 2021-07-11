@@ -44,7 +44,7 @@ namespace TerraLeague.Projectiles
 
             if ((int)projectile.ai[0] == -1)
             {
-                projectile.ai[0] = TerraLeague.GetClosestNPC(projectile.Center, 700, projectile.position, 24, 24, -1, Main.player[projectile.owner].MinionAttackTargetNPC);
+                projectile.ai[0] = Targeting.GetClosestNPC(projectile.Center, 700, projectile.position, 24, 24, -1, Main.player[projectile.owner].MinionAttackTargetNPC);
             }
 
             if ((int)projectile.ai[0] != -1)

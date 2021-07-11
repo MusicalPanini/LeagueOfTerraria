@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override string GetAbilityTooltip()
         {
             return "Launch a void blast that applies 2 stacks of 'Caustic Wounds' to the hit enemy." +
-                    "\nAt [c/" + TerraLeague.MAGColor + ":50 MAG], Void Seeker will deal magic damage instead and apply 3 stacks.";
+                    "\nAt [c/" + LeagueTooltip.MagicColor + ":50 MAG], Void Seeker will deal magic damage instead and apply 3 stacks.";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -72,9 +72,15 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             if (modPlayer.MAG >= 50)
-                return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.RNG) + " + " + GetScalingTooltip(player, DamageType.MAG) + " magic damage";
+                return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged),
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+              ) + " magic damage";
             else
-                return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.RNG) + " + " + GetScalingTooltip(player, DamageType.MAG) + " ranged damage";
+                return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged),
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+              ) + " ranged damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

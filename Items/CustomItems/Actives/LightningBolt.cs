@@ -24,12 +24,12 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, magicMinionScaling);
+                scaleText = LeagueTooltip.TooltipValue(baseDamage, false, "", new Tuple<int, ScaleType>(magicMinionScaling, ScaleType.Summon));
             else
-                scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
+                scaleText = LeagueTooltip.TooltipValue(baseDamage, false, "", new Tuple<int, ScaleType>(magicMinionScaling, ScaleType.Magic));
 
-            return TooltipName("FROST BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Target an enemy to deal ") + baseDamage + " + " + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed' to them")
-                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with either MAG or SUM");
+            return TooltipName("FROST BOLT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Target an enemy to deal ") + baseDamage + " + " + scaleText + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed' to them")
+                + "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             if (cooldownCount <= 0)
             {
-                int npc = TerraLeague.NPCMouseIsHovering();
+                int npc = Targeting.NPCMouseIsHovering();
                 if (npc != -1)
                 {
                     int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);

@@ -37,7 +37,7 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Heal you self and a nearby ally for " + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", Main.LocalPlayer.statManaMax2, 20, true) +
+            return "Heal you self and a nearby ally for " + LeagueTooltip.TooltipValue(0, true, "", new System.Tuple<int, ScaleType>(GetPercentScalingAmount(), ScaleType.MaxLife)) +
                 "\nCan target an ally to prioritize who gets healed" +
                 "\nYou both gain 'Swiftness'";
         }
@@ -58,7 +58,7 @@ namespace TerraLeague.Items.SummonerSpells
             // For Server
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                int healTarget = TerraLeague.GetClosestPlayer(player.MountedCenter, effectRadius, player.whoAmI, player.team, TerraLeague.PlayerMouseIsHovering(30, player.whoAmI, player.team));
+                int healTarget = Targeting.GetClosestPlayer(player.MountedCenter, effectRadius, player.whoAmI, player.team, Targeting.PlayerMouseIsHovering(30, player.whoAmI, player.team));
 
                 if (healTarget != -1)
                 {

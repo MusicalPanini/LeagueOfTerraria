@@ -77,7 +77,7 @@ namespace TerraLeague.Items.SummonerSpells
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            int npc = TerraLeague.NPCMouseIsHovering();
+            int npc = Targeting.NPCMouseIsHovering();
             if (npc != -1)
             {
                 Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Ignite>(), 1, 0, player.whoAmI, npc);

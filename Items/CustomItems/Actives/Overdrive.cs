@@ -20,8 +20,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("OVERDRIVE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Gain 10% damage and 20% move speed for " + effectDuration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("OVERDRIVE") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Gain 10% damage and 20% move speed for " + effectDuration + " seconds") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

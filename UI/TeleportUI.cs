@@ -420,7 +420,7 @@ namespace TerraLeague.UI
         {
             if (TeleportUI.visible)
             {
-                var activePlayerList = TerraLeague.GetAllPlayersInRange(Main.LocalPlayer.MountedCenter, 99999, Main.LocalPlayer.whoAmI, Main.LocalPlayer.team, true);
+                var activePlayerList = Targeting.GetAllPlayersInRange(Main.LocalPlayer.MountedCenter, 99999, Main.LocalPlayer.whoAmI, Main.LocalPlayer.team, true);
                 int currentActivePlayers = activePlayerList.Count();
 
                 if (currentActivePlayers != activePlayers)
@@ -528,7 +528,7 @@ namespace TerraLeague.UI
 
         public static void GetNextPlayer(bool previous)
         {
-            List<int> activePlayers = TerraLeague.GetAllPlayersInRange(Main.LocalPlayer.MountedCenter, 99999, Main.LocalPlayer.whoAmI, Main.LocalPlayer.team, true);
+            List<int> activePlayers = Targeting.GetAllPlayersInRange(Main.LocalPlayer.MountedCenter, 99999, Main.LocalPlayer.whoAmI, Main.LocalPlayer.team, true);
 
             int playerPos = activePlayers.First(x => x == playerNum);
 

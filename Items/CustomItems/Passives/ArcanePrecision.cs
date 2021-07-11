@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("ARCANE PRECISION") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Abilities have a " + critChance + "% chance to crit");
+            return TooltipName("ARCANE PRECISION") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Abilities have a " + critChance + "% chance to crit");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

@@ -33,7 +33,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.alpha >= 60)
             {
-                if (TerraLeague.IsThereAnNPCInRange(projectile.Center, 90))
+                if (Targeting.IsThereAnNPCInRange(projectile.Center, 90))
                 {
                     Prime();
                 }

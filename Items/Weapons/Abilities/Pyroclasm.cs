@@ -64,7 +64,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " magic damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+              ) + " magic damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -74,7 +76,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void DoEffect(Player player, AbilityType type)
         {
-            if (TerraLeague.NPCMouseIsHovering(30, true) != -1)
+            if (Targeting.NPCMouseIsHovering(30, true) != -1)
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
                 {
@@ -85,7 +87,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int knockback = 0;
 
                     SetAnimation(player, 20, 20, position + velocity);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, TerraLeague.NPCMouseIsHovering(30, true), -1);
+                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, Targeting.NPCMouseIsHovering(30, true), -1);
                     SetCooldowns(player, type);
                 }
             }

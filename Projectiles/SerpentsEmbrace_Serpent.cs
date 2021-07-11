@@ -57,7 +57,7 @@ namespace TerraLeague.Projectiles
 
             //    Vector2 center = Main.player[projectile.owner].MountedCenter;
 
-            //    var targets = TerraLeague.GetAllNPCsInRange(center, 500, true);
+            //    var targets = Targeting.GetAllNPCsInRange(center, 500, true);
             //    for (int i = 0; i < targets.Count; i++)
             //    {
             //        if (Main.npc[targets[i]].HasBuff(BuffID.Venom))

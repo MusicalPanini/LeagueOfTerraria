@@ -85,25 +85,25 @@ namespace TerraLeague.Items.Weapons
                     string text = getWeaponTooltip() != "" ? "\n" + getWeaponTooltip() : "";
                     if (GetIfAbilityExists(AbilityType.Q))
                     {
-                        text += "\n[c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + TerraLeague.ConvertKeyString(TerraLeague.QAbility) + ":] [c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.Q).GetAbilityName() + "]" +
+                        text += "\n[c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + LeagueTooltip.ConvertKeyString(TerraLeague.QAbility) + ":] [c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.Q).GetAbilityName() + "]" +
                             "\n" + GetAbility(AbilityType.Q).GetTooltip();
                     }
                     if (GetIfAbilityExists(AbilityType.W))
                     {
-                        text += "\n[c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + TerraLeague.ConvertKeyString(TerraLeague.WAbility) + ":] [c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.W).GetAbilityName() + "]" +
+                        text += "\n[c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + LeagueTooltip.ConvertKeyString(TerraLeague.WAbility) + ":] [c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.W).GetAbilityName() + "]" +
                             "\n" + GetAbility(AbilityType.W).GetTooltip();
                     }
                     if (GetIfAbilityExists(AbilityType.E))
                     {
-                        text += "\n[c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + TerraLeague.ConvertKeyString(TerraLeague.EAbility) + ":] [c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.E).GetAbilityName() + "]" +
+                        text += "\n[c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + LeagueTooltip.ConvertKeyString(TerraLeague.EAbility) + ":] [c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.E).GetAbilityName() + "]" +
                             "\n" + GetAbility(AbilityType.E).GetTooltip();
                     }
                     if (GetIfAbilityExists(AbilityType.R))
                     {
-                        text += "\n[c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + TerraLeague.ConvertKeyString(TerraLeague.RAbility) + ":] [c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.R).GetAbilityName() + "]" +
+                        text += "\n[c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityNameColor)).Hex3() + ":Ability " + LeagueTooltip.ConvertKeyString(TerraLeague.RAbility) + ":] [c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(AbilityButtonColor)).Hex3() + ":" + GetAbility(AbilityType.R).GetAbilityName() + "]" +
                             "\n" + GetAbility(AbilityType.R).GetTooltip();
                     }
-                    text += "\n[c/" + TerraLeague.PulseText(TerraLeague.ConvertHexToColor(QuoteColor)).Hex3() + ":'" + ChampQuote + "']";
+                    text += "\n[c/" + LeagueTooltip.PulseText(LeagueTooltip.ConvertHexToColor(QuoteColor)).Hex3() + ":'" + ChampQuote + "']";
 
                     string[] lines = text.Split('\n');
                     tooltips.RemoveAt(pos);

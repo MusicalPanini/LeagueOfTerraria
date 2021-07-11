@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("HASTE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain an additional 10 Ability, Item, and Summoner Spell Haste");
+            return TooltipName("HASTE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain an additional 10 Ability, Item, and Summoner Spell Haste");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

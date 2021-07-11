@@ -29,14 +29,14 @@ namespace TerraLeague.Items.CustomItems.Actives
             int value = modifiedHealPower(player);
 
             if (UI.ItemUI.extraStats)
-                statis += TerraLeague.CreateColorString(Color.White.Hex3(), baseHeal + "") + " + " + TerraLeague.CreateColorString(TerraLeague.HEALColor, "HEAL(" + (value - baseHeal) + ")");
+                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), baseHeal + "") + " + " + LeagueTooltip.CreateColorString(LeagueTooltip.HealPowerColor, "HEAL(" + (value - baseHeal) + ")");
             else
-                statis += TerraLeague.CreateColorString(Color.White.Hex3(), value + "");
+                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), value + "");
 
-            return TooltipName("INTERVENTION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Create a healing rune at the target location.\nAfter 2.5 seconds it heals all nearby allies for ") + statis + TerraLeague.CreateColorString(ActiveSecondaryColor, " life.") + "\n"
-                + TerraLeague.CreateColorString(ActiveSecondaryColor, "It also damages enemies for twice the amount.") + "\n"
-                + TerraLeague.CreateColorString(ActiveSecondaryColor, "Heal Power is 3 times as effective for this heal") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("INTERVENTION") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Create a healing rune at the target location.\nAfter 2.5 seconds it heals all nearby allies for ") + statis + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " life.") + "\n"
+                + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "It also damages enemies for twice the amount.") + "\n"
+                + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Heal Power is 3 times as effective for this heal") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

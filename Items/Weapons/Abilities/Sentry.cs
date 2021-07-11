@@ -32,7 +32,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Create a sentry that fires " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)Main.LocalPlayer.maxMinions, 100) + " + 5 returning chakrams";
+            return "Create a sentry that fires " + LeagueTooltip.TooltipValue(5, false, "",
+              new Tuple<int, ScaleType>(100, ScaleType.Minions)
+              ) + " returning chakrams";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -63,7 +65,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "TURRETS", (int)Main.LocalPlayer.maxTurrets, GetAbilityBaseDamage(player) * 100) + " + " + GetScalingTooltip(player, DamageType.SUM) + " summon damage"
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon),
+              new Tuple<int, ScaleType>(3300, ScaleType.Sentries)
+              ) + " summon damage"
                  + "\nUses 10% Crescendum Ammo";
         }
 

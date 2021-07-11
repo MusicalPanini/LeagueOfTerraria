@@ -31,7 +31,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Summon 2 etherial blades at the targeted location that strike upward in a cross-section after a delay." +
+            return "Summon 2 etherial blades at the target location that strike in a cross-section." +
                     "\nKills will allow you to cast again for a short time.";
         }
 
@@ -61,7 +61,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MEL) + " melee damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MEL), ScaleType.Melee)
+              ) + " melee damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

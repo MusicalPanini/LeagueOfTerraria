@@ -23,8 +23,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("SHOCK") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee and ranged damage will consume " + percentManaUsage + "% of your current mana and deal " + percentManaDamage + "% of your current mana as additional damage")
-                + "\n" + TerraLeague.CreateColorString(PassiveSubColor, "This effect is dissable while below 20% max mana");
+            return TooltipName("SHOCK") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Melee and ranged damage will consume " + percentManaUsage + "% of your current mana and deal " + percentManaDamage + "% of your current mana as additional damage")
+                + "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, "This effect is dissable while below 20% max mana");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

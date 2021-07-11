@@ -107,7 +107,7 @@ namespace TerraLeague.Projectiles
         {
             if (target.townNPC)
                 return false;
-            return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+            return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
         }
 
         public override bool? CanCutTiles()

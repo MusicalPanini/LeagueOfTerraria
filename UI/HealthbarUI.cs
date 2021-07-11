@@ -580,24 +580,24 @@ namespace TerraLeague.UI
                     int orangeLife = player.statLifeMax > 400 ? 5 * (player.statLifeMax - 400) : 0;
                     int redLife = player.statLifeMax - orangeLife;
 
-                    tooltip += TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, "Health Bar");
+                    tooltip += LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, "Health Bar");
                     tooltip += "\nMax life consists of:";
                     if (redLife > 0)
-                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.RedHealthColor, "Heart Crystals - " + redLife);
+                        tooltip += "\n" + LeagueTooltip.CreateColorString(HealthbarUI.RedHealthColor, "Heart Crystals - " + redLife);
                     if (orangeLife > 0)
-                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.OrangeHealthColor, "Life Fruit - " + orangeLife);
+                        tooltip += "\n" + LeagueTooltip.CreateColorString(HealthbarUI.OrangeHealthColor, "Life Fruit - " + orangeLife);
                     if (player.statLifeMax2 > 0)
-                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.BonusHealthColor, "Bonus Health - " + (modPlayer.GetRealHeathWithoutShield(true) - player.statLifeMax));
+                        tooltip += "\n" + LeagueTooltip.CreateColorString(HealthbarUI.BonusHealthColor, "Bonus Health - " + (modPlayer.GetRealHeathWithoutShield(true) - player.statLifeMax));
 
                     TerraLeague.instance.tooltipUI.DrawText(tooltip.Split('\n'));
                 }
                 else if (stat == ResourceBarMode.MANA)
                 {
-                    tooltip += TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, "Mana Bar");
+                    tooltip += LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, "Mana Bar");
                     tooltip += "\nMax mana consists of:";
-                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.ManaColor, "Mana Crystals - " + player.statManaMax);
+                        tooltip += "\n" + LeagueTooltip.CreateColorString(HealthbarUI.ManaColor, "Mana Crystals - " + player.statManaMax);
                     if (player.statManaMax2 > 0)
-                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.ManaColor, "Bonus Mana - " + (player.statManaMax2 - player.statManaMax));
+                        tooltip += "\n" + LeagueTooltip.CreateColorString(HealthbarUI.ManaColor, "Bonus Mana - " + (player.statManaMax2 - player.statManaMax));
 
                     TerraLeague.instance.tooltipUI.DrawText(tooltip.Split('\n'));
                 }
@@ -681,12 +681,12 @@ namespace TerraLeague.UI
                     string tip = Lang.GetBuffDescription(Main.LocalPlayer.buffType[buffNumber]);
                     int num = 0;
                     ModContent.GetModBuff(Main.LocalPlayer.buffType[buffNumber]).ModifyBuffTip(ref tip, ref num);
-                    buffDescription = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
+                    buffDescription = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
                         "\n" + tip;
                 }
                 else
                 {
-                    buffDescription = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
+                    buffDescription = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
                     "\n" + Lang.GetBuffDescription(Main.LocalPlayer.buffType[buffNumber]);
                     if (Main.LocalPlayer.buffType[buffNumber] == Terraria.ID.BuffID.MonsterBanner)
                     {
@@ -699,14 +699,14 @@ namespace TerraLeague.UI
                             if (Item.BannerToNPC(i) != 0 && Main.player[Main.myPlayer].NPCBannerBuff[i])
                             {
                                 if (name1 == "")
-                                    name1 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                    name1 = LeagueTooltip.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
                                 else if (name2 == "")
-                                    name2 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                    name2 = LeagueTooltip.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
                                 else if (name3 == "")
-                                    name3 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                    name3 = LeagueTooltip.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
                                 else
                                 {
-                                    string name4 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                    string name4 = LeagueTooltip.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
 
                                     int spaces = 18 - name1.Length;
 

@@ -32,8 +32,8 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Fire a rain of arrows that slow enemies and apply 'Grievous Wounds'" +
-                "\nThe arrows will remain stuck in the ground for 6 seconds";
+            return "Fire a rain of arrows that embed in the ground." +
+                "\nThe arrows will deal damage and slow";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -64,7 +64,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.RNG) + " ranged damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged)
+              ) + " ranged damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

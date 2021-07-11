@@ -57,7 +57,7 @@ namespace TerraLeague.Items.SummonerSpells
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             
-            int npc = TerraLeague.NPCMouseIsHovering();
+            int npc = Targeting.NPCMouseIsHovering();
             if (npc != -1)
             {
                 Projectile.NewProjectile(new Vector2(Main.npc[npc].Center.X + Main.rand.NextFloat(-400, 400), Main.npc[npc].Center.Y - 1500), Vector2.Zero, ProjectileType<Summoner_Smite>(), GetDamageStat(), 0, player.whoAmI, npc);

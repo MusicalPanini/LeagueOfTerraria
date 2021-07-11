@@ -64,7 +64,7 @@ namespace TerraLeague.UI
                 uiLines[i].HAlign = 0;
 
                 
-                uiLines[i].TextColor = TerraLeague.PulseText(Color.White);
+                uiLines[i].TextColor = LeagueTooltip.PulseText(Color.White);
             }
 
             if (drawText)

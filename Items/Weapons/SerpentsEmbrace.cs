@@ -23,7 +23,9 @@ namespace TerraLeague.Items.Weapons
         {
             return "Fire a serpent that applies 'Venom'." +
                 "\nIf a nearby enemy has 'Venom' launch Twin Fangs instead at nearby 'Venom' affected enemies instead." +
-                "\nTwin Fangs deal " + item.damage + " + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, MAGScaling) + " magic damage";
+                "\nTwin Fangs deal " + LeagueTooltip.TooltipValue(item.damage, false, "",
+              new System.Tuple<int, ScaleType>(MAGScaling, ScaleType.Magic)
+              ) + " magic damage";
         }
 
         public override void SetDefaults()
@@ -54,12 +56,12 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 500, BuffID.Venom))
+            if (Targeting.IsThereAnNPCInRange(player.MountedCenter, 500, BuffID.Venom))
             {
                 int tfDamage = item.damage + (MAGScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100);
                 Vector2 center = player.MountedCenter;
 
-                var targets = TerraLeague.GetAllNPCsInRange(center, 500, true);
+                var targets = Targeting.GetAllNPCsInRange(center, 500, true);
                 for (int i = 0; i < targets.Count; i++)
                 {
                     if (Main.npc[targets[i]].HasBuff(BuffID.Venom))
