@@ -57,8 +57,12 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return "4% + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, GetAbilityScalingAmount(player, DamageType.MAG), false, "%") + " of targets max life On Hit" +
-                    "\nMax: 20 + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, 50) + " damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "%",
+                new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+                ) + " of targets max life On Hit"
+                + "\nMax On Hit Damage: " + LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+                new Tuple<int, ScaleType>(50, ScaleType.Magic)
+                );
         }
 
         public override bool CanBeCastWhileUsingItem()

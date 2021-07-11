@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("THE VOW") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Periodically Grant nearby allies 'Iron Skin'");
+            return TooltipName("THE VOW") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Periodically Grant nearby allies 'Iron Skin'");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

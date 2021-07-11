@@ -23,8 +23,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("INSPIRE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give all nearby allies a speed boost and \n" + onHitDamage + " On Hit damage for " + effectDuration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("INSPIRE") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Give all nearby allies a speed boost and \n" + onHitDamage + " On Hit damage for " + effectDuration + " seconds") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

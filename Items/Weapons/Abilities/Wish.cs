@@ -64,7 +64,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player), 100, true) + " + " + GetScalingTooltip(player, DamageType.MAG, true) + " healing";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), true, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+              ) + " healing";
         }
 
         public override bool CanBeCastWhileUsingItem()

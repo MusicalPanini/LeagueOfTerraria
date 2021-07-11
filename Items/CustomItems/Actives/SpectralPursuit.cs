@@ -23,9 +23,9 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("SPECTURAL PURSUIT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Send out ") + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)modPlayer.maxMinionsLastStep, 100) + TerraLeague.CreateColorString(ActiveSecondaryColor, " spooky ghosts that track down a nearby enemy" +
-                "\nThey deal ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseDamage, 100) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling) + TerraLeague.CreateColorString(ActiveSecondaryColor, " minion damage and apply 'Slowed'") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("SPECTURAL PURSUIT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Send out ") + LeagueTooltip.TooltipValue(0, false, "", new System.Tuple<int, ScaleType>(100, ScaleType.Minions)) + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " spooky ghosts that track down a nearby enemy" +
+                "\nThey deal ") + LeagueTooltip.TooltipValue(baseDamage, false, "", new System.Tuple<int, ScaleType>(minionScaling, ScaleType.Summon)) + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " minion damage and apply 'Slowed'") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

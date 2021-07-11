@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("ABYSSAL CURSE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Debuff nearby enemies to make them take 8% more magic damage");
+            return TooltipName("ABYSSAL CURSE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Debuff nearby enemies to make them take 8% more magic damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

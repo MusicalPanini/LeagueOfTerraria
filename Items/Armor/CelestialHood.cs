@@ -61,7 +61,7 @@ namespace TerraLeague.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            player.setBonus = "Gain " + TerraLeague.CreateScalingTooltip(TerraLeague.CDRColor, "HASTE", modPlayer.abilityHasteLastStep, 25, false, "%") + " increased critical strike chance";
+            player.setBonus = "Gain " + LeagueTooltip.TooltipValue(0, false, "%", new System.Tuple<int, ScaleType>(25, ScaleType.Haste)) + " increased critical strike chance";
             player.meleeCrit += modPlayer.abilityHasteLastStep / 4;
             player.rangedCrit += modPlayer.abilityHasteLastStep / 4;
             player.magicCrit += modPlayer.abilityHasteLastStep / 4;

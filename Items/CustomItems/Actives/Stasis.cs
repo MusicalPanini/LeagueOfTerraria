@@ -23,13 +23,13 @@ namespace TerraLeague.Items.CustomItems.Actives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (stopWatch)
             {
-                return TooltipName("STASIS") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Render yourself frozen and invulnerable for " + duration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, "Can only be used once a day");
+                return TooltipName("STASIS") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Render yourself frozen and invulnerable for " + duration + " seconds") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, "Can only be used once a day");
             }
             else
             {
-                return TooltipName("STASIS") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Render yourself frozen and invulnerable for " + duration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+                return TooltipName("STASIS") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Render yourself frozen and invulnerable for " + duration + " seconds") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
             }
         }
 

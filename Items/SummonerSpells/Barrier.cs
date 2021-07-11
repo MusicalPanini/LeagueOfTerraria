@@ -49,7 +49,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override string GetTooltip()
         {
-            return "You gain a shield that protects from " + TerraLeague.CreateScalingTooltip(DamageType.NONE, GetShieldStat(), 100, true) + " damage for 10 seconds" +
+            return "You gain a shield that protects from " + LeagueTooltip.TooltipValue(GetShieldStat(), true, "") + " damage for 10 seconds" +
                 "\nShield strength scales through the game";
         }
 

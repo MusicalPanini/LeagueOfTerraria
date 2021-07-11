@@ -33,7 +33,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override string GetAbilityTooltip()
         {
             return "Prepare your axe then spin it with great speed" +
-                    "\nHeal " + TerraLeague.CreateScalingTooltip(DamageType.NONE, (int)(7), 100, true) + " per enemy hit";
+                    "\nHeal " +  LeagueTooltip.TooltipValue(7, true, "") + " per enemy hit";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -64,7 +64,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MEL) + " melee damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MEL), ScaleType.Melee)
+              ) + " melee damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

@@ -19,8 +19,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
-            return TooltipName("PURITY") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Target yourself or an ally and 'Cleanse' them for " + effectDuration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("PURITY") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Target yourself or an ally and 'Cleanse' them for " + effectDuration + " seconds") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

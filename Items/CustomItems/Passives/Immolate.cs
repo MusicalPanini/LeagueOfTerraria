@@ -20,7 +20,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("IMMOLATE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Set near by enemies on fire and deal " + (weaker ? 10 : 50) + " damage per second");
+            return TooltipName("IMMOLATE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Set near by enemies on fire and deal " + (weaker ? 10 : 50) + " damage per second");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

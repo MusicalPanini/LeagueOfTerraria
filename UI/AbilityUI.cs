@@ -100,7 +100,7 @@ namespace TerraLeague.UI
             {
                 List<string> tooltip = new List<string>
                 {
-                    TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, ability.GetAbilityName())
+                    LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, ability.GetAbilityName())
                 };
                 if (ability.GetDamageTooltip(Main.LocalPlayer) != "")
                     tooltip.AddRange(ability.GetDamageTooltip(Main.LocalPlayer).Split('\n'));

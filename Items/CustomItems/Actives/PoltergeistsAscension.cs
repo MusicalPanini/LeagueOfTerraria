@@ -18,8 +18,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("Wraith step") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Gain a burst of movement speed for " + effectDuration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("Wraith step") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Gain a burst of movement speed for " + effectDuration + " seconds") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

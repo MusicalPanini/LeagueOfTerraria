@@ -65,7 +65,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return "Enemies with 'Deadly Venom' take " + GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.RNG) + " + " + GetScalingTooltip(player, DamageType.MAG) + " ranged damage per stack";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+                new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged),
+                new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+                ) + " ranged damage per stack";
         }
 
         public override bool CanBeCastWhileUsingItem()

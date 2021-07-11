@@ -21,7 +21,11 @@ namespace TerraLeague.Items.Weapons
 
         string GetWeaponTooltip()
         {
-            return "Manipulate " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", Main.LocalPlayer.maxMinions, 150) + " flowing blades that deal damage based on their speed";
+            return "Manipulate " +
+                LeagueTooltip.TooltipValue(0, false, "",
+                new System.Tuple<int, ScaleType>(150, ScaleType.Minions)
+                ) +
+                " flowing blades that deal damage based on their speed";
         }
 
         public override void SetDefaults()

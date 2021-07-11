@@ -74,10 +74,15 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override string GetDamageTooltip(Player player)
         {
             checkingForHealing = false;
-            string text = GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.RNG) + " ranged damage";
+            string text = LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged)
+              ) + " ranged damage";
 
             checkingForHealing = true;
-            text += "\n" + TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player), 100, true) + " + " + GetScalingTooltip(player, DamageType.RNG, true) + " + " + GetScalingTooltip(player, DamageType.MAG, true) + " healing";
+            text += "\n" + LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged),
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+              ) + " healing";
 
             return text;
         }

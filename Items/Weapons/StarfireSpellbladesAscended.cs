@@ -20,7 +20,11 @@ namespace TerraLeague.Items.Weapons
         string GetWeaponTooltip()
         {
             return "You have ascended!" +
-                "\nFire a wave of starfire that deals " + (int)(item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
+                "\nFire a wave of starfire that deals " +
+                LeagueTooltip.TooltipValue((int)(item.damage * 0.75), false, "",
+                new System.Tuple<int, ScaleType>(30, ScaleType.Melee),
+                new System.Tuple<int, ScaleType>(50, ScaleType.Summon)
+                ) + " melee damage";
         }
 
         public override void SetDefaults()

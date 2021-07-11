@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("STONE SKIN") + TerraLeague.CreateColorString(PassiveSecondaryColor, "While near at least " + enemies + " enemies, gain " + armorResist + " armor and resist");
+            return TooltipName("STONE SKIN") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "While near at least " + enemies + " enemies, gain " + armorResist + " armor and resist");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

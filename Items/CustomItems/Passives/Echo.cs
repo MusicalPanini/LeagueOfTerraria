@@ -28,8 +28,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TerraLeague.CreateColorString(PassiveSubColor, "Moving will generate charge")
-                + "\n" + TooltipName("ECHO") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your next magic attack will deal ") + baseDamage + " + " +  TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, (int)magicScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra magic damage and launch 8 homing projectiles");
+            return LeagueTooltip.CreateColorString(PassiveSubColor, "Moving will generate charge")
+                + "\n" + TooltipName("ECHO") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Your next magic attack will deal ") + LeagueTooltip.TooltipValue(baseDamage, false, "", new Tuple<int, ScaleType>((int)magicScaling, ScaleType.Summon)) + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " extra magic damage and launch 8 homing projectiles");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

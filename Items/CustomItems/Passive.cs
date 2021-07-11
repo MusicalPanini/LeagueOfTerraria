@@ -24,7 +24,7 @@ namespace TerraLeague.Items.CustomItems
 
         public string TooltipName(string name)
         {
-            return TerraLeague.CreateColorString(PassiveMainColor, "Passive: " + name.ToUpper() + " - ");
+            return LeagueTooltip.CreateColorString(PassiveMainColor, "Passive: " + name.ToUpper()) + "\n";
         }
 
         public virtual void UpdateAccessory(Player player, ModItem modItem)

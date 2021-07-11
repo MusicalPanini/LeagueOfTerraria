@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player), 100, true) + " + " + GetScalingTooltip(player, DamageType.SUM, true) + " shielding";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), true, "") + " shielding";
         }
 
         public override bool CanBeCastWhileUsingItem()

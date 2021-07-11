@@ -29,8 +29,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("Tempest") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your next magic or minion attack will deal ") + baseDamage + " + " +  TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, (int)magicScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra magic damage\nand create 11 bolts of lightning around the target")
-            + "\n" + TerraLeague.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown.");
+            return TooltipName("Tempest") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Your next magic or minion attack will deal ") + LeagueTooltip.TooltipValue(baseDamage, false, "", new Tuple<int, ScaleType>((int)magicScaling, ScaleType.Magic)) + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " extra magic damage\nand create 11 bolts of lightning around the target")
+            + "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown.");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

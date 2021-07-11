@@ -17,8 +17,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("Annul") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain a shield that will protect from one projectile at full charge") +
-                "\n" + TerraLeague.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("Annul") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain a shield that will protect from one projectile at full charge") +
+                "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

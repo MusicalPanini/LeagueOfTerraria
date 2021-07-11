@@ -19,8 +19,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
-            return TooltipName("DAMNATION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Deal ") + damage + TerraLeague.CreateColorString(ActiveSecondaryColor, " damage to an enemy at your cursor and steal their speed")
-                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("DAMNATION") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Deal ") + damage + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " damage to an enemy at your cursor and steal their speed")
+                + "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

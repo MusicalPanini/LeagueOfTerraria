@@ -25,9 +25,9 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("Starlit Grace") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Dealing damage heals the lowest health nearby player for ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, heal, 100, true)
-                + "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "Every second in combat increases this heal by " + scaling + "% up to " + (maxStacks * scaling) + "%")
-                + "\n" + TerraLeague.CreateColorString(PassiveSubColor, passiveCooldown + " second cooldown");
+            return TooltipName("Starlit Grace") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Dealing damage heals the lowest health nearby player for ") + LeagueTooltip.TooltipValue(heal, true, "")
+                + "\n" + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Every second in combat increases this heal by " + scaling + "% up to " + (maxStacks * scaling) + "%")
+                + "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, passiveCooldown + " second cooldown");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

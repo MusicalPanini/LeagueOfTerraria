@@ -27,8 +27,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("DEVOTION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give nearby allies a ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", modPlayer.maxLifeLastStep, percentLifeShield, true) + TerraLeague.CreateColorString(ActiveSecondaryColor, " Shield") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("DEVOTION") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Give nearby allies a ") + LeagueTooltip.TooltipValue(0, true, "", new Tuple<int, ScaleType>(percentLifeShield, ScaleType.MaxLife)) + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " Shield") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

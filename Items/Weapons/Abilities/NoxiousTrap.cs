@@ -32,7 +32,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Toss " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "TURRETS", (int)Main.LocalPlayer.maxTurrets, 100) + " + 2 mushroom traps that rupture and release clouds of venom when an enemy is near";
+            return "Toss " + LeagueTooltip.TooltipValue(2, false, "",
+              new Tuple<int, ScaleType>(100, ScaleType.Sentries)
+              ) + " mushroom traps that rupture and release clouds of venom when an enemy is near";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -63,7 +65,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.SUM) + " summon damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
+              ) + " minion damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

@@ -30,16 +30,18 @@ namespace TerraLeague.Items.Weapons
             int tt2 = tooltips.FindIndex(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt2 != -1)
             {
-                tooltips.Insert(tt2 + 1, new TooltipLine(TerraLeague.instance, "Shielding", TerraLeague.CreateScalingTooltip(DamageType.NONE, modPlayer.ScaleValueWithHealPower(shielding * (float)modPlayer.magicDamageLastStep, true), 100, true) + " magic shielding"));
+                tooltips.Insert(tt2 + 1, new TooltipLine(TerraLeague.instance, "Shielding", 
+                    LeagueTooltip.TooltipValue((int)(shielding * (float)modPlayer.magicDamageLastStep), true, "") + " magic shielding"));
             }
         }
 
         string GetWeaponTooltip()
         {
-            string magic = TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, 20);
             return "Send out a returning refraction of your staff, shielding allies and damaging enemies" +
                 "\nHas a chance to apply 'Illuminated' to enemies" +
-                "\n'Illuminated' enemies take 40 + " + magic + " magic On Hit damage from Radiant Staff";
+                "\n'Illuminated' enemies take " + LeagueTooltip.TooltipValue(40, false, "",
+              new System.Tuple<int, ScaleType>(20, ScaleType.Magic)
+              ) + " magic On Hit damage from Radiant Staff";
         }
 
         public override void SetDefaults()

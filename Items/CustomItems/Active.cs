@@ -25,7 +25,7 @@ namespace TerraLeague.Items.CustomItems
 
         public string TooltipName(string name)
         {
-            return TerraLeague.CreateColorString(ActiveMainColor, "Active: " + name.ToUpper() + " - ");
+            return LeagueTooltip.CreateColorString(ActiveMainColor, "Active: " + name.ToUpper()) + "\n";
         }
 
         virtual public void PostPlayerUpdate(Player player, LeagueItem modItem)

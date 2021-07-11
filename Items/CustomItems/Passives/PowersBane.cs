@@ -24,7 +24,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("POWER'S BANE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "All damage taken above " + damageThreshold + " will be reduced by " + damageReduction);
+            return TooltipName("POWER'S BANE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "All damage taken above " + damageThreshold + " will be reduced by " + damageReduction);
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

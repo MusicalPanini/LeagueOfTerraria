@@ -23,10 +23,11 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("VOID CALLER") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Summon a Zz'Rot portal at your cursor" +
-                "\nIt ejects ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 3, 100) + " + " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)modPlayer.maxMinionsLastStep, 100) +
-                TerraLeague.CreateColorString(ActiveSecondaryColor, " Zz'Rots every second for 5 seconds. The Zz'Rots deal ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseDamage, 100) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, sumScaling) +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("VOID CALLER") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Summon a Zz'Rot portal at your cursor" +
+                "\nIt ejects ") + LeagueTooltip.TooltipValue(3, false, "", new System.Tuple<int, ScaleType>(100, ScaleType.Minions)) +
+                LeagueTooltip.CreateColorString(ActiveSecondaryColor, " Zz'Rots every second for 5 seconds." +
+                "\nThe Zz'Rots deal ") + LeagueTooltip.TooltipValue(baseDamage, false, "", new System.Tuple<int, ScaleType>(sumScaling, ScaleType.Summon)) + " minion damage" +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

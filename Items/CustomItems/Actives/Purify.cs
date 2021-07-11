@@ -17,8 +17,8 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
-            return TooltipName("PURIFY") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Create a cleansing field at the target location for 10 seconds.\nAllies will be immune to most debuffs while in this field") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("PURIFY") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Create a cleansing field at the target location for 10 seconds.\nAllies will be immune to most debuffs while in this field") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

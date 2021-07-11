@@ -65,7 +65,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.RNG) + " + " + GetScalingTooltip(player, DamageType.MAG) + " ranged damage";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged)
+               ) + " ranged damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

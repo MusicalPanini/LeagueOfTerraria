@@ -64,7 +64,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MEL) + " + " + GetScalingTooltip(player, DamageType.MAG) + " magic damage per dagger";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MEL), ScaleType.Melee),
+               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+               ) + " magic damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

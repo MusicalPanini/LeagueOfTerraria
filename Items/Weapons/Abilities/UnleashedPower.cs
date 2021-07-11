@@ -32,7 +32,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Launch " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)Main.LocalPlayer.maxMinions, 200) + " dark spheres at a targeted enemy";
+            return "Launch " + LeagueTooltip.TooltipValue(2, false, "", new Tuple<int, ScaleType>(200, ScaleType.Minions)) + " dark spheres at a targeted enemy";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -63,7 +63,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.SUM) + " summon damage per sphere";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
+              ) + " summon damage";
         }
 
         public override bool CanBeCastWhileUsingItem()

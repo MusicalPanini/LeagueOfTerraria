@@ -28,16 +28,16 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             if (UI.ItemUI.extraStats)
             {
-                statis += TerraLeague.CreateColorString(Color.White.Hex3(), value + "") + " + " + TerraLeague.CreateColorString(TerraLeague.HEALColor, "HEAL(" + (((int)(value * modifiedhealPower)) - (value)) + ")");
+                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), value + "") + " + " + LeagueTooltip.CreateColorString(TerraLeague.HEALColor, "HEAL(" + (((int)(value * modifiedhealPower)) - (value)) + ")");
             }
             else
             {
                 value = (int)(value * modifiedhealPower);
-                statis += TerraLeague.CreateColorString(Color.White.Hex3(), value + "");
+                statis += LeagueTooltip.CreateColorString(Color.White.Hex3(), value + "");
             }
 
-            return TooltipName("REJUVINATE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Heal nearby allies for ") + statis + TerraLeague.CreateColorString(ActiveSecondaryColor, " life\nHeal Power is 2 times as effective for this heal") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
+            return TooltipName("REJUVINATE") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Heal nearby allies for ") + statis + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " life\nHeal Power is 2 times as effective for this heal") +
+                 "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

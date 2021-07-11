@@ -18,7 +18,9 @@ namespace TerraLeague.Items.Weapons
 
         string GetWeaponTooltip()
         {
-            return "Deals an additional " + TerraLeague.CreateScalingTooltip(DamageType.RNG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG, 100) + " damage";
+            return "Deals an additional " + LeagueTooltip.TooltipValue(0, false, "",
+              new System.Tuple<int, ScaleType>(100, ScaleType.Ranged)
+              ) + " damage";
         }
 
         public override void SetDefaults()

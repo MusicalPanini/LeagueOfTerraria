@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("STORM") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Enhances the bonus effects of ENERGIZED and applies 'Slowed'");
+            return TooltipName("STORM") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Enhances the bonus effects of ENERGIZED and applies 'Slowed'");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

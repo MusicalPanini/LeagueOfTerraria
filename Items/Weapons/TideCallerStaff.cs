@@ -30,7 +30,7 @@ namespace TerraLeague.Items.Weapons
             int tt2 = tooltips.FindIndex(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt2 != -1)
             {
-                tooltips.Insert(tt2 + 1, new TooltipLine(TerraLeague.instance, "Healing", TerraLeague.CreateScalingTooltip(DamageType.NONE, (int)(healing * modPlayer.magicDamageLastStep), 100, true) + " magic healing"));
+                tooltips.Insert(tt2 + 1, new TooltipLine(TerraLeague.instance, "Healing", LeagueTooltip.TooltipValue((int)(healing * (float)modPlayer.magicDamageLastStep), true, "") + " magic healing"));
             }
         }
 

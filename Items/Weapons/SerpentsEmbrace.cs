@@ -23,7 +23,9 @@ namespace TerraLeague.Items.Weapons
         {
             return "Fire a serpent that applies 'Venom'." +
                 "\nIf a nearby enemy has 'Venom' launch Twin Fangs instead at nearby 'Venom' affected enemies instead." +
-                "\nTwin Fangs deal " + item.damage + " + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, MAGScaling) + " magic damage";
+                "\nTwin Fangs deal " + LeagueTooltip.TooltipValue(item.damage, false, "",
+              new System.Tuple<int, ScaleType>(MAGScaling, ScaleType.Magic)
+              ) + " magic damage";
         }
 
         public override void SetDefaults()
