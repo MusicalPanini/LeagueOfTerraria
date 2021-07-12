@@ -443,6 +443,7 @@ namespace TerraLeague.UI
             }
             else
             {
+                itemCooldown.SetText("");
                 itemStat.SetText("");
                 _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorder");
             }
