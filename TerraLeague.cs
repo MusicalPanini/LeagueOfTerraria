@@ -848,6 +848,11 @@ namespace TerraLeague
             HealthAndManaHitBoxes();
         }
 
+        public static int ScaleWithUseTimeMulti(int value, Item item, Player player)
+        {
+            return (int)Math.Max(value * (2 - item.GetGlobalItem<Items.TerraLeagueITEMGLOBAL>().UseTimeMultiplier(item, player)), 1);
+        }
+
         /// <summary>
         /// Plays a sound of specific pitch and returns the created instance
         /// </summary>
