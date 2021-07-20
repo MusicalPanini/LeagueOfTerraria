@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 int manaUsed = (int)(player.statMana * percentMana * 0.01);
                 player.CheckMana(manaUsed, true);
 
-                modPlayer.AddShield(manaUsed + baseShield,duration * 60, Color.SkyBlue, ShieldType.Basic);
+                modPlayer.AddShield(modPlayer.ScaleValueWithHealPower(manaUsed * ((float)manaScaling / percentMana) + baseShield), duration * 60, Color.SkyBlue, ShieldType.Basic);
                 SetCooldown(player);
 
                 Efx(player);
