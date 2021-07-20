@@ -30,11 +30,20 @@ namespace TerraLeague.Items.CompleteItems
             string itemName = player.armor[slot].Name;
 
             if (itemName == "Tear of the Goddess" || itemName == "Archangel's Staff" || itemName == "Seraph's Embrase" || itemName == "Manamune" || itemName == "Muramana")
+            {
+                base.CanEquipAccessory(player, slot);
                 return true;
+            }
             else if (modPlayer.awe)
+            {
                 return false;
+            }
             else
+            {
+                base.CanEquipAccessory(player, slot);
                 return true;
+            }
+
         }
 
         public override void SetDefaults()
