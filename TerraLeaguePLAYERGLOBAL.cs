@@ -1479,26 +1479,33 @@ namespace TerraLeague
         
         public override void PostUpdate()
         {
-            if (TerraLeague.instance.debugMode)
+            //if (TerraLeague.debugMode)
             {
-                for (int i = 0; i < AbilityCooldowns.Length; i++)
+                if (TerraLeague.noAbilityCooldowns)
                 {
-                    if (AbilityCooldowns[i] > 60)
-                        AbilityCooldowns[i] = 60;
+                    for (int i = 0; i < AbilityCooldowns.Length; i++)
+                    {
+                        if (AbilityCooldowns[i] != 0)
+                            AbilityCooldowns[i] = 0;
+
+                        calibrumAmmo = 100;
+                        severumAmmo = 100;
+                        gravitumAmmo = 100;
+                        infernumAmmo = 100;
+                        crescendumAmmo = 100;
+
+                        blessingCooldown = 0;
+                    }
                 }
 
-                for (int i = 0; i < sumCooldowns.Length; i++)
+                if (TerraLeague.noSummonerCooldowns)
                 {
-                    sumCooldowns[i] = 0;
+                    for (int i = 0; i < sumCooldowns.Length; i++)
+                    {
+                        sumCooldowns[i] = 0;
+                    }
                 }
 
-                calibrumAmmo = 100;
-                severumAmmo = 100;
-                gravitumAmmo = 100;
-                infernumAmmo = 100;
-                crescendumAmmo = 100;
-
-                blessingCooldown = 0;
             }
 
             if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
@@ -3687,9 +3694,9 @@ namespace TerraLeague
             }
             if (keyDir == num)
             {
-                if ((solariSet && solariCharge >= solariMaxCharge) || TerraLeague.instance.debugMode)
+                if ((solariSet && solariCharge >= solariMaxCharge) || TerraLeague.noItemCooldowns)
                 {
-                    if (TerraLeague.instance.debugMode)
+                    if (TerraLeague.noItemCooldowns)
                         solariCharge = solariMaxCharge - 60;
                     else
                         solariCharge = 0;

@@ -30,6 +30,8 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
+            if (TerraLeague.noItemCooldowns)
+                cooldownCount = 0;
             if (cooldownCount > 0)
                 cooldownCount--;
         }

@@ -24,6 +24,8 @@ namespace TerraLeague
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
+        [Header("UI Options")]
+
         [Increment(5)]
         [Range(20, 100)]
         [DefaultValue(50)]
@@ -41,6 +43,15 @@ namespace TerraLeague
         public int manaBarDividerSpacing;
 
         [DefaultValue(true)]
+        [BackgroundColor(19, 122, 113)]
+        [Label("Use the custom resource bar")]
+        [Tooltip("WARNING: You wont be able to clearly see shield values with this off")]
+        public bool UseModResourceBar;
+
+
+        [Header("Gameplay Options")]
+
+        [DefaultValue(true)]
         [BackgroundColor(51, 150, 183)]
         [Label("Use mana regen overhaul")]
         [Tooltip("WARNING: The mod was not built around the vanilla system")]
@@ -52,13 +63,6 @@ namespace TerraLeague
         [Tooltip("This will cause defence to not block any damage, but turn it into armor and resist instead")]
         public bool UseCustomDefenceStat;
 
-        [DefaultValue(true)]
-        [BackgroundColor(19, 122, 113)]
-        [Slider]
-        [Label("Use the custom resource bar")]
-        [Tooltip("WARNING: You wont be able to clearly see shield values with this off")]
-        public bool UseModResourceBar;
-
         [DefaultValue(1)]
         [Range(0, 1)]
         [BackgroundColor(0, 96, 29)]
@@ -66,12 +70,43 @@ namespace TerraLeague
         [Label("Set the intensity of the Black Mist effect")]
         public float drawMist;
 
+
+        [Header("Debug Tools")]
+
+        [DefaultValue(false)]
+        [BackgroundColor(200, 200, 0)]
+        [Label("[DEBUG] Remove Ability Cooldowns")]
+        public bool noAbilityCooldowns;
+
+        [DefaultValue(false)]
+        [BackgroundColor(75, 75, 75)]
+        [Label("[DEBUG] Remove Item Cooldowns")]
+        public bool noItemCooldowns;
+
+        [DefaultValue(false)]
+        [BackgroundColor(200, 200, 0)]
+        [Label("[DEBUG] Remove Summoner Cooldowns")]
+        public bool noSummonerCooldowns;
+
+        [DefaultValue(false)]
+        [BackgroundColor(75, 75, 75)]
+        [Label("[DEBUG] Display Logs")]
+        public bool showLogging;
+
         public override void OnChanged()
         {
             UI.ResourceBar.healthBarDividerDistance = healthBarDividerSpacing;
             UI.ResourceBar.manaBarDividerDistance = manaBarDividerSpacing;
             TerraLeague.fogIntensity = drawMist;
             TerraLeague.UseModResourceBar = UseModResourceBar;
+            TerraLeague.canLog = showLogging;
+
+            if (TerraLeague.debugMode || Main.netMode == NetmodeID.SinglePlayer)
+            {
+                TerraLeague.noAbilityCooldowns = noAbilityCooldowns;
+                TerraLeague.noItemCooldowns = noItemCooldowns;
+                TerraLeague.noSummonerCooldowns = noSummonerCooldowns;
+            }
             if (Main.netMode == NetmodeID.SinglePlayer)
             {
                 TerraLeague.UseCustomManaRegen = UseCustomManaRegen;
@@ -83,10 +118,12 @@ namespace TerraLeague
     }
 
     [BackgroundColor(4, 74, 26)]
-    [Label("Server Config Config")]
+    [Label("Server Config")]
     public class TerraLeagueServerConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
+
+        [Header("Gameplay Options")]
 
         [DefaultValue(true)]
         [BackgroundColor(51, 150, 183)]
@@ -99,6 +136,15 @@ namespace TerraLeague
         [Label("Convert defence into armor and resist for server")]
         [Tooltip("This will cause defence to not block any damage, but turn it into armor and resist instead")]
         public bool UseCustomDefenceStat;
+
+
+        [Header("Debug Tools")]
+
+        [DefaultValue(false)]
+        [BackgroundColor(100, 100, 100)]
+        [Label("Enable clientside debug configs")]
+        [Tooltip("This allows individual clients to toggle debug options")]
+        public bool debugModeEnabled;
 
         public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref string message)
         {
@@ -119,6 +165,16 @@ namespace TerraLeague
             {
                 TerraLeague.UseCustomManaRegen = UseCustomManaRegen;
                 TerraLeague.UseCustomDefenceStat = UseCustomDefenceStat;
+                TerraLeague.debugMode = debugModeEnabled;
+
+                if (!TerraLeague.debugMode)
+                {
+                    TerraLeague.noAbilityCooldowns = false;
+                    TerraLeague.noItemCooldowns = false;
+                    TerraLeague.noSummonerCooldowns = false;
+                    TerraLeague.UseCustomManaRegen = false;
+                    TerraLeague.UseCustomDefenceStat = false;
+                }
             }
 
             base.OnChanged();

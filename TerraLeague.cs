@@ -38,11 +38,8 @@ namespace TerraLeague
         internal ToolTipUI tooltipUI;
         internal TeleportUI teleportUI;
         internal PlayerUI playerUI;
-        internal bool canLog = false;
-        internal bool debugMode = false;
-        public static bool UseModResourceBar = false;
-        public static bool UseCustomManaRegen = false;
-        public static bool UseCustomDefenceStat = false;
+        
+        
         internal int SumCurrencyID;
         private UserInterface userInterface1;
         private UserInterface userInterface2;
@@ -65,6 +62,16 @@ namespace TerraLeague
         public static ModHotKey EAbility;
         public static ModHotKey RAbility;
 
+        // Config Stuff
+        public static bool canLog = false;
+        public static bool UseModResourceBar = false;
+        public static bool UseCustomManaRegen = false;
+        public static bool UseCustomDefenceStat = false;
+        public static bool noItemCooldowns = false;
+        public static bool noAbilityCooldowns = false;
+        public static bool noSummonerCooldowns = false;
+        public static bool unlimitedMana = false;
+        public static bool debugMode = false;
         public static float fogIntensity;
         //public static ModHotKey Trinket;
         public static PlayerLayer ShieldEffect;
@@ -589,7 +596,7 @@ namespace TerraLeague
         /// <param name="color">Color of the text</param>
         internal static void Log(string message, Color color)
         {
-            if (instance.canLog)
+            if (canLog)
             {
                 color.A = 0;
 

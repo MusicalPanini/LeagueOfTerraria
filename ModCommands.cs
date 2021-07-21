@@ -32,7 +32,7 @@ namespace TerraLeague
 
         public override void Action(CommandCaller caller, string input, string[] args)
         {
-            TerraLeague.instance.canLog = TerraLeague.instance.canLog == false ? true : false;
+            TerraLeague.canLog = TerraLeague.canLog == false ? true : false;
             Main.NewText("Toggled Logs");
         }
     }
@@ -90,14 +90,14 @@ namespace TerraLeague
 
         public override void Action(CommandCaller caller, string input, string[] args)
         {
-            if (TerraLeague.instance.debugMode)
+            if (TerraLeague.debugMode)
             {
-                TerraLeague.instance.debugMode = false;
+                TerraLeague.debugMode = false;
                 Main.NewText("Debug mode disabled");
             }
             else
             {
-                TerraLeague.instance.debugMode = true;
+                TerraLeague.debugMode = true;
                 Main.NewText("Debug mode enabled");
             }
         }
