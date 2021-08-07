@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using TerraLeague.Buffs;
 using TerraLeague.NPCs;
+using TerraLeague.NPCs.TargonBoss;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -36,13 +37,13 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            TerraLeague.DustBorderRing((int)(effectRadius), projectile.Center, 263, TargonBoss.DianaColor, 1);
+            TerraLeague.DustBorderRing((int)(effectRadius), projectile.Center, 263, TargonBossNPC.DianaColor, 1);
 
             if (projectile.timeLeft % 30 == 1)
             {
                 float rad = effectRadius - (effectRadius * projectile.timeLeft / 150f);
                 //TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0f - (0.05f * projectile.timeLeft / 30));
-                TerraLeague.DustElipce(rad, rad, 0, projectile.Center, 263, TargonBoss.DianaColor, 1.5f, 180, true);
+                TerraLeague.DustElipce(rad, rad, 0, projectile.Center, 263, TargonBossNPC.DianaColor, 1.5f, 180, true);
             }
 
             if (projectile.timeLeft == 1)
@@ -51,7 +52,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            TerraLeague.DustElipce(2, 2, 0, projectile.Center, 263, TargonBoss.DianaColor, 1f, 180, true, 10);
+            TerraLeague.DustElipce(2, 2, 0, projectile.Center, 263, TargonBossNPC.DianaColor, 1f, 180, true, 10);
             Main.PlaySound(new LegacySoundStyle(2, 74), projectile.Center);
 
             base.Kill(timeLeft);

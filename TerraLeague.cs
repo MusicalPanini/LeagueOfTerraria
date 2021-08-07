@@ -23,6 +23,7 @@ using TerraLeague.Shaders;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Audio;
 using TerraLeague.Items.Accessories;
+using TerraLeague.NPCs.TargonBoss;
 
 namespace TerraLeague
 {
@@ -208,7 +209,7 @@ namespace TerraLeague
                 bossChecklist.Call(
                     "AddBoss",  // Call
                     3.1f,       // Boss Progresion
-                    new List<int>() { ModContent.NPCType<TargonBoss>() }, // NPC Types
+                    new List<int>() { ModContent.NPCType<TargonBossNPC>() }, // NPC Types
                     this, // Mod
                     "The Celestial Gate Keeper", // Name
                     (Func<bool>)(() => TerraLeagueWORLDGLOBAL.TargonArenaDefeated), // Completion Check
@@ -217,8 +218,8 @@ namespace TerraLeague
                     new List<int>() { ModContent.ItemType<Items.CelestialBar>(), ModContent.ItemType<Items.Placeable.TargonMonolith>(), ModContent.ItemType<Items.Accessories.BottleOfStardust>() }, // Drops
                     "Climb Mount Targon and accept the challenge at its peak", // Spawn Info
                     "",
-                    "TerraLeague/NPCs/TargonBoss_Checklist",
-                    "TerraLeague/NPCs/TargonBoss_Head");
+                    "TerraLeague/NPCs/TargonBoss/TargonBoss_Checklist",
+                    "TerraLeague/NPCs/TargonBoss/TargonBoss_Head");
 
 
                 bossChecklist.Call(
@@ -388,7 +389,7 @@ namespace TerraLeague
             {
                 return;
             }
-            if (Main.LocalPlayer.HasBuff(ModContent.BuffType<InTargonArena>()) && NPC.CountNPCS(ModContent.NPCType<TargonBoss>()) > 0)
+            if (Main.LocalPlayer.HasBuff(ModContent.BuffType<InTargonArena>()) && NPC.CountNPCS(ModContent.NPCType<TargonBossNPC>()) > 0)
             {
                 music = MusicID.Boss2;
                 priority = MusicPriority.BossHigh;
@@ -682,7 +683,7 @@ namespace TerraLeague
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendRemoveBuff(-1, Main.myPlayer, buffType, target);
+                    TerraLeagueNPCsGLOBAL.PacketHandler.SendRemoveBuff(-1, Main.myPlayer, buffType, target);
                 }
             }
         }

@@ -48,7 +48,7 @@ namespace TerraLeague.Projectiles
                 target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks++;
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 3, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks);
+                    TerraLeagueNPCsGLOBAL.PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 3, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks);
             }
 
             target.AddBuff(BuffType<DeadlyVenom>(), 300);

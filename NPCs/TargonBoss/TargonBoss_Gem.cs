@@ -13,7 +13,7 @@ using TerraLeague.Dusts;
 using Terraria.Audio;
 using System.Linq;
 
-namespace TerraLeague.NPCs
+namespace TerraLeague.NPCs.TargonBoss
 {
     public class TargonBoss_Gem : ModNPC
     {
@@ -58,12 +58,12 @@ namespace TerraLeague.NPCs
                 npc.ai[0] = 2;
             }
 
-            if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+            if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
             {
                 npc.active = false;
             }
 
-            Lighting.AddLight(npc.Center, TargonBoss.TaricColor.ToVector3());
+            Lighting.AddLight(npc.Center, TargonBossNPC.TaricColor.ToVector3());
 
 
             return base.PreAI();
@@ -71,14 +71,14 @@ namespace TerraLeague.NPCs
 
         public override void AI()
         {
-            NPC bossNPC = Main.npc.First(x => x.type == NPCType<TargonBoss>());
+            NPC bossNPC = Main.npc.First(x => x.type == NPCType<TargonBossNPC>());
 
             if (Main.time % 2 == 0)
             {
                 if (npc.lifeMax > 10)
-                    TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, npc.Center, 128), npc.Center, 263, Main.rand.NextFloat(0.08f, 0.2f), 1.5f, TargonBoss.TaricColor);
+                    TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, npc.Center, 128), npc.Center, 263, Main.rand.NextFloat(0.08f, 0.2f), 1.5f, TargonBossNPC.TaricColor);
                 else
-                    TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, npc.Center, 128), npc.Center, 263, Main.rand.NextFloat(0.08f, 0.1f), 1, TargonBoss.TaricColor);
+                    TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, npc.Center, 128), npc.Center, 263, Main.rand.NextFloat(0.08f, 0.1f), 1, TargonBossNPC.TaricColor);
             }
         }
 
@@ -94,7 +94,7 @@ namespace TerraLeague.NPCs
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.TaricColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.TaricColor, 1.5f);
                     dust.noGravity = true;
                     count++;
                     break;
@@ -104,7 +104,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBoss.TaricColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.TaricColor, 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }

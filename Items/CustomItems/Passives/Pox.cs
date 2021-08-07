@@ -36,7 +36,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks++;
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
-                        target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 5, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks);
+                        TerraLeagueNPCsGLOBAL.PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 5, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks);
                 }
 
                 target.AddBuff(BuffType<Buffs.Pox>(), 600);
