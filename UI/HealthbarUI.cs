@@ -86,35 +86,87 @@ namespace TerraLeague.UI
 
 
             Player drawPlayer = Main.LocalPlayer;
-            Rectangle destRec = new Rectangle((int)((base.Width.Pixels/2) - 58), (int)((base.Height.Pixels/2) - 48), 116, 20);
-            Rectangle destRecBreath = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
-            Rectangle destRecLavaCharm = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 16);
+            PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
 
-            if (drawPlayer.breath != drawPlayer.breathMax)
-            {
-                Texture2D texture = TerraLeague.instance.GetTexture("UI/BreathBar");
-                Rectangle sourRec = new Rectangle(0, 0, 116, 20);
-                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
-
-                Texture2D texture2 = TerraLeague.instance.GetTexture("UI/Blank");
-                Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
-                spriteBatch.Draw(texture2, destRecBreath, sourRec2, Color.DarkCyan);
-            }
-
-            if (drawPlayer.lavaTime != drawPlayer.lavaMax)
-            {
-                Texture2D texture = TerraLeague.instance.GetTexture("UI/LavaCharmBar");
-                Rectangle sourRec = new Rectangle(0, 0, 116, 20);
-                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
-
-                Texture2D texture2 = TerraLeague.instance.GetTexture("UI/Blank");
-                Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
-                Color color = new Color((int)(255 - 255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)), 0, (int)(255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)));
-                //(drawPlayer.lavaTime / (double)drawPlayer.lavaMax)
-                spriteBatch.Draw(texture2, destRecLavaCharm, sourRec2, color);
-            }
-
+            bool breathActive = drawPlayer.breath != drawPlayer.breathMax;
+            bool lavaActive = drawPlayer.lavaTime != drawPlayer.lavaMax;
+            bool voidActive = modPlayer.VoidInflu != PLAYERGLOBAL.VoidInfluMax;
+            bool duelMeter = false;
+            Texture2D meter = TerraLeague.instance.GetTexture("UI/BreathBar");
             
+            Rectangle destRec = new Rectangle((int)((base.Width.Pixels/2) - 58), (int)((base.Height.Pixels/2) - 48), 116, 20);
+            Rectangle barTop = new Rectangle();
+            Rectangle barBot = new Rectangle();
+            Color topColor = Color.White;
+            Color botColor = Color.White;
+
+            if (voidActive)
+            {
+                if (breathActive)
+                {
+                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 8);
+                    topColor = Color.DarkCyan;
+                    meter = TerraLeague.instance.GetTexture("UI/VoidAirBar");
+                }
+                else if (lavaActive)
+                {
+                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 8);
+                    topColor = new Color((int)(255 - 255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)), 0, (int)(255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)));
+                    meter = TerraLeague.instance.GetTexture("UI/VoidLavaBar");
+                }
+
+                if (breathActive || lavaActive)
+                {
+                    duelMeter = true;
+                    barBot = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 38), (int)(100 - 100 * (modPlayer.VoidInflu / PLAYERGLOBAL.VoidInfluMax)), 8);
+                    botColor = Color.DarkMagenta;
+                }
+                else
+                {
+                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (modPlayer.VoidInflu / PLAYERGLOBAL.VoidInfluMax)), 16);
+                    topColor = Color.DarkMagenta;
+                    meter = TerraLeague.instance.GetTexture("UI/VoidBar");
+                }
+
+            }
+            else
+            {
+                if (breathActive)
+                {
+                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
+                    topColor = Color.DarkCyan;
+                    meter = TerraLeague.instance.GetTexture("UI/BreathBar");
+                }
+                else if (lavaActive)
+                {
+                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 16);
+                    topColor = new Color((int)(255 - 255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)), 0, (int)(255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)));
+                    meter = TerraLeague.instance.GetTexture("UI/LavaCharmBar");
+                }
+            }
+
+            if (voidActive || breathActive || lavaActive)
+            {
+                Texture2D texture = meter;
+                Rectangle sourRec = new Rectangle(0, 0, 116, 20);
+                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
+
+                if (duelMeter)
+                {
+                    Texture2D textureBar = TerraLeague.instance.GetTexture("UI/SmallBlank_H");
+                    Rectangle sourRecTop = new Rectangle(0, 0, 8, 8);
+                    spriteBatch.Draw(textureBar, barTop, sourRecTop, topColor);
+
+                    Rectangle sourRecBot = new Rectangle(0, 0, 8, 8);
+                    spriteBatch.Draw(textureBar, barBot, sourRecBot, botColor);
+                }
+                else
+                {
+                    Texture2D textureTop = TerraLeague.instance.GetTexture("UI/Blank");
+                    Rectangle sourRecTop = new Rectangle(0, 0, 16, 16);
+                    spriteBatch.Draw(textureTop, barTop, sourRecTop, topColor);
+                }
+            }
         }
     }
 

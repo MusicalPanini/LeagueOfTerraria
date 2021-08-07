@@ -68,6 +68,9 @@ namespace TerraLeague
         internal bool zoneTargon = false;
         internal bool zoneTargonMonolith = false;
         internal bool zoneVoidPortal = false;
+        public const float VoidInfluMax = 100;
+        public float VoidInflu = 100;
+
         /// <summary>
         /// Has the player hit an enemy with current melee swing
         /// </summary>
@@ -1494,6 +1497,21 @@ namespace TerraLeague
             if (player.ownedProjectileCounts[ProjectileType<DarkinScythe_ReapingSlash>()] > 0)
             {
                 player.noKnockback = true;
+            }
+
+            if (zoneVoidPortal)
+            {
+                if (VoidInflu > 0)
+                    VoidInflu -= player.CountItem(ItemType<VoidFragment>(), 100) / 250f;
+                else
+                    VoidInflu = 0;
+            }
+            else
+            {
+                if (VoidInflu < VoidInfluMax)
+                    VoidInflu += 1f;
+                else
+                    VoidInflu = VoidInfluMax;
             }
 
             base.PreUpdate();
