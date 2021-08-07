@@ -35,6 +35,7 @@ namespace TerraLeague.NPCs
             npc.knockBackResist = 0f;
             npc.SpawnedFromStatue = true;
             npc.noGravity = true;
+            npc.behindTiles = true;
             base.SetDefaults();
         }
 
