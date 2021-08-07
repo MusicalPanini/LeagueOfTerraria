@@ -399,6 +399,11 @@ namespace TerraLeague
                 music = MusicID.Eerie;
                 priority = MusicPriority.Environment;
             }
+            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneVoidPortal)
+            {
+                music = MusicID.Hell;
+                priority = MusicPriority.Environment;
+            }
             base.UpdateMusic(ref music, ref priority);
         }
 

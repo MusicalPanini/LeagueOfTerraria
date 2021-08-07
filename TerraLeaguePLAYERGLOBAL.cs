@@ -68,6 +68,10 @@ namespace TerraLeague
         internal bool zoneTargonPeak = false;
         internal bool zoneTargon = false;
         internal bool zoneTargonMonolith = false;
+        internal bool zoneVoidPortal = false;
+        public const float VoidInfluMax = 100;
+        public float VoidInflu = 100;
+
         /// <summary>
         /// Has the player hit an enemy with current melee swing
         /// </summary>
@@ -1145,6 +1149,27 @@ namespace TerraLeague
                 }
             }
 
+            if (NPC.CountNPCS(NPCType<VoidPortal>()) != 0)
+            {
+                List<NPC> portals = Main.npc.Where(x => x.type == NPCType<VoidPortal>()).ToList();
+                if (portals != null)
+                {
+                    for (int i = 0; i < portals.Count; i++)
+                    {
+                        if (Vector2.Distance(portals[i].Center, player.MountedCenter) < 1500)
+                        {
+                            zoneVoidPortal = true;
+                            break;
+                        }
+                        zoneVoidPortal = false;
+                    }
+                }
+            }
+            else
+            {
+                zoneVoidPortal = false;
+            }
+
             zoneSurfaceMarble = (TerraLeagueWORLDGLOBAL.marbleBlocks > 300);
             if (zoneSurfaceMarble)
             {
@@ -1473,6 +1498,21 @@ namespace TerraLeague
             if (player.ownedProjectileCounts[ProjectileType<DarkinScythe_ReapingSlash>()] > 0)
             {
                 player.noKnockback = true;
+            }
+
+            if (zoneVoidPortal)
+            {
+                if (VoidInflu > 0)
+                    VoidInflu -= player.CountItem(ItemType<VoidFragment>(), 100) / 250f;
+                else
+                    VoidInflu = 0;
+            }
+            else
+            {
+                if (VoidInflu < VoidInfluMax)
+                    VoidInflu += 1f;
+                else
+                    VoidInflu = VoidInfluMax;
             }
 
             base.PreUpdate();
