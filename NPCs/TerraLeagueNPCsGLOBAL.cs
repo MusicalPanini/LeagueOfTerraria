@@ -1206,7 +1206,7 @@ namespace TerraLeague.NPCs
                     Color.White,
                     0,
                     texture.Size() * 0.5f,
-                    System.Math.Min((System.Math.Min(npc.width, npc.height) / 28f) - 0.2f, 1.2f),
+                    Math.Max(Math.Min((System.Math.Min(npc.width, npc.height) / 28f) - 0.2f, 1.2f), 0.5f),
                     SpriteEffects.None,
                     0f
                 );
