@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using TerraLeague.Buffs;
+using TerraLeague.Gores;
 using TerraLeague.NPCs;
 using Terraria;
 using Terraria.Audio;
@@ -20,79 +21,79 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 210;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 210;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            NPC npc = Main.npc[(int)projectile.ai[0]];
-            Player player = Main.player[projectile.owner];
+            NPC NPC = Main.npc[(int)Projectile.ai[0]];
+            Player player = Main.player[Projectile.owner];
 
-            if (!npc.active || projectile.Distance(player.Center) > Items.Weapons.Abilities.SoulShackles.range)
+            if (!NPC.active || Projectile.Distance(player.Center) > Items.Weapons.Abilities.SoulShackles.range)
             {
                 ChainBreak(player.Center);
-                projectile.Kill();
+                Projectile.Kill();
             }
             else
             {
-                if (projectile.timeLeft < 180)
+                if (Projectile.timeLeft < 180)
                 {
-                    if ((int)projectile.ai[1] == 0)
+                    if ((int)Projectile.ai[1] == 0)
                     {
-                        projectile.friendly = true;
+                        Projectile.friendly = true;
                     }
-                    projectile.Center = npc.Center;
+                    Projectile.Center = NPC.Center;
 
-                    Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.Bottom.Y - npc.height / 4f), npc.width, npc.height / 4, DustID.EnchantedNightcrawler, 0, -2, 0, new Color(159, 0, 255), 1.5f);
+                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.Bottom.Y - NPC.height / 4f), NPC.width, NPC.height / 4, DustID.EnchantedNightcrawler, 0, -2, 0, new Color(159, 0, 255), 1.5f);
                     dust.noGravity = true;
 
-                    if (projectile.timeLeft == 1)
+                    if (Projectile.timeLeft == 1)
                     {
-                        projectile.friendly = true;
-                        DustChain(player, (int)projectile.Distance(player.Center) / 4, 2f);
+                        Projectile.friendly = true;
+                        DustChain(player, (int)Projectile.Distance(player.Center) / 4, 2f);
 
                         for (int i = 0; i < 20; i++)
                         {
-                            dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.EnchantedNightcrawler, 0, 0, 0, new Color(159, 0, 255), 1.5f);
+                            dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.EnchantedNightcrawler, 0, 0, 0, new Color(159, 0, 255), 1.5f);
                             dust.noGravity = true;
                         }
 
-                        TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 54, -0.5f);
-                        var sound = TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 4, -1f);
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 54, -0.5f);
+                        var sound = TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 4, -1f);
                         if (sound != null)
                             sound.Volume = sound.Volume / 3f;
                     }
 
-                    if (projectile.soundDelay == 0)
+                    if (Projectile.soundDelay == 0)
                     {
-                        projectile.soundDelay = 25;
-                        TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f - (projectile.timeLeft / 180f));
+                        Projectile.soundDelay = 25;
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 15, 0.5f - (Projectile.timeLeft / 180f));
                     }
                 }
                 else
                 {
-                    Vector2 npcPos = npc.Center;
+                    Vector2 npcPos = NPC.Center;
                     Vector2 playerPos = player.MountedCenter;
 
-                    float projectileX = ((npcPos.X - playerPos.X) * (-(projectile.timeLeft - 210) / 30f)) + playerPos.X;
-                    float projectileY = ((npcPos.Y - playerPos.Y) * (-(projectile.timeLeft - 210) / 30f)) + playerPos.Y;
+                    float projectileX = ((npcPos.X - playerPos.X) * (-(Projectile.timeLeft - 210) / 30f)) + playerPos.X;
+                    float projectileY = ((npcPos.Y - playerPos.Y) * (-(Projectile.timeLeft - 210) / 30f)) + playerPos.Y;
 
-                    projectile.Center = new Vector2(projectileX, projectileY);
+                    Projectile.Center = new Vector2(projectileX, projectileY);
                 }
             }
 
-            float timepassed = ((210 - projectile.timeLeft) / 210f);
-            DustChain(player, (int)(projectile.Distance(player.Center) * (1 + timepassed)) / 64, 1 + (timepassed * 0.5f));
+            float timepassed = ((210 - Projectile.timeLeft) / 210f);
+            DustChain(player, (int)(Projectile.Distance(player.Center) * (1 + timepassed)) / 64, 1 + (timepassed * 0.5f));
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -103,10 +104,10 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if ((int)projectile.ai[1] == 0)
+            if ((int)Projectile.ai[1] == 0)
             {
-                projectile.ai[1] = 1;
-                projectile.friendly = false;
+                Projectile.ai[1] = 1;
+                Projectile.friendly = false;
                 target.AddBuff(BuffType<Slowed>(), 180);
             }
             else
@@ -118,12 +119,12 @@ namespace TerraLeague.Projectiles
 
         void DustChain(Player player, int loops, float scale)
         {
-            Vector2 ChainLine = projectile.position - player.Center;
+            Vector2 ChainLine = Projectile.position - player.Center;
             ChainLine.Normalize();
 
             for (int i = 0; i < loops; i++)
             {
-                int distance = Main.rand.Next((int)projectile.Distance(player.Center));
+                int distance = Main.rand.Next((int)Projectile.Distance(player.Center));
                 Vector2 dustPoint = ChainLine * distance;
 
                 Dust dust = Dust.NewDustDirect(dustPoint + player.Center, 1, 1, DustID.EnchantedNightcrawler, 0, 0, 100, new Color(159, 0, 255), scale);
@@ -133,21 +134,21 @@ namespace TerraLeague.Projectiles
 
         public void ChainBreak(Vector2 source)
         {
-            Vector2 ChainLine = projectile.position - source;
+            Vector2 ChainLine = Projectile.position - source;
             ChainLine.Normalize();
-            int links = (int)projectile.Distance(source) / 32;
+            int links = (int)Projectile.Distance(source) / 32;
 
             for (int i = 0; i < links; i++)
             {
                 int distance = 32 * i;
                 Vector2 gorePoint = ChainLine * distance;
 
-                int gore = Gore.NewGore(gorePoint + source, Vector2.Zero, mod.GetGoreSlot("Gores/SoulShackleGoreA"), 1f);
+                int gore = Gore.NewGore(gorePoint + source, Vector2.Zero, GoreType<SoulShackleGoreA>(), 1f);
 
                 Main.gore[gore].timeLeft /= 10;
 
                 gorePoint = ChainLine * (distance + 16);
-                gore = Gore.NewGore(gorePoint + source, Vector2.Zero, mod.GetGoreSlot("Gores/SoulShackleGoreB"), 1f);
+                gore = Gore.NewGore(gorePoint + source, Vector2.Zero, GoreType<SoulShackleGoreB>(), 1f);
                 Main.gore[gore].timeLeft /= 15;
             }
         }
@@ -159,19 +160,19 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)projectile.ai[0] == target.whoAmI && projectile.friendly)
+            if ((int)Projectile.ai[0] == target.whoAmI && Projectile.friendly)
                 return true;
             else
                 return false;
         }
 
 
-        public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/TheFallenCelestialsDarkMagic_SoulShackleChain");
+            Texture2D texture = Request<Texture2D>("TerraLeague/Projectiles/TheFallenCelestialsDarkMagic_SoulShackleChain").Value;
 
-            Vector2 position = projectile.Center;
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 position = Projectile.Center;
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             mountedCenter.Y += 4;
             Rectangle? sourceRectangle = new Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
@@ -201,7 +202,7 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            texture = mod.GetTexture("Projectiles/TheFallenCelestialsDarkMagic_SoulShackleBorder");
+            texture = Request<Texture2D>("TerraLeague/Projectiles/TheFallenCelestialsDarkMagic_SoulShackleBorder").Value;
             origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             Vector2 BorderVector =  position - mountedCenter;
             BorderVector.Normalize();

@@ -18,62 +18,62 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.timeLeft = 180;
-            projectile.penetrate = 3;
-            projectile.friendly = true;
-            projectile.magic = true;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.timeLeft = 180;
+            Projectile.penetrate = 3;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         public override void AI()
         {
-            if (projectile.ai[0] > 0)
-                projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            if (Projectile.ai[0] > 0)
+                Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
 
-            projectile.spriteDirection = projectile.direction;
+            Projectile.spriteDirection = Projectile.direction;
 
-            if (projectile.timeLeft < 150 && (int)projectile.ai[1] == 0)
+            if (Projectile.timeLeft < 150 && (int)Projectile.ai[1] == 0)
             {
-                projectile.velocity.Y += 0.4f;
-                projectile.velocity.X *= 0.97f;
-                projectile.rotation += (Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y)) * 0.03f * (float)projectile.direction;
+                Projectile.velocity.Y += 0.4f;
+                Projectile.velocity.X *= 0.97f;
+                Projectile.rotation += (Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y)) * 0.03f * (float)Projectile.direction;
             }
-            else if ((int)projectile.ai[1] > 0)
+            else if ((int)Projectile.ai[1] > 0)
             {
-                projectile.velocity.Y += 0.4f;
-                projectile.rotation += (Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y)) * 0.03f * (float)projectile.direction;
+                Projectile.velocity.Y += 0.4f;
+                Projectile.rotation += (Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y)) * 0.03f * (float)Projectile.direction;
 
             }
             else
             {
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             }
             
-            if ((int)projectile.ai[1] == 2)
+            if ((int)Projectile.ai[1] == 2)
             {
-                    projectile.velocity = new Vector2(projectile.velocity.X * 0.2f, -6);
+                    Projectile.velocity = new Vector2(Projectile.velocity.X * 0.2f, -6);
 
-                projectile.ai[1] = 1;
+                Projectile.ai[1] = 1;
             }
 
-            if (projectile.velocity.Y > 16)
-                projectile.velocity.Y = 16;
+            if (Projectile.velocity.Y > 16)
+                Projectile.velocity.Y = 16;
 
             base.AI();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (projectile.ai[0] == 0)
+            if (Projectile.ai[0] == 0)
             {
-                projectile.netUpdate = true;
-                projectile.ai[1] = 2;
-                projectile.timeLeft += 30;
+                Projectile.netUpdate = true;
+                Projectile.ai[1] = 2;
+                Projectile.timeLeft += 30;
             }
             else
             {
-                target.immune[projectile.owner] = 2;
+                target.immune[Projectile.owner] = 2;
             }
 
             base.OnHitNPC(target, damage, knockback, crit);
@@ -81,10 +81,10 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
             for (int i = 0; i < 6; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust dustIndex = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Iron, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
             }
             base.Kill(timeLeft);
         }

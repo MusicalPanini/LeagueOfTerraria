@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/EvolvedWings";
+            return "TerraLeague/AbilityImages/EvolvedWings";
         }
 
         public override string GetAbilityTooltip()
@@ -66,11 +66,11 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.NPCDeath1, player.MountedCenter);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCDeath1, player.MountedCenter);
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Moss_Purple, -3 * player.direction, -2);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PurpleMoss, -3 * player.direction, -2);
                 dust.scale = 2;
             }
         }

@@ -37,21 +37,21 @@ namespace TerraLeague.UI
                 switch (modPlayer.WhisperShotsLeft)
                 {
                     case 4:
-                        texture = TerraLeague.instance.GetTexture("UI/Ammo1");
+                        texture = Request<Texture2D>("TerraLeague/UI/Ammo1").Value;
                         break;
                     case 3:
-                        texture = TerraLeague.instance.GetTexture("UI/Ammo2");
+                        texture = Request<Texture2D>("TerraLeague/UI/Ammo2").Value;
                         break;
                     case 2:
-                        texture = TerraLeague.instance.GetTexture("UI/Ammo3");
+                        texture = Request<Texture2D>("TerraLeague/UI/Ammo3").Value;
                         break;
                     case 1:
-                        texture = TerraLeague.instance.GetTexture("UI/Ammo4");
+                        texture = Request<Texture2D>("TerraLeague/UI/Ammo4").Value;
                         frame = ((int)Main.time % 10);
                         frame = frame > 5 ? 0 : 1;
                         break;
                     case 0:
-                        texture = TerraLeague.instance.GetTexture("UI/AmmoNone");
+                        texture = Request<Texture2D>("TerraLeague/UI/AmmoNone").Value;
                         break;
                     default:
                         break;
@@ -79,13 +79,13 @@ namespace TerraLeague.UI
                 switch (modPlayer.DestinyShotsLeft)
                 {
                     case 2:
-                        texture = TerraLeague.instance.GetTexture("UI/ShotgunAmmo2");
+                        texture = Request<Texture2D>("TerraLeague/UI/ShotgunAmmo2").Value;
                         break;
                     case 1:
-                        texture = TerraLeague.instance.GetTexture("UI/ShotgunAmmo1");
+                        texture = Request<Texture2D>("TerraLeague/UI/ShotgunAmmo1").Value;
                         break;
                     case 0:
-                        texture = TerraLeague.instance.GetTexture("UI/ShotgunAmmoNone");
+                        texture = Request<Texture2D>("TerraLeague/UI/ShotgunAmmoNone").Value;
                         break;
                     default:
                         break;
@@ -109,12 +109,12 @@ namespace TerraLeague.UI
 
             if (player.HeldItem.type == ItemType<EchoingFlameCannon>() && Main.myPlayer == player.whoAmI)
             {
-                Texture2D textureLT = TerraLeague.instance.GetTexture("UI/EchoingFlames_LT");
-                Texture2D textureLM = TerraLeague.instance.GetTexture("UI/EchoingFlames_LM"); ;
-                Texture2D textureLB = TerraLeague.instance.GetTexture("UI/EchoingFlames_LB"); ;
-                Texture2D textureRB = TerraLeague.instance.GetTexture("UI/EchoingFlames_RB"); ;
-                Texture2D textureRM = TerraLeague.instance.GetTexture("UI/EchoingFlames_RM"); ;
-                Texture2D textureRT = TerraLeague.instance.GetTexture("UI/EchoingFlames_RT"); ;
+                Texture2D textureLT = Request<Texture2D>("TerraLeague/UI/EchoingFlames_LT").Value;
+                Texture2D textureLM = Request<Texture2D>("TerraLeague/UI/EchoingFlames_LM").Value;
+                Texture2D textureLB = Request<Texture2D>("TerraLeague/UI/EchoingFlames_LB").Value;
+                Texture2D textureRB = Request<Texture2D>("TerraLeague/UI/EchoingFlames_RB").Value;
+                Texture2D textureRM = Request<Texture2D>("TerraLeague/UI/EchoingFlames_RM").Value;
+                Texture2D textureRT = Request<Texture2D>("TerraLeague/UI/EchoingFlames_RT").Value;
 
 
                 if (modPlayer.echoingFlames_LT <= 0)
@@ -198,7 +198,7 @@ namespace TerraLeague.UI
 
             if (modPlayer.onslaught)
             {
-                Texture2D texture = TerraLeague.instance.GetTexture("UI/OnslaughtRange");
+                Texture2D texture = ModContent.Request<Texture2D>("TerraLeague/UI/OnslaughtRange").Value;
 
                 if (texture != null)
                 {
@@ -221,7 +221,7 @@ namespace TerraLeague.UI
 
             if (modPlayer.solariSet && Main.myPlayer == player.whoAmI)
             {
-                Texture2D texture = TerraLeague.instance.GetTexture("UI/SolariSetCharge");
+                Texture2D texture = ModContent.Request<Texture2D>("TerraLeague/UI/SolariSetCharge").Value;
                 int frame;
 
                 if (modPlayer.solariCharge < PLAYERGLOBAL.solariMaxCharge * 0.125f)

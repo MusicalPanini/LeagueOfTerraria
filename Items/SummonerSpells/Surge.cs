@@ -14,11 +14,12 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Surge Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Surge";
+            return "TerraLeague/Items/SummonerSpells/Surge";
         }
 
         public override string GetSpellName()
@@ -49,7 +50,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
 
             int arrow1Height = 32;
             int arrow1Width = 32;

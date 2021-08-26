@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class IcebornSubjugation : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Iceborn Subjugation");
             Main.debuff[Type] = true;

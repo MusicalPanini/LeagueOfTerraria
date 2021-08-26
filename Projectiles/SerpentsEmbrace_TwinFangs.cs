@@ -18,23 +18,23 @@ namespace TerraLeague.Projectiles
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
             DisplayName.SetDefault("Twin Fangs");
             base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.alpha = 0;
-            projectile.timeLeft = 90;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.magic = true;
-            projectile.scale = 1.5f;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 90;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.scale = 1.5f;
 
             CanOnlyHitTarget = true;
             CanRetarget = false;
@@ -43,12 +43,12 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             //AnimateProjectile();
 
-            if (projectile.soundDelay == 0)
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 23, -0.5f);
-            projectile.soundDelay = 100;
+            if (Projectile.soundDelay == 0)
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 23, -0.5f);
+            Projectile.soundDelay = 100;
 
             HomingAI();
         }
@@ -57,7 +57,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Venom, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.CorruptPlants, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1.2f);
                 dust.noGravity = true;
             }
         }
@@ -68,12 +68,12 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-                projectile.frame++;
-                projectile.frame %= 4;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
             }
         }
     }

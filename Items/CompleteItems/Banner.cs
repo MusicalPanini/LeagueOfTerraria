@@ -18,15 +18,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases your max number of minions" +
                 "\nIncreases your max number of sentries" +
                 "\nIncreases life regeneration by 2");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
+            Item.width = 30;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
 
             Active = new Rally(3, 20, 100);
         }
@@ -42,14 +43,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Aegis>(), 1);
-            recipe.AddIngredient(ItemType<RaptorCloak>(), 1);
-            recipe.AddIngredient(ItemID.PygmyNecklace);
-            recipe.AddIngredient(ItemType<BrassBar>(), 8);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Aegis>(), 1)
+            .AddIngredient(ItemType<RaptorCloak>(), 1)
+            .AddIngredient(ItemID.PygmyNecklace)
+            .AddIngredient(ItemType<BrassBar>(), 8)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

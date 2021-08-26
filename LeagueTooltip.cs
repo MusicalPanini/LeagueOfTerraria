@@ -142,7 +142,7 @@ namespace TerraLeague
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string ConvertKeyString(ModHotKey key)
+        public static string ConvertKeyString(ModKeybind key)
         {
             string keyConvertedString;
             string keyString = "N/A";

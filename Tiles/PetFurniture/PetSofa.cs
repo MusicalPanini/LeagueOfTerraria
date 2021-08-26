@@ -10,9 +10,9 @@ namespace TerraLeague.Tiles.PetFurniture
 {
     public class PetSofa : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            dustType = DustID.Ghost;
+            DustType = DustID.Cloud;
 
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -25,7 +25,7 @@ namespace TerraLeague.Tiles.PetFurniture
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Petrified Wood Sofa");
             AddMapEntry(new Color(200, 200, 200), name);
-            disableSmartCursor = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

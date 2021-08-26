@@ -11,38 +11,51 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             DisplayName.SetDefault("Hextech Bolt");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.alpha = 255;
-            projectile.scale = 1.2f;
-            projectile.timeLeft = 900;
-            projectile.ranged = true;
-            projectile.extraUpdates = 16;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.alpha = 255;
+            Projectile.scale = 1.2f;
+            Projectile.timeLeft = 900;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.extraUpdates = 2;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Left, 0.09f, 0.40f, 0.60f);
+            Lighting.AddLight(Projectile.Left, 0.09f, 0.40f, 0.60f);
 
-            projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+            Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
 
-            if (projectile.velocity.Y > 16f)
+            if (Projectile.velocity.Y > 16f)
             {
-                projectile.velocity.Y = 16f;
+                Projectile.velocity.Y = 16f;
             }
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 111, Vector2.Zero, 0, default, 0.5f);
-            dust.noGravity = true;
-            dust.alpha = 100;
+                for (int i = 0; i < 10; i++)
+                {
+                    float x2 = Projectile.position.X - Projectile.velocity.X / 10f * (float)i;
+                    float y2 = Projectile.position.Y - Projectile.velocity.Y / 10f * (float)i;
+                    int num141 = Dust.NewDust(new Vector2(x2, y2), 1, 1, 111, 0f, 0f, 0, default(Color), 0.5f);
+                    Main.dust[num141].alpha = Projectile.alpha;
+                    Main.dust[num141].position.X = x2;
+                    Main.dust[num141].position.Y = y2;
+                    Dust obj77 = Main.dust[num141];
+                    obj77.velocity *= 0f;
+                    Main.dust[num141].noGravity = true;
+                }
+
+            //Dust dust = Dust.NewDustPerfect(Projectile.position, 111, Vector2.Zero, 0, default, 0.5f);
+            //dust.noGravity = true;
+            //dust.alpha = 100;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -52,7 +65,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 
@@ -63,7 +76,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (projectile.ai[0] != target.whoAmI && !target.friendly)
+            if (Projectile.ai[0] != target.whoAmI && !target.friendly)
                 return true;
             else
                 return false;

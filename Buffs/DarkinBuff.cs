@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
 {
     public class DarkinBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Darkin");
             Description.SetDefault("LIFESTEAL OR SOMETHING");

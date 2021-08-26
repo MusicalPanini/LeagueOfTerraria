@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class TravelerBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Traveler");
             Description.SetDefault("25% increased movement speed" +

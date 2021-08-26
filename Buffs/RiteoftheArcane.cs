@@ -13,7 +13,7 @@ namespace TerraLeague.Buffs
         public bool initial = true;
         int damage = 0;
 
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rite of the Arcane");
             Description.SetDefault("Magic Artillery!");
@@ -43,7 +43,7 @@ namespace TerraLeague.Buffs
             {
                 Vector2 position = new Vector2(Main.rand.NextFloat(-400, 400) + player.MountedCenter.X, player.MountedCenter.Y - 700);
                 Vector2 velocity = new Vector2(Main.rand.NextFloat(-6, 6), 16);
-                Projectile proj = Projectile.NewProjectileDirect(position, velocity, ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(new ArcaneEnergy().Item), position, velocity, ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
 
                 //Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(Main.rand.NextFloat(-8 + 7 * player.buffTime[buffIndex] / 180f, 8 - 7 * player.buffTime[buffIndex] / 180f), Main.rand.NextFloat(-18, -16)), ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
             }

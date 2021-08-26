@@ -24,7 +24,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("IMPENDULUM") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain life, mana, magic and minion damage based on the time of day\n" + GetStat * lifePerTime + " life and mana, +" + (int)(GetStat * magicMinionDamage) + "% magic and minion damage");
+            return TooltipName("IMPENDULUM") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain life, mana, magic and summon damage based on the time of day\n" + GetStat * lifePerTime + " life and mana, +" + (int)(GetStat * magicMinionDamage) + "% magic and summon damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             passiveStat = GetStat;
             player.statLifeMax2 += lifePerTime * GetStat;
             player.statManaMax2 += lifePerTime * GetStat;
-            player.magicDamage += (float)(magicMinionDamage * 0.01f * GetStat);
+            player.GetDamage(DamageClass.Magic) += (float)(magicMinionDamage * 0.01f * GetStat);
             modPlayer.TrueMinionDamage += magicMinionDamage * 0.01f * GetStat;
 
             base.UpdateAccessory(player, modItem);

@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class MagicVeil : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Magic Veil");
             Description.SetDefault("Negate the next projectile damage you take");

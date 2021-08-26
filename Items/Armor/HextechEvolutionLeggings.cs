@@ -13,15 +13,16 @@ namespace TerraLeague.Items.Armor
             base.SetStaticDefaults();
             DisplayName.SetDefault("Hextech Evolution Boots");
             Tooltip.SetDefault("8% reduced mana cost");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 18;
-            item.value = 250000;
-            item.rare = ItemRarityID.Pink;
-            item.defense = 8;
+            Item.width = 22;
+            Item.height = 18;
+            Item.value = 250000;
+            Item.rare = ItemRarityID.Pink;
+            Item.defense = 8;
         }
 
         public override void UpdateEquip(Player player)
@@ -31,12 +32,12 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 16);
-            recipe.AddIngredient(ItemType<PerfectHexCore>(), 1);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddRecipeGroup("TerraLeague:Tier3Bar", 16)
+            .AddIngredient(ItemType<PerfectHexCore>(), 1)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override void UpdateArmorSet(Player player)

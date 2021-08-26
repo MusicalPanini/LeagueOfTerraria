@@ -20,17 +20,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 1.2f;
-            projectile.timeLeft = 301;
-            projectile.extraUpdates = 8;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1.2f;
+            Projectile.timeLeft = 301;
+            Projectile.extraUpdates = 8;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
 
             CanOnlyHitTarget = true;
             CanRetarget = false;
@@ -40,18 +40,18 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if(projectile.soundDelay == 0)
+            if(Projectile.soundDelay == 0)
             {
-                Main.PlaySound(new LegacySoundStyle(2, 88), projectile.Center);
-                if (projectile.owner == Main.LocalPlayer.whoAmI)
-                    projectile.netUpdate = true;
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 88), Projectile.Center);
+                if (Projectile.owner == Main.LocalPlayer.whoAmI)
+                    Projectile.netUpdate = true;
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            if (projectile.Hitbox.Intersects(Main.npc[(int)projectile.ai[0]].Hitbox))
+            if (Projectile.Hitbox.Intersects(Main.npc[(int)Projectile.ai[0]].Hitbox))
             {
-                projectile.velocity = Vector2.Zero;
-                projectile.Center = Main.npc[(int)projectile.ai[0]].Center;
+                Projectile.velocity = Vector2.Zero;
+                Projectile.Center = Main.npc[(int)Projectile.ai[0]].Center;
             }
             else
             {
@@ -59,39 +59,39 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                    int dustBoxWidth = projectile.width - 12;
-                    int dustBoxHeight = projectile.height - 12;
+                    Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                    int dustBoxWidth = Projectile.width - 12;
+                    int dustBoxHeight = Projectile.height - 12;
                     Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.AncientLight, 0f, 0f, 100, new Color(255, 106, 0, 150), 1.5f);
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
-                    dust.velocity += projectile.velocity * 0.1f;
-                    dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                    dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                    dust.velocity += Projectile.velocity * 0.1f;
+                    dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                    dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
                 }
 
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 106, 0, 150), 1f);
+                Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 106, 0, 150), 1f);
                 dust2.noGravity = true;
                 dust2.velocity *= 3f;
-                Lighting.AddLight(projectile.position, 1f, 1f, 0f);
+                Lighting.AddLight(Projectile.position, 1f, 1f, 0f);
             }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (target.life <= 0 || target.boss)
-                Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)(Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep * 0.15);
+            if (target.life <= 0 || NPCID.Sets.ShouldBeCountedAsBoss[target.type])
+                Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)(Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep * 0.15);
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
-            Main.PlaySound(new LegacySoundStyle(2, 92), projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 92), Projectile.Center);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 106, 0, 150), 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 106, 0, 150), 2f);
                 dust.velocity *= 3f;
                 dust.noGravity = true;
             }

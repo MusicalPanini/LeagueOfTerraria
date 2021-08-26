@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Ignited : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ignited");
             Main.debuff[Type] = true;

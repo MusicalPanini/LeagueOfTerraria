@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class DecisiveStrike : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Decisive Strike");
             Description.SetDefault("Your next melee attack will deal additional damage and apply 'Slowed'");

@@ -16,39 +16,39 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             DisplayName.SetDefault("Damnation");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.alpha = 255;
-            projectile.timeLeft = 1000;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.extraUpdates = 6;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.extraUpdates = 6;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
-            Vector2 move = player.Center - projectile.Center;
+            Vector2 move = player.Center - Projectile.Center;
 
             AdjustMagnitude(ref move);
-            projectile.velocity = (10 * projectile.velocity + move) / 11f;
-            AdjustMagnitude(ref projectile.velocity);
+            Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
+            AdjustMagnitude(ref Projectile.velocity);
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 156, null, 50, default, 1f);
+            Dust dust = Dust.NewDustPerfect(Projectile.position, 156, null, 50, default, 1f);
             dust.noGravity = true;
             dust.velocity *= 0;
 
-            if (projectile.Hitbox.Intersects(player.Hitbox))
+            if (Projectile.Hitbox.Intersects(player.Hitbox))
             {
                 HitPlayer(player);
             }
@@ -70,16 +70,16 @@ namespace TerraLeague.Projectiles
 
         public void HitPlayer(Player player)
         {
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
             player.AddBuff(BuffID.Swiftness, 180);
 
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Ultrabright, 0, -2, 0);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.UltraBrightTorch, 0, -2, 0);
                 dust.noGravity = true;
             }
 
-            projectile.Kill();
+            Projectile.Kill();
         }
 
 

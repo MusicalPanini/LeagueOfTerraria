@@ -13,15 +13,16 @@ namespace TerraLeague.Items.Armor
             base.SetStaticDefaults();
             DisplayName.SetDefault("Void Warped Leggings");
             Tooltip.SetDefault("8% increased melee speed");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 18;
-            item.value = 40000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 4;
+            Item.width = 22;
+            Item.height = 18;
+            Item.value = 40000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 4;
         }
 
         public override void UpdateEquip(Player player)

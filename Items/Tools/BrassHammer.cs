@@ -10,35 +10,35 @@ namespace TerraLeague.Items.Tools
         {
             DisplayName.SetDefault("Bilgewater Brass Hammer");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 10;
-            item.melee = true;
-            item.autoReuse = true;
-            item.useTurn = true;
-            item.width = 32;
-            item.height = 32;
-            item.useTime = 20;
-            item.useAnimation = 26;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 5.5f;
-            item.value = 1600;
-            item.rare = ItemRarityID.Blue;
-            item.hammer = 48;
-            item.scale = 1.2f;
-            item.UseSound = SoundID.Item1;
+            Item.damage = 10;
+            Item.DamageType = DamageClass.Melee;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.useTime = 20;
+            Item.useAnimation = 26;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 5.5f;
+            Item.value = 1600;
+            Item.rare = ItemRarityID.Blue;
+            Item.hammer = 48;
+            Item.scale = 1.2f;
+            Item.UseSound = SoundID.Item1;
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<BrassBar>(), 9);
-            recipe.AddIngredient(ItemID.Wood, 3);
-            recipe.anyWood = true;
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(GetInstance<BrassBar>(), 9)
+            .AddRecipeGroup("Wood", 3)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
             base.AddRecipes();
         }
     }

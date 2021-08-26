@@ -11,24 +11,28 @@ namespace TerraLeague.Items
     {
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 4));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
             DisplayName.SetDefault("Damned Soul");
             base.SetStaticDefaults();
+
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 16;
-            item.height = 16;
-            item.uniqueStack = false;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.buyPrice(0, 0, 0, 20);
+            Item.maxStack = 999;
+            Item.width = 16;
+            Item.height = 16;
+            Item.uniqueStack = false;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(0, 0, 0, 20);
         }
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(item.Center, Color.DarkSeaGreen.ToVector3());
+            Lighting.AddLight(Item.Center, Color.DarkSeaGreen.ToVector3());
         }
     }
 }

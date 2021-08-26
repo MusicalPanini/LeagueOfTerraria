@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class Garrison : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Garrison");
             Description.SetDefault("Magic has made you resilient");

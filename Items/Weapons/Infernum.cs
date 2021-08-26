@@ -14,6 +14,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Infernum");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -25,23 +26,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 100;
-            item.ranged = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 76;
-            item.height = 28;
-            item.useAnimation = 26;
-            item.useTime = 26;
-            item.shootSpeed = 12f;
-            item.noMelee = true;
-            item.knockBack = 2;
-            item.value = 310000 * 5;
-            item.rare = ItemRarityID.Purple;
-            item.shoot = ProjectileType<Infernum_Flame>();
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 45);
-            item.autoReuse = true;
+            Item.damage = 100;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.width = 76;
+            Item.height = 28;
+            Item.useAnimation = 26;
+            Item.useTime = 26;
+            Item.shootSpeed = 12f;
+            Item.noMelee = true;
+            Item.knockBack = 2;
+            Item.value = 310000 * 5;
+            Item.rare = ItemRarityID.Purple;
+            Item.shoot = ProjectileType<Infernum_Flame>();
+            Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 45);
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new Duskwave(this));
             abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Inf));
             abilityItem.ChampQuote = "Cosmic flame will fill the night";
@@ -63,25 +64,23 @@ namespace TerraLeague.Items.Weapons
             return base.CanUseItem(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             player.GetModPlayer<PLAYERGLOBAL>().infernumAmmo -= 5;
 
-            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY + 3)) * 25f;
+            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(velocity.X, velocity.Y + 3)) * 25f;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
                 position += muzzleOffset;
             }
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.LunarBar, 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.LunarBar, 16)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
         public override Vector2? HoldoutOffset()

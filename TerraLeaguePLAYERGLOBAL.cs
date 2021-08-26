@@ -22,6 +22,9 @@ using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.NPCs.TargonBoss;
+using ReLogic.Content;
+using TerraLeague.Items.Armor;
+using TerraLeague.Common.ModSystems;
 
 namespace TerraLeague
 {
@@ -273,7 +276,7 @@ namespace TerraLeague
                 int trueArmor = armor;
 
                 if (TerraLeague.UseCustomDefenceStat)
-                    trueArmor += player.statDefense;
+                    trueArmor += Player.statDefense;
 
                 if (trueArmor >= 0)
                 {
@@ -298,7 +301,7 @@ namespace TerraLeague
                 int trueResist = resist;
 
                 if (TerraLeague.UseCustomDefenceStat)
-                    trueResist += player.statDefense;
+                    trueResist += Player.statDefense;
 
                 if (trueResist >= 0)
                 {
@@ -352,7 +355,7 @@ namespace TerraLeague
         /// </summary>
         public double magicModifer = 1;
         /// <summary>
-        /// Minion damage multiplier
+        /// summon damage multiplier
         /// </summary>
         public double minionModifer = 1;
 
@@ -431,9 +434,9 @@ namespace TerraLeague
         public int GetRealHeathWithoutShield(bool maxHealth = false)
         {
             if (maxHealth)
-                return player.statLifeMax2 - GetTotalShield();
+                return Player.statLifeMax2 - GetTotalShield();
             else
-                return player.statLife - GetTotalShield();
+                return Player.statLife - GetTotalShield();
         }
         /// <summary>
         /// Returns the total amount of shielding on the player
@@ -491,7 +494,7 @@ namespace TerraLeague
 
         // Stat Calculation Stuff
         /// <summary>
-        /// Used for all modded minion damage instead of the vanilla stat (player.minionDamage) to let summoned minions scale their damage while active
+        /// Used for all modded summon damage instead of the vanilla stat (Player.minionDamage) to let summoned minions scale their damage while active
         /// </summary>
         public double TrueMinionDamage = 0;
         public double meleeDamageLastStep = 0;
@@ -896,19 +899,19 @@ namespace TerraLeague
                 switch (i)
                 {
                     case 1:
-                        currentGun = player.HasItem(ItemType<Calibrum>()) ? 1 : 0;
+                        currentGun = Player.HasItem(ItemType<Calibrum>()) ? 1 : 0;
                         break;
                     case 2:
-                        currentGun = player.HasItem(ItemType<Severum>()) ? 2 : 0;
+                        currentGun = Player.HasItem(ItemType<Severum>()) ? 2 : 0;
                         break;
                     case 3:
-                        currentGun = player.HasItem(ItemType<Gravitum>()) ? 3 : 0;
+                        currentGun = Player.HasItem(ItemType<Gravitum>()) ? 3 : 0;
                         break;
                     case 4:
-                        currentGun = player.HasItem(ItemType<Infernum>()) ? 4 : 0;
+                        currentGun = Player.HasItem(ItemType<Infernum>()) ? 4 : 0;
                         break;
                     case 5:
-                        currentGun = player.HasItem(ItemType<Crescendum>()) ? 5 : 0;
+                        currentGun = Player.HasItem(ItemType<Crescendum>()) ? 5 : 0;
                         break;
                     default:
                         currentGun = 0;
@@ -1021,7 +1024,7 @@ namespace TerraLeague
             SummonerCooldowns();
             AbilityCooldownsAndStuff();
 
-            if (player.whoAmI == Main.myPlayer)
+            if (Player.whoAmI == Main.myPlayer)
             {
                 if (sumSpells[0].Name == "ReviveRune" && TerraLeague.Sum1.JustPressed && sumCooldowns[0] == 0)
                     UseSummonerSpell(1);
@@ -1038,7 +1041,7 @@ namespace TerraLeague
 
         public override void OnEnterWorld(Player player)
         {
-            mod.Logger.Debug("Player: " + player.name);
+            Mod.Logger.Debug("Player: " + Player.name);
             for (int i = 0; i < sumSpells.Length; i++)
             {
                 if (i == 0)
@@ -1048,7 +1051,7 @@ namespace TerraLeague
                     else
                         sumSpells[i] = (SummonerSpell)GetInstance<BarrierRune>();
 
-                    mod.Logger.Debug("OnEnterWorld: set Sum 1 to " + sumSpells[i].Name);
+                    Mod.Logger.Debug("OnEnterWorld: set Sum 1 to " + sumSpells[i].Name);
                     initSum1 = null;
                 }
                 else if (i == 1)
@@ -1058,7 +1061,7 @@ namespace TerraLeague
                     else
                         sumSpells[i] = (SummonerSpell)GetInstance<GhostRune>();
 
-                    mod.Logger.Debug("OnEnterWorld: set Sum 2 to " + sumSpells[i].Name);
+                    Mod.Logger.Debug("OnEnterWorld: set Sum 2 to " + sumSpells[i].Name);
                     initSum2 = null;
                 }
             }
@@ -1066,13 +1069,13 @@ namespace TerraLeague
 
         public override TagCompound Save()
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                mod.Logger.Debug("Player: " + player.name);
-                mod.Logger.Debug("Save: Completed Save with Sums " + sumSpells[0] + " and " + sumSpells[1]);
-                mod.Logger.Debug("Player: Active = " + player.active);
+                Mod.Logger.Debug("Player: " + Player.name);
+                Mod.Logger.Debug("Save: Completed Save with Sums " + sumSpells[0] + " and " + sumSpells[1]);
+                Mod.Logger.Debug("Player: Active = " + Player.active);
 
-                if (player.active)
+                if (Player.active)
                 {
                     return new TagCompound
                     {
@@ -1099,24 +1102,25 @@ namespace TerraLeague
 
         public override void Load(TagCompound tag)
         {
-            if (player.name == "TestDude")
+            if (Player.name == "TestDude")
             {
 
             }
-            if (Main.LocalPlayer.whoAmI == player.whoAmI)
+            if (Main.LocalPlayer.whoAmI == Player.whoAmI)
             {
                 manaChargeStacks = tag.GetInt("manaChargeStacks");
-                initSum1 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellOne"));
-                initSum2 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellTwo"));
+                initSum1 = (SummonerSpell)GetModItem(SummonerSpell.SummonerID[tag.GetString("sumSpellOne")]);
+                initSum2 = (SummonerSpell)GetModItem(SummonerSpell.SummonerID[tag.GetString("sumSpellTwo")]);
                 blessingCooldown = tag.GetInt("blessingCooldown");
 
-                mod.Logger.Debug("Player: " + player.name);
-                mod.Logger.Debug("Load: Completed Load"/* with Sums " + initSum1.Name + " and " + initSum2.Name*/);
+                Mod.Logger.Debug("Player: " + Player.name);
+                Mod.Logger.Debug("Load: Completed Load"/* with Sums " + initSum1.Name + " and " + initSum2.Name*/);
             }
         }
-        
-        public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
+        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
+            List<Item> items = new List<Item>();
+
             Item bag = new Item();
             bag.SetDefaults(ItemType<DoransBag>());
             items.Add(bag);
@@ -1124,31 +1128,23 @@ namespace TerraLeague
             Item weapon = new Item();
             weapon.SetDefaults(ItemType<WeaponKit>());
             items.Add(weapon);
+
+            return items;
         }
 
-        public override void UpdateBiomes()
+        public override void ModifyStartingInventory(IReadOnlyDictionary<string, List<Item>> itemsByMod, bool mediumCoreDeath)
         {
-            zoneTargonPeak = false;
-            zoneTargon = false;
+            base.ModifyStartingInventory(itemsByMod, mediumCoreDeath);
+        }
 
-            if (NPC.CountNPCS(NPCType<TargonSigil>()) != 0)
-            {
-                NPC sigil = Main.npc.FirstOrDefault(x => x.type == NPCType<TargonSigil>());
-                if (sigil != null)
-                {
-                    zoneTargonPeak = sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.3 * 16;
-                    if (sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.4 * 16 && !Main.hardMode)
-                    {
-                        player.AddBuff(BuffType<CelestialFrostbite>(), 2);
-                    }
+        void OldMethodRun()
+        {
+            UpdateBiomes();
+            UpdateBiomeVisuals();
+        }
 
-                    if (Math.Abs(sigil.Center.X - player.MountedCenter.X) < Main.maxTilesX / 21 * 16 && Math.Abs(sigil.Center.Y - player.MountedCenter.Y) < Main.worldSurface * 16)
-                    {
-                        zoneTargon = true;
-                    }
-                }
-            }
-
+        public void UpdateBiomes()
+        {
             if (NPC.CountNPCS(NPCType<VoidPortal>()) != 0)
             {
                 List<NPC> portals = Main.npc.Where(x => x.type == NPCType<VoidPortal>()).ToList();
@@ -1156,7 +1152,7 @@ namespace TerraLeague
                 {
                     for (int i = 0; i < portals.Count; i++)
                     {
-                        if (Vector2.Distance(portals[i].Center, player.MountedCenter) < 1500)
+                        if (Vector2.Distance(portals[i].Center, Player.MountedCenter) < 1500)
                         {
                             zoneVoidPortal = true;
                             break;
@@ -1170,31 +1166,22 @@ namespace TerraLeague
                 zoneVoidPortal = false;
             }
 
-            zoneSurfaceMarble = (TerraLeagueWORLDGLOBAL.marbleBlocks > 300);
             if (zoneSurfaceMarble)
             {
                 nPCSpawnInfo.marble = true;
             }
 
-            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 4) || (TerraLeagueWORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
-
-            if (zoneBlackMist)
+            if (Main.tile[(int)Player.MountedCenter.X / 16, (int)Player.MountedCenter.Y / 16].wall == (ushort)WallType<Walls.TargonStoneWall_Arena>())
             {
-                player.blind = true;
+                Player.AddBuff(BuffType<InTargonArena>(), 5);
             }
-
-
-            if (Main.tile[(int)player.MountedCenter.X / 16, (int)player.MountedCenter.Y / 16].wall == (ushort)WallType<Walls.TargonStoneWall_Arena>())
-            {
-                player.AddBuff(BuffType<InTargonArena>(), 5);
-            }
-            else if (player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
+            else if (Player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
             {
                 var ded = new PlayerDeathReason
                 {
-                    SourceCustomReason = player.name + " tried to run from Targon's Challenge"
+                    SourceCustomReason = Player.name + " tried to run from Targon's Challenge"
                 };
-                player.KillMe(ded, 999999, 0);
+                Player.KillMe(ded, 999999, 0);
             }
         }
 
@@ -1226,32 +1213,32 @@ namespace TerraLeague
             {
                 if (oldClone.accessoryStat[i] != accessoryStat[i])
                 {
-                    PacketHandler.SendEquipData(-1, player.whoAmI, accessoryStat[i], i);
+                    PacketHandler.SendEquipData(-1, Player.whoAmI, accessoryStat[i], i);
                 }
             }
             
 
             if (oldClone.NormalShield != NormalShield)
             {
-                PacketHandler.SendShieldTotal(-1, player.whoAmI, player.whoAmI, NormalShield, 0);
+                PacketHandler.SendShieldTotal(-1, Player.whoAmI, Player.whoAmI, NormalShield, 0);
             }
             if (oldClone.MagicShield != MagicShield)
             {
-                PacketHandler.SendShieldTotal(-1, player.whoAmI, player.whoAmI, MagicShield, 1);
+                PacketHandler.SendShieldTotal(-1, Player.whoAmI, Player.whoAmI, MagicShield, 1);
             }
             if (oldClone.PhysicalShield != PhysicalShield)
             {
-                PacketHandler.SendShieldTotal(-1, player.whoAmI, player.whoAmI, PhysicalShield, 2);
+                PacketHandler.SendShieldTotal(-1, Player.whoAmI, Player.whoAmI, PhysicalShield, 2);
             }
 
             if (oldClone.zoneSurfaceMarble != zoneSurfaceMarble)
             {
-                PacketHandler.SendBiome(-1, player.whoAmI, player.whoAmI, 0, zoneSurfaceMarble);
+                PacketHandler.SendBiome(-1, Player.whoAmI, Player.whoAmI, 0, zoneSurfaceMarble);
             }
 
             if (oldClone.zoneBlackMist != zoneBlackMist)
             {
-                PacketHandler.SendBiome(-1, player.whoAmI, player.whoAmI, 1, zoneBlackMist);
+                PacketHandler.SendBiome(-1, Player.whoAmI, Player.whoAmI, 1, zoneBlackMist);
             }
         }
         #endregion
@@ -1263,42 +1250,42 @@ namespace TerraLeague
 
         public override void PostUpdateRunSpeeds()
         {
-            if (T1Boots && player.accRunSpeed < 5)
-                player.accRunSpeed = 5;
-            if (T2Boots && player.accRunSpeed < 6.5f)
-                player.accRunSpeed = 6.5f;
-            if (T3Boots && player.accRunSpeed < 6.5f)
-                player.accRunSpeed = 6.5f;
-            if (T4Boots && player.accRunSpeed < 7)
-                player.accRunSpeed = 7;
-            if (T5Boots && player.accRunSpeed < 7.5f)
-                player.accRunSpeed = 7.5f;
+            if (T1Boots && Player.accRunSpeed < 5)
+                Player.accRunSpeed = 5;
+            if (T2Boots && Player.accRunSpeed < 6.5f)
+                Player.accRunSpeed = 6.5f;
+            if (T3Boots && Player.accRunSpeed < 6.5f)
+                Player.accRunSpeed = 6.5f;
+            if (T4Boots && Player.accRunSpeed < 7)
+                Player.accRunSpeed = 7;
+            if (T5Boots && Player.accRunSpeed < 7.5f)
+                Player.accRunSpeed = 7.5f;
 
             if (highlander)
             {
-                player.maxRunSpeed *= 2.4f;
-                player.moveSpeed *= 4f;
+                Player.maxRunSpeed *= 2.4f;
+                Player.moveSpeed *= 4f;
             }
 
             if (ghosted)
             {
-                player.accRunSpeed += 5;
-                player.maxRunSpeed *= 2;
-                player.moveSpeed *= 3;
+                Player.accRunSpeed += 5;
+                Player.maxRunSpeed *= 2;
+                Player.moveSpeed *= 3;
             }
 
             if (swifties)
             {
                 if (T5Boots)
-                    player.accRunSpeed += 3;
+                    Player.accRunSpeed += 3;
                 else if (T4Boots)
-                    player.accRunSpeed += 2f;
+                    Player.accRunSpeed += 2f;
                 else if (T3Boots)
-                    player.accRunSpeed += 1.5f;
+                    Player.accRunSpeed += 1.5f;
                 else if (T2Boots)
-                    player.accRunSpeed += 1;
+                    Player.accRunSpeed += 1;
                 else
-                    player.accRunSpeed += 0.5f;
+                    Player.accRunSpeed += 0.5f;
             }
             base.PostUpdateRunSpeeds();
         }
@@ -1306,20 +1293,20 @@ namespace TerraLeague
         public override void UpdateLifeRegen()
         {
             UpdateStats();
-            if (player.lifeRegen > 0)
+            if (Player.lifeRegen > 0)
             {
                 if (warmogsHeart)
                 {
-                    if (player.statLifeMax2 >= 600 && player.velocity == Vector2.Zero)
+                    if (Player.statLifeMax2 >= 600 && Player.velocity == Vector2.Zero)
                     {
-                        player.lifeRegen += 8;
-                        player.lifeRegenTime *= 2;
+                        Player.lifeRegen += 8;
+                        Player.lifeRegenTime *= 2;
                     }
                     else
-                        player.lifeRegen += 3;
+                        Player.lifeRegen += 3;
                 }
                 if (spiritualRestur)
-                    player.lifeRegen = (int)(player.lifeRegen * 1.3);
+                    Player.lifeRegen = (int)(Player.lifeRegen * 1.3);
             }
 
             base.UpdateLifeRegen();
@@ -1330,24 +1317,24 @@ namespace TerraLeague
             base.UpdateBadLifeRegen();
             if (celestialFrostbite && !NPC.downedBoss1)
             {
-                player.lifeRegenTime = 0;
-                if (player.lifeRegen < 0)
-                    player.lifeRegen -= 20;
+                Player.lifeRegenTime = 0;
+                if (Player.lifeRegen < 0)
+                    Player.lifeRegen -= 20;
                 else
-                    player.lifeRegen = -20;
+                    Player.lifeRegen = -20;
             }
-            if (targonArena && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated && NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
+            if (targonArena && !DownedBossSystem.downedTargonBoss && NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
             {
-                player.lifeRegenTime = 0;
-                if (player.lifeRegen < 0)
-                    player.lifeRegen -= 100;
+                Player.lifeRegenTime = 0;
+                if (Player.lifeRegen < 0)
+                    Player.lifeRegen -= 100;
                 else
-                    player.lifeRegen = -100;
+                    Player.lifeRegen = -100;
             }
 
-            if (invincible && player.lifeRegen < 0)
+            if (invincible && Player.lifeRegen < 0)
             {
-                player.lifeRegen = 0;
+                Player.lifeRegen = 0;
             }
         }
 
@@ -1356,60 +1343,61 @@ namespace TerraLeague
         /// </summary>
         public void UpdateStats()
         {
-            player.statLifeMax2 = (int)(GetRealHeathWithoutShield(true) * healthModifier) + GetTotalShield();
+            Player.statLifeMax2 = (int)(GetRealHeathWithoutShield(true) * healthModifier) + GetTotalShield();
 
-            player.meleeDamage *= meleeStatScaling;
-            player.rangedDamage *= rangedStatScaling;
-            player.magicDamage *= magicStatScaling;
-            TrueMinionDamage *= minionStatScaling;
-            TrueMinionDamage += (player.minionDamage * minionStatScaling) - player.minionDamage;
+            Player.GetDamage(DamageClass.Melee) *= meleeStatScaling;
+            Player.GetDamage(DamageClass.Ranged) *= rangedStatScaling;
+            Player.GetDamage(DamageClass.Magic) *= magicStatScaling;
+            Player.GetDamage(DamageClass.Summon) *= minionStatScaling;
+            //TrueMinionDamage += (Player.minionDamage * minionStatScaling) - Player.minionDamage;
 
-            if (player.ammoCost75)
+            if (Player.ammoCost75)
             {
                 ConsumeAmmoChance += 0.25;
-                player.ammoCost75 = false;
+                Player.ammoCost75 = false;
             }
 
-            if (player.ammoCost80)
+            if (Player.ammoCost80)
             {
                 ConsumeAmmoChance += 0.2;
-                player.ammoCost80 = false;
+                Player.ammoCost80 = false;
             }
 
-            if (player.ammoBox)
+            if (Player.ammoBox)
             {
                 ConsumeAmmoChance += 0.2;
-                player.ammoBox = false;
+                Player.ammoBox = false;
             }
 
-            if (player.ammoPotion)
+            if (Player.ammoPotion)
             {
                 ConsumeAmmoChance += 0.2;
-                player.ammoPotion = false;
+                Player.ammoPotion = false;
             }
         }
 
         public override void PreUpdate()
         {
+            OldMethodRun();
             CheckActivesandPassivesAreActive();
             if (stunned)
             {
-                player.velocity = Vector2.Zero;
-                player.gravity = 0f;
-                player.moveSpeed = 0f;
-                player.dash = 0;
-                player.noKnockback = true;
-                player.grappling[0] = -1;
-                player.grapCount = 0;
-                player.controlJump = false;
-                player.controlDown = false;
-                player.controlLeft = false;
-                player.controlRight = false;
-                player.controlUp = false;
-                player.controlUseItem = false;
-                player.controlUseTile = false;
-                player.controlThrow = false;
-                player.gravDir = 1f;
+                Player.velocity = Vector2.Zero;
+                Player.gravity = 0f;
+                Player.moveSpeed = 0f;
+                Player.dash = 0;
+                Player.noKnockback = true;
+                Player.grappling[0] = -1;
+                Player.grapCount = 0;
+                Player.controlJump = false;
+                Player.controlDown = false;
+                Player.controlLeft = false;
+                Player.controlRight = false;
+                Player.controlUp = false;
+                Player.controlUseItem = false;
+                Player.controlUseTile = false;
+                Player.controlThrow = false;
+                Player.gravDir = 1f;
             }
 
             if (lifeStealCharge >= 1)
@@ -1421,89 +1409,89 @@ namespace TerraLeague
                 
                 if (bloodShield && GetRealHeathWithoutShield() >= GetRealHeathWithoutShield(true))
                 {
-                    player.AddBuff(BuffType<Buffs.BloodShield>(), 180);
+                    Player.AddBuff(BuffType<Buffs.BloodShield>(), 180);
                     AddShieldAttachedToBuff((int)(heal), BuffType<Buffs.BloodShield>(), Color.Red, ShieldType.Basic);
                 }
                 else
                 {
-                    player.statLife += heal;
+                    Player.statLife += heal;
                 }
-                    player.HealEffect(heal);
+                Player.HealEffect(heal);
 
                 lifeStealCharge = 0;
             }
             if (feastStacks >= 500 && feastStacks < 2500)
             {
-                player.AddBuff(BuffType<FeastStack1>(), 2);
+                Player.AddBuff(BuffType<FeastStack1>(), 2);
             }
             else if (feastStacks >= 2500 && feastStacks < 12500)
             {
-                player.AddBuff(BuffType<FeastStack2>(), 2);
+                Player.AddBuff(BuffType<FeastStack2>(), 2);
             }
             else if (feastStacks >= 12500)
             {
-                player.AddBuff(BuffType<FeastStack3>(), 2);
+                Player.AddBuff(BuffType<FeastStack3>(), 2);
                 if (feastStacks > 12500)
                     feastStacks = 12500;
             }
             if (umbralTrespassing)
             {
-                player.immuneAlpha = 255;
-                player.velocity = Vector2.Zero;
-                player.gravity = 0;
+                Player.immuneAlpha = 255;
+                Player.velocity = Vector2.Zero;
+                Player.gravity = 0;
                 if (taggedIsNPC)
                 {
-                    player.position = umbralTaggedNPC.position;
-                    player.position.X = umbralTaggedNPC.position.X + (umbralTaggedNPC.width * 0.5f) - (player.width * 0.5f);
-                    player.position.Y = umbralTaggedNPC.position.Y - umbralTaggedNPC.height * 0.5f;
+                    Player.position = umbralTaggedNPC.position;
+                    Player.position.X = umbralTaggedNPC.position.X + (umbralTaggedNPC.width * 0.5f) - (Player.width * 0.5f);
+                    Player.position.Y = umbralTaggedNPC.position.Y - umbralTaggedNPC.height * 0.5f;
 
                 }
 
                 if (umbralTaggedNPC.life <= 0 && taggedIsNPC)
                 {
-                    player.ClearBuff(BuffType<UmbralTrespassing>());
+                    Player.ClearBuff(BuffType<UmbralTrespassing>());
                 }
             }
 
             if (requiemChannel)
             {
-                Lighting.AddLight(player.Center, 0f, 0.75f, 0.3f);
+                Lighting.AddLight(Player.Center, 0f, 0.75f, 0.3f);
                 Color color = Main.rand.NextBool() ? new Color(0, 255, 140) : new Color(0, 255, 0);
-                Dust dust = Dust.NewDustDirect(new Vector2(player.position.X, player.Center.Y - 320), player.width, 400, DustID.RedsWingsRun, 0f, -5f, 197, color, 2.5f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Player.position.X, Player.Center.Y - 320), Player.width, 400, DustID.SomethingRed, 0f, -5f, 197, color, 2.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity.X *= 0.3f;
                 dust.fadeIn = 2.6f;
 
-                player.position = player.oldPosition;
-                player.velocity = Vector2.Zero;
-                if (requiemChannelTime == 1 && player == Main.LocalPlayer)
+                Player.position = Player.oldPosition;
+                Player.velocity = Vector2.Zero;
+                if (requiemChannelTime == 1 && Player == Main.LocalPlayer)
                 {
-                    var npcs = Targeting.GetAllNPCsInRange(player.Center, 999999, true, true);
+                    var npcs = Targeting.GetAllNPCsInRange(Player.Center, 999999, true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {
                         NPC npc = Main.npc[npcs[i]];
-                        Projectile.NewProjectile(new Vector2(npc.Center.X, npc.Center.Y), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), requiemDamage, 0, player.whoAmI, npc.whoAmI);
+                        Projectile.NewProjectile(Player.GetProjectileSource_Item(new DeathsingerTome().Item), new Vector2(npc.Center.X, npc.Center.Y), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), requiemDamage, 0, Player.whoAmI, npc.whoAmI);
                     }
                 }
             }
 
             if (finalsparkChannel || deathLotus || rightoftheArcaneChannel)
             {
-                player.position = player.oldPosition;
-                player.velocity = Vector2.Zero;
+                Player.position = Player.oldPosition;
+                Player.velocity = Vector2.Zero;
             }
 
-            if (player.ownedProjectileCounts[ProjectileType<DarkinScythe_ReapingSlash>()] > 0)
+            if (Player.ownedProjectileCounts[ProjectileType<DarkinScythe_ReapingSlash>()] > 0)
             {
-                player.noKnockback = true;
+                Player.noKnockback = true;
             }
 
             if (zoneVoidPortal)
             {
                 if (VoidInflu > 0)
-                    VoidInflu -= player.CountItem(ItemType<VoidFragment>(), 100) / 250f;
+                    VoidInflu -= Player.CountItem(ItemType<VoidFragment>(), 100) / 250f;
                 else
                     VoidInflu = 0;
             }
@@ -1549,10 +1537,10 @@ namespace TerraLeague
 
             }
 
-            if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
+            if (Player.itemTime <= 1 && oldUsedInventorySlot != -1)
             {
-                player.selectedItem = oldUsedInventorySlot;
-                player.itemLocation = Vector2.Zero;
+                Player.selectedItem = oldUsedInventorySlot;
+                Player.itemLocation = Vector2.Zero;
                 oldUsedInventorySlot = -1;
             }
 
@@ -1568,16 +1556,16 @@ namespace TerraLeague
             // Handles the Revive Summoner Spells effects
             if (reviving)
             {
-                //player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
-                player.HealEffect(player.statLifeMax2);
-                player.ManaEffect(player.statManaMax2);
-                player.statLife = player.statLifeMax2;
-                player.AddBuff(BuffType<Revived>(), ReviveRune.buffDuration * 60);
+                //Player.Teleport(new Vector2(Player.lastDeathPostion.X, Player.lastDeathPostion.Y - 32), 1);
+                Player.HealEffect(Player.statLifeMax2);
+                Player.ManaEffect(Player.statManaMax2);
+                Player.statLife = Player.statLifeMax2;
+                Player.AddBuff(BuffType<Revived>(), ReviveRune.buffDuration * 60);
 
-                ReviveRune.Efx(player);
-                SummonerSpell.PacketHandler.SendRevive(-1, player.whoAmI, player.whoAmI);
+                ReviveRune.Efx(Player);
+                SummonerSpell.PacketHandler.SendRevive(-1, Player.whoAmI, Player.whoAmI);
 
-                //player.ChangeSpawn((int)originalSpawn.X, (int)originalSpawn.Y);
+                //Player.ChangeSpawn((int)originalSpawn.X, (int)originalSpawn.Y);
                 reviving = false;
             }
 
@@ -1607,22 +1595,22 @@ namespace TerraLeague
                 Main.NewText("Celestial voices call out to you. Another blessing is ready", 0, 200, 255);
             }
 
-            if (sunAmulet)
-            {
-                if (Main.time % 60 == 0)
-                {
-                    float light = Lighting.BrightnessAverage((int)player.position.ToTileCoordinates16().X, (int)player.position.ToTileCoordinates16().Y, 2, 3);
-                    sunAmuletDamage = (int)(light * 7);
-                }
+            //if (sunAmulet)
+            //{
+            //    if (Main.time % 60 == 0)
+            //    {
+            //        float light = Lighting.BrightnessAverage((int)Player.position.ToTileCoordinates16().X, (int)Player.position.ToTileCoordinates16().Y, 2, 3);
+            //        sunAmuletDamage = (int)(light * 7);
+            //    }
 
-                player.meleeDamage += sunAmuletDamage * 0.01f;
-                player.rangedDamage += sunAmuletDamage * 0.01f;
-                player.magicDamage += sunAmuletDamage * 0.01f;
-                TrueMinionDamage += sunAmuletDamage * 0.01f;
-            }
+            //    Player.meleeDamage += sunAmuletDamage * 0.01f;
+            //    Player.rangedDamage += sunAmuletDamage * 0.01f;
+            //    Player.magicDamage += sunAmuletDamage * 0.01f;
+            //    TrueMinionDamage += sunAmuletDamage * 0.01f;
+            //}
 
             if (flashofBrilliance && flashofBrillianceCooldown <= 0)
-                player.AddBuff(BuffType<FlashofBrilliance>(), 2);
+                Player.AddBuff(BuffType<FlashofBrilliance>(), 2);
             if (flashofBrillianceCooldown > 0)
                 flashofBrillianceCooldown--;
 
@@ -1670,7 +1658,7 @@ namespace TerraLeague
                 cannonTimer--;
             }
 
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 // Prophet set bonus cooldown
                 if (prophetTimer > 0)
@@ -1679,16 +1667,16 @@ namespace TerraLeague
                 }
                 else if (prophetSet)
                 {
-                    TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 103, -0.25f);
+                    TerraLeague.PlaySoundWithPitch(Player.MountedCenter, 2, 103, -0.25f);
 
-                    for (int i = 0; i < player.maxMinions; i++)
+                    for (int i = 0; i < Player.maxMinions; i++)
                     {
-                        Projectile.NewProjectile(player.MountedCenter, new Vector2(Main.rand.NextFloat(-4, 4), -6), ProjectileType<VoidProphetsStaff_Zzrot>(), (int)(20 * minionDamageLastStep), 1, player.whoAmI);
+                        Projectile.NewProjectile(Player.GetProjectileSource_Item(new VoidProphetHood().Item), Player.MountedCenter, new Vector2(Main.rand.NextFloat(-4, 4), -6), ProjectileType<VoidProphetsStaff_Zzrot>(), (int)(20 * minionDamageLastStep), 1, Player.whoAmI);
                     }
 
                     for (int i = 0; i < 10; i++)
                     {
-                        Dust.NewDustDirect(player.position, player.width, player.height, DustID.Shadowflame, 0, -3);
+                        Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Shadowflame, 0, -3);
                     }
 
                     prophetTimer = 60 * 6;
@@ -1703,7 +1691,7 @@ namespace TerraLeague
                 {
                     float distance = 800;
                     int target = -1;
-                    Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -10, -16);
+                    Vector2 handPos = Player.MountedCenter + new Vector2(Player.direction * -10, -16);
 
                     for (int k = 0; k < 200; k++)
                     {
@@ -1722,7 +1710,7 @@ namespace TerraLeague
                     if (target != -1)
                     {
                         hextechEvolutionAngle = TerraLeague.CalcVelocityToPoint(handPos, Main.npc[target].Center, 8).RotatedBy(-0.01f * 20);
-                        Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI);
+                        Projectile.NewProjectile(Player.GetProjectileSource_Item(new HextechEvolutionBreastplate().Item), handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * Player.GetDamage(DamageClass.Magic)), 0, Player.whoAmI);
                     }
                     else
                     {
@@ -1733,42 +1721,43 @@ namespace TerraLeague
                 }
                 else if (hextechEvolutionSet && hextechEvoltionCooldown > 50 && hextechEvolutionAngle != Vector2.Zero)
                 {
-                    Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16).RotatedBy(player.fullRotation);
+                    Vector2 handPos = Player.MountedCenter + new Vector2(Player.direction * -12, -16).RotatedBy(Player.fullRotation);
                     hextechEvolutionAngle = hextechEvolutionAngle.RotatedBy(0.01f);
-                    Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI, hextechEvoltionCooldown % 20);
+                    Projectile.NewProjectile(Player.GetProjectileSource_Item(new HextechEvolutionBreastplate().Item), handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * Player.GetDamage(DamageClass.Magic)), 0, Player.whoAmI, hextechEvoltionCooldown % 20);
                 }
             }
             
             // Solari set bonus
             if (solariSet)
             {
-                Lighting.AddLight((int)(player.position.X + (float)(player.width / 2)) / 16, (int)(player.position.Y + (float)(player.height / 2)) / 16, 0.8f, 0.95f, 1f);
+                Lighting.AddLight((int)(Player.position.X + (float)(Player.width / 2)) / 16, (int)(Player.position.Y + (float)(Player.height / 2)) / 16, 0.8f, 0.95f, 1f);
                 if (Main.dayTime)
                 {
-                    player.lifeRegen += 2;
-                    player.statDefense += 4;
-                    player.meleeSpeed += 0.1f;
-                    player.meleeDamage += 0.1f;
-                    player.meleeCrit += 2;
-                    player.rangedDamage += 0.1f;
-                    player.rangedCrit += 2;
-                    player.magicDamage += 0.1f;
-                    player.magicCrit += 2;
-                    player.pickSpeed -= 0.15f;
-                    TrueMinionDamage += 0.1f;
-                    player.minionKB += 0.5f;
+                    Player.lifeRegen += 2;
+                    Player.statDefense += 4;
+                    Player.meleeSpeed += 0.1f;
+                    Player.GetDamage(DamageClass.Melee) += 0.1f;
+                    Player.GetCritChance(DamageClass.Melee) += 2;
+                    Player.GetDamage(DamageClass.Ranged) += 0.1f;
+                    Player.GetCritChance(DamageClass.Ranged) += 2;
+                    Player.GetDamage(DamageClass.Magic) += 0.1f;
+                    Player.GetCritChance(DamageClass.Magic) += 2;
+                    Player.GetDamage(DamageClass.Summon) += 0.1f;
+                    Player.pickSpeed -= 0.15f;
+                    //TrueMinionDamage += 0.1f;
+                    Player.minionKB += 0.5f;
 
                     if (solariCharge < solariMaxCharge)
                         solariCharge++;
                     else
-                        player.AddBuff(BuffType<SolarFlareCharged>(), 2);
+                        Player.AddBuff(BuffType<SolarFlareCharged>(), 2);
 
                     if(solariCharge == solariMaxCharge - 1)
                     {
-                        Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
                         for (int num225 = 0; num225 < 12; num225++)
                         {
-                            int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.AmberBolt, 0f, 0f, 0, default, (float)Main.rand.Next(20, 26) * 0.1f);
+                            int num226 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.AmberBolt, 0f, 0f, 0, default, (float)Main.rand.Next(20, 26) * 0.1f);
                             Main.dust[num226].noGravity = true;
                             Dust obj2 = Main.dust[num226];
                             obj2.velocity *= 0.5f;
@@ -1778,12 +1767,12 @@ namespace TerraLeague
             }
 
             // Starfire Spellblade stack handler
-            if (CombatTimer >= 240 /*|| player.HeldItem.type != ItemType<StarfireSpellblades>()*/)
+            if (CombatTimer >= 240 /*|| Player.HeldItem.type != ItemType<StarfireSpellblades>()*/)
             {
                 AscensionTimer = 0;
                 AscensionStacks = 0;
             }
-            if (CombatTimer < 240 && AscensionStacks < 6 && player.HeldItem.type == ItemType<StarfireSpellblades>())
+            if (CombatTimer < 240 && AscensionStacks < 6 && Player.HeldItem.type == ItemType<StarfireSpellblades>())
             {
                 AscensionTimer++;
                 if (AscensionTimer >= 30)
@@ -1821,10 +1810,37 @@ namespace TerraLeague
 
             if (highlander)
             {
-                player.armorEffectDrawShadow = true;
+                Player.armorEffectDrawShadow = true;
             }
 
             // Dusts
+            if (Player.HasBuff(BuffType<Buffs.CelestialExpansion>()))
+            {
+                for (int i = 0; i < Main.projectile.Length; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (proj.active)
+                    {
+                        if (proj.owner == Player.whoAmI && proj.DamageType == DamageClass.Summon && proj.type != ProjectileType<StarForgersCore_ForgedStar>())
+                        {
+                            {
+                                Dust dust = Dust.NewDustDirect(proj.position, proj.width, proj.height, 111, proj.velocity.X, proj.velocity.Y, 200, default, 0.5f);
+                                dust.noGravity = true;
+                                dust.noLight = true;
+                                dust.velocity *= 0.1f;
+
+                                for (int j = 0; j < 2; j++)
+                                {
+                                    Dust dust2 = Dust.NewDustDirect(proj.position, proj.width, proj.height, 162, proj.velocity.X, proj.velocity.Y, 124, default, 1f);
+                                    dust2.noGravity = true;
+                                    dust2.noLight = true;
+                                    dust2.velocity *= 0.6f;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             if (tidecallersBlessing)
             {
                 if ((Main.time % 2) == 0)
@@ -1833,7 +1849,7 @@ namespace TerraLeague
                     {
                         Vector2 pos = new Vector2(32, 0).RotatedBy((MathHelper.TwoPi * i / 3) + (MathHelper.TwoPi * (Main.time % 120) / 120));
 
-                        Dust dust = Dust.NewDustPerfect(player.MountedCenter + pos, DustType<Dusts.BubbledBubble>(), null, 0, default, 1.5f);
+                        Dust dust = Dust.NewDustPerfect(Player.MountedCenter + pos, DustType<Dusts.BubbledBubble>(), null, 0, default, 1.5f);
                         dust.noLight = true;
                         dust.noGravity = true;
                         dust.velocity *= 0.0f;
@@ -1842,9 +1858,9 @@ namespace TerraLeague
             }
             if (ghosted)
             {
-                for (int i = 0; i < player.velocity.Length()/7f; i++)
+                for (int i = 0; i < Player.velocity.Length()/7f; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Clentaminator_Cyan, 0, 0, 0, default, player.velocity.Length() / 5f);
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.AncientLight, 0, 0, 0, default, Player.velocity.Length() / 5f);
                     dust.noLight = true;
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
@@ -1853,11 +1869,11 @@ namespace TerraLeague
             }
             if (gathFire)
             {
-                player.armorEffectDrawOutlines = true;
-                Lighting.AddLight(player.Center, new Vector3(0.1f, 0.6f, 0.8f));
+                Player.armorEffectDrawOutlines = true;
+                Lighting.AddLight(Player.Center, new Vector3(0.1f, 0.6f, 0.8f));
                 if (Main.rand.Next(0,6) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(15, 170, 200));
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.AncientLight, 0, 0, 0, new Color(15, 170, 200));
                     dust.velocity.X = 0;
                     dust.velocity.Y -= 2;
                     dust.noGravity = true;
@@ -1865,10 +1881,10 @@ namespace TerraLeague
             }
             if (angelsProtection)
             {
-                player.armorEffectDrawShadow = true;
+                Player.armorEffectDrawShadow = true;
                 if (Main.rand.Next(0, 5) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Cloud, 0, 0, 0, new Color(255, 255, 255, 150));
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Cloud, 0, 0, 0, new Color(255, 255, 255, 150));
                     dust.noGravity = true;
                 }
             }
@@ -1876,7 +1892,7 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 5) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Crimstone, 0, 0, 0, new Color(50, 0, 0, 200), 1.3f);
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.CrimsonTorch, 0, 0, 0, new Color(50, 0, 0, 200), 1.3f);
                     dust.velocity *= 0.5f;
                     dust.alpha = 40;
                     dust.noGravity = true;
@@ -1886,7 +1902,7 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(255, 0, 0, 255));
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.AncientLight, 0, 0, 0, new Color(255, 0, 0, 255));
                     dust.velocity.X = 0;
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -1897,7 +1913,7 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight, 0, 0, 0, new Color(131, 234, 46, 255));
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.AncientLight, 0, 0, 0, new Color(131, 234, 46, 255));
                     dust.velocity.X = 0;
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -1908,12 +1924,12 @@ namespace TerraLeague
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 1f);
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 1f);
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
                     dust.noLight = true;
 
-                    dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 1);
+                    dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 1);
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
                     dust.noLight = true;
@@ -1921,7 +1937,7 @@ namespace TerraLeague
             }
             if (spinningAxe)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Wet, 0, 0, 0, new Color(255, 0, 0));
+                Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.WaterCandle, 0, 0, 0, new Color(255, 0, 0));
                 dust.noGravity = true;
                 dust.scale = 1.4f;
             }
@@ -1931,39 +1947,39 @@ namespace TerraLeague
 
                 for (int i = 0; i < 12; i++)
                 {
-                    Vector2 pos = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians((30 * i) + displacement)) + player.Center;
+                    Vector2 pos = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians((30 * i) + displacement)) + Player.Center;
 
-                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Fire, Vector2.Zero, 0, default, 2f);
+                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Torch, Vector2.Zero, 0, default, 2f);
                     dustR.noGravity = true;
                 }
             }
             if (bioBarrage)
             {
-                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Plantera_Green, 0, -4, 50);
+                Dust dustIndex = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.JunglePlants, 0, -4, 50);
                 dustIndex.velocity *= 0.3f;
             }
             if (toxicShot)
             {
-                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedsWingsRun, 0, -4, 50);
+                Dust dustIndex = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.SomethingRed , 0, -4, 50);
                 dustIndex.velocity *= 0.3f;
             }
             if (immolate)
             {
                 for (int i = 0; i < 1; i++)
                 {
-                    Vector2 pos = new Vector2(player.position.X, player.position.Y + (player.height * 0.9f));
-                    Dust dustIndex = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, 12f, -1f, 100, default, 1.25f);
+                    Vector2 pos = new Vector2(Player.position.X, Player.position.Y + (Player.height * 0.9f));
+                    Dust dustIndex = Dust.NewDustDirect(pos, Player.width, Player.height / 10, DustID.Torch, 12f, -1f, 100, default, 1.25f);
                     dustIndex.noGravity = true;
                     dustIndex.velocity.Y *= 0.4f;
                     dustIndex.velocity.X *= 0.6f;
-                    dustIndex.velocity.X += player.velocity.X;
+                    dustIndex.velocity.X += Player.velocity.X;
                     dustIndex.noLight = true;
-                    Dust dustIndex2 = Dust.NewDustDirect(pos, player.width, player.height / 10, DustID.Fire, -12f, -1f, 100, default, 1.5f);
+                    Dust dustIndex2 = Dust.NewDustDirect(pos, Player.width, Player.height / 10, DustID.Torch, -12f, -1f, 100, default, 1.5f);
                     dustIndex2.noGravity = true;
                     dustIndex2.noLight = true;
                     dustIndex2.velocity.Y *= 0.4f;
                     dustIndex2.velocity.X *= 0.6f;
-                    dustIndex2.velocity.X += player.velocity.X;
+                    dustIndex2.velocity.X += Player.velocity.X;
                 }
             }
 
@@ -1976,26 +1992,26 @@ namespace TerraLeague
             {
                 PlayerDeathReason ded = new PlayerDeathReason
                 {
-                    SourceCustomReason = player.name + " died to their wounds"
+                    SourceCustomReason = Player.name + " died to their wounds"
                 };
 
                 if (cauterizedDamage < 6)
                 {
-                    player.statLife -= (cauterizedDamage * 2) / 3;
-                    CombatText.NewText(player.Hitbox, Color.DarkRed, (cauterizedDamage * 2) / 3, false, true);
-                    //player.Hurt(ded, cauterizedDamage + (int)(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
+                    Player.statLife -= (cauterizedDamage * 2) / 3;
+                    CombatText.NewText(Player.Hitbox, Color.DarkRed, (cauterizedDamage * 2) / 3, false, true);
+                    //Player.Hurt(ded, cauterizedDamage + (int)(Player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
                     cauterizedDamage = 0;
                 }
                 else
                 {
-                    player.statLife -= (cauterizedDamage * 2) / 3;
-                    CombatText.NewText(player.Hitbox, Color.DarkRed, (cauterizedDamage * 2) / 3, false, true);
+                    Player.statLife -= (cauterizedDamage * 2) / 3;
+                    CombatText.NewText(Player.Hitbox, Color.DarkRed, (cauterizedDamage * 2) / 3, false, true);
                     cauterizedDamage = (cauterizedDamage * 2) / 3;
-                    //player.Hurt(ded, (cauterizedDamage / 3) + (int)(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
+                    //Player.Hurt(ded, (cauterizedDamage / 3) + (int)(Player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
                 }
 
                 if (GetRealHeathWithoutShield() <= 0)
-                    player.KillMe(ded, 0, 1, false);
+                    Player.KillMe(ded, 0, 1, false);
             }
 
             // Healing handler
@@ -2005,45 +2021,45 @@ namespace TerraLeague
             }
 
             // Ability and Summoner Spells Handler
-            if (player.whoAmI == Main.myPlayer)
+            if (Player.whoAmI == Main.myPlayer)
             {
-                if (!player.silence && !player.noItems)
+                if (!Player.silence && !Player.noItems)
                 {
                     if (TerraLeague.Item1.JustPressed)
                     {
-                        if (player.armor[3].modItem is LeagueItem item)
+                        if (Player.armor[3].ModItem is LeagueItem item)
                             if (item.Active != null)
-                                item.Active.DoActive(player, item);
+                                item.Active.DoActive(Player, item);
                     }
                     if (TerraLeague.Item2.JustPressed)
                     {
-                        if (player.armor[4].modItem is LeagueItem item)
+                        if (Player.armor[4].ModItem is LeagueItem item)
                             if (item.Active != null)
-                                item.Active.DoActive(player, item);
+                                item.Active.DoActive(Player, item);
                     }
                     if (TerraLeague.Item3.JustPressed)
                     {
-                        if (player.armor[5].modItem is LeagueItem item)
+                        if (Player.armor[5].ModItem is LeagueItem item)
                             if (item.Active != null)
-                                item.Active.DoActive(player, item);
+                                item.Active.DoActive(Player, item);
                     }
                     if (TerraLeague.Item4.JustPressed)
                     {
-                        if (player.armor[6].modItem is LeagueItem item)
+                        if (Player.armor[6].ModItem is LeagueItem item)
                             if (item.Active != null)
-                                item.Active.DoActive(player, item);
+                                item.Active.DoActive(Player, item);
                     }
                     if (TerraLeague.Item5.JustPressed)
                     {
-                        if (player.armor[7].modItem is LeagueItem item)
+                        if (Player.armor[7].ModItem is LeagueItem item)
                             if (item.Active != null)
-                                item.Active.DoActive(player, item);
+                                item.Active.DoActive(Player, item);
                     }
                     if (TerraLeague.Item6.JustPressed)
                     {
-                        if (player.armor[8].modItem is LeagueItem item)
+                        if (Player.armor[8].ModItem is LeagueItem item)
                             if (item.Active != null)
-                                item.Active.DoActive(player, item);
+                                item.Active.DoActive(Player, item);
                     }
                 }
 
@@ -2058,33 +2074,33 @@ namespace TerraLeague
 
                 if (Abilities[0] != null && AbilityBuffer[0] > 0)
                 {
-                    if (Abilities[0].CanCurrentlyBeCast(player))
+                    if (Abilities[0].CanCurrentlyBeCast(Player))
                     {
-                        Abilities[0].DoEffect(player, AbilityType.Q);
+                        Abilities[0].DoEffect(Player, AbilityType.Q);
                         AbilityBuffer[0] = 0;
                     }
                 }
                 if (Abilities[1] != null && AbilityBuffer[1] > 0)
                 {
-                    if (Abilities[1].CanCurrentlyBeCast(player))
+                    if (Abilities[1].CanCurrentlyBeCast(Player))
                     {
-                        Abilities[1].DoEffect(player, AbilityType.W);
+                        Abilities[1].DoEffect(Player, AbilityType.W);
                         AbilityBuffer[1] = 0;
                     }
                 }
                 if (Abilities[2] != null && AbilityBuffer[2] > 0)
                 {
-                    if (Abilities[2].CanCurrentlyBeCast(player))
+                    if (Abilities[2].CanCurrentlyBeCast(Player))
                     {
-                        Abilities[2].DoEffect(player, AbilityType.E);
+                        Abilities[2].DoEffect(Player, AbilityType.E);
                         AbilityBuffer[2] = 0;
                     }
                 }
                 if (Abilities[3] != null && AbilityBuffer[3] > 0)
                 {
-                    if (Abilities[3].CanCurrentlyBeCast(player))
+                    if (Abilities[3].CanCurrentlyBeCast(Player))
                     {
-                        Abilities[3].DoEffect(player, AbilityType.R);
+                        Abilities[3].DoEffect(Player, AbilityType.R);
                         AbilityBuffer[3] = 0;
                     }
                 }
@@ -2101,7 +2117,7 @@ namespace TerraLeague
                 AbilityChannel = false;
 
 
-                if (!player.silence)
+                if (!Player.silence)
                 {
                     if (TerraLeague.Sum1.JustPressed && sumSpells[0] != null && sumCooldowns[0] == 0 /*&& canUseSummoner*/)
                     {
@@ -2128,9 +2144,9 @@ namespace TerraLeague
             #endregion
 
             // Runs PostPlayerUpdate() for all equiped LeagueItems
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                LeagueItem.RunEnabled_PostPlayerUpdate(player);
+                LeagueItem.RunEnabled_PostPlayerUpdate(Player);
             }
 
             // Handles Summoner Spell cooldowns
@@ -2139,14 +2155,14 @@ namespace TerraLeague
             AbilityCooldownsAndStuff();
 
             healPowerLastStep = healPower;
-            meleeDamageLastStep = Math.Round(player.meleeDamage + player.allDamage - 1, 2);
-            rangedDamageLastStep = Math.Round(player.rangedDamage + player.allDamage - 1, 2);
-            magicDamageLastStep = Math.Round(player.magicDamage + player.allDamage - 1 - player.manaSickReduction, 2);
-            minionDamageLastStep = Math.Round(player.minionDamage + player.allDamage - 1, 2) + TrueMinionDamage;
-            rocketDamageLastStep = Math.Round(player.rocketDamage, 2);
-            arrowDamageLastStep = Math.Round(player.arrowDamage, 2);
-            bulletDamageLastStep = Math.Round(player.bulletDamage, 2);
-            defenceLastStep = player.statDefense;
+            meleeDamageLastStep = (double)Player.GetDamage(DamageClass.Melee).Additive;
+            rangedDamageLastStep = (double)Player.GetDamage(DamageClass.Ranged).Additive;
+            magicDamageLastStep = (double)Player.GetDamage(DamageClass.Magic).Additive; // Mana Sickness?
+            minionDamageLastStep = (double)Player.GetDamage(DamageClass.Summon).Additive;
+            rocketDamageLastStep = (double)Player.rocketDamage;
+            arrowDamageLastStep = (double)Player.arrowDamage;
+            bulletDamageLastStep = (double)Player.bulletDamage;
+            defenceLastStep = Player.statDefense;
             armorLastStep = armor;
             resistLastStep = resist;
             abilityHasteLastStep = abilityHaste;
@@ -2154,26 +2170,25 @@ namespace TerraLeague
             summonerHasteLastStep = summonerHaste;
             ultHasteLastStep = ultHaste;
             extraSumCDRLastStep = Math.Round(extraSumCDR, 2);
-            maxMinionsLastStep = player.maxMinions;
+            maxMinionsLastStep = Player.maxMinions;
             maxLifeLastStep = GetRealHeathWithoutShield(true);
 
             SetShieldColor();
             base.PostUpdate();
         }
 
-        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
+        public override void UpdateEquips()
         {
-            if (darkinCostume)
-                player.AddBuff(BuffType<DarkinBuff>(), 2, true);
-
-            base.UpdateEquips(ref wallSpeedBuff, ref tileSpeedBuff, ref tileRangeBuff);
+            //if (darkinCostume)
+            //    Player.AddBuff(BuffType<DarkinBuff>(), 2, true);
+            base.UpdateEquips();
         }
 
         public override void UpdateVanityAccessories()
         {
-            for (int n = 13; n < 18 + player.extraAccessorySlots; n++)
+            for (int n = 13; n < 18; n++)
             {
-                Item item = player.armor[n];
+                Item item = Player.armor[n];
                 if (item.type == ItemType<Items.Accessories.DarkinArtifact>())
                 {
                     darkinCostumeHideVanity = false;
@@ -2182,17 +2197,15 @@ namespace TerraLeague
             }
         }
         
-        public override void UpdateBiomeVisuals()
+        public void UpdateBiomeVisuals()
         {
             //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
             //if (TerraLeague.DrawBlackMistFog)
-            //player.ManageSpecialBiomeVisuals("TerraLeague:Targon", zoneTargonMonolith, player.Center);
+            //Player.ManageSpecialBiomeVisuals("TerraLeague:Targon", zoneTargonMonolith, Player.Center);
 
             bool doTargonEFX = (zoneTargonPeak || zoneTargonMonolith);
-            player.ManageSpecialBiomeVisuals("TerraLeague:Targon", doTargonEFX, player.Center);
-            player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
-
-            base.UpdateBiomeVisuals();
+            Player.ManageSpecialBiomeVisuals("TerraLeague:Targon", doTargonEFX, Player.Center);
+            Player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, Player.Center);
         }
 
         /// <summary>
@@ -2208,7 +2221,7 @@ namespace TerraLeague
         /// <returns></returns>
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            bool? itemKill = LeagueItem.RunEnabled_PreKill(player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+            bool? itemKill = LeagueItem.RunEnabled_PreKill(Player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
             if (itemKill != null)
             {
                 return (bool)itemKill;
@@ -2233,7 +2246,7 @@ namespace TerraLeague
         /// <param name="crit"></param>
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            if (item.melee)
+            if (item.DamageType == DamageClass.Melee)
                 ModifyHitNPCTrue(item, target, ref damage, ref knockback, ref crit);
 
             base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
@@ -2254,7 +2267,7 @@ namespace TerraLeague
             base.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
 
             // Some projectiles are considered a melee swing by this mod, and will go on to be treated as such
-            if (TerraLeague.IsProjActuallyMeleeAttack(proj) && proj.melee)
+            if (TerraLeague.IsProjActuallyMeleeAttack(proj) && proj.DamageType == DamageClass.Melee)
             {
                 ModifyHitNPCTrue(null, target, ref damage, ref knockback, ref crit);
             }
@@ -2264,25 +2277,25 @@ namespace TerraLeague
 
                 int onhitdamage = 0;
 
-                // Adds the mods custom minion damage stat to the modifier to apply the correct damage
-                if (TerraLeague.IsMinionDamage(proj) && (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell && !proj.GetGlobalProjectile<PROJECTILEGLOBAL>().summonAbility))
-                {
-                    minionModifer *= (float)TrueMinionDamage + 1;
-                }
-                if (modNPC.abyssalCurse && proj.magic)
+                // Adds the mods custom summon damage stat to the modifier to apply the correct damage
+                //if (TerraLeague.IsMinionDamage(proj) && (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell && !proj.GetGlobalProjectile<PROJECTILEGLOBAL>().summonAbility))
+                //{
+                //    minionModifer *= (float)TrueMinionDamage + 1;
+                //}
+                if (modNPC.abyssalCurse && proj.DamageType == DamageClass.Magic)
                 {
                     magicModifer *= 1.08;
                 }
-                if (modNPC.OrgDest && proj.magic)
+                if (modNPC.OrgDest && proj.DamageType == DamageClass.Magic)
                 {
                     magicModifer *= 1.1;
                 }
-                if (modNPC.doomed && proj.magic)
+                if (modNPC.doomed && proj.DamageType == DamageClass.Magic)
                 {
                     magicModifer *= 1.2;
                 }
 
-                if (bioBarrage && proj.ranged)
+                if (bioBarrage && proj.DamageType == DamageClass.Ranged)
                 {
                     int bioonhit = (int)(target.lifeMax * (0.04 + (MAG * 0.0005)));
                     if (bioonhit > Items.Weapons.Abilities.BioArcaneBarrage.GetMaxOnHit(this))
@@ -2294,7 +2307,7 @@ namespace TerraLeague
                 }
 
                 // Runs NPCHitWithProjectile() for all equiped LeagueItems
-                LeagueItem.RunEnabled_NPCHitWithProjectile(player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage);
+                LeagueItem.RunEnabled_NPCHitWithProjectile(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage);
                 
                 if (tidecallersBlessing)
                 {
@@ -2302,51 +2315,51 @@ namespace TerraLeague
                 }
                 if (voidbornSet && proj.minion)
                 {
-                    player.ManaEffect(2);
-                    player.statMana += 2;
+                    Player.ManaEffect(2);
+                    Player.statMana += 2;
                 }
 
                 // +-+-+-+-+FINALIZED DAMAGE MODIFIERS+-+-+-+-+
 
                 // Add All Modifiers to the damage type
-                if (proj.melee)
+                if (proj.DamageType == DamageClass.Melee)
                 {
-                    player.armorPenetration += meleeArmorPen;
+                    Player.armorPenetration += meleeArmorPen;
                     onhitdamage += meleeOnHit;
 
                     damage = (int)(damage * meleeModifer);
                     damage += meleeFlatDamage;
                 }
-                if (proj.ranged)
+                if (proj.DamageType == DamageClass.Ranged)
                 {
-                    player.armorPenetration += rangedArmorPen;
+                    Player.armorPenetration += rangedArmorPen;
                     onhitdamage += rangedOnHit;
 
                     damage = (int)(damage * rangedModifer);
                     damage += rangedFlatDamage;
                 }
-                if (proj.magic)
+                if (proj.DamageType == DamageClass.Magic)
                 {
-                    player.armorPenetration += magicArmorPen;
+                    Player.armorPenetration += magicArmorPen;
                     onhitdamage += magicOnHit;
                     damage = (int)(damage * magicModifer);
                     damage += magicFlatDamage;
                 }
-                if (proj.minion)
+                if (proj.DamageType == DamageClass.Summon)
                 {
-                    player.armorPenetration += minionArmorPen;
+                    Player.armorPenetration += minionArmorPen;
                     onhitdamage += minionOnHit;
 
                     damage = (int)(damage * minionModifer);
                     damage += minionFlatDamage;
                 }
 
-                if (toxicShot && proj.ranged)
+                if (toxicShot && proj.DamageType == DamageClass.Ranged)
                 {
                     onhitdamage += Items.Weapons.Abilities.ToxicShot.GetMaxOnHit(this);
                     target.AddBuff(BuffID.Venom, 240);
                 }
-                if (proj.melee)
+                if (proj.DamageType == DamageClass.Melee)
                 {
                     if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().frozen)
                     {
@@ -2367,26 +2380,26 @@ namespace TerraLeague
                         target.AddBuff(BuffType<GrievousWounds>(), 120);
                 }
                 if (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects)
-                    FlashOfBrillianceEffect(player, target);
+                    FlashOfBrillianceEffect(Player, target);
 
                 // Performs Winds Fury (Runanns Hurricane)
-                if (proj.ranged && (windsFury || windFuryReplicator) && !TerraLeague.DoNotCountRangedDamage(proj) && windsFuryCooldown == 0)
+                if (proj.DamageType == DamageClass.Ranged && (windsFury || windFuryReplicator) && !TerraLeague.DoNotCountRangedDamage(proj) && windsFuryCooldown == 0)
                 {
-                    int target1 = Targeting.GetClosestNPC(player.Center, 520, target.whoAmI);
+                    int target1 = Targeting.GetClosestNPC(Player.Center, 520, target.whoAmI);
                     int target2 = -1;
                     if (target1 != -1)
                     {
-                        target2 = Targeting.GetClosestNPC(player.Center, 520, new int[] { target.whoAmI, target1 });
+                        target2 = Targeting.GetClosestNPC(Player.Center, 520, new int[] { target.whoAmI, target1 });
                     }
 
                     if (windsFury)
                     {
                         if (target1 != -1)
                         {
-                            Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target1].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
+                            Projectile.NewProjectileDirect(proj.GetProjectileSource_FromThis(), Player.MountedCenter, TerraLeague.CalcVelocityToPoint(Player.MountedCenter, Main.npc[target1].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, Player.whoAmI, target.whoAmI);
                             if (target2 != -1)
                             {
-                                Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target2].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
+                                Projectile.NewProjectileDirect(proj.GetProjectileSource_FromThis(), Player.MountedCenter, TerraLeague.CalcVelocityToPoint(Player.MountedCenter, Main.npc[target2].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, Player.whoAmI, target.whoAmI);
                             }
                         }
                     }
@@ -2394,17 +2407,17 @@ namespace TerraLeague
                     {
                         if (target1 != -1)
                         {
-                            Projectile newProj = Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target1].Center, 10), proj.type, (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
-                            newProj.ranged = false;
+                            Projectile newProj = Projectile.NewProjectileDirect(proj.GetProjectileSource_FromThis(), Player.MountedCenter, TerraLeague.CalcVelocityToPoint(Player.MountedCenter, Main.npc[target1].Center, 10), proj.type, (int)(damage * 0.4f), 0, Player.whoAmI, target.whoAmI);
+                            newProj.DamageType = DamageClass.Ranged;
                             if (target2 != -1)
                             {
-                                newProj = Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target2].Center, 10), proj.type, (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
-                                newProj.ranged = false;
+                                newProj = Projectile.NewProjectileDirect(proj.GetProjectileSource_FromThis(), Player.MountedCenter, TerraLeague.CalcVelocityToPoint(Player.MountedCenter, Main.npc[target2].Center, 10), proj.type, (int)(damage * 0.4f), 0, Player.whoAmI, target.whoAmI);
+                                newProj.DamageType = DamageClass.Ranged;
                             }
                         }
                     }
 
-                    Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 24);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Player.position.X, (int)Player.position.Y, 24);
 
                     if (target1 != -1)
                         windsFuryCooldown = (int)(15 / rangedAttackSpeed);
@@ -2412,19 +2425,19 @@ namespace TerraLeague
 
                 // Lifesteal calculation
                 double LifeCharge = 0;
-                if (lifeStealMelee > 0 && proj.melee)
+                if (lifeStealMelee > 0 && proj.DamageType == DamageClass.Melee)
                 {
                     LifeCharge += lifeStealMelee; //* (damage - (target.defense * 0.5));
                 }
-                if (lifeStealRange > 0 && proj.ranged)
+                if (lifeStealRange > 0 && proj.DamageType == DamageClass.Ranged)
                 {
                     LifeCharge += lifeStealRange;// * (damage - (target.defense * 0.5));
                 }
-                if (lifeStealMagic > 0 && proj.magic)
+                if (lifeStealMagic > 0 && proj.DamageType == DamageClass.Magic)
                 {
                     LifeCharge += lifeStealMagic;// * (damage - (target.defense * 0.5));
                 }
-                if (lifeStealMinion > 0 && TerraLeague.IsMinionDamage(proj))
+                if (lifeStealMinion > 0 && TerraLeague.IsMinionDamage(proj) || proj.DamageType == DamageClass.Summon)
                 {
                     LifeCharge += lifeStealMinion;// * (damage - (target.defense * 0.5));
                 }
@@ -2444,10 +2457,10 @@ namespace TerraLeague
                 // On Hit Damage Calculation
                 if (onhitdamage > 0 && Main.rand.NextBool(4))
                 {
-                    if (proj.melee)
+                    if (proj.DamageType == DamageClass.Melee)
                         onhitdamage = (int)(onhitdamage * 0.75);
-                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, (guinsoosRage && (proj.ranged || proj.melee)));
-                    player.addDPS(onhitdamage);
+                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().OnHitDamage(target, Player, onhitdamage, 0, 0, (guinsoosRage && (proj.DamageType == DamageClass.Ranged || proj.DamageType == DamageClass.Melee)));
+                    Player.addDPS(onhitdamage);
                 }
 
                 OnKilledEnemy(target, damage, crit);
@@ -2470,11 +2483,11 @@ namespace TerraLeague
             if (decisiveStrike)
             {
                 target.AddBuff(BuffType<Slowed>(), 180);
-                player.ClearBuff(BuffType<Buffs.DecisiveStrike>());
+                Player.ClearBuff(BuffType<Buffs.DecisiveStrike>());
             }
 
             // Runs NPCHit() for all equiped LeagueItems
-            LeagueItem.RunEnabled_NPCHit(player, item, target, ref damage, ref knockback, ref crit, ref onhitdamage);
+            LeagueItem.RunEnabled_NPCHit(Player, item, target, ref damage, ref knockback, ref crit, ref onhitdamage);
 
             // Damage Buffs
             if (scourgeBlessing)
@@ -2488,7 +2501,7 @@ namespace TerraLeague
 
             // +-+-+-+-+FINALIZED DAMAGE MODIFIERS+-+-+-+-+
 
-            player.armorPenetration += meleeArmorPen;
+            Player.armorPenetration += meleeArmorPen;
             onhitdamage += meleeOnHit;
 
             damage = (int)(damage * meleeModifer);
@@ -2504,26 +2517,26 @@ namespace TerraLeague
             if ((cleaveLifesteal || cleaveMaxLife || cleaveBasic) && cleaveCooldown == 0)
             {
                 int cleaveDamage = 0;
-                var npcs = Targeting.GetAllNPCsInRange(player.MountedCenter, 200, true, true);
+                var npcs = Targeting.GetAllNPCsInRange(Player.MountedCenter, 200, true, true);
 
                 if (cleaveLifesteal)
                 {
-                    Cleave.Efx(player.whoAmI, CleaveType.Lifesteal);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2, player.whoAmI);
+                    Cleave.Efx(Player.whoAmI, CleaveType.Lifesteal);
+                    Passive.PacketHandler.SendCleave(-1, Player.whoAmI, 2, Player.whoAmI);
                     cleaveDamage = (int)(MEL * 50 / 100f);
                     cleaveCooldown = 45;
                 }
                 else if (cleaveMaxLife)
                 {
-                    Cleave.Efx(player.whoAmI, CleaveType.MaxLife);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1, player.whoAmI);
-                    cleaveDamage = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
+                    Cleave.Efx(Player.whoAmI, CleaveType.MaxLife);
+                    Passive.PacketHandler.SendCleave(-1, Player.whoAmI, 1, Player.whoAmI);
+                    cleaveDamage = (int)((MEL * 40 / 100f) + (Player.statLifeMax2 * 0.05));
                     cleaveCooldown = 45;
                 }
                 else if (cleaveBasic)
                 {
-                    Cleave.Efx(player.whoAmI, CleaveType.Basic);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0, player.whoAmI);
+                    Cleave.Efx(Player.whoAmI, CleaveType.Basic);
+                    Passive.PacketHandler.SendCleave(-1, Player.whoAmI, 0, Player.whoAmI);
                     cleaveDamage = (int)(MEL * 40 / 100f);
                     cleaveCooldown = 60;
                 }
@@ -2531,9 +2544,9 @@ namespace TerraLeague
                 for (int i = 0; i < npcs.Count; i++)
                 {
                     NPC npc = Main.npc[npcs[i]];
-                    if (player.CanHit(npc) && npc.whoAmI != target.whoAmI)
+                    if (Player.CanHit(npc) && npc.whoAmI != target.whoAmI)
                     {
-                        player.ApplyDamageToNPC(npc, cleaveDamage, 0, 0, crit);
+                        Player.ApplyDamageToNPC(npc, cleaveDamage, 0, 0, crit);
                         if (cleaveLifesteal && npc.type != NPCID.TargetDummy)
                             lifeToHeal += (int)((cleaveDamage - (npc.defense * 0.5)) * 0.05);
                     }
@@ -2551,15 +2564,15 @@ namespace TerraLeague
             }
             if (excessiveForce)
             {
-                player.ClearBuff(BuffType<Buffs.ExcessiveForce>());
+                Player.ClearBuff(BuffType<Buffs.ExcessiveForce>());
                 excessiveForce = false;
-                float angle = player.AngleTo(Main.MouseWorld);
+                float angle = Player.AngleTo(Main.MouseWorld);
                 for (int i = 0; i < 12; i++)
                 {
-                    Projectile.NewProjectileDirect(target.Center, new Vector2(12, 0).RotatedBy(angle + MathHelper.ToRadians((-30 + (5 * i)))), ProjectileType<AtlasGauntlets_ExcessiveForce>(), damage, knockback/2, player.whoAmI, target.whoAmI);
+                    Projectile.NewProjectileDirect(Player.GetProjectileSource_Item(new AtlasGauntlets().Item), target.Center, new Vector2(12, 0).RotatedBy(angle + MathHelper.ToRadians((-30 + (5 * i)))), ProjectileType<AtlasGauntlets_ExcessiveForce>(), damage, knockback/2, Player.whoAmI, target.whoAmI);
                 }
             }
-            FlashOfBrillianceEffect(player, target);
+            FlashOfBrillianceEffect(Player, target);
 
             // Lifesteal calculation
             if (lifeStealMelee > 0 && !target.immortal)
@@ -2575,8 +2588,8 @@ namespace TerraLeague
             // On Hit Damage Calculation
             if (onhitdamage > 0 && Main.rand.NextBool(4))
             {
-                target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, guinsoosRage);
-                player.addDPS(onhitdamage);
+                target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().OnHitDamage(target, Player, onhitdamage, 0, 0, guinsoosRage);
+                Player.addDPS(onhitdamage);
             }
 
             OnKilledEnemy(target, damage, crit);
@@ -2600,7 +2613,7 @@ namespace TerraLeague
                 wasHitByProjOrNPCLastStep = "Proj";
 
                 // Runs OnHitByProjectile(npc) for all equiped LeagueItems
-                LeagueItem.RunEnabled_OnHitByProjectile(player, npc, ref damage, ref crit);
+                LeagueItem.RunEnabled_OnHitByProjectile(Player, npc, ref damage, ref crit);
 
                 ArmorResistScaledDamage(ref damage, false);
                 //// Reduces the projectile damage based on Players resist stat
@@ -2614,7 +2627,7 @@ namespace TerraLeague
                 wasHitByProjOrNPCLastStep = "NPC";
 
                 // Runs OnHitByNPC() for all equiped LeagueItems
-                LeagueItem.RunEnabled_OnHitByNPC(player, npc, ref damage, ref crit);
+                LeagueItem.RunEnabled_OnHitByNPC(Player, npc, ref damage, ref crit);
 
                 ArmorResistScaledDamage(ref damage, true);
                 //// Reduces the contact damage based on Players armor stat
@@ -2642,11 +2655,11 @@ namespace TerraLeague
             wasHitByProjOrNPCLastStep = "Proj";
 
             // Runs OnHitByProjectile(Projectile) for all equiped LeagueItems
-            LeagueItem.RunEnabled_OnHitByProjectile(player, proj, ref damage, ref crit);
+            LeagueItem.RunEnabled_OnHitByProjectile(Player, proj, ref damage, ref crit);
 
             // Greymark
             if (greymark)
-                player.AddBuff(BuffType<GreymarkBuff>(), 4 * 60);
+                Player.AddBuff(BuffType<GreymarkBuff>(), 4 * 60);
 
             ArmorResistScaledDamage(ref damage, false);
             // Reduces the projectile damage based on Players resist stat
@@ -2663,17 +2676,9 @@ namespace TerraLeague
         void ArmorResistScaledDamage(ref int damage, bool armor = true)
         {
             TerraLeague.Log(armor ? "--CONTACT--" : "--PROJECTILE--", Color.HotPink);
-            
-            if (armor)
-            {
-                TerraLeague.Log("Inital: " + damage, Color.MediumSlateBlue);
-            }
-            else
-            {
-                TerraLeague.Log("Inital: " + damage * (Main.expertMode ? 4 : 2), Color.MediumSlateBlue);
-            }
+            TerraLeague.Log("Inital: " + damage, Color.MediumSlateBlue);
 
-
+            // Scales damage it specified reduction type
             if (armor)
             {
                 damage = (int)Math.Round(damage * ArmorDamageReduction, 0);
@@ -2682,37 +2687,27 @@ namespace TerraLeague
             else
             {
                 damage = (int)Math.Round(damage * ResistDamageReduction, 0);
-                TerraLeague.Log("Reduction: " + damage * (Main.expertMode ? 4 : 2) + " ~ Percent: " + ResistDamageReduction, Color.MediumSlateBlue);
+                TerraLeague.Log("Reduction: " + damage + " ~ Percent: " + ResistDamageReduction, Color.MediumSlateBlue);
             }
 
+            // Added player defence to the damage to negate its effects if Custom Defence changes are in effect
             if (TerraLeague.UseCustomDefenceStat)
             {
-                if (armor)
-                {
-                    if (Main.expertMode)
-                        damage += (int)Math.Round(player.statDefense * 0.75);
-                    else
-                        damage += (int)Math.Round(player.statDefense * 0.5);
+                int addedDamage = 0;;
 
-                    TerraLeague.Log("PostDef: " + damage + " ~ Added Damage: " + (int)Math.Round(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), Color.MediumSlateBlue);
-                    TerraLeague.Log("Expected Result: " + (damage - (int)Math.Round(player.statDefense * (Main.expertMode ? 0.75 : 0.5))), Color.DarkGreen);
-
-                }
+                if (Main.masterMode)
+                    addedDamage += Player.statDefense;
+                else if (Main.expertMode)
+                    addedDamage += (int)(Player.statDefense * 0.75);
                 else
-                {
-                    if (Main.expertMode)
-                        damage += (int)Math.Round(player.statDefense * 0.75) / 4;
-                    else
-                        damage += (int)Math.Round(player.statDefense * 0.5) / 2;
+                    addedDamage += (int)(Player.statDefense * 0.5);
 
-                    double addedDamage = player.statDefense * (Main.expertMode ? 0.75 : 0.5);
+                damage += addedDamage;
 
-                    TerraLeague.Log("PostDef: " + (damage * (Main.expertMode ? 4 : 2)) + " ~ Added Damage: " + (int)Math.Round(addedDamage), Color.MediumSlateBlue);
-                    TerraLeague.Log("Expected Result: " + ((damage * (Main.expertMode ? 4 : 2)) - (int)Math.Round(addedDamage)), Color.Green);
-                }
 
+                TerraLeague.Log("PostDef: " + damage + " ~ Added Damage: " + addedDamage, Color.MediumSlateBlue);
+                TerraLeague.Log("Expected Result: " + (damage - addedDamage), Color.DarkGreen);
             }
-
         }
 
         /// <summary>
@@ -2724,7 +2719,7 @@ namespace TerraLeague
         /// <returns></returns>
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
-            if (npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled || invincible || contactDodge || player.ownedProjectileCounts[ProjectileType<XanCrestBlades_BladeSurge>()] > 0)
+            if (npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled || invincible || contactDodge || Player.ownedProjectileCounts[ProjectileType<XanCrestBlades_BladeSurge>()] > 0)
             {
                 return false;
             }
@@ -2733,7 +2728,7 @@ namespace TerraLeague
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile projCheck = Main.projectile[i];
-                    if (projCheck.owner == player.whoAmI)
+                    if (projCheck.owner == Player.whoAmI)
                     {
                         if (projCheck.active && projCheck.GetGlobalProjectile<PROJECTILEGLOBAL>().playerInvincible)
                         {
@@ -2762,7 +2757,7 @@ namespace TerraLeague
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile projCheck = Main.projectile[i];
-                    if (projCheck.owner == player.whoAmI)
+                    if (projCheck.owner == Player.whoAmI)
                     {
                         if (projCheck.active && projCheck.GetGlobalProjectile<PROJECTILEGLOBAL>().playerInvincible)
                         {
@@ -2785,19 +2780,19 @@ namespace TerraLeague
             if (npc.life - (damage - (npc.defense / 2)) <= 0 || npc.life - (damage - (npc.defense / 2)) * 2 <= 0 && crit)
             {
                 // Runs OnKilledNPC() for all equiped LeagueItems
-                LeagueItem.RunEnabled_OnKilledNPC(player, npc, ref damage, ref crit);
+                LeagueItem.RunEnabled_OnKilledNPC(Player, npc, ref damage, ref crit);
 
                 // Gives mana if Dorans Ring is equiped
-                if (dring && player.statMana < player.statManaMax2)
+                if (dring && Player.statMana < Player.statManaMax2)
                 {
-                    player.ManaEffect(5);
-                    player.statMana += 5;
+                    Player.ManaEffect(5);
+                    Player.statMana += 5;
                 }
 
                 // Gives the Excited buff if holding the Pow Pow or Fish Bones weapons
-                if (player.HeldItem.type == ItemType<PowPow>() || player.HeldItem.type == ItemType<FishBones>())
+                if (Player.HeldItem.type == ItemType<PowPow>() || Player.HeldItem.type == ItemType<FishBones>())
                 {
-                    player.AddBuff(BuffType<PowPowExcited>(), 300);
+                    Player.AddBuff(BuffType<PowPowExcited>(), 300);
                 }
             }
         }
@@ -2808,7 +2803,7 @@ namespace TerraLeague
         public void OnHitByEnemy()
         {
             //if (GetTotalShield() <= 0)
-                player.AddBuff(BuffType<GrievousWounds>(), 180); // 3 seconds
+                Player.AddBuff(BuffType<GrievousWounds>(), 180); // 3 seconds
             CombatTimer = 0;
         }
 
@@ -2819,7 +2814,7 @@ namespace TerraLeague
         /// <param name="duration">The buffs duration in frames (60 = 1 second)</param>
         /// <param name="target">ID of the player who is recieving the buff</param>
         /// <param name="toWho">Who this information is being sent to (-1 is all players on the server)</param>
-        /// <param name="fromWho">Who is sending this information (player.whoAmI)</param>
+        /// <param name="fromWho">Who is sending this information (Player.whoAmI)</param>
         internal void SendBuffPacket(int buff, int duration, int target, int toWho, int fromWho)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -2834,7 +2829,7 @@ namespace TerraLeague
         /// <param name="healAmount">Amount of healing</param>
         /// <param name="healTarget">ID of the player you are healing</param>
         /// <param name="toWho">Who this information is being sent to (-1 is all playres on the server)</param>
-        /// <param name="fromWho">Who is sending this information (player.whoAmI)</param>
+        /// <param name="fromWho">Who is sending this information (Player.whoAmI)</param>
         internal void SendHealPacket(int healAmount, int healTarget, int toWho, int fromWho)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -2848,13 +2843,13 @@ namespace TerraLeague
                 if (ardentsFrenzy)
                 {
                     SendBuffPacket(BuffType<Frenzy>(), 240, healTarget, toWho, fromWho);
-                    player.AddBuff(BuffType<Frenzy>(), 240);
+                    Player.AddBuff(BuffType<Frenzy>(), 240);
                 }
 
                 if (rapids)
                 {
                     SendBuffPacket(BuffType<Buffs.Rapids>(), 240, healTarget, toWho, fromWho);
-                    player.AddBuff(BuffType<Buffs.Rapids>(), 240);
+                    Player.AddBuff(BuffType<Buffs.Rapids>(), 240);
                 }
 
                 PacketHandler.SendHealing(toWho, fromWho, healAmount, healTarget);
@@ -2869,7 +2864,7 @@ namespace TerraLeague
         /// <param name="shieldType">The type of shield it will be (Basic, Physical, or Magic)</param>
         /// <param name="shieldDuration">How long the shield will last in frames (60 = 1)</param>
         /// <param name="toWho">Who this information is being sent to (-1 is all players on the server)</param>
-        /// <param name="fromWho">Who is sending this information (player.whoAmI)</param>
+        /// <param name="fromWho">Who is sending this information (Player.whoAmI)</param>
         /// <param name="shieldColor">The color of the shield</param>
         internal void SendShieldPacket(int shieldAmount, int shieldTarget, ShieldType shieldType, int shieldDuration, int toWho, int fromWho, Color shieldColor)
         {
@@ -2884,13 +2879,13 @@ namespace TerraLeague
                 if (ardentsFrenzy)
                 {
                     SendBuffPacket(BuffType<Frenzy>(), 240, shieldTarget, toWho, fromWho);
-                    player.AddBuff(BuffType<Frenzy>(), 240);
+                    Player.AddBuff(BuffType<Frenzy>(), 240);
                 }
 
                 if (rapids)
                 {
                     SendBuffPacket(BuffType<Buffs.Rapids>(), 240, shieldTarget, toWho, fromWho);
-                    player.AddBuff(BuffType<Buffs.Rapids>(), 240);
+                    Player.AddBuff(BuffType<Buffs.Rapids>(), 240);
                 }
 
                 PacketHandler.SendShield(toWho, fromWho, shieldAmount, (int)shieldType, shieldDuration, shieldTarget, shieldColor);
@@ -2903,7 +2898,7 @@ namespace TerraLeague
         /// <param name="manaAmount">Amount of mana</param>
         /// <param name="manaTarget">ID of the player you are giving mana</param>
         /// <param name="toWho">Who this information is being sent to (-1 is all players on the server)</param>
-        /// <param name="fromWho">Who is sending this information (player.whoAmI)</param>
+        /// <param name="fromWho">Who is sending this information (Player.whoAmI)</param>
         internal void SendManaPacket(int manaAmount, int manaTarget, int toWho, int fromWho)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -2920,7 +2915,7 @@ namespace TerraLeague
             if (spiritualRestur)
                 lifeToHeal = (int)(lifeToHeal * 1.3);
 
-            //if (player.HasBuff(BuffID.PotionSickness))
+            //if (Player.HasBuff(BuffID.PotionSickness))
             //    lifeToHeal /= 2;
 
             int trueLifeHeal = lifeToHeal;
@@ -2932,8 +2927,8 @@ namespace TerraLeague
 
             if (lifeToHeal > 0)
             {
-                player.statLife += trueLifeHeal;
-                player.HealEffect(lifeToHeal);
+                Player.statLife += trueLifeHeal;
+                Player.HealEffect(lifeToHeal);
                 lifeToHeal = 0;
             }
         }
@@ -2944,13 +2939,13 @@ namespace TerraLeague
         /// <param name="num">1 = Left Slot | 2 = Right Slot</param>
         public void UseSummonerSpell(int num)
         {
-            if (player.whoAmI == Main.myPlayer)
+            if (Player.whoAmI == Main.myPlayer)
             {
                 if (num > 2)
                     num = 2;
                 if (num < 1)
                     num = 1;
-                sumSpells[num - 1].DoEffect(player, num);
+                sumSpells[num - 1].DoEffect(Player, num);
             }
         }
         
@@ -2959,7 +2954,7 @@ namespace TerraLeague
         /// </summary>
         public void SummonerCooldowns()
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 for (int i = 0; i < sumSpells.Length; i++)
                 {
@@ -2976,10 +2971,10 @@ namespace TerraLeague
         [Obsolete]
         public void UseAbility(AbilityType abilityType)
         {
-            if (player.whoAmI == Main.myPlayer)
+            if (Player.whoAmI == Main.myPlayer)
             {
                 if (Abilities[(int)abilityType] != null)
-                    Abilities[(int)abilityType].DoEffect(player, abilityType);
+                    Abilities[(int)abilityType].DoEffect(Player, abilityType);
             }
         }
 
@@ -2988,12 +2983,12 @@ namespace TerraLeague
         /// </summary>
         public void AbilityCooldownsAndStuff()
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 bool[] Found = new bool[Abilities.Length];
 
-                //AbilityItem heldItem = player.HeldItem.modItem as AbilityItem;
-                Item currentItem = player.HeldItem;
+                //AbilityItem heldItem = Player.HeldItem.modItem as AbilityItem;
+                Item currentItem = Player.HeldItem;
 
                 if (currentItem.type != ItemID.None)
                 {
@@ -3013,7 +3008,7 @@ namespace TerraLeague
                     }
                 }
 
-                foreach (var item in player.inventory)
+                foreach (var item in Player.inventory)
                 {
                     //AbilityItem curItem = item.modItem as AbilityItem;
 
@@ -3070,59 +3065,41 @@ namespace TerraLeague
         {
             if ((darkinCostume || darkinCostumeForceVanity) && !darkinCostumeHideVanity)
             {
-                player.legs = mod.GetEquipSlot("DarkinLegs", EquipType.Legs);
-                player.body = mod.GetEquipSlot("DarkinBody", EquipType.Body);
-                player.head = mod.GetEquipSlot("DarkinHead", EquipType.Head);
+                Player.legs = Mod.GetEquipSlot("DarkinLegs", EquipType.Legs);
+                Player.body = Mod.GetEquipSlot("DarkinBody", EquipType.Body);
+                Player.head = Mod.GetEquipSlot("DarkinHead", EquipType.Head);
             }
         }
 
-        public override void ModifyDrawLayers(List<PlayerLayer> layers)
+        public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
             DrawOnPlayer();
-
-            //layers.Where(x => x.Name == "HeldItem").First().layer.Method.
-
-            TerraLeague.ShieldEffect.visible = true;
-
-            int itemIndex = layers.FindIndex(x => x.Name == "HeldItem");
-
-            layers.Add(TerraLeague.ShieldEffect);
-
-            if (trueInvis)
-            {
-                for (int i = 0; i < layers.Count; i++)
-                {
-                    layers[i].visible = false;
-                }
-            }
-
             AnimateSpellEffects();
-
             if (requiemChannel || finalsparkChannel || rightoftheArcaneChannel)
             {
-                player.bodyFrame.Y = player.bodyFrame.Height * 5;
+                Player.bodyFrame.Y = Player.bodyFrame.Height * 5;
             }
-
-            if (player.armor.FirstOrDefault(x => x.type == ItemType<Items.Armor.HextechEvolutionMask>()) != null)
+            if (trueInvis)
             {
-                var hairLayer = layers.FirstOrDefault(x => x.Name == "Hair");
-                var faceLayer = layers.FirstOrDefault(x => x.Name == "Face");
-                if (hairLayer != null || faceLayer != null)
-                {
-                    layers.Insert(16, hairLayer);
-                }
-            }
 
-            if (player.ownedProjectileCounts[ProjectileType<AtlasGauntlets_Right>()] > 0)
+            }
+            if (Player.ownedProjectileCounts[ProjectileType<AtlasGauntlets_Right>()] > 0)
             {
-                var armsLayer = layers.FirstOrDefault(x => x.Name == "Arms");
-                if (armsLayer != null)
-                {
-                    armsLayer.visible = false;
-                }
+                drawInfo.missingArm = true;
+                drawInfo.missingHand = true;
             }
 
-            base.ModifyDrawLayers(layers);
+            //if (Player.armor.FirstOrDefault(x => x.type == ItemType<Items.Armor.HextechEvolutionMask>()) != null)
+            //{
+            //    var hairLayer = layers.FirstOrDefault(x => x.Name == "Hair");
+            //    var faceLayer = layers.FirstOrDefault(x => x.Name == "Face");
+            //    if (hairLayer != null || faceLayer != null)
+            //    {
+            //        layers.Insert(16, hairLayer);
+            //    }
+            //}
+
+            base.HideDrawLayers(drawInfo);
         }
 
         /// <summary>
@@ -3130,18 +3107,18 @@ namespace TerraLeague
         /// </summary>
         public void DrawOnPlayer()
         {
-            if (player.HasBuff(BuffType<Buffs.SpinningAxe>()) && !trueInvis)
+            if (Player.HasBuff(BuffType<Buffs.SpinningAxe>()) && !trueInvis)
             {
-                Texture2D texture = mod.GetTexture("Projectiles/DarksteelThrowingAxe_SpinningAxe");
-                Color color = Lighting.GetColor((int)player.Center.X / 16, (int)player.Center.Y / 16);
-                float rotation = MathHelper.ToRadians(((float)Main.time % 15)*24) * player.direction;
+                Texture2D texture = Request<Texture2D>("TerraLeague/Projectiles/DarksteelThrowingAxe_SpinningAxe").Value;
+                Color color = Lighting.GetColor((int)Player.Center.X / 16, (int)Player.Center.Y / 16);
+                float rotation = MathHelper.ToRadians(((float)Main.time % 15)*24) * Player.direction;
                 Main.spriteBatch.Draw
                 (
                     texture,
                     new Vector2
                     (
-                        player.position.X - Main.screenPosition.X + player.width * 0.5f,
-                        player.position.Y - Main.screenPosition.Y + player.height * 0.5f
+                        Player.position.X - Main.screenPosition.X + Player.width * 0.5f,
+                        Player.position.Y - Main.screenPosition.Y + Player.height * 0.5f
                     ),
                     new Rectangle(0, 0, texture.Width, texture.Height),
                     //Color.White,
@@ -3149,7 +3126,7 @@ namespace TerraLeague
                     rotation,
                     texture.Size() * 0.5f,
                     1,
-                    player.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+                    Player.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
                     0f
                 );
             }
@@ -3162,81 +3139,81 @@ namespace TerraLeague
         /// </summary>
         public void AnimateSpellEffects()
         {
-            if (abilityAnimation > 0 && player.itemAnimation <= 0)
+            if (abilityAnimation > 0 && Player.itemAnimation <= 0)
             {
                 if (abilityAnimationType == 1)
                 {
                     if ((double)abilityAnimation < (double)abilityAnimationMax * 0.333)
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height * 3;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 3;
                     }
                     else if ((double)abilityAnimation < (double)abilityAnimationMax * 0.666)
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height * 2;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 2;
                     }
                     else
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height;
                     }
                 }
                 else if (abilityAnimationType == 2)
                 {
                     if ((double)abilityAnimation > (double)abilityAnimationMax * 0.5)
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height * 3;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 3;
                     }
                     else
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height * 2;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 2;
                     }
                 }
                 else if (abilityAnimationType == 3)
                 {
                     if ((double)abilityAnimation > (double)abilityAnimationMax * 0.666)
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height * 3;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 3;
                     }
                     else
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height * 3;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 3;
                     }
                 }
                 else if (abilityAnimationType == 4)
                 {
-                    player.bodyFrame.Y = player.bodyFrame.Height * 2;
+                    Player.bodyFrame.Y = Player.bodyFrame.Height * 2;
                 }
                 else if (abilityAnimationType == 5)
                 {
                     if (abilityItem.type == ItemID.Blowpipe || abilityItem.type == ItemID.Blowgun)
                     {
-                        player.bodyFrame.Y = player.bodyFrame.Height * 2;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 2;
                     }
                     else
                     {
-                        float num2 = abilityRotation * (float)player.direction;
-                        player.bodyFrame.Y = player.bodyFrame.Height * 3;
+                        float num2 = abilityRotation * (float)Player.direction;
+                        Player.bodyFrame.Y = Player.bodyFrame.Height * 3;
                         
                         if ((double)num2 < -0.75)
                         {
-                            player.bodyFrame.Y = player.bodyFrame.Height * 2;
-                            if (player.gravDir == -1f)
+                            Player.bodyFrame.Y = Player.bodyFrame.Height * 2;
+                            if (Player.gravDir == -1f)
                             {
-                                player.bodyFrame.Y = player.bodyFrame.Height * 4;
+                                Player.bodyFrame.Y = Player.bodyFrame.Height * 4;
                             }
                         }
                         if ((double)num2 > 0.6)
                         {
-                            player.bodyFrame.Y = player.bodyFrame.Height * 4;
-                            if (player.gravDir == -1f)
+                            Player.bodyFrame.Y = Player.bodyFrame.Height * 4;
+                            if (Player.gravDir == -1f)
                             {
-                                player.bodyFrame.Y = player.bodyFrame.Height * 2;
+                                Player.bodyFrame.Y = Player.bodyFrame.Height * 2;
                             }
                         }
                     }
                 }
                 else if (abilityAnimationType == 6)
                 {
-                    player.bodyFrame.Y = player.bodyFrame.Height * 5;
+                    Player.bodyFrame.Y = Player.bodyFrame.Height * 5;
                 }
             }
         }
@@ -3246,9 +3223,9 @@ namespace TerraLeague
         /// </summary>
         private void ResetShieldStuff()
         {
-            if (Main.LocalPlayer.whoAmI == player.whoAmI)
+            if (Main.LocalPlayer.whoAmI == Player.whoAmI)
             {
-                player.statLife -= GetTotalShield();
+                Player.statLife -= GetTotalShield();
 
                 MagicShield = 0;
                 PhysicalShield = 0;
@@ -3261,7 +3238,7 @@ namespace TerraLeague
 
                     if (shield.AssociatedBuff != -1)
                     {
-                        if (!player.HasBuff(shield.AssociatedBuff))
+                        if (!Player.HasBuff(shield.AssociatedBuff))
                         {
                             Shields.RemoveAt(i);
                         }
@@ -3286,27 +3263,27 @@ namespace TerraLeague
                 }
 
                 Shields.RemoveAll(x => x.ShieldTimeLeft == 0);
-                player.statLifeMax2 += GetTotalShield();
-                player.statLife += GetTotalShield();
+                Player.statLifeMax2 += GetTotalShield();
+                Player.statLife += GetTotalShield();
                 PureHealthLastStep = GetRealHeathWithoutShield();
             }
             else
             {
-                player.statLifeMax2 += GetTotalShield();
+                Player.statLifeMax2 += GetTotalShield();
                 PureHealthLastStep = GetRealHeathWithoutShield();
             }
 
 
 
-            if (GetRealHeathWithoutShield() <= 0 && !player.dead && player.active && Main.LocalPlayer.whoAmI == player.whoAmI && GetTotalShield() > 0)
+            if (GetRealHeathWithoutShield() <= 0 && !Player.dead && Player.active && Main.LocalPlayer.whoAmI == Player.whoAmI && GetTotalShield() > 0)
             {
                 var ded = new PlayerDeathReason
                 {
-                    SourceCustomReason = "The shield around " + player.name + " couldn't save them"
+                    SourceCustomReason = "The shield around " + Player.name + " couldn't save them"
                 };
 
                 ClearShields();
-                player.KillMe(ded, 0, 0);
+                Player.KillMe(ded, 0, 0);
                 Kill(0, 0, false, ded);
             }
 
@@ -3368,12 +3345,12 @@ namespace TerraLeague
 
         public void SetShieldColor()
         {
-            if (player.whoAmI == Main.myPlayer)
+            if (Player.whoAmI == Main.myPlayer)
             {
                 Color oldCol = currentShieldColor;
 
 
-                if (player.HasBuff(BuffType<DivineJudgementBuff>()))
+                if (Player.HasBuff(BuffType<DivineJudgementBuff>()))
                 {
                     currentShieldColor = Color.Gold;
                 }
@@ -3392,7 +3369,7 @@ namespace TerraLeague
 
                 if (Main.netMode == NetmodeID.MultiplayerClient && (oldCol.R != currentShieldColor.R || oldCol.G != currentShieldColor.G || oldCol.B != currentShieldColor.B || oldCol.A != currentShieldColor.A))
                 {
-                    PacketHandler.SendNewShield(-1, player.whoAmI, player.whoAmI, currentShieldColor);
+                    PacketHandler.SendNewShield(-1, Player.whoAmI, Player.whoAmI, currentShieldColor);
                 }
             }
         }
@@ -3402,7 +3379,7 @@ namespace TerraLeague
         /// </summary>
         public void ClearShields()
         {
-            player.statLifeMax2 -= MagicShield + PhysicalShield + NormalShield;
+            Player.statLifeMax2 -= MagicShield + PhysicalShield + NormalShield;
 
             Shields.RemoveAll(x => true);
             MagicShield = 0;
@@ -3418,11 +3395,11 @@ namespace TerraLeague
         /// <param name="secondaryPassive">Search the secondary slot of the LeagueItems</param>
         public void FindAndSetPassiveStat(Passive SearchTarget, float setTo)
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                for (int i = 3; i < 9; i++)
+                for (int i = 3; i < 10; i++)
                 {
-                    if (player.armor[i].modItem is LeagueItem item)
+                    if (Player.armor[i].ModItem is LeagueItem item)
                     {
                         if (item.Passives != null)
                         {
@@ -3446,11 +3423,11 @@ namespace TerraLeague
         /// <param name="setTo">The number to set the stat to</param>
         public void FindAndSetActiveStat(Active SearchTarget, int setTo)
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                for (int i = 3; i < 9; i++)
+                for (int i = 3; i < 10; i++)
                 {
-                    if (player.armor[i].modItem is LeagueItem item)
+                    if (Player.armor[i].ModItem is LeagueItem item)
                     {
                         if (item.Active != null)
                         {
@@ -3472,9 +3449,9 @@ namespace TerraLeague
         /// <returns></returns>
         public float GetPassiveStat(Passive SearchTarget)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem item)
+                if (Player.armor[i].ModItem is LeagueItem item)
                 {
                     if (item.Passives != null)
                     {
@@ -3493,37 +3470,37 @@ namespace TerraLeague
         }
 
         /// <summary>
-        /// Alters the vanilla mana regen system to be a flat increase in current mana per second 1:1 with player.manaRegen * modPlayer.manaRegenModifer + additional modifiers
+        /// Alters the vanilla mana regen system to be a flat increase in current mana per second 1:1 with Player.manaRegen * modPlayer.manaRegenModifer + additional modifiers
         /// </summary>
         public void LinearManaRegen()
         {
             if (TerraLeague.UseCustomManaRegen)
             {
                 // Nebular Armor Thingys
-                if (player.nebulaLevelMana > 0)
-                    player.nebulaManaCounter = 0;
+                if (Player.nebulaLevelMana > 0)
+                    Player.nebulaManaCounter = 0;
 
 
-                if (player.manaRegenBuff)
+                if (Player.manaRegenBuff)
                     manaRegen += 5;
-                if (player.HasBuff(BuffID.StarInBottle))
-                    player.manaRegenBonus += 25;
+                if (Player.HasBuff(BuffID.StarInBottle))
+                    Player.manaRegenBonus += 25;
 
-                player.manaRegenDelay = 90000;
-                manaRegen += player.statManaMax2 / 75;
-                //player.manaRegen = (int)(player.manaRegen * manaRegenModifer * (1 + (player.manaRegenBonus / 25.0)) * (1 + player.nebulaLevelMana));
+                Player.manaRegenDelay = 90000;
+                manaRegen += Player.statManaMax2 / 75;
+                //Player.manaRegen = (int)(Player.manaRegen * manaRegenModifer * (1 + (Player.manaRegenBonus / 25.0)) * (1 + Player.nebulaLevelMana));
 
-                double trueModifier = manaRegenModifer + (player.manaRegenBonus / 50.0) + player.nebulaLevelMana;
+                double trueModifier = manaRegenModifer + (Player.manaRegenBonus / 50.0) + Player.nebulaLevelMana;
                 manaRegen = (int)(manaRegen * trueModifier);
-                //if (player.manaRegen < 2)
-                //    player.manaRegen = 2;
+                //if (Player.manaRegen < 2)
+                //    Player.manaRegen = 2;
 
                 // Out of combat regen
                 if (CombatTimer >= 240)
                     manaRegen *= 2;
 
-                if (manaRegenTimer == 60 && player.statMana < player.statManaMax2)
-                    player.statMana += manaRegen;
+                if (manaRegenTimer == 60 && Player.statMana < Player.statManaMax2)
+                    Player.statMana += manaRegen;
 
                 if (manaRegenTimer == 60)
                     manaRegenTimer = 0;
@@ -3541,9 +3518,9 @@ namespace TerraLeague
             //PassivesAreActive = new bool[12];
             //ActivesAreActive = new bool[6];
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
-                if (player.armor[i + 3].modItem is LeagueItem legItem)
+                if (Player.armor[i + 3].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -3602,44 +3579,44 @@ namespace TerraLeague
         /// <param name="target"></param>
         public void ShatterEffect(NPC target)
         {
-            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 27, -0.5f);
+            TerraLeague.PlaySoundWithPitch(Player.MountedCenter, 2, 27, -0.5f);
             for (int i = 0; i < 20; i++)
             {
                 Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Ice, 0, -2, 0, default, 1.5f);
                 dustIndex.velocity *= 2;
             }
-            if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.LocalPlayer.whoAmI)
-                PacketHandler.SendShatterEFX(-1, player.whoAmI, target.whoAmI);
+            if (Main.netMode == NetmodeID.MultiplayerClient && Player.whoAmI == Main.LocalPlayer.whoAmI)
+                PacketHandler.SendShatterEFX(-1, Player.whoAmI, target.whoAmI);
         }
 
         public void CausticWoundsEffect(NPC target)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 122), target.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 122), target.Center);
             for (int i = 0; i < 8; i++)
             {
-                Dust.NewDustDirect(target.position, 8, 8, DustID.Clentaminator_Purple, 0, 0, 0, new Color(59, 0, 255), 1f);
+                Dust.NewDustDirect(target.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
             }
         }
 
         public void SetTempUseItem(int itemToUse)
         {
             if (oldUsedInventorySlot == -1)
-                oldUsedInventorySlot = player.selectedItem;
+                oldUsedInventorySlot = Player.selectedItem;
 
-            player.selectedItem = player.FindItem(itemToUse);
+            Player.selectedItem = Player.FindItem(itemToUse);
 
-            if (oldUsedInventorySlot == 58 && player.selectedItem == -1)
-                player.selectedItem = 58;
+            if (oldUsedInventorySlot == 58 && Player.selectedItem == -1)
+                Player.selectedItem = 58;
         }
 
         public void MeleeProjectileCooldown()
         {
-            if (player.itemTime == 1 && meleeProjCooldown && player.whoAmI == Main.myPlayer)
+            if (Player.itemTime == 1 && meleeProjCooldown && Player.whoAmI == Main.myPlayer)
             {
-                Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
                 for (int num225 = 0; num225 < 5; num225++)
                 {
-                    int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.ManaRegeneration, 0f, 0f, 255, default, (float)Main.rand.Next(20, 26) * 0.1f);
+                    int num226 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Cloud, 0f, 0f, 255, default, (float)Main.rand.Next(20, 26) * 0.1f);
                     Main.dust[num226].noLight = true;
                     Main.dust[num226].noGravity = true;
                     Dust obj2 = Main.dust[num226];
@@ -3649,7 +3626,7 @@ namespace TerraLeague
             }
         }
 
-        public void FlashOfBrillianceEffect(Player player, NPC target)
+        public void FlashOfBrillianceEffect(Player Player, NPC target)
         {
             if (flashofBrilliance && flashofBrillianceCooldown <= 0)
             {
@@ -3668,11 +3645,11 @@ namespace TerraLeague
 
                     int dam = 50;
                     float speed = Main.rand.NextFloat(chosenItem.shootSpeed * 0.9f, chosenItem.shootSpeed * 1.1f);
-                    Vector2 velocity = TerraLeague.CalcVelocityToPoint(player.MountedCenter, target.Center, speed).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f));
+                    Vector2 velocity = TerraLeague.CalcVelocityToPoint(Player.MountedCenter, target.Center, speed).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f));
 
-                    Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, velocity, chosenItem.shoot, dam, chosenItem.knockBack, player.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(Player.GetProjectileSource_Accessory(new Items.Accessories.FlashofBrilliance().Item), Player.MountedCenter, velocity, chosenItem.shoot, dam, chosenItem.knockBack, Player.whoAmI);
                     proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects = true;
-                    Main.PlaySound(chosenItem.UseSound, player.MountedCenter);
+                    Terraria.Audio.SoundEngine.PlaySound(chosenItem.UseSound, Player.MountedCenter);
                 }
             }
         }
@@ -3691,16 +3668,16 @@ namespace TerraLeague
                 switch (m)
                 {
                     case 0:
-                        keyTapped = (DownControlLastStep && player.releaseDown);
+                        keyTapped = (DownControlLastStep && Player.releaseDown);
                         break;
                     case 1:
-                        keyTapped = (UpControlLastStep && player.releaseUp);
+                        keyTapped = (UpControlLastStep && Player.releaseUp);
                         break;
                     case 2:
-                        keyTapped = (RightControlLastStep && player.releaseRight);
+                        keyTapped = (RightControlLastStep && Player.releaseRight);
                         break;
                     case 3:
-                        keyTapped = (LeftControlLastStep && player.releaseLeft);
+                        keyTapped = (LeftControlLastStep && Player.releaseLeft);
                         break;
                 }
                 if (keyTapped)
@@ -3719,10 +3696,10 @@ namespace TerraLeague
                     doubleTap[m]--;
             }
 
-            DownControlLastStep = player.controlDown;
-            UpControlLastStep = player.controlUp;
-            LeftControlLastStep = player.controlLeft;
-            RightControlLastStep = player.controlRight;
+            DownControlLastStep = Player.controlDown;
+            UpControlLastStep = Player.controlUp;
+            LeftControlLastStep = Player.controlLeft;
+            RightControlLastStep = Player.controlRight;
         }
         void KeyDoubleTap(int keyDir)
         {
@@ -3741,8 +3718,8 @@ namespace TerraLeague
                         solariCharge = solariMaxCharge - 60;
                     else
                         solariCharge = 0;
-                    Projectile.NewProjectileDirect(new Vector2(Main.MouseWorld.X, player.MountedCenter.Y - 400), Vector2.Zero, ProjectileType<SolariSet_LargeSolarSigil>(), (int)(100 * player.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep), 0, player.whoAmI);
-                    //player.AddBuff(BuffType<SolarFlareStorm>(), 360);
+                    Projectile.NewProjectileDirect(Player.GetProjectileSource_Item(new SolariHeadPiece().Item), new Vector2(Main.MouseWorld.X, Player.MountedCenter.Y - 400), Vector2.Zero, ProjectileType<SolariSet_LargeSolarSigil>(), (int)(100 * Player.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep), 0, Player.whoAmI);
+                    //Player.AddBuff(BuffType<SolarFlareStorm>(), 360);
                 }
             }
         }

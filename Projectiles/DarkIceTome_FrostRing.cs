@@ -18,21 +18,21 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.timeLeft = 300;
-            projectile.penetrate = 100;
-            projectile.friendly = true;
-            projectile.alpha = 255;
-            projectile.magic = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 100;
+            Projectile.friendly = true;
+            Projectile.alpha = 255;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
                 Prime();
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
             base.AI();
         }
 
@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
             target.AddBuff(BuffType<Slowed>(), 300);
             target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().slowed = true;
             target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().icebornSubjugation = true;
-            target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().icebornSubjugationOwner = projectile.owner;
+            target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().icebornSubjugationOwner = Projectile.owner;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
@@ -58,11 +58,11 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 82, -0.7f);
 
             for (int i = 0; i < 50; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0, 0, 50, default, 1.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, 0, 0, 50, default, 1.5f);
                 dust.velocity *= 2f;
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -70,7 +70,7 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 50; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0, 0, 50, default, 1);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, 0, 0, 50, default, 1);
                 dust.velocity *= 2f;
                 dust.noGravity = true;
             }
@@ -79,7 +79,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 18; i++)
                 {
-                    Vector2 pos = new Vector2(350, 0).RotatedBy(MathHelper.ToRadians((20 * i) + (j * 6))) + projectile.Center;
+                    Vector2 pos = new Vector2(350, 0).RotatedBy(MathHelper.ToRadians((20 * i) + (j * 6))) + Projectile.Center;
 
                     Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default, 1);
                     dustR.noGravity = true;
@@ -87,12 +87,12 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
 
             base.Kill(timeLeft);
         }
@@ -101,7 +101,7 @@ namespace TerraLeague.Projectiles
         {
             if (target.townNPC)
                 return false;
-            return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width/2);
+            return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width/2);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -113,16 +113,16 @@ namespace TerraLeague.Projectiles
         {
             int size = 700;
 
-            projectile.tileCollide = false;
-            projectile.velocity = Vector2.Zero;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = size;
-            projectile.height = size;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = size;
+            Projectile.height = size;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 2;
         }
 
         public override bool? CanCutTiles()

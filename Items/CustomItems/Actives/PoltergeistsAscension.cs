@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
+                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type);
 
                 player.AddBuff(BuffID.Swiftness, effectDuration * 60);
                 SetCooldown(player);
@@ -44,6 +44,13 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void Efx(Player user)
         {
+            for (int i = 0; i < 10; i++)
+            {
+                float X = Main.rand.NextFloat(user.Left.X - 16, user.Right.X + 16);
+                float Y = Main.rand.NextFloat(user.Top.Y - 16, user.Bottom.Y -16);
+                Gore.NewGoreDirect(new Microsoft.Xna.Framework.Vector2(X, Y), new Microsoft.Xna.Framework.Vector2(Main.rand.NextFloat(-10, 10), 10), 1248);
+                Gore.NewGoreDirect(new Microsoft.Xna.Framework.Vector2(X, Y), Microsoft.Xna.Framework.Vector2.Zero, GoreID.Smoke1);
+            }
             TerraLeague.PlaySoundWithPitch(user.MountedCenter, 2, 117, 0.5f);
         }
     }

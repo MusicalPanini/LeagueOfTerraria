@@ -13,16 +13,17 @@ namespace TerraLeague.Items.StartingItems
         {
             DisplayName.SetDefault("The Dark Seal");
             Tooltip.SetDefault("Increases maximum mana by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = 50000;
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = 50000;
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -39,22 +40,13 @@ namespace TerraLeague.Items.StartingItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.BandofStarpower, 1);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 5);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 1);
-            recipe.AddIngredient(ItemID.FallenStar, 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-
-            ModRecipe StarPower = new ModRecipe(mod);
-            StarPower.AddIngredient(ItemID.ManaCrystal, 1);
-            recipe.AddRecipeGroup("TerraLeague:IronGroup", 10);
-            StarPower.AddIngredient(ItemType<ManaBar>(), 5);
-            StarPower.AddTile(TileID.Anvils);
-            StarPower.SetResult(ItemID.BandofStarpower);
-            StarPower.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.BandofStarpower, 1)
+            .AddIngredient(ItemType<DarksteelBar>(), 5)
+            .AddIngredient(ItemID.MeteoriteBar, 1)
+            .AddIngredient(ItemID.FallenStar, 3)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
         public override string GetStatText()

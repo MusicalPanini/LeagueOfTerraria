@@ -16,21 +16,21 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.ignoreWater = true;
-            projectile.minion = true;
+            Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.ignoreWater = true;
+            Projectile.minion = true;
         }
 
         public override void AI()
         {
-            if (projectile.velocity != Vector2.Zero)
+            if (Projectile.velocity != Vector2.Zero)
             {
-                projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+                Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
 
                 for (int i = 0; i < Main.projectile.Length; i++)
                 {
@@ -38,37 +38,37 @@ namespace TerraLeague.Projectiles
                     {
                         Projectile bulb = Main.projectile[i];
 
-                        if (bulb.Hitbox.Intersects(new Rectangle((int)projectile.Center.X - 75, (int)projectile.Center.Y - 75, 150, 150)))
+                        if (bulb.Hitbox.Intersects(new Rectangle((int)Projectile.Center.X - 75, (int)Projectile.Center.Y - 75, 150, 150)))
                         {
-                            Projectile.NewProjectileDirect(bulb.position, Vector2.Zero, ProjectileType<HextechWrench_EvolutionTurret>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), bulb.position, Vector2.Zero, ProjectileType<HextechWrench_EvolutionTurret>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
                             bulb.Kill();
                         }
                     }
                 }
             }
-            projectile.velocity = Vector2.Zero;
+            Projectile.velocity = Vector2.Zero;
 
-            if (projectile.ai[0] == 0f)
+            if (Projectile.ai[0] == 0f)
             {
-                projectile.alpha -= 75;
+                Projectile.alpha -= 75;
 
-                if (projectile.alpha <= 0)
+                if (Projectile.alpha <= 0)
                 {
-                    projectile.alpha = 0;
-                    projectile.ai[0] = 1f;
-                    if (projectile.ai[1] == 0f)
+                    Projectile.alpha = 0;
+                    Projectile.ai[0] = 1f;
+                    if (Projectile.ai[1] == 0f)
                     {
-                        projectile.ai[1] += 1f;
-                        projectile.position += projectile.velocity * 1f;
+                        Projectile.ai[1] += 1f;
+                        Projectile.position += Projectile.velocity * 1f;
                     }
-                    if (projectile.type == ProjectileType<StrangleThornsTome_StrangleThorns>() && Main.myPlayer == projectile.owner)
+                    if (Projectile.type == ProjectileType<StrangleThornsTome_StrangleThorns>() && Main.myPlayer == Projectile.owner)
                     {
-                        int num49 = projectile.type;
-                        if (projectile.ai[1] >= (float)(9 + Main.rand.Next(2)))
+                        int num49 = Projectile.type;
+                        if (Projectile.ai[1] >= (float)(9 + Main.rand.Next(2)))
                         {
                             num49 = ProjectileType<StrangleThornsTome_StrangleThornsEnd>();
                         }
-                        int number = Projectile.NewProjectile(projectile.Center.X + new Vector2(0, -32).RotatedBy(projectile.rotation).X, projectile.Center.Y + new Vector2(0, -32).RotatedBy(projectile.rotation).Y, projectile.velocity.X + new Vector2(0, -32).RotatedBy(projectile.rotation).X, projectile.velocity.Y + new Vector2(0, -32).RotatedBy(projectile.rotation).Y, num49, projectile.damage, projectile.knockBack, projectile.owner, 0f, projectile.ai[1] + 1f);
+                        int number = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X + new Vector2(0, -32).RotatedBy(Projectile.rotation).X, Projectile.Center.Y + new Vector2(0, -32).RotatedBy(Projectile.rotation).Y, Projectile.velocity.X + new Vector2(0, -32).RotatedBy(Projectile.rotation).X, Projectile.velocity.Y + new Vector2(0, -32).RotatedBy(Projectile.rotation).Y, num49, Projectile.damage, Projectile.knockBack, Projectile.owner, 0f, Projectile.ai[1] + 1f);
                         NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, number, 0f, 0f, 0f, 0, 0, 0);
                         return;
                     }
@@ -76,20 +76,20 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                if (projectile.alpha < 170 && projectile.alpha + 5 >= 170)
+                if (Projectile.alpha < 170 && Projectile.alpha + 5 >= 170)
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Vile, projectile.velocity.X * 0.025f, projectile.velocity.Y * 0.025f, 170, default, 1.2f);
+                        Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.CorruptPlants, Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default, 1.2f);
                     }
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Demonite, 0f, 0f, 170, default, 1.1f);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 14, 0f, 0f, 170, default, 1.1f);
                 }
 
-                projectile.alpha += 7;
+                Projectile.alpha += 7;
 
-                if (projectile.alpha >= 255)
+                if (Projectile.alpha >= 255)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                     return;
                 }
             }

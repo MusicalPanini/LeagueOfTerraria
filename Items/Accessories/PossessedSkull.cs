@@ -15,15 +15,16 @@ namespace TerraLeague.Items.Accessories
             DisplayName.SetDefault("Possessed Skull");
             Tooltip.SetDefault("Increase max number of minions by 1");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 30;
-            item.rare = ItemRarityID.Green;
-            item.value = 5400 * 5;
-            item.accessory = true;
+            Item.width = 22;
+            Item.height = 30;
+            Item.rare = ItemRarityID.Green;
+            Item.value = 5400 * 5;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -35,12 +36,11 @@ namespace TerraLeague.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Bone, 100);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 20);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Bone, 100)
+            .AddIngredient(ItemType<DamnedSoul>(), 20)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

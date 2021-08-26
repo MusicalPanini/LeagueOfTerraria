@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/DeathFromBelow";
+            return "TerraLeague/AbilityImages/DeathFromBelow";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -100,8 +100,8 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 int knockback = 0;
 
-                Projectile.NewProjectile(position + new Vector2(95, 90), velocity, projType, damage, knockback, player.whoAmI, 1);
-                Projectile.NewProjectile(position + new Vector2(-95, 90), velocity, projType, damage, knockback, player.whoAmI, -1);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position + new Vector2(95, 90), velocity, projType, damage, knockback, player.whoAmI, 1);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position + new Vector2(-95, 90), velocity, projType, damage, knockback, player.whoAmI, -1);
 
                 DoEfx(player, type);
             }

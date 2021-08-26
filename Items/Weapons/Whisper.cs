@@ -6,6 +6,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,6 +19,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Whisper");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -28,23 +30,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 140;
-            item.ranged = true;
-            item.width = 44;
-            item.height = 20;
-            item.useAnimation = 80;
-            item.useTime = 80;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true; 
-            item.knockBack = 4;
-            item.value = 100000;
-            item.rare = ItemRarityID.Pink;
-            item.shoot = ProjectileID.PurificationPowder;
-            item.shootSpeed = 1f;
-            item.useAmmo = AmmoID.Bullet;
-            item.autoReuse = true;
+            Item.damage = 140;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 44;
+            Item.height = 20;
+            Item.useAnimation = 80;
+            Item.useTime = 80;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true; 
+            Item.knockBack = 4;
+            Item.value = 100000;
+            Item.rare = ItemRarityID.Pink;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.shootSpeed = 1f;
+            Item.useAmmo = AmmoID.Bullet;
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new DancingGrenade(this));
             abilityItem.ChampQuote = "Prepare... for your finale";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -65,7 +67,7 @@ namespace TerraLeague.Items.Weapons
             return 1;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (modPlayer.WhisperShotsLeft == 1)
@@ -78,7 +80,6 @@ namespace TerraLeague.Items.Weapons
                 type = ProjectileType<Whisper_Shot>();
             }
             SetStatsPostShoot(player);
-            return true;
         }
 
         public override Vector2? HoldoutOffset()
@@ -99,11 +100,10 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<HarmonicBar>(), 16)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

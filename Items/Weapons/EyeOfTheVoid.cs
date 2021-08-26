@@ -16,6 +16,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Eye of the Void");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -25,41 +26,35 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 16;
-            item.noMelee = true;
-            item.magic = true;
-            item.channel = true;
-            item.mana = 6;
-            item.rare = ItemRarityID.Orange;
-            item.value = 5400;
-            item.width = 28;
-            item.height = 32;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.UseSound = new LegacySoundStyle(2, 15);
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shootSpeed = 10;
-            item.shoot = ProjectileType<EyeOfTheVoid_Lazer>();
+            Item.damage = 16;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Magic;
+            Item.channel = true;
+            Item.mana = 6;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = 5400;
+            Item.width = 28;
+            Item.height = 32;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.UseSound = new LegacySoundStyle(2, 15);
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.shootSpeed = 10;
+            Item.shoot = ProjectileType<EyeOfTheVoid_Lazer>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new PlasmaFission(this));
             abilityItem.ChampQuote = "Knowledge through... disintegration";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 120);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<VoidFragment>(), 120)
+            .AddTile(TileID.DemonAltar)
+            .Register();
         }
     }
 }

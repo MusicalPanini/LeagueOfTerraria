@@ -4,6 +4,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,6 +18,7 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Emperor of the Sands");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,22 +28,22 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 11;
-            item.summon = true;
-            item.mana = 20;
-            item.width = 48;
-            item.height = 48;
-            item.useTime = 36;
-            item.useAnimation = 36;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 10000;
-            item.rare = ItemRarityID.Green;
-            item.UseSound = new LegacySoundStyle(2, 113);
-            item.shoot = ProjectileType<EmperoroftheSands_SandSolder>();
+            Item.damage = 11;
+            Item.DamageType = DamageClass.Summon;
+            Item.mana = 20;
+            Item.width = 48;
+            Item.height = 48;
+            Item.useTime = 36;
+            Item.useAnimation = 36;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = new LegacySoundStyle(2, 113);
+            Item.shoot = ProjectileType<EmperoroftheSands_SandSolder>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new EmperorsDivide(this));
             abilityItem.ChampQuote = "Your emperor shall return";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -53,7 +55,7 @@ namespace TerraLeague.Items.Weapons
             return true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             position = Main.MouseWorld;
 
@@ -64,7 +66,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     for (int y = (int)((Main.mouseY + Main.screenPosition.Y) / 16) - 1; y <= (int)((Main.mouseY + Main.screenPosition.Y) / 16) + 1; y++)
                     {
-                        if (Main.tile[x, y].collisionType > 0)
+                        if (Main.tile[x, y].CollisionType > 0)
                         {
                             pathBlocked = true;
                             break;
@@ -74,7 +76,8 @@ namespace TerraLeague.Items.Weapons
 
                 if (!pathBlocked)
                 {
-                    return true;
+                    Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
+                    proj.originalDamage = Item.damage;
                 }
             }
 
@@ -85,7 +88,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (player.altFunctionUse == 2)
             {
-                player.MinionNPCTargetAim();
+                player.MinionNPCTargetAim(true);
             }
             else
             {
@@ -96,14 +99,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Sapphire, 4);
-            recipe.AddIngredient(ItemID.SandBlock, 100);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 10);
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Sapphire, 4)
+            .AddIngredient(ItemID.SandBlock, 100)
+            .AddRecipeGroup("TerraLeague:GoldGroup", 10)
+            .AddIngredient(ItemType<Sunstone>(), 10)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

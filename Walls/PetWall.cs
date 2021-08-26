@@ -11,11 +11,11 @@ namespace TerraLeague.Walls
 {
     public class PetWall : ModWall
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
             AddMapEntry(new Color(140, 140, 140));
-            drop = mod.WallType("PetWall");
+            ItemDrop = ModContent.ItemType<Items.Placeable.PetWall>();
         }
     }
 }

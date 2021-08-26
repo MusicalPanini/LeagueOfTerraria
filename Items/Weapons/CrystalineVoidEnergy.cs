@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Crystaline Void Energy");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -30,43 +31,40 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 16;
-            item.ranged = true;
-            item.width = 24;
-            item.height = 54;
-            item.useAnimation = 35;
-            item.useTime = 35;
-            item.shootSpeed = 6f;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 5400;
-            item.rare = ItemRarityID.Orange;
-            item.UseSound =  new LegacySoundStyle(2, 75);
-            item.autoReuse = true;
-            item.shoot = ProjectileType<CrystalineVoidEnergy_VoidEnergy>();
+            Item.damage = 16;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 24;
+            Item.height = 54;
+            Item.useAnimation = 35;
+            Item.useTime = 35;
+            Item.shootSpeed = 9f;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 5400;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound =  new LegacySoundStyle(2, 75);
+            Item.autoReuse = true;
+            Item.shoot = ProjectileType<CrystalineVoidEnergy_VoidEnergy>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new VoidSeeker(this));
             abilityItem.ChampQuote = "Exploit their weakness";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             position.Y += 4;
-            
-            return true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 120);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<VoidFragment>(), 120)
+            .AddTile(TileID.DemonAltar)
+            .Register();
         }
 
         public override Vector2? HoldoutOffset()

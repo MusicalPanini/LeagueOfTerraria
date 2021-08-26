@@ -14,38 +14,37 @@ namespace TerraLeague.Items.Armor
             base.SetStaticDefaults();
             DisplayName.SetDefault("Spiritual Gown");
             Tooltip.SetDefault("10% increased heal power");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = 40000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 3;
-            item.backSlot = (sbyte)mod.GetEquipSlot("SpiritualBreastplate", EquipType.Back);
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = 40000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 3;
+            Item.backSlot = (sbyte)Mod.GetEquipSlot("SpiritualBreastplate", EquipType.Back);
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.back = item.backSlot;
+            player.back = Item.backSlot;
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
         }
 
-        public override void UpdateVanity(Player player, EquipType type)
+        public override void UpdateVanity(Player player)
         {
             if (player.wings <= 0)
-                player.back = item.backSlot;
-            base.UpdateVanity(player, type);
+                player.back = Item.backSlot;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<ManaBar>(), 18);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(GetInstance<ManaBar>(), 18)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
         public override void UpdateArmorSet(Player player)

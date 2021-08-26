@@ -44,7 +44,7 @@ namespace TerraLeague.UI
         public override void OnInitialize()
         {
             if (backgroundTexture == null)
-                backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBackground");
+                backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/TeleportBackground").Value;
 
             LeftPercent = ((float)Main.screenWidth - width) / 2 / (float)Main.screenWidth;
             TopPercent = 0.3f;
@@ -107,7 +107,7 @@ namespace TerraLeague.UI
 
                 CalculatedStyle dimensions = this.GetDimensions();
                 Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
-                spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+                Main.spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
             }
             else
             {
@@ -143,6 +143,7 @@ namespace TerraLeague.UI
             {
                 if (visible)
                 {
+                    TerraLeague.GetTextureIfNull(ref backgroundTexture, "TerraLeague/UI/TeleportBackground");
                     Main.LocalPlayer.mouseInterface = IsMouseHovering;
 
                     if (moveMode)
@@ -185,6 +186,7 @@ namespace TerraLeague.UI
                     TeleName.SetText(nameText);
 
                     Recalculate();
+                    base.Update(gameTime);
 
                     TeleportPlayerButton.Update(gameTime);
                 }
@@ -233,24 +235,24 @@ namespace TerraLeague.UI
 
         public override void OnInitialize()
         {
-            backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorder");
+            backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/TeleportBorder").Value;
 
             switch (type)
             {
                 case TeleportType.LeftBeach:
-                    forgroundTexture = TerraLeague.instance.GetTexture("UI/LeftBeach");
+                    forgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/LeftBeach").Value;
                     break;
                 case TeleportType.RightBeach:
-                    forgroundTexture = TerraLeague.instance.GetTexture("UI/RightBeach");
+                    forgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/RightBeach").Value;
                     break;
                 case TeleportType.Dungeon:
-                    forgroundTexture = TerraLeague.instance.GetTexture("UI/Dungeon");
+                    forgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/Dungeon").Value;
                     break;
                 case TeleportType.Hell:
-                    forgroundTexture = TerraLeague.instance.GetTexture("UI/Hell");
+                    forgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/Hell").Value;
                     break;
                 case TeleportType.Random:
-                    forgroundTexture = TerraLeague.instance.GetTexture("UI/Random");
+                    forgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/Random").Value;
                     break;
                 default:
                     break;
@@ -275,8 +277,35 @@ namespace TerraLeague.UI
 
         public override void Update(GameTime gameTime)
         {
+            Width.Set(44, 0);
+            Height.Set(44, 0);
+
             if (TeleportUI.visible)
             {
+                TerraLeague.GetTextureIfNull(ref backgroundTexture, "TerraLeague/UI/TeleportBorder");
+                string path;
+                switch (type)
+                {
+                    case TeleportType.LeftBeach:
+                        path = "TerraLeague/UI/LeftBeach";
+                        break;
+                    case TeleportType.RightBeach:
+                        path = "TerraLeague/UI/RightBeach";
+                        break;
+                    case TeleportType.Dungeon:
+                        path = "TerraLeague/UI/Dungeon";
+                        break;
+                    case TeleportType.Hell:
+                        path = "TerraLeague/UI/Hell";
+                        break;
+                    case TeleportType.Random:
+                    default:
+                        path = "TerraLeague/UI/Random";
+                        forgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/Random").Value;
+                        break;
+                }
+
+                TerraLeague.GetTextureIfNull(ref forgroundTexture, path);
             }
 
             base.Update(gameTime);
@@ -288,7 +317,7 @@ namespace TerraLeague.UI
             {
                 CalculatedStyle dimensions = this.GetDimensions();
                 Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
-                spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+                Main.spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
 
                 switch (type)
                 {
@@ -299,7 +328,7 @@ namespace TerraLeague.UI
                     case TeleportType.Random:
                         dimensions = this.GetDimensions();
                         point1 = new Point((int)dimensions.X + 4, (int)dimensions.Y + 4);
-                        spriteBatch.Draw(forgroundTexture, new Rectangle(point1.X, point1.Y, 36, 36), Color.White);
+                        Main.spriteBatch.Draw(forgroundTexture, new Rectangle(point1.X, point1.Y, 36, 36), Color.White);
                         break;
                     default:
                         break;
@@ -313,27 +342,29 @@ namespace TerraLeague.UI
         {
             TeleportRune.AttemptTP(Main.LocalPlayer, type);
 
-            //switch (type)
-            //{
-            //    case TeleportType.LeftBeach:
-            //        TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.LeftBeach());
-            //        break;
-            //    case TeleportType.RightBeach:
-            //        TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.RightBeach());
-            //        break;
-            //    case TeleportType.Dungeon:
-            //        TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.Dungeon());
-            //        break;
-            //    case TeleportType.Hell:
-            //        TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.Hell(Main.LocalPlayer));
-            //        break;
-            //    case TeleportType.Random:
-            //        TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.RandomTP());
-            //        break;
-            //    default:
-            //        break;
-            //}
-            
+            switch (type)
+            {
+                case TeleportType.LeftBeach:
+                    TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.LeftBeach());
+                    break;
+                case TeleportType.RightBeach:
+                    TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.RightBeach());
+                    break;
+                case TeleportType.Dungeon:
+                    TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.Dungeon());
+                    break;
+                case TeleportType.Hell:
+                    Main.LocalPlayer.DemonConch();
+                    //TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.Hell(Main.LocalPlayer));
+                    break;
+                case TeleportType.Random:
+                    Main.LocalPlayer.TeleportationPotion();
+                    //TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.RandomTP());
+                    break;
+                default:
+                    break;
+            }
+
             base.MouseUp(evt);
         }
 
@@ -364,7 +395,7 @@ namespace TerraLeague.UI
 
             TeleportUI.nameText = name;
 
-            backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorderSelected");
+            backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/TeleportBorderSelected").Value;
 
             base.MouseOver(evt);
         }
@@ -373,7 +404,7 @@ namespace TerraLeague.UI
         {
             TeleportUI.nameText = "";
 
-            backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorder");
+            backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/TeleportBorder").Value;
 
             base.MouseDown(evt);
         }
@@ -396,9 +427,9 @@ namespace TerraLeague.UI
 
         public override void OnInitialize()
         {
-            backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorder");
-            noPlayers = TerraLeague.instance.GetTexture("UI/NoPlayers");
-            ded = TerraLeague.instance.GetTexture("UI/Ded");
+            backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/TeleportBorder").Value;
+            noPlayers = ModContent.Request<Texture2D>("TerraLeague/UI/NoPlayers").Value;
+            ded = ModContent.Request<Texture2D>("TerraLeague/UI/Ded").Value;
             if (backgroundTexture != null)
             {
                 width = backgroundTexture.Width;
@@ -420,6 +451,10 @@ namespace TerraLeague.UI
         {
             if (TeleportUI.visible)
             {
+                TerraLeague.GetTextureIfNull(ref backgroundTexture, "TerraLeague/UI/TeleportBorder");
+                TerraLeague.GetTextureIfNull(ref noPlayers, "TerraLeague/UI/NoPlayers");
+                TerraLeague.GetTextureIfNull(ref ded, "TerraLeague/UI/Ded");
+
                 var activePlayerList = Targeting.GetAllPlayersInRange(Main.LocalPlayer.MountedCenter, 99999, Main.LocalPlayer.whoAmI, Main.LocalPlayer.team, true);
                 int currentActivePlayers = activePlayerList.Count();
 
@@ -452,13 +487,13 @@ namespace TerraLeague.UI
             {
                 CalculatedStyle dimensions = this.GetDimensions();
                 Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
-                spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+                Main.spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
 
                 if (playerNum == -1)
                 {
                     dimensions = this.GetDimensions();
                     point1 = new Point((int)dimensions.X + 6, (int)dimensions.Y + 6);
-                    spriteBatch.Draw(noPlayers, new Rectangle(point1.X, point1.Y, 32, 32), Color.White);
+                    Main.spriteBatch.Draw(noPlayers, new Rectangle(point1.X, point1.Y, 32, 32), Color.White);
                 }
                 else
                 {
@@ -466,7 +501,7 @@ namespace TerraLeague.UI
                     DrawPlayerHead(Main.player[playerNum], dimensions.X + Left.Pixels, dimensions.Y + Top.Pixels, 1, 1.5f);
                     if (Main.player[playerNum].dead)
                     {
-                        spriteBatch.Draw(noPlayers, new Rectangle(point1.X, point1.Y, 32, 32), Color.White);
+                        Main.spriteBatch.Draw(noPlayers, new Rectangle(point1.X, point1.Y, 32, 32), Color.White);
                     }
                 }
             }
@@ -491,7 +526,7 @@ namespace TerraLeague.UI
                 if (!Main.player[playerNum].dead)
                 {
                     name = Main.player[playerNum].name;
-                    backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorderSelected");
+                    backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/TeleportBorderSelected").Value;
                 }
             }
 
@@ -505,7 +540,7 @@ namespace TerraLeague.UI
         {
             TeleportUI.nameText = "";
 
-            backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorder");
+            backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/TeleportBorder").Value;
 
             base.MouseDown(evt);
         }
@@ -544,168 +579,168 @@ namespace TerraLeague.UI
 
         void DrawPlayerHead(Player drawPlayer, float X, float Y, float Alpha = 1f, float Scale = 1f)
         {
-            List<PlayerHeadLayer> drawHeadLayers = PlayerHooks.GetDrawHeadLayers(drawPlayer);
-            var spriteBatch = Main.spriteBatch;
-            Vector2 position = new Vector2(X - 9, Y - 5);
-            short hairDye = drawPlayer.hairDye;
+            //List<PlayerHeadLayer> drawHeadLayers = PlayerHooks.GetDrawHeadLayers(drawPlayer);
+            //var spriteBatch = Main.spriteBatch;
+            //Vector2 position = new Vector2(X - 9, Y - 5);
+            //short hairDye = drawPlayer.hairDye;
 
-            int helmetDye = 0;
-            if (drawPlayer.dye[0] != null)
-            {
-                helmetDye = drawPlayer.dye[0].dye;
-            }
+            //int helmetDye = 0;
+            //if (drawPlayer.dye[0] != null)
+            //{
+            //    helmetDye = drawPlayer.dye[0].dye;
+            //}
 
-            int faceDye = 0;
-            if (drawPlayer.dye[0] != null)
-            {
-                faceDye = drawPlayer.dye[0].dye;
-            }
+            //int faceDye = 0;
+            //if (drawPlayer.dye[0] != null)
+            //{
+            //    faceDye = drawPlayer.dye[0].dye;
+            //}
 
-            bool hairCheck = false;
-            if (drawPlayer.head == 10 || drawPlayer.head == 12 || drawPlayer.head == 28 || drawPlayer.head == 62 || drawPlayer.head == 97 || drawPlayer.head == 106 || drawPlayer.head == 113 || drawPlayer.head == 116 || drawPlayer.head == 119 || drawPlayer.head == 133 || drawPlayer.head == 138 || drawPlayer.head == 139 || drawPlayer.head == 163 || drawPlayer.head == 178 || drawPlayer.head == 181 || drawPlayer.head == 191 || drawPlayer.head == 198)
-            {
-                hairCheck = true;
-            }
-            bool altHairCheck = false;
-            if (drawPlayer.head == 161 || drawPlayer.head == 14 || drawPlayer.head == 15 || drawPlayer.head == 16 || drawPlayer.head == 18 || drawPlayer.head == 21 || drawPlayer.head == 24 || drawPlayer.head == 25 || drawPlayer.head == 26 || drawPlayer.head == 40 || drawPlayer.head == 44 || drawPlayer.head == 51 || drawPlayer.head == 56 || drawPlayer.head == 59 || drawPlayer.head == 60 || drawPlayer.head == 67 || drawPlayer.head == 68 || drawPlayer.head == 69 || drawPlayer.head == 114 || drawPlayer.head == 121 || drawPlayer.head == 126 || drawPlayer.head == 130 || drawPlayer.head == 136 || drawPlayer.head == 140 || drawPlayer.head == 145 || drawPlayer.head == 158 || drawPlayer.head == 159 || drawPlayer.head == 184 || drawPlayer.head == 190 || (double)drawPlayer.head == 92.0 || drawPlayer.head == 195)
-            {
-                altHairCheck = true;
-            }
-            ItemLoader.DrawHair(drawPlayer, ref hairCheck, ref altHairCheck);
+            //bool hairCheck = false;
+            //if (drawPlayer.head == 10 || drawPlayer.head == 12 || drawPlayer.head == 28 || drawPlayer.head == 62 || drawPlayer.head == 97 || drawPlayer.head == 106 || drawPlayer.head == 113 || drawPlayer.head == 116 || drawPlayer.head == 119 || drawPlayer.head == 133 || drawPlayer.head == 138 || drawPlayer.head == 139 || drawPlayer.head == 163 || drawPlayer.head == 178 || drawPlayer.head == 181 || drawPlayer.head == 191 || drawPlayer.head == 198)
+            //{
+            //    hairCheck = true;
+            //}
+            //bool altHairCheck = false;
+            //if (drawPlayer.head == 161 || drawPlayer.head == 14 || drawPlayer.head == 15 || drawPlayer.head == 16 || drawPlayer.head == 18 || drawPlayer.head == 21 || drawPlayer.head == 24 || drawPlayer.head == 25 || drawPlayer.head == 26 || drawPlayer.head == 40 || drawPlayer.head == 44 || drawPlayer.head == 51 || drawPlayer.head == 56 || drawPlayer.head == 59 || drawPlayer.head == 60 || drawPlayer.head == 67 || drawPlayer.head == 68 || drawPlayer.head == 69 || drawPlayer.head == 114 || drawPlayer.head == 121 || drawPlayer.head == 126 || drawPlayer.head == 130 || drawPlayer.head == 136 || drawPlayer.head == 140 || drawPlayer.head == 145 || drawPlayer.head == 158 || drawPlayer.head == 159 || drawPlayer.head == 184 || drawPlayer.head == 190 || (double)drawPlayer.head == 92.0 || drawPlayer.head == 195)
+            //{
+            //    altHairCheck = true;
+            //}
+            //ItemLoader.DrawHair(drawPlayer, ref hairCheck, ref altHairCheck);
 
-            if (drawPlayer.head == 0 && hairDye == 0)
-            {
-                hairDye = 1;
-            }
+            //if (drawPlayer.head == 0 && hairDye == 0)
+            //{
+            //    hairDye = 1;
+            //}
 
-            for (int i = 0; i < drawHeadLayers.Count; i++)
-            {
-                if (drawHeadLayers[i] != PlayerHeadLayer.Head)
-                {
-                    if (drawHeadLayers[i] != PlayerHeadLayer.Hair)
-                    {
-                        if (drawHeadLayers[i] != PlayerHeadLayer.AltHair)
-                        {
-                            if (drawHeadLayers[i] != PlayerHeadLayer.Armor)
-                            {
-                                if (drawHeadLayers[i] != PlayerHeadLayer.FaceAcc)
-                                {
-                                    //drawHeadLayers[i].Draw(ref playerHeadDrawInfo);
-                                }
-                                else if (drawPlayer.face > 0)
-                                {
-                                    DrawData value = (drawPlayer.face == 7) ? new DrawData(Main.accFaceTexture[drawPlayer.face], position, new Rectangle(0, 0, 40, 56), new Color(200, 200, 200, 150), 0, Vector2.Zero, Scale, SpriteEffects.None, 0) : new DrawData(Main.accFaceTexture[drawPlayer.face], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                                    GameShaders.Armor.Apply(faceDye, drawPlayer, value);
-                                    value.Draw(Main.spriteBatch);
-                                    Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                                }
-                            }
-                            else if (drawPlayer.head == 23)
-                            {
-                                DrawData HairHeadArmorDrawData;
-                                if (!drawPlayer.invis)
-                                {
-                                    HairHeadArmorDrawData = new DrawData(Main.playerHairTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                                    GameShaders.Hair.Apply(hairDye, drawPlayer, HairHeadArmorDrawData);
-                                    HairHeadArmorDrawData.Draw(Main.spriteBatch);
-                                    Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                                }
-                                // Helmet
-                                HairHeadArmorDrawData = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                                GameShaders.Armor.Apply(helmetDye, drawPlayer, HairHeadArmorDrawData);
-                                HairHeadArmorDrawData.Draw(Main.spriteBatch);
-                                Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                            }
-                            else if (drawPlayer.head == 14 || drawPlayer.head == 56 || drawPlayer.head == 158)
-                            {
-                                // Helmet
-                                DrawData HelmetDrawData = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                                GameShaders.Armor.Apply(helmetDye, drawPlayer, HelmetDrawData);
-                                HelmetDrawData.Draw(Main.spriteBatch);
-                                Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                            }
-                            else if (drawPlayer.head > 0 && drawPlayer.head != 28)
-                            {
-                                // Helmet
-                                DrawData HelmetDrawData = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                                GameShaders.Armor.Apply(helmetDye, drawPlayer, HelmetDrawData);
-                                HelmetDrawData.Draw(Main.spriteBatch);
-                                Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                            }
-                            else
-                            {
-                                DrawData value5 = new DrawData(Main.playerHairTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                                GameShaders.Hair.Apply(hairDye, drawPlayer, value5);
-                                value5.Draw(Main.spriteBatch);
-                                Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                            }
-                        }
-                        else if (altHairCheck)
-                        {
-                            DrawData AltHairDrawData = new DrawData(Main.playerHairAltTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0); 
-                            GameShaders.Hair.Apply(hairDye, drawPlayer, AltHairDrawData);
-                            AltHairDrawData.Draw(Main.spriteBatch);
-                            Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                        }
+            //for (int i = 0; i < drawHeadLayers.Count; i++)
+            //{
+            //    if (drawHeadLayers[i] != PlayerHeadLayer.Head)
+            //    {
+            //        if (drawHeadLayers[i] != PlayerHeadLayer.Hair)
+            //        {
+            //            if (drawHeadLayers[i] != PlayerHeadLayer.AltHair)
+            //            {
+            //                if (drawHeadLayers[i] != PlayerHeadLayer.Armor)
+            //                {
+            //                    if (drawHeadLayers[i] != PlayerHeadLayer.FaceAcc)
+            //                    {
+            //                        //drawHeadLayers[i].Draw(ref playerHeadDrawInfo);
+            //                    }
+            //                    else if (drawPlayer.face > 0)
+            //                    {
+            //                        DrawData value = (drawPlayer.face == 7) ? new DrawData(Main.accFaceTexture[drawPlayer.face], position, new Rectangle(0, 0, 40, 56), new Color(200, 200, 200, 150), 0, Vector2.Zero, Scale, SpriteEffects.None, 0) : new DrawData(Main.accFaceTexture[drawPlayer.face], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //                        GameShaders.Armor.Apply(faceDye, drawPlayer, value);
+            //                        value.Draw(Main.spriteBatch);
+            //                        Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //                    }
+            //                }
+            //                else if (drawPlayer.head == 23)
+            //                {
+            //                    DrawData HairHeadArmorDrawData;
+            //                    if (!drawPlayer.invis)
+            //                    {
+            //                        HairHeadArmorDrawData = new DrawData(Main.playerHairTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //                        GameShaders.Hair.Apply(hairDye, drawPlayer, HairHeadArmorDrawData);
+            //                        HairHeadArmorDrawData.Draw(Main.spriteBatch);
+            //                        Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //                    }
+            //                    // Helmet
+            //                    HairHeadArmorDrawData = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //                    GameShaders.Armor.Apply(helmetDye, drawPlayer, HairHeadArmorDrawData);
+            //                    HairHeadArmorDrawData.Draw(Main.spriteBatch);
+            //                    Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //                }
+            //                else if (drawPlayer.head == 14 || drawPlayer.head == 56 || drawPlayer.head == 158)
+            //                {
+            //                    // Helmet
+            //                    DrawData HelmetDrawData = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //                    GameShaders.Armor.Apply(helmetDye, drawPlayer, HelmetDrawData);
+            //                    HelmetDrawData.Draw(Main.spriteBatch);
+            //                    Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //                }
+            //                else if (drawPlayer.head > 0 && drawPlayer.head != 28)
+            //                {
+            //                    // Helmet
+            //                    DrawData HelmetDrawData = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //                    GameShaders.Armor.Apply(helmetDye, drawPlayer, HelmetDrawData);
+            //                    HelmetDrawData.Draw(Main.spriteBatch);
+            //                    Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //                }
+            //                else
+            //                {
+            //                    DrawData value5 = new DrawData(Main.playerHairTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //                    GameShaders.Hair.Apply(hairDye, drawPlayer, value5);
+            //                    value5.Draw(Main.spriteBatch);
+            //                    Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //                }
+            //            }
+            //            else if (altHairCheck)
+            //            {
+            //                DrawData AltHairDrawData = new DrawData(Main.playerHairAltTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0); 
+            //                GameShaders.Hair.Apply(hairDye, drawPlayer, AltHairDrawData);
+            //                AltHairDrawData.Draw(Main.spriteBatch);
+            //                Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //            }
 
-                    }
-                    else if (hairCheck)
-                    {
-                        DrawData value7 = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                        GameShaders.Armor.Apply(helmetDye, drawPlayer, value7);
-                        value7.Draw(Main.spriteBatch);
-                        Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //        }
+            //        else if (hairCheck)
+            //        {
+            //            DrawData value7 = new DrawData(Main.armorHeadTexture[drawPlayer.head], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //            GameShaders.Armor.Apply(helmetDye, drawPlayer, value7);
+            //            value7.Draw(Main.spriteBatch);
+            //            Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
-                        value7 = new DrawData(Main.playerHairTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                        GameShaders.Hair.Apply(hairDye, drawPlayer, value7);
-                        value7.Draw(Main.spriteBatch);
-                        Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-                    }
-                }
-                else if (drawPlayer.head != 38 && drawPlayer.head != 135 && ItemLoader.DrawHead(drawPlayer))
-                {
-                    var skinVariant = drawPlayer.skinVariant;
-                    Main.spriteBatch.Draw(Main.playerTextures[skinVariant, 0], position, new Rectangle(0, 0, 40, 56), drawPlayer.skinColor, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                    Main.spriteBatch.Draw(Main.playerTextures[skinVariant, 1], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                    Main.spriteBatch.Draw(Main.playerTextures[skinVariant, 2], position, new Rectangle(0, 0, 40, 56), drawPlayer.eyeColor, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-                }
-            }
+            //            value7 = new DrawData(Main.playerHairTexture[drawPlayer.hair], position, new Rectangle(0, 0, 40, 56), drawPlayer.GetHairColor(false), 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //            GameShaders.Hair.Apply(hairDye, drawPlayer, value7);
+            //            value7.Draw(Main.spriteBatch);
+            //            Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            //        }
+            //    }
+            //    else if (drawPlayer.head != 38 && drawPlayer.head != 135 && ItemLoader.DrawHead(drawPlayer))
+            //    {
+            //        var skinVariant = drawPlayer.skinVariant;
+            //        Main.spriteBatch.Draw(Main.playerTextures[skinVariant, 0], position, new Rectangle(0, 0, 40, 56), drawPlayer.skinColor, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //        Main.spriteBatch.Draw(Main.playerTextures[skinVariant, 1], position, new Rectangle(0, 0, 40, 56), Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //        Main.spriteBatch.Draw(Main.playerTextures[skinVariant, 2], position, new Rectangle(0, 0, 40, 56), drawPlayer.eyeColor, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            //    }
+            //}
         }
 
         void LoadAccFace(int i)
         {
-            if (!Main.accFaceLoaded[i])
-            {
-                Main.accFaceTexture[i] = Main.instance.OurLoad<Texture2D>("Images/Acc_Face_" + i.ToString());
-                Main.accFaceLoaded[i] = true;
-            }
+            //if (!Main.accFaceLoaded[i])
+            //{
+            //    Main.accFaceTexture[i] = Main.instance.OurLoad<Texture2D>("Images/Acc_Face_" + i.ToString());
+            //    Main.accFaceLoaded[i] = true;
+            //}
         }
 
         void LoadHair(int i)
         {
-            if (!Main.hairLoaded[i])
-            {
-                Texture2D[] array = Main.playerHairTexture;
-                char directorySeparatorChar = Path.DirectorySeparatorChar;
-                string str = directorySeparatorChar.ToString();
-                int num = i + 1;
-                array[i] = Main.instance.OurLoad<Texture2D>("Images" + str + "Player_Hair_" + num.ToString());
-                Texture2D[] array2 = Main.playerHairAltTexture;
-                directorySeparatorChar = Path.DirectorySeparatorChar;
-                string str2 = directorySeparatorChar.ToString();
-                num = i + 1;
-                array2[i] = Main.instance.OurLoad<Texture2D>("Images" + str2 + "Player_HairAlt_" + num.ToString());
-                Main.hairLoaded[i] = true;
-            }
+            //if (!Main.hairLoaded[i])
+            //{
+            //    Texture2D[] array = Main.playerHairTexture;
+            //    char directorySeparatorChar = Path.DirectorySeparatorChar;
+            //    string str = directorySeparatorChar.ToString();
+            //    int num = i + 1;
+            //    array[i] = Main.instance.OurLoad<Texture2D>("Images" + str + "Player_Hair_" + num.ToString());
+            //    Texture2D[] array2 = Main.playerHairAltTexture;
+            //    directorySeparatorChar = Path.DirectorySeparatorChar;
+            //    string str2 = directorySeparatorChar.ToString();
+            //    num = i + 1;
+            //    array2[i] = Main.instance.OurLoad<Texture2D>("Images" + str2 + "Player_HairAlt_" + num.ToString());
+            //    Main.hairLoaded[i] = true;
+            //}
         }
 
         void LoadArmorHead(int i)
         {
-            if (!Main.armorHeadLoaded[i])
-            {
-                Main.armorHeadTexture[i] = Main.instance.OurLoad<Texture2D>("Images" + Path.DirectorySeparatorChar.ToString() + "Armor_Head_" + i.ToString());
-                Main.armorHeadLoaded[i] = true;
-            }
+            //if (!Main.armorHeadLoaded[i])
+            //{
+            //    Main.armorHeadTexture[i] = Main.instance.OurLoad<Texture2D>("Images" + Path.DirectorySeparatorChar.ToString() + "Armor_Head_" + i.ToString());
+            //    Main.armorHeadLoaded[i] = true;
+            //}
         }
 
         Color quickAlpha(Color oldColor, float alpha)
@@ -738,9 +773,9 @@ namespace TerraLeague.UI
         public override void OnInitialize()
         {
             if (previous)
-                backgroundTexture = TerraLeague.instance.GetTexture("UI/LeftButton");
+                backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/LeftButton").Value;
             else
-                backgroundTexture = TerraLeague.instance.GetTexture("UI/RightButton");
+                backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/RightButton").Value;
 
             if (backgroundTexture != null)
             {
@@ -761,7 +796,10 @@ namespace TerraLeague.UI
 
         public override void Update(GameTime gameTime)
         {
-
+            if (previous)
+                TerraLeague.GetTextureIfNull(ref backgroundTexture, "TerraLeague/UI/LeftButton");
+            else
+                TerraLeague.GetTextureIfNull(ref backgroundTexture, "TerraLeague/UI/RightButton");
             base.Update(gameTime);
         }
 
@@ -771,7 +809,7 @@ namespace TerraLeague.UI
             {
                 CalculatedStyle dimensions = this.GetDimensions();
                 Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
-                spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+                Main.spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
             }
             base.DrawSelf(spriteBatch);
         }
@@ -781,9 +819,9 @@ namespace TerraLeague.UI
             if (PlayerTeleportButton.playerNum != -1)
             {
                 if (previous)
-                    backgroundTexture = TerraLeague.instance.GetTexture("UI/LeftButtonPressed");
+                    backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/LeftButtonPressed").Value;
                 else
-                    backgroundTexture = TerraLeague.instance.GetTexture("UI/RightButtonPressed");
+                    backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/RightButtonPressed").Value;
             }
 
             base.MouseDown(evt);
@@ -792,9 +830,9 @@ namespace TerraLeague.UI
         public override void MouseUp(UIMouseEvent evt)
         {
             if (previous)
-                backgroundTexture = TerraLeague.instance.GetTexture("UI/LeftButton");
+                backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/LeftButton").Value;
             else
-                backgroundTexture = TerraLeague.instance.GetTexture("UI/RightButton");
+                backgroundTexture = ModContent.Request<Texture2D>("TerraLeague/UI/RightButton").Value;
 
             if (PlayerTeleportButton.playerNum != -1)
             {

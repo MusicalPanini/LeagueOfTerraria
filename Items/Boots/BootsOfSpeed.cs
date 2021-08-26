@@ -12,16 +12,17 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Boots of Speed");
             Tooltip.SetDefault("Lets you run faster");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 28;
-            item.value = 10000;
-            item.rare = ItemRarityID.Blue;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 26;
+            Item.height = 28;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Blue;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -31,11 +32,11 @@ namespace TerraLeague.Items.Boots
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Leather, 5);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Leather, 5)
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
     }
 }

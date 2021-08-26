@@ -2,6 +2,7 @@
 using TerraLeague.Items.CustomItems;
 using TerraLeague.Items.CustomItems.Passives;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,16 +18,17 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases maximum mana by 30" +
                 "\nIncreases resist by 5" +
                 "\nIncreases ability haste by 10");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 34;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 34;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -47,17 +49,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Catalyst>(), 1);
-            recipe.AddIngredient(ItemType<NegatronCloak>(), 1);
-            recipe.AddIngredient(ItemID.MimeMask, 1);
-            recipe.AddIngredient(ItemType<VoidBar>(), 10);
-            recipe.AddRecipeGroup("TerraLeague:EvilPartGroup", 10);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Catalyst>(), 1)
+            .AddIngredient(ItemType<NegatronCloak>(), 1)
+            .AddIngredient(ItemID.MimeMask, 1)
+            .AddIngredient(ItemType<VoidBar>(), 10)
+            .AddRecipeGroup("TerraLeague:EvilPartGroup", 10)
+            .AddIngredient(ItemID.SoulofNight, 10)
+            .AddIngredient(ItemID.SoulofFright, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

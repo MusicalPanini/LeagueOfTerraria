@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class FinalSparkChannel : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Channeling Final Spark");
             Description.SetDefault("No more holding back!");

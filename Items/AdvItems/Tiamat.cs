@@ -15,15 +15,16 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Tiamat");
             Tooltip.SetDefault("3% increased melee damage" +
                 "\nIncreases life regeneration by 2");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 26;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 26;
+            Item.height = 26;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -32,7 +33,7 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.03f;
+            player.GetDamage(DamageClass.Melee) += 0.03f;
             player.lifeRegen += 2;
 
             base.UpdateAccessory(player, hideVisual);
@@ -40,14 +41,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LongSword>(), 2);
-            recipe.AddIngredient(ItemType<RejuvBead>(), 1);
-            recipe.AddIngredient(ItemID.Spear, 1);
-            recipe.AddIngredient(ItemID.Spike, 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 2)
+            .AddIngredient(ItemType<RejuvBead>(), 1)
+            .AddIngredient(ItemID.Spear, 1)
+            .AddIngredient(ItemID.Spike, 10)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

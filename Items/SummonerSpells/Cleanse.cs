@@ -13,10 +13,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Cleanse Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Cleanse";
+            return "TerraLeague/Items/SummonerSpells/Cleanse";
         }
 
         public override string GetSpellName()
@@ -47,7 +48,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.3f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.3f), player.Center);
             //for (int j = 0; j < 18; j++)
             //{
             //    Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));

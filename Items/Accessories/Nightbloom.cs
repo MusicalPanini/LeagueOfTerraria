@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Accessories
             Tooltip.SetDefault("Increases mana regeneration by 1" +
                 "\nWhile below 50% life increase mana regeneration by 3");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 26;
-            item.rare = ItemRarityID.Orange;
-            item.value = 27000;
-            item.accessory = true;
+            Item.width = 26;
+            Item.height = 26;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = 27000;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

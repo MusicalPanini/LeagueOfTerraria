@@ -17,10 +17,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Flash Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Flash";
+            return "TerraLeague/Items/SummonerSpells/Flash";
         }
 
         public override string GetSpellName()
@@ -44,7 +45,7 @@ namespace TerraLeague.Items.SummonerSpells
             {
                 for (int y = (int)((Main.mouseY + Main.screenPosition.Y) / 16) - 1; y <= (int)((Main.mouseY + Main.screenPosition.Y) / 16) + 1; y++)
                 {
-                    if (Main.tile[x, y].collisionType > 0 || Main.tile[x, y].wall == WallID.LihzahrdBrickUnsafe && !NPC.downedPlantBoss)
+                    if (Main.tile[x, y].CollisionType > 0 || Main.tile[x, y].wall == WallID.LihzahrdBrickUnsafe && !NPC.downedPlantBoss)
                     {
                         pathBlocked = true;
                         break;

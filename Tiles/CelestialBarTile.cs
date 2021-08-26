@@ -10,7 +10,7 @@ namespace TerraLeague.Tiles
 {
     public class CelestialBarTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileShine[Type] = 1100;
             Main.tileSolid[Type] = true;
@@ -25,7 +25,7 @@ namespace TerraLeague.Tiles
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Celestial Bar");
             AddMapEntry(new Color(0, 165, 255), name);
-            dustType = DustID.DungeonWater;
+            DustType = DustID.WaterCandle;
         }
 
         public override bool Drop(int i, int j)

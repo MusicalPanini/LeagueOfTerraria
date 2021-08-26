@@ -15,9 +15,11 @@ namespace TerraLeague.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Orb of Deception");
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 4));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
 
             Tooltip.SetDefault("");
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -27,26 +29,26 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 28;
-            item.width = 30;
-            item.height = 30;
-            item.magic = true;
-            item.useTime = 25;
-            item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.Stabbing;
-            item.knockBack = 1;
-            item.mana = 20;
-            item.value = 54000;
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = new LegacySoundStyle(2, 8, Terraria.Audio.SoundType.Sound);
-            item.shootSpeed = 15f;
-            item.shoot = ProjectileType<OrbofDeception_Orb>();
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = false;
-            item.noUseGraphic = true;
+            Item.damage = 28;
+            Item.width = 30;
+            Item.height = 30;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 25;
+            Item.useAnimation = 25;
+            Item.useStyle = ItemUseStyleID.Thrust;
+            Item.knockBack = 1;
+            Item.mana = 20;
+            Item.value = 54000;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = new LegacySoundStyle(2, 8, Terraria.Audio.SoundType.Sound);
+            Item.shootSpeed = 15f;
+            Item.shoot = ProjectileType<OrbofDeception_Orb>();
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = false;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new FoxFire(this));
             abilityItem.ChampQuote = "Let's have some real fun";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -60,11 +62,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ManaBar>(), 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ManaBar>(), 16)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

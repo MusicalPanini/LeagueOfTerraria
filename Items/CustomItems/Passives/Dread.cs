@@ -7,9 +7,9 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int maxStacks;
         readonly int lostStacks;
-        readonly double magicMinionDamage;
+        readonly float magicMinionDamage;
 
-        public Dread(int MaxStacks, int LostStacks, double magicMinionDamageIncrease)
+        public Dread(int MaxStacks, int LostStacks, float magicMinionDamageIncrease)
         {
             maxStacks = MaxStacks;
             lostStacks = LostStacks;
@@ -20,13 +20,13 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             return TooltipName("DREAD") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Kills grant stacks up to " + maxStacks)
                 + "\n" + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Lose " + lostStacks + " stacks when enemies damage you")
-                 + "\n" + TooltipName("DO OR DIE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain " + magicMinionDamage + "% magic and minion damage per stack of DREAD");
+                 + "\n" + TooltipName("DO OR DIE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain " + magicMinionDamage + "% magic and summon damage per stack of DREAD");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
         {
-            player.magicDamage += (float)(magicMinionDamage * 0.01 * passiveStat);
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += magicMinionDamage * 0.01 * passiveStat;
+            player.GetDamage(DamageClass.Magic) += magicMinionDamage * 0.01f * passiveStat;
+            player.GetDamage(DamageClass.Summon) += magicMinionDamage * 0.01f * passiveStat;
 
             base.UpdateAccessory(player, modItem);
         }

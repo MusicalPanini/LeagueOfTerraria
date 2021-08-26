@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Template";
+            return "TerraLeague/AbilityImages/Template";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -96,7 +96,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                             int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MEL) + GetAbilityScaledDamage(player, DamageType.SUM);
                             int knockback = 0;
 
-                            Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                            Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                             SetCooldowns(player, type);
                         }
                     }

@@ -16,15 +16,16 @@ namespace TerraLeague.Items.Accessories
                 "\nIncreases mana regeneration by 1" +
                 "\nWhile below 50% life increase mana regeneration by 3");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 30;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 100000;
-            item.accessory = true;
+            Item.width = 28;
+            Item.height = 30;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = 100000;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -41,12 +42,11 @@ namespace TerraLeague.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Nightbloom>(), 1);
-            recipe.AddIngredient(ItemType<PossessedSkull>(), 1);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Nightbloom>(), 1)
+            .AddIngredient(ItemType<PossessedSkull>(), 1)
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

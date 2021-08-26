@@ -114,7 +114,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         override public void Efx(Player User, NPC HitNPC)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 30), HitNPC.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 30), HitNPC.Center);
             PLAYERGLOBAL modPlayer = User.GetModPlayer<PLAYERGLOBAL>();
             if (modPlayer.icyZone)
             {

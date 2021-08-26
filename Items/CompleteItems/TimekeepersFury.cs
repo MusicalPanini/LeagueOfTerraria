@@ -14,20 +14,21 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Timekeeper's Wrath");
-            Tooltip.SetDefault("3% increased magic and minion damage" +
+            Tooltip.SetDefault("3% increased magic and summon damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases maximum mana by 20" +
                 "\n[c/007399:TOUCH OF DEATH's magic pen is based on IMPENDULUM]");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -40,8 +41,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.statLifeMax2 += 20;
             player.statManaMax2 += 20;
-            player.magicDamage += 0.03f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.03;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
 
             Passives[1].passiveStat = Impendulum.GetStat;
 
@@ -50,16 +51,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Orb>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemType<SapphireCrystal>(), 1);
-            recipe.AddIngredient(ItemID.SoulofLight, 6);
-            recipe.AddIngredient(ItemID.SoulofNight, 6);
-            recipe.AddIngredient(ItemID.SoulofMight, 4);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Orb>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemType<SapphireCrystal>(), 1)
+            .AddIngredient(ItemID.SoulofLight, 6)
+            .AddIngredient(ItemID.SoulofNight, 6)
+            .AddIngredient(ItemID.SoulofMight, 4)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

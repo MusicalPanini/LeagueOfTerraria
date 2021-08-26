@@ -14,25 +14,26 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Moonflair Spellblade");
-            Tooltip.SetDefault("4% increased magic and minion damage" +
+            Tooltip.SetDefault("4% increased magic and summon damage" +
                 "\nIncreases armor by 5" +
                 "\nIncreases resist by 4" +
                 "\nImmunity to Slow and Chilled");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 20, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 20, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.04f;
-            player.magicDamage += 0.04f;
+            player.GetDamage(DamageClass.Magic) += 0.04f;
+            player.GetDamage(DamageClass.Summon) += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 5;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.buffImmune[BuffID.Slow] = true;
@@ -41,13 +42,13 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Seekers>(), 1);
-            recipe.AddIngredient(ItemType<NegatronCloak>(), 1);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 12);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Seekers>(), 1)
+            .AddIngredient(ItemType<NegatronCloak>(), 1)
+            .AddIngredient(ItemType<CelestialBar>(), 12)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

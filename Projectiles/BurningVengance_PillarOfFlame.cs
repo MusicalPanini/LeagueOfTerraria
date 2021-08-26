@@ -12,47 +12,47 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             DisplayName.SetDefault("Pillar Of Flame");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 160;
-            projectile.height = 8;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 1080;
-            projectile.magic = true;
-            projectile.extraUpdates = 24;
-            projectile.tileCollide = false;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 160;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 1080;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.extraUpdates = 24;
+            Projectile.tileCollide = false;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 34, -0.5f);
-                projectile.soundDelay = 48;
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 34, -0.5f);
+                Projectile.soundDelay = 240;
             }
 
             if (Main.rand.Next(0, 2) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default, 4f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 0, default, 4f);
                 dust.noGravity = true;
                 dust.velocity = new Vector2(0, -5f);
                 dust.noLight = true;
                 dust.fadeIn = 2;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default, 6f);
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 0, default, 6f);
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 1f);
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, 0, 3, 0, default, 1f);
                 dust.noLight = true;
 
             }

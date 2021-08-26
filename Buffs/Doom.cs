@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Doom : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Doomed");
             Main.debuff[Type] = true;

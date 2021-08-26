@@ -15,22 +15,23 @@ namespace TerraLeague.Items.AdvItems
                 "\n+1 melee and ranged life steal" /*+
                 "\n10% decreased maximum life" +
                 "\n10% increased damage taken"*/);
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.03f;
-            player.rangedDamage += 0.03f;
+            player.GetDamage(DamageClass.Melee) += 0.03f;
+            player.GetDamage(DamageClass.Ranged) += 0.03f;
 
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;
@@ -40,14 +41,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LongSword>(), 1);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 5);
-            recipe.AddIngredient(ItemID.HellstoneBar, 5);
-            recipe.AddIngredient(ItemID.Ruby, 2);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 1)
+            .AddIngredient(ItemID.MeteoriteBar, 5)
+            .AddIngredient(ItemID.HellstoneBar, 5)
+            .AddIngredient(ItemID.Ruby, 2)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

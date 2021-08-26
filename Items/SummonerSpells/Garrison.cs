@@ -14,10 +14,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Garrison Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Garrison";
+            return "TerraLeague/Items/SummonerSpells/Garrison";
         }
 
         public override string GetSpellName()
@@ -66,8 +67,8 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
-            Main.PlaySound(new LegacySoundStyle(2, 37), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 37), player.Center);
 
             int border = 96;
             int borderHeight = 88;

@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
 {
     public class Clairvoyance : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Clairvoyance");
             Description.SetDefault("You see all");

@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class DivineJudgementBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Divine Judgement");
             Description.SetDefault("The worthy survive!" +

@@ -19,28 +19,28 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 78;
-            projectile.height = 78;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.timeLeft = 301;
-            projectile.extraUpdates = 32;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
+            Projectile.width = 78;
+            Projectile.height = 78;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 301;
+            Projectile.extraUpdates = 32;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
-            if (projectile.velocity.Y < 15)
+            if (Projectile.velocity.Y < 15)
             {
-                projectile.velocity.Y += 0.3f;
+                Projectile.velocity.Y += 0.3f;
             }
 
-            if (projectile.timeLeft % 8 == 0 && Main.myPlayer == projectile.owner)
+            if (Projectile.timeLeft % 8 == 0 && Main.myPlayer == Projectile.owner)
             {
-                Dust dust2 = Dust.NewDustPerfect(projectile.Center, 211, null, 0, new Color(255, 0, 0), 2);
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center, 211, null, 0, new Color(255, 0, 0), 2);
                 dust2.noGravity = true;
                 dust2.velocity *= 0;
             }
@@ -48,11 +48,11 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            if (Main.myPlayer == projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(new Vector2(projectile.position.X + (int)((projectile.width / 19.0) * i), projectile.position.Y + projectile.height - 24), 6, null, 0, new Color(255, 125, 0), 4f);
+                    Dust dust = Dust.NewDustPerfect(new Vector2(Projectile.position.X + (int)((Projectile.width / 19.0) * i), Projectile.position.Y + Projectile.height - 24), 6, null, 0, new Color(255, 125, 0), 4f);
                     dust.velocity *= 0f;
                     dust.noGravity = true;
                 }

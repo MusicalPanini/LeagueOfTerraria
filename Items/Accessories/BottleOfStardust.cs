@@ -14,17 +14,18 @@ namespace TerraLeague.Items.Accessories
             DisplayName.SetDefault("Bottle of Stardust");
             Tooltip.SetDefault("Enhances the effects of Targon's Blessings");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 30;
-            item.rare = ItemRarityID.Expert;
-            item.value = 100000;
-            item.expertOnly = true;
-            item.expert = true;
-            item.accessory = true;
+            Item.width = 20;
+            Item.height = 30;
+            Item.rare = ItemRarityID.Expert;
+            Item.value = 100000;
+            Item.expertOnly = true;
+            Item.expert = true;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

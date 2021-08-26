@@ -14,8 +14,11 @@ namespace TerraLeague.Projectiles
         { 
             get 
             {
-                double ats = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed - 1;
-                return (int)(90 * ats);
+                double rngatkspd = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed;
+
+                double multi = 1 / (rngatkspd);
+
+                return  (int)(90 * multi);
             }
         }
 
@@ -23,8 +26,9 @@ namespace TerraLeague.Projectiles
         {
             get
             {
-                double ats = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed - 1;
-                return (int)(18 * ats);
+                double rngatkspd = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed;
+                double multi = 1 / (rngatkspd);
+                return (int)(18 * multi);
             }
         }
 
@@ -35,54 +39,54 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.timeLeft = 300;
-            projectile.friendly = false;
-            projectile.ranged = true;
-            projectile.alpha = 255;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.timeLeft = 300;
+            Projectile.friendly = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.alpha = 255;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
             if (player.channel)
             {
-                projectile.Center = player.MountedCenter;
+                Projectile.Center = player.MountedCenter;
 
                 
 
-                if (projectile.owner == Main.LocalPlayer.whoAmI)
+                if (Projectile.owner == Main.LocalPlayer.whoAmI)
                 {
                     int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
                     player.ChangeDir(dir);
-                    projectile.ai[1] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
-                    projectile.netUpdate = true;
+                    Projectile.ai[1] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
+                    Projectile.netUpdate = true;
                 }
-                player.itemRotation = projectile.ai[1];
+                player.itemRotation = Projectile.ai[1];
 
                 for (int k = 0; k < 2 + 1; k++)
                 {
-                    float scale = projectile.localAI[0] / (2 * MaxCharge/3f);
+                    float scale = Projectile.localAI[0]  / (2 * MaxCharge/3f);
                     if (k % 2 == 1)
-                        scale = projectile.localAI[0] / (3 *MaxCharge/4f);
+                        scale = Projectile.localAI[0]  / (3 *MaxCharge/4f);
 
-                    Vector2 postion = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
+                    Vector2 postion = Projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
                     Dust dust = Dust.NewDustDirect(postion - Vector2.One * 8f, 16, 16, DustID.Blood, 0, 0, 0, new Color(255, 0, 0), scale);
-                    dust.velocity = Vector2.Normalize(projectile.Center - postion) * 1.5f * (10f - (float)2 * 2f) / 10f;
+                    dust.velocity = Vector2.Normalize(Projectile.Center - postion) * 1.5f * (10f - (float)2 * 2f) / 10f;
                     dust.noGravity = true;
                     dust.customData = player;
                 }
-                if (projectile.localAI[0] < MaxCharge)
-                    projectile.localAI[0]++;
+                if (Projectile.localAI[0]  < MaxCharge)
+                    Projectile.localAI[0] ++;
 
-                if (projectile.localAI[0] >= MaxCharge)
+                if (Projectile.localAI[0]  >= MaxCharge)
                 {
-                    if (projectile.soundDelay == 0)
-                        TerraLeague.PlaySoundWithPitch(projectile.Center, 25, 1, 0);
-                    projectile.soundDelay = 2;
+                    if (Projectile.soundDelay == 0)
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 25, 1, 0);
+                    Projectile.soundDelay = 2;
 
                 }
 
@@ -91,9 +95,9 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                player.itemTime = 1 + (int)(UseTime * (1 - (projectile.localAI[0] / MaxCharge)));
-                player.itemAnimation = 1 + (int)(UseTime * (1 - (projectile.localAI[0] / MaxCharge)));
-                projectile.Kill();
+                player.itemTime = 1 + (int)(UseTime * (1 - (Projectile.localAI[0]  / MaxCharge)));
+                player.itemAnimation = 1 + (int)(UseTime * (1 - (Projectile.localAI[0]  / MaxCharge)));
+                Projectile.Kill();
             }
 
             base.AI();
@@ -106,13 +110,13 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
-            float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
+            float rot = Projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
 
-            Projectile.NewProjectileDirect(projectile.Center, new Vector2(6 + (10 * projectile.localAI[0] / MaxCharge), 0).RotatedBy(rot), (int)projectile.ai[0], projectile.damage * (int)(1 + projectile.localAI[0] / (MaxCharge/3f)), projectile.knockBack, projectile.owner, projectile.localAI[0] / (MaxCharge * 2f));
+            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, new Vector2(6 + (10 * Projectile.localAI[0]  / MaxCharge), 0).RotatedBy(rot), (int)Projectile.ai[0], Projectile.damage * (int)(1 + Projectile.localAI[0]  / (MaxCharge/3f)), Projectile.knockBack, Projectile.owner, Projectile.localAI[0]  / (MaxCharge * 2f));
 
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 5, 0 - (projectile.localAI[0] / 90f));
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 5, 0 - (Projectile.localAI[0]  / 90f));
 
             base.Kill(timeLeft);
         }

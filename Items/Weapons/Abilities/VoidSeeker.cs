@@ -29,9 +29,9 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             if (modPlayer.magicDamageLastStep < modPlayer.rangedDamageLastStep)
-                return "AbilityImages/VoidSeeker";
+                return "TerraLeague/AbilityImages/VoidSeeker";
             else
-                return "AbilityImages/VoidSeekerM";
+                return "TerraLeague/AbilityImages/VoidSeekerM";
         }
 
         public override string GetAbilityTooltip()
@@ -42,7 +42,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 3);
+            return (int)(abilityItem.Item.damage * 3);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -103,7 +103,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 if (modPlayer.MAG >= 50)
                     poweredUp = 1;
 
-                Projectile proj = Projectile.NewProjectileDirect(player.Center, velocity, projType, damage, knockback, player.whoAmI, poweredUp);
+                Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), player.Center, velocity, projType, damage, knockback, player.whoAmI, poweredUp);
 
 
                 SetAnimation(player, position + velocity);

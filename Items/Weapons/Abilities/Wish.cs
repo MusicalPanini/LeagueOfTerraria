@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Wish";
+            return "TerraLeague/AbilityImages/Wish";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 3);
+            return (int)(abilityItem.Item.damage * 3);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -121,7 +121,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 }
             }
 
-            Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.MountedCenter);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.MountedCenter);
         }
     }
 }

@@ -24,6 +24,8 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Audio;
 using TerraLeague.Items.Accessories;
 using TerraLeague.NPCs.TargonBoss;
+using TerraLeague.Items;
+using TerraLeague.Biomes;
 
 namespace TerraLeague
 {
@@ -32,40 +34,26 @@ namespace TerraLeague
         internal static string TooltipHeadingColor = "0099cc";
 
         internal static TerraLeague instance;
-        internal StatUI statUI;
-        internal ItemUI itemUI;
-        internal AbilityUI abilityUI;
-        internal HealthbarUI healthbarUI;
-        internal ToolTipUI tooltipUI;
-        internal TeleportUI teleportUI;
-        internal PlayerUI playerUI;
-        
-        
         internal int SumCurrencyID;
-        private UserInterface userInterface1;
-        private UserInterface userInterface2;
-        private UserInterface userInterface3;
-        private UserInterface PlayerInterface;
-        public UserInterface HealthbarInterface;
-        public UserInterface tooltipInterface;
-        public UserInterface teleportInterface;
-        public static ModHotKey ToggleStats;
-        public static ModHotKey Item1;
-        public static ModHotKey Item2;
-        public static ModHotKey Item3;
-        public static ModHotKey Item4;
-        public static ModHotKey Item5;
-        public static ModHotKey Item6;
-        public static ModHotKey Sum1;
-        public static ModHotKey Sum2;
-        public static ModHotKey QAbility;
-        public static ModHotKey WAbility;
-        public static ModHotKey EAbility;
-        public static ModHotKey RAbility;
+        
+        public static ModKeybind ToggleStats;
+        public static ModKeybind Item1;
+        public static ModKeybind Item2;
+        public static ModKeybind Item3;
+        public static ModKeybind Item4;
+        public static ModKeybind Item5;
+        public static ModKeybind Item6;
+        public static ModKeybind Sum1;
+        public static ModKeybind Sum2;
+        public static ModKeybind QAbility;
+        public static ModKeybind WAbility;
+        public static ModKeybind EAbility;
+        public static ModKeybind RAbility;
 
         // Config Stuff
         public static bool canLog = false;
         public static bool UseModResourceBar = false;
+        public static bool LockUI = false;
         public static bool UseCustomManaRegen = false;
         public static bool UseCustomDefenceStat = false;
         public static bool noItemCooldowns = false;
@@ -74,10 +62,10 @@ namespace TerraLeague
         public static bool unlimitedMana = false;
         public static bool debugMode = false;
         public static float fogIntensity;
-        //public static ModHotKey Trinket;
-        public static PlayerLayer ShieldEffect;
+        //public static ModKeybind Trinket;
 
-        public static bool StopHealthandManaText = true;
+        //public static PlayerLayer ShieldEffect;
+
 
         public TerraLeague()
         {
@@ -91,110 +79,34 @@ namespace TerraLeague
         {
             Logger.InfoFormat("{0} logging", Name);
 
-            ToggleStats = RegisterHotKey("Toggle Stats Page", "L");
-            Item1 = RegisterHotKey("Active item 1", "1");
-            Item2 = RegisterHotKey("Active item 2", "2");
-            Item3 = RegisterHotKey("Active item 3", "3");
-            Item4 = RegisterHotKey("Active item 4", "4");
-            Item5 = RegisterHotKey("Active item 5", "5");
-            Item6 = RegisterHotKey("Active item 6", "6");
-            Sum1 = RegisterHotKey("Summoner Spell 1", "F");
-            Sum2 = RegisterHotKey("Summoner Spell 2", "G");
-            QAbility = RegisterHotKey("Ability 1", "Z");
-            WAbility = RegisterHotKey("Ability 2", "X");
-            EAbility = RegisterHotKey("Ability 3", "C");
-            RAbility = RegisterHotKey("Ability 4", "V");
+            ToggleStats = KeybindLoader.RegisterKeybind(this,"Toggle Stats Page", "L");
+            Item1 = KeybindLoader.RegisterKeybind(this, "Active item 1", "1");
+            Item2 = KeybindLoader.RegisterKeybind(this, "Active item 2", "2");
+            Item3 = KeybindLoader.RegisterKeybind(this, "Active item 3", "3");
+            Item4 = KeybindLoader.RegisterKeybind(this, "Active item 4", "4");
+            Item5 = KeybindLoader.RegisterKeybind(this, "Active item 5", "5");
+            Item6 = KeybindLoader.RegisterKeybind(this, "Active item 6", "6");
+            Sum1 = KeybindLoader.RegisterKeybind(this, "Summoner Spell 1", "F");
+            Sum2 = KeybindLoader.RegisterKeybind(this, "Summoner Spell 2", "G");
+            QAbility = KeybindLoader.RegisterKeybind(this, "Ability 1", "Z");
+            WAbility = KeybindLoader.RegisterKeybind(this, "Ability 2", "X");
+            EAbility = KeybindLoader.RegisterKeybind(this, "Ability 3", "C");
+            RAbility = KeybindLoader.RegisterKeybind(this, "Ability 4", "V");
             //Trinket = RegisterHotKey("Trinket", "R");
             SumCurrencyID = CustomCurrencyManager.RegisterCurrency(new SummonerCurrency(ModContent.ItemType<VialofTrueMagic>(), 999L));
 
-            ShieldEffect = new PlayerLayer("TerraLeague", "ShieldEffect", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
-            {
-                Player drawPlayer = drawInfo.drawPlayer;
-                PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
-
-                int frame = 0;
-
-                if (modPlayer.shieldFrame < 4)
-                    frame = 0;
-                else if (modPlayer.shieldFrame < 8)
-                    frame = 1;
-                else if (modPlayer.shieldFrame < 12)
-                    frame = 2;
-                else if (modPlayer.shieldFrame < 16)
-                    frame = 3;
-                else if (modPlayer.shieldFrame < 20)
-                    frame = 4;
-                else if (modPlayer.shieldFrame < 24)
-                    frame = 5;
-
-                if (drawInfo.shadow != 0f)
-                {
-                    return;
-                }
-
-                if (modPlayer.currentShieldColor.A != 0 && drawPlayer.active)
-                {
-
-                    Color color = modPlayer.currentShieldColor;
-                    color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
-                    color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.RotatedRelativePoint(drawPlayer.Center).X - Main.screenPosition.X /*- 19 + 30*/), (int)(drawPlayer.RotatedRelativePoint(drawPlayer.Center).Y - Main.screenPosition.Y - 2 /*- 10 + 30*/), 60, 60);
-
-                    Lighting.AddLight(drawPlayer.Center, color.ToVector3());
-
-                    Texture2D texture = instance.GetTexture("Projectiles/NormalShield");
-                    Rectangle sourRec = new Rectangle(0, 0 + (60 * frame), 60, 60);
-                    DrawData data = new DrawData(texture, destRec, sourRec, color, 0, new Vector2(30, 30), SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
-                }
-            });
-
             if (!Main.dedServ)
             {
-                AddEquipTexture(new Items.Accessories.DarkinHead(), null, EquipType.Head, "DarkinHead", "TerraLeague/Items/Accessories/Darkin_Head");
-                AddEquipTexture(new Items.Accessories.DarkinBody(), null, EquipType.Body, "DarkinBody", "TerraLeague/Items/Accessories/Darkin_Body", "TerraLeague/Items/Accessories/Darkin_Arms");
-                AddEquipTexture(new Items.Accessories.DarkinLegs(), null, EquipType.Legs, "DarkinLegs", "TerraLeague/Items/Accessories/Darkin_Legs");
+                //AddEquipTexture(new Items.Accessories.DarkinHead(), null, EquipType.Head, "TerraLeague/Items/Accessories/Darkin_Head");
+                //AddEquipTexture(new Items.Accessories.DarkinBody(), null, EquipType.Body, "TerraLeague/Items/Accessories/Darkin_Body", "TerraLeague/Items/Accessories/Darkin_Arms");
+                //AddEquipTexture(new Items.Accessories.DarkinLegs(), null, EquipType.Legs, "TerraLeague/Items/Accessories/Darkin_Legs");
 
-                Filters.Scene["TerraLeague:TheBlackMist"] = new Filter(new BlackMistShaderData("FilterSandstormForeground").UseColor(0, 2, 1).UseSecondaryColor(0, 0, 0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(3.5f).UseOpacity(0.2f).UseImageScale(new Vector2(8, 8)), EffectPriority.High);
-                Overlays.Scene["TerraLeague:TheBlackMist"] = new SimpleOverlay("Images/Misc/Perlin", new BlackMistShaderData("FilterSandstormBackground").UseColor(0, 1, 0).UseSecondaryColor(0, 0, 0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(5).UseOpacity(1f).UseImageScale(new Vector2(4, 4)), EffectPriority.High, RenderLayers.Landscape);
+                Filters.Scene["TerraLeague:TheBlackMist"] = new Filter(new BlackMistShaderData("FilterSandstormForeground").UseColor(0, 2, 1).UseSecondaryColor(0, 0, 0).UseImage(((Texture2D)Assets.Request<Texture2D>("Textures/Backgrounds/Fog")), 0, null).UseIntensity(1f).UseOpacity(0.2f).UseImageScale(new Vector2(8, 8)), EffectPriority.High);
+                Overlays.Scene["TerraLeague:TheBlackMist"] = new SimpleOverlay("Images/Misc/Perlin", new BlackMistShaderData("FilterSandstormBackground").UseColor(0, 1, 0).UseSecondaryColor(0, 0, 0).UseImage((Texture2D)Assets.Request<Texture2D>("Textures/Backgrounds/Fog"), 0, null).UseIntensity(5).UseOpacity(1f).UseImageScale(new Vector2(4, 4)), EffectPriority.High, RenderLayers.Landscape);
                 SkyManager.Instance["TerraLeague:TheBlackMist"] = new BlackMistSky();
 
                 Filters.Scene["TerraLeague:Targon"] = new Filter(new TargonShaderData("FilterMiniTower").UseColor(0.0f, 0.3f, 0.8f).UseOpacity(0.7f), EffectPriority.VeryHigh);
-                SkyManager.Instance["TerraLeague:Targon"] = new TargonSky();
-
-                userInterface1 = new UserInterface();
-                statUI = new StatUI();
-                StatUI.visible = 1;
-                userInterface1.SetState(statUI);
-
-                userInterface2 = new UserInterface();
-                itemUI = new ItemUI();
-                ItemUI.visible = true;
-                userInterface2.SetState(itemUI);
-
-                userInterface3 = new UserInterface();
-                abilityUI = new AbilityUI();
-                AbilityUI.visible = true;
-                userInterface3.SetState(abilityUI);
-
-                HealthbarInterface = new UserInterface();
-                healthbarUI = new HealthbarUI();
-                HealthbarUI.visible = true;
-                HealthbarInterface.SetState(healthbarUI);
-
-                tooltipInterface = new UserInterface();
-                tooltipUI = new ToolTipUI();
-                //ToolTipUI.visible = true;
-                tooltipInterface.SetState(tooltipUI);
-
-                teleportInterface = new UserInterface();
-                teleportUI = new TeleportUI();
-                TeleportUI.visible = false;
-                teleportInterface.SetState(teleportUI);
-
-                PlayerInterface = new UserInterface();
-                playerUI = new PlayerUI();
-                PlayerInterface.SetState(playerUI);
+                SkyManager.Instance["TerraLeague:Targon"] = new TargonPeakSky();
             }
 
             Main.instance.GUIBarsDraw();
@@ -203,41 +115,41 @@ namespace TerraLeague
 
         public override void PostSetupContent()
         {
-            Mod bossChecklist = ModLoader.GetMod("BossChecklist");
-            if (bossChecklist != null)
-            {
-                bossChecklist.Call(
-                    "AddBoss",  // Call
-                    3.1f,       // Boss Progresion
-                    new List<int>() { ModContent.NPCType<TargonBossNPC>() }, // NPC Types
-                    this, // Mod
-                    "The Celestial Gate Keeper", // Name
-                    (Func<bool>)(() => TerraLeagueWORLDGLOBAL.TargonArenaDefeated), // Completion Check
-                    0, // Spawn Item 
-                    new List<int>() { ModContent.ItemType<Items.Placeable.TargonBossTrophy>() }, // Collection Items
-                    new List<int>() { ModContent.ItemType<Items.CelestialBar>(), ModContent.ItemType<Items.Placeable.TargonMonolith>(), ModContent.ItemType<Items.Accessories.BottleOfStardust>() }, // Drops
-                    "Climb Mount Targon and accept the challenge at its peak", // Spawn Info
-                    "",
-                    "TerraLeague/NPCs/TargonBoss/TargonBoss_Checklist",
-                    "TerraLeague/NPCs/TargonBoss/TargonBoss_Head");
+            //Mod bossChecklist = ModLoader.GetMod("BossChecklist");
+            //if (bossChecklist != null)
+            //{
+            //    bossChecklist.Call(
+            //        "AddBoss",  // Call
+            //        3.1f,       // Boss Progresion
+            //        new List<int>() { ModContent.NPCType<TargonBossNPC>() }, // NPC Types
+            //        this, // Mod
+            //        "The Celestial Gate Keeper", // Name
+            //        (Func<bool>)(() => Common.ModSystems.WorldSystem.TargonArenaDefeated), // Completion Check
+            //        0, // Spawn Item 
+            //        new List<int>() { ModContent.ItemType<Items.Placeable.TargonBossTrophy>() }, // Collection Items
+            //        new List<int>() { ModContent.ItemType<Items.CelestialBar>(), ModContent.ItemType<Items.Placeable.TargonMonolith>(), ModContent.ItemType<Items.Accessories.BottleOfStardust>() }, // Drops
+            //        "Climb Mount Targon and accept the challenge at its peak", // Spawn Info
+            //        "",
+            //        "TerraLeague/NPCs/TargonBoss/TargonBoss_Checklist",
+            //        "TerraLeague/NPCs/TargonBoss/TargonBoss_Head");
 
 
-                bossChecklist.Call(
-                    "AddEvent",  // Call
-                    2.8f,       // Boss Progresion
-                    new List<int>() { ModContent.NPCType<TheUndying_1>(), ModContent.NPCType<TheUndying_Archer>(), ModContent.NPCType<TheUndying_Necromancer>(), ModContent.NPCType<BansheeHive>(), ModContent.NPCType<EtherealRemitter>(), ModContent.NPCType<FallenCrimera>(), ModContent.NPCType<MistEater>(), ModContent.NPCType<SoulBoundSlime>(), ModContent.NPCType<SpectralBitter>(), ModContent.NPCType<UnleashedSpirit>(), ModContent.NPCType<Scuttlegeist>(), ModContent.NPCType<MistDevourer_Head>(), ModContent.NPCType<ShelledHorror>(), ModContent.NPCType<SpectralShark>(), ModContent.NPCType<Mistwraith>(), ModContent.NPCType<ShadowArtilery>() }, // NPC Types
-                    this, // Mod
-                    "The Harrowing", // Name
-                    (Func<bool>)(() => TerraLeagueWORLDGLOBAL.BlackMistDefeated), // Completion Check
-                    0, // Spawn Item 
-                    0, // Collection Items
-                    new List<int>() { ModContent.ItemType<EternalFlame>(), ModContent.ItemType<Items.Tools.FadingMemories>(), ModContent.ItemType<Nightbloom>(), ModContent.ItemType<Items.Armor.NecromancersHood>(), ModContent.ItemType<Items.Armor.NecromancersRobe>(), ModContent.ItemType<Items.DamnedSoul>() }, // Drops
-                    "If there is a player with more than 200 max life, there is a 1/12 chance each night for The Harrowing to begin. During New Moons, there is a 1/4 chance instead", // Spawn Info
-                    "",
-                    "TerraLeague/NPCs/BlackMist_Checklist",
-                    "TerraLeague/Gores/MistPuff_1"
-                    );
-            }
+            //    bossChecklist.Call(
+            //        "AddEvent",  // Call
+            //        2.8f,       // Boss Progresion
+            //        new List<int>() { ModContent.NPCType<TheUndying_1>(), ModContent.NPCType<TheUndying_Archer>(), ModContent.NPCType<TheUndying_Necromancer>(), ModContent.NPCType<BansheeHive>(), ModContent.NPCType<EtherealRemitter>(), ModContent.NPCType<FallenCrimera>(), ModContent.NPCType<MistEater>(), ModContent.NPCType<SoulBoundSlime>(), ModContent.NPCType<SpectralBitter>(), ModContent.NPCType<UnleashedSpirit>(), ModContent.NPCType<Scuttlegeist>(), ModContent.NPCType<MistDevourer_Head>(), ModContent.NPCType<ShelledHorror>(), ModContent.NPCType<SpectralShark>(), ModContent.NPCType<Mistwraith>(), ModContent.NPCType<ShadowArtilery>() }, // NPC Types
+            //        this, // Mod
+            //        "The Harrowing", // Name
+            //        (Func<bool>)(() => Common.ModSystems.WorldSystem.BlackMistDefeated), // Completion Check
+            //        0, // Spawn Item 
+            //        0, // Collection Items
+            //        new List<int>() { ModContent.ItemType<EternalFlame>(), ModContent.ItemType<Items.Tools.FadingMemories>(), ModContent.ItemType<Nightbloom>(), ModContent.ItemType<Items.Armor.NecromancersHood>(), ModContent.ItemType<Items.Armor.NecromancersRobe>(), ModContent.ItemType<Items.DamnedSoul>() }, // Drops
+            //        "If there is a player with more than 200 max life, there is a 1/12 chance each night for The Harrowing to begin. During New Moons, there is a 1/4 chance instead", // Spawn Info
+            //        "",
+            //        "TerraLeague/NPCs/BlackMist_Checklist",
+            //        "TerraLeague/Gores/MistPuff_1"
+            //        );
+            //}
         }
 
         /// <summary>
@@ -247,7 +159,6 @@ namespace TerraLeague
         public override void Unload()
         {
             instance = null;
-            ShieldEffect = null;
             ToggleStats = null;
             Item1 = null;
             Item2 = null;
@@ -263,149 +174,34 @@ namespace TerraLeague
             RAbility = null;
             //Trinket = null;
 
-            StopHealthandManaText = false;
             base.Unload();
         }
 
-        public override void UpdateUI(GameTime gameTime)
-        {
-            if (ToggleStats.JustReleased)
-            {
-                ItemUI.extraStats = !ItemUI.extraStats;
-            }
 
-            base.UpdateUI(gameTime);
-        }
-
-        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
-        {
-            int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
-
-            if (UseModResourceBar)
-            {
-                if (resourseBar < 0)
-                    resourseBar = 7;
-                else
-                {
-                    layers[resourseBar].Active = false;
-                    //layers.RemoveAt(resourseBar);
-                }
-                layers.Insert(resourseBar, new LegacyGameInterfaceLayer("TerraLeague: Resource Bar",
-                delegate
-                {
-                    if (HealthbarUI.visible)
-                    {
-                        HealthbarInterface.Update(Main._drawInterfaceGameTime);
-                        healthbarUI.Draw(Main.spriteBatch);
-                    }
-                    return true;
-                },
-                InterfaceScaleType.UI));
-
-                layers.Insert(resourseBar, new LegacyGameInterfaceLayer("TerraLeague: Resource Bar",
-                delegate
-                {
-                    if (HealthbarUI.visible)
-                    {
-                        tooltipInterface.Update(Main._drawInterfaceGameTime);
-                        tooltipUI.Draw(Main.spriteBatch);
-                    }
-                    return true;
-                },
-                InterfaceScaleType.UI));
-            }
-
-            int inventoryLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-            if (inventoryLayer < 0)
-                inventoryLayer = 4;
-
-            layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
-            "TerraLeague: Stat Hud",
-            delegate
-            {
-                if (StatUI.visible < 0)
-                {
-                    userInterface1.Update(Main._drawInterfaceGameTime);
-                    statUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            layers.Insert(0, new LegacyGameInterfaceLayer(
-            "TerraLeague: Player Hud",
-            delegate
-            {
-                PlayerInterface.Update(Main._drawInterfaceGameTime);
-                playerUI.Draw(Main.spriteBatch);
-                return true;
-            },
-            InterfaceScaleType.Game));
-            layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
-            "TerraLeague: Item Hud",
-            delegate
-            {
-                if (ItemUI.visible)
-                {
-                    userInterface2.Update(Main._drawInterfaceGameTime);
-                    itemUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            layers.Insert(resourseBar, new LegacyGameInterfaceLayer(
-            "TerraLeague: Ability Hud",
-            delegate
-            {
-                if (AbilityUI.visible)
-                {
-                    userInterface3.Update(Main._drawInterfaceGameTime);
-                    abilityUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            layers.Insert(resourseBar, new LegacyGameInterfaceLayer(
-            "TerraLeague: Teleport UI",
-            delegate
-            {
-                if (TeleportUI.visible)
-                {
-                    teleportInterface.Update(Main._drawInterfaceGameTime);
-                    teleportUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
-        }
-
-        public override void UpdateMusic(ref int music, ref MusicPriority priority)
-        {
-            if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active)
-            {
-                return;
-            }
-            if (Main.LocalPlayer.HasBuff(ModContent.BuffType<InTargonArena>()) && NPC.CountNPCS(ModContent.NPCType<TargonBossNPC>()) > 0)
-            {
-                music = MusicID.Boss2;
-                priority = MusicPriority.BossHigh;
-            }
-            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
-            {
-                music = MusicID.Eerie;
-                priority = MusicPriority.Environment;
-            }
-            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneVoidPortal)
-            {
-                music = MusicID.Hell;
-                priority = MusicPriority.Environment;
-            }
-            base.UpdateMusic(ref music, ref priority);
-        }
+        // Move to Biome class
+        //public override void UpdateMusic(ref int music, ref MusicPriority priority)
+        //{
+        //    if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active)
+        //    {
+        //        return;
+        //    }
+        //    if (Main.LocalPlayer.HasBuff(ModContent.BuffType<InTargonArena>()) && NPC.CountNPCS(ModContent.NPCType<TargonBossNPC>()) > 0)
+        //    {
+        //        music = MusicID.Boss2;
+        //        priority = MusicPriority.BossHigh;
+        //    }
+        //    if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+        //    {
+        //        music = MusicID.Eerie;
+        //        priority = MusicPriority.Environment;
+        //    }
+        //    if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneVoidPortal)
+        //    {
+        //        music = MusicID.Hell;
+        //        priority = MusicPriority.Environment;
+        //    }
+        //    base.UpdateMusic(ref music, ref priority);
+        //}
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
@@ -498,35 +294,94 @@ namespace TerraLeague
 
         public override void AddRecipes()
         {
-            RecipeFinder finder = new RecipeFinder();
-            finder.AddIngredient(ItemID.RottenChunk, 5);
-
-            foreach (Recipe recipe in finder.SearchRecipes())
+            for (int i = 0; i < Recipe.numRecipes; i++)
             {
-                RecipeEditor editor = new RecipeEditor(recipe);
-                editor.DeleteRecipe();
+                Recipe recipe = Main.recipe[i];
+                // All recipes that require wood will now need 100% more
+                if (recipe.HasResult(ItemID.Leather))
+                {
+                    if (recipe.TryGetIngredient(ItemID.RottenChunk, out Item ingredient))
+                    {
+                        recipe.RemoveIngredient(ingredient);
+                        recipe.AddRecipeGroup("TerraLeague:EvilDropGroup", 3);
+                    }
+                }
             }
 
-            ModRecipe leather1 = new ModRecipe(this);
-            leather1.AddRecipeGroup("TerraLeague:EvilDropGroup", 3);
-            leather1.AddTile(TileID.WorkBenches);
-            leather1.SetResult(ItemID.Leather, 2);
-            leather1.AddRecipe();
+            CreateRecipe(ItemID.SharkToothNecklace)
+                .AddIngredient(ItemID.SharkFin, 4)
+                .AddIngredient(ItemID.Chain, 4)
+                .AddIngredient(ItemID.SoulofNight, 8)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
 
-            ModRecipe sharktooth = new ModRecipe(this);
-            sharktooth.AddIngredient(ItemID.SharkFin, 4);
-            sharktooth.AddIngredient(ItemID.Chain, 4);
-            sharktooth.AddIngredient(ItemID.SoulofNight, 8);
-            sharktooth.AddTile(TileID.MythrilAnvil);
-            sharktooth.SetResult(ItemID.SharkToothNecklace);
-            sharktooth.AddRecipe();
+            CreateRecipe(ItemID.SharkToothNecklace)
+                .AddIngredient(ItemID.Stinger, 5)
+                .AddIngredient(ItemID.Leather, 2)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
 
-            ModRecipe feralClaws = new ModRecipe(this);
-            feralClaws.AddIngredient(ItemID.Stinger, 5);
-            feralClaws.AddIngredient(ItemID.Leather, 2);
-            feralClaws.AddTile(TileID.MythrilAnvil);
-            feralClaws.SetResult(ItemID.FeralClaws);
-            feralClaws.AddRecipe();
+            CreateRecipe(ItemID.PirateShirt)
+                .AddIngredient(ModContent.ItemType<BrassBar>(), 10)
+                .AddIngredient(ItemID.Silk, 4)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.PirateHat)
+                .AddIngredient(ModContent.ItemType<BrassBar>(), 16)
+                .AddIngredient(ItemID.Silk, 10)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.PiratePants)
+                .AddIngredient(ModContent.ItemType<BrassBar>(), 12)
+                .AddIngredient(ItemID.Silk, 6)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe(ItemID.BuccaneerBandana)
+                .AddIngredient(ModContent.ItemType<BrassBar>(), 10)
+                .AddIngredient(ItemID.HellstoneBar, 10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            CreateRecipe(ItemID.BuccaneerShirt)
+                .AddIngredient(ModContent.ItemType<BrassBar>(), 16)
+                .AddIngredient(ItemID.HellstoneBar, 16)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            CreateRecipe(ItemID.BuccaneerPants)
+                .AddIngredient(ModContent.ItemType<BrassBar>(), 12)
+                .AddIngredient(ItemID.HellstoneBar, 12)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            CreateRecipe(ItemID.CobaltShield)
+            .AddRecipeGroup("TerraLeague:Tier1Bar", 10)
+            .AddIngredient(ItemID.SoulofLight, 10)
+            .AddTile(TileID.Anvils)
+            .Register();
+
+            CreateRecipe(ItemID.WandofSparking)
+            .AddRecipeGroup("Wood", 10)
+            .AddIngredient(ItemID.FallenStar, 1)
+            .AddIngredient(ItemID.Fireblossom, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+
+            CreateRecipe(ItemID.Muramasa)
+            .AddIngredient(ModContent.ItemType<ManaBar>(), 18)
+            .AddIngredient(ItemID.Bone, 50)
+            .AddTile(TileID.Anvils)
+            .Register();
+
+            CreateRecipe(ItemID.BandofStarpower)
+            .AddIngredient(ItemID.ManaCrystal, 1)
+            .AddRecipeGroup("IronBar", 10)
+            .AddIngredient(ModContent.ItemType<ManaBar>(), 5)
+            .AddTile(TileID.Anvils)
+            .Register();
 
             base.AddRecipes();
         }
@@ -572,9 +427,13 @@ namespace TerraLeague
 
                 Vector2 pos = new Vector2((float)X, (float)Y) + center;
 
+                Vector2 velocity = new Vector2(pulseStrength, 0).RotatedBy((pos-center).ToRotation());
+                velocity.X *= 1.1f;
+
                 Dust dust = Dust.NewDustPerfect(pos, dustType, (center - pos) * pulseStrength, 0, color, scale);
                 dust.noGravity = true;
                 dust.noLight = noLight;
+                dust.velocity.X *= 1.1f;
             }
         }
 
@@ -588,6 +447,7 @@ namespace TerraLeague
             for (int i = 0; i < dustCount; i++)
             {
                 Vector2 position = new Vector2(pointA.X + (xDif * (i / (float)dustCount)), pointA.Y + (yDif * (i / (float)dustCount)));
+                position += new Vector2(Main.rand.NextFloat(xDif / dustCount), Main.rand.NextFloat(yDif / dustCount));
                 Dust dust = Dust.NewDustPerfect(position, dustType, null, 0, color, scale);
                 dust.velocity = velocity;
                 dust.noGravity = true;
@@ -659,11 +519,11 @@ namespace TerraLeague
         /// <returns></returns>
         internal static int FindAccessorySlotOnPlayer(Player player, ModItem accessory)
         {
-            if (accessory.item.accessory && player.whoAmI == Main.LocalPlayer.whoAmI)
+            if (accessory.Item.accessory && player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    if (player.armor[i + 3].type == accessory.item.type)
+                    if (player.armor[i + 3].type == accessory.Item.type)
                     {
                         return i;
                     }
@@ -822,44 +682,7 @@ namespace TerraLeague
         /// <param name="key"></param>
         /// <returns></returns>
 
-        public static void HealthAndManaHitBoxes()
-        {
-            if (!StopHealthandManaText)
-            {
-                return;
-            }
-
-            bool isHealthOver200 = (Main.LocalPlayer.statLifeMax2 > 200);
-            int heartWidthTotal = isHealthOver200 ? 260 : (26 * Main.player[Main.myPlayer].statLifeMax2 / 20);
-
-            int healthBarX = 500 + (Main.screenWidth - 800);
-            int healthBarY = 32;
-            int healthBarWidth = 500 + heartWidthTotal + (Main.screenWidth - 800);
-            int healthBarHeight = isHealthOver200 ? Main.heartTexture.Height + 32 : 32;
-
-            Rectangle healthBar = new Rectangle(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
-
-
-            int manaBarX = 762 + (Main.screenWidth - 800);
-            int manaBarY = 30;
-            int manaBarHeight = 28 * Main.LocalPlayer.statManaMax2 / 20;
-            int manaBarWidth = Main.manaTexture.Width + 2;
-
-            Rectangle manaBar = new Rectangle(manaBarX, manaBarY, manaBarWidth, manaBarHeight);
-
-            StopHealthManaMouseOver(healthBar, manaBar);
-        }
-
-        public static void StopHealthManaMouseOver(Rectangle HealthHitBox, Rectangle ManaHitBox)
-        {
-            Main.mouseText = HealthHitBox.Contains(Main.mouseX, Main.mouseY) ||
-                ManaHitBox.Contains(Main.mouseX, Main.mouseY);
-        }
-
-        public override void PostDrawInterface(SpriteBatch spriteBatch)
-        {
-            HealthAndManaHitBoxes();
-        }
+        
 
         public static int ScaleWithUseTimeMulti(int value, Item item, Player player)
         {
@@ -880,11 +703,70 @@ namespace TerraLeague
             else if (pitch < -1)
                 pitch = -1;
 
-            var sound = Main.PlaySound(new LegacySoundStyle(soundID, style), position);
+            var sound = Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(soundID, style), position);
             if (sound != null)
                 sound.Pitch = pitch;
 
             return sound;
+        }
+
+        public static void GetTextureIfNull(ref Texture2D texture, string path)
+        {
+            if (texture == null || texture.Width <= 1)
+                texture = ModContent.Request<Texture2D>(path).Value;
+        }
+
+        public static void DrawCircle(Vector2 center, float radius, Color color = default)
+        {
+            Texture2D texture = Terraria.GameContent.TextureAssets.FishingLine.Value;
+            Rectangle rectangle = texture.Frame(1, 1, 0, 0, 0, 0);
+            Vector2 origin = new Vector2((float)(rectangle.Width / 2), 2f);
+
+            int points = 10;
+            for (int i = points; i < radius; i++)
+            {
+                Vector2 point1 = new Vector2(radius, 0);
+                Vector2 point2 = point1.RotatedBy(MathHelper.TwoPi / i);
+
+                if (Vector2.Distance(point1, point2) < 16)
+                {
+                    points = i;
+                    break;
+                }
+            }
+
+            List<Vector2> pointList = new List<Vector2>();
+            for (int i = 0; i < points + 1; i++)
+            {
+                pointList.Add(center + new Vector2(radius, 0).RotatedBy(MathHelper.TwoPi / points * i));
+            }
+
+            Vector2 value2 = pointList[0];
+            //Main.spriteBatch.Begin();
+
+            for (int i = 0; i < points; i++)
+            {
+                Vector2 vector = pointList[i];
+                Vector2 vector2 = pointList[i + 1] - vector;
+                float rotation = vector2.ToRotation() - 1.57079637f;
+                rotation -= 0.04f;
+                //Microsoft.Xna.Framework.Color Color = Lighting.GetColor(vector.ToTileCoordinates(), color);
+                Vector2 scale = new Vector2(1f, (vector2.Length() + 2f) / (float)rectangle.Height);
+                Main.spriteBatch.Draw(texture, value2 - Main.screenPosition, rectangle, color, rotation, origin, scale, SpriteEffects.None, 0f);
+                value2 += vector2;
+                //Vector2 point1 = new Vector2(radius, 0).RotatedBy(MathHelper.TwoPi / points * i);
+                //Vector2 point2 = new Vector2(radius, 0).RotatedBy(MathHelper.TwoPi / points * (i + 1));
+
+                //float rotation = point2.ToRotation() - 1.57079637f;
+                //Color LightColor = Lighting.GetColor((point1 + center).ToTileCoordinates(), Color.White);
+                //Vector2 scale = new Vector2(1f, (point2.Length() + 2f) / (float)rectangle.Height);
+
+                //Main.spriteBatch.Draw(texture, (center + point2) - Main.screenPosition, rectangle, LightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+
+
+                //Dust.NewDustPerfect((center + point2), DustID.Dirt);
+            }
+            //Main.spriteBatch.End();
         }
     }
 }

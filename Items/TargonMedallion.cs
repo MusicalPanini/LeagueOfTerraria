@@ -4,6 +4,7 @@ using TerraLeague.NPCs;
 using TerraLeague.NPCs.TargonBoss;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -18,19 +19,20 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Targon Medallion");
             Tooltip.SetDefault("Use in the Arena to summon the Gate Keeper");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 
         public override void SetDefaults()
         {
-            item.rare = ItemRarityID.Blue;
-            item.width = 32;
-            item.height = 32;
-            item.maxStack = 99;
-            item.useTime = 10;
-            item.useAnimation = 10;
-            item.useStyle = ItemUseStyleID.HoldingUp;
-            item.consumable = true;
-            item.UseSound = new LegacySoundStyle(2, 4);
+            Item.rare = ItemRarityID.Blue;
+            Item.width = 32;
+            Item.height = 32;
+            Item.maxStack = 99;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.consumable = true;
+            Item.UseSound = new LegacySoundStyle(2, 4);
         }
 
         public override bool CanUseItem(Player player)
@@ -42,16 +44,16 @@ namespace TerraLeague.Items
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("Targon's Challenge has begun", 0, 200, 255);
 
-                    NPC.NewNPC(TerraLeagueWORLDGLOBAL.TargonCenterX, ((int)Main.worldSurface * 16) + 64, NPCType<TargonBossNPC>());
+                    NPC.NewNPC(Common.ModSystems.WorldSystem.TargonCenterX, ((int)Main.worldSurface * 16) + 64, NPCType<TargonBossNPC>());
                 }
                 else
                 {
-                    NetMessage.BroadcastChatMessage(NetworkText.FromKey("Targon's Challenge has begun", new object[0]), new Color(0, 200, 255), -1);
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Targon's Challenge has begun", new object[0]), new Color(0, 200, 255), -1);
 
-                    TerraLeagueNPCsGLOBAL.PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBossNPC>(), new Vector2(TerraLeagueWORLDGLOBAL.TargonCenterX, (float)(Main.worldSurface * 16) + 64));
+                    TerraLeagueNPCsGLOBAL.PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBossNPC>(), new Vector2(Common.ModSystems.WorldSystem.TargonCenterX, (float)(Main.worldSurface * 16) + 64));
                 }
 
-                item.stack -= 1;
+                Item.stack -= 1;
 
                 return base.CanUseItem(player);
             }
@@ -67,11 +69,11 @@ namespace TerraLeague.Items
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 4);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 4)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

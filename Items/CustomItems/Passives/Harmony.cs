@@ -32,11 +32,11 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void PostPlayerUpdate(Player player, ModItem modItem)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem != null)
+                if (player.armor[i].ModItem != null)
                 {
-                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
+                    LeagueItem legItem = player.armor[i].ModItem as LeagueItem;
 
                     if (legItem != null)
                     {

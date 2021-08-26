@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("BLOOD POOL") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Store 10% of magic and minion damage as charge up to " + BloodPoolMaxStack +
+            return TooltipName("BLOOD POOL") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Store 10% of magic and summon damage as charge up to " + BloodPoolMaxStack +
                 "\nHealing an ally will consume the charge and heal that much extra");
         }
 
@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
         {
-            if (proj.magic || TerraLeague.IsMinionDamage(proj))
+            if (proj.DamageType == DamageClass.Magic || proj.DamageType == DamageClass.Summon)
             {
                 AddStat(player, BloodPoolMaxStack, damage * 0.1f);
             }

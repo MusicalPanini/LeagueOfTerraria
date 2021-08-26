@@ -19,80 +19,80 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Feast");
-            ProjectileID.Sets.DontAttachHideToAlpha[projectile.type] = true;
+            ProjectileID.Sets.DontAttachHideToAlpha[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 64;
-            projectile.height = 32;
-            projectile.alpha = 255;
-            projectile.timeLeft = 100;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = false;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 64;
+            Projectile.height = 32;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 100;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = false;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            projectile.scale = 3f + 2 * (int)projectile.ai[0];
-            projectile.width = (int)(64 * projectile.scale);
-            projectile.height = (int)(32 * projectile.scale);
-            drawOriginOffsetX = -32;
-            drawOriginOffsetY = 32 + 32 * (int)projectile.ai[0];
+            Projectile.scale = 3f + 2 * (int)Projectile.ai[0];
+            Projectile.width = (int)(64 * Projectile.scale);
+            Projectile.height = (int)(32 * Projectile.scale);
+            DrawOriginOffsetX = -32;
+            DrawOriginOffsetY = 32 + 32 * (int)Projectile.ai[0];
 
-            Vector2 pos = Main.player[projectile.owner].MountedCenter;
+            Vector2 pos = Main.player[Projectile.owner].MountedCenter;
             pos.Y += YDis;
-            projectile.Center = pos;
+            Projectile.Center = pos;
 
-            if ((int)projectile.ai[1] != 1)
+            if ((int)Projectile.ai[1] != 1)
             {
-                if (projectile.timeLeft < 100 - 14)
+                if (Projectile.timeLeft < 100 - 14)
                 {
-                    projectile.alpha = 0;
-                    projectile.friendly = true;
-                    projectile.timeLeft = 48;
-                    projectile.extraUpdates = 1;
-                    projectile.ai[1] = 1;
-                    TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 3, 6, -0.2f);
-                    TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 2, 1, -0.3f);
+                    Projectile.alpha = 0;
+                    Projectile.friendly = true;
+                    Projectile.timeLeft = 48;
+                    Projectile.extraUpdates = 1;
+                    Projectile.ai[1] = 1;
+                    TerraLeague.PlaySoundWithPitch(Main.player[Projectile.owner].MountedCenter, 3, 6, -0.2f);
+                    TerraLeague.PlaySoundWithPitch(Main.player[Projectile.owner].MountedCenter, 2, 1, -0.3f);
                 }
                 else
                 {
-                    //YDis += 8f + 4 * (int)projectile.ai[0];
-                    YDis = -(4 / 7f) * (float)Math.Pow(100 - projectile.timeLeft - 14, 2) + 112;
-                    YDis *= 1 + 0.5f * (int)projectile.ai[0];
-                    projectile.alpha -= 10;
+                    //YDis += 8f + 4 * (int)Projectile.ai[0];
+                    YDis = -(4 / 7f) * (float)Math.Pow(100 - Projectile.timeLeft - 14, 2) + 112;
+                    YDis *= 1 + 0.5f * (int)Projectile.ai[0];
+                    Projectile.alpha -= 10;
                 }
             }
-            if (projectile.timeLeft > 40 && projectile.timeLeft <= 42 && (int)projectile.ai[1] == 1)
-                YDis += -64 + -32 * (int)projectile.ai[0];
-            if (projectile.timeLeft <= 40 && (int)projectile.ai[1] == 1)
+            if (Projectile.timeLeft > 40 && Projectile.timeLeft <= 42 && (int)Projectile.ai[1] == 1)
+                YDis += -64 + -32 * (int)Projectile.ai[0];
+            if (Projectile.timeLeft <= 40 && (int)Projectile.ai[1] == 1)
             {
-                projectile.extraUpdates = 0;
-                projectile.friendly = false;
+                Projectile.extraUpdates = 0;
+                Projectile.friendly = false;
 
-                if (projectile.timeLeft <= 30)
-                    projectile.alpha += 255 / 30;
+                if (Projectile.timeLeft <= 30)
+                    Projectile.alpha += 255 / 30;
             }
 
             if (Main.rand.Next(0, 2) == 0)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Moss_Purple, 0f, 0f, 100, default, projectile.ai[0] + 1);
+                Dust dustIndex = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleMoss, 0f, 0f, 100, default, Projectile.ai[0] + 1);
                 dustIndex.noGravity = true;
-                dustIndex.alpha = projectile.alpha;
+                dustIndex.alpha = Projectile.alpha;
             }
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (target.life <= Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().feastStacks && !target.immortal)
+            if (target.life <= Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().feastStacks && !target.immortal)
             {
-                Main.player[projectile.owner].ApplyDamageToNPC(target, 99999, 0, 0, false);
+                Main.player[Projectile.owner].ApplyDamageToNPC(target, 99999, 0, 0, false);
             }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
@@ -102,7 +102,7 @@ namespace TerraLeague.Projectiles
         {
             if (target.life <= 0)
             {
-                Player player = Main.player[projectile.owner];
+                Player player = Main.player[Projectile.owner];
 
                 Feast feast = new Feast(GetModItem(ItemType<TerrorOfTheVoid>()));
 

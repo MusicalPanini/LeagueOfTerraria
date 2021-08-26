@@ -17,15 +17,16 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Gargoyle's Stoneplate");
             Tooltip.SetDefault("Increases armor by 5" +
                 "\nIncreases resist by 5");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Active = new Metallicize(90);
             Passives = new Passive[]
@@ -42,18 +43,18 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ChainVest>(), 1);
-            recipe.AddIngredient(ItemType<Stopwatch>(), 1);
-            recipe.AddIngredient(ItemType<NegatronCloak>(), 1);
-            recipe.AddIngredient(ItemType<Petricite>(), 20);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 5);
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 5);
-            recipe.AddIngredient(ItemID.Marble, 50);
-            recipe.AddIngredient(ItemID.SoulofMight, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ChainVest>(), 1)
+            .AddIngredient(ItemType<Stopwatch>(), 1)
+            .AddIngredient(ItemType<NegatronCloak>(), 1)
+            .AddIngredient(ItemType<Petricite>(), 20)
+            .AddIngredient(ItemType<SilversteelBar>(), 5)
+            .AddRecipeGroup("TerraLeague:Tier3Bar", 5)
+            .AddIngredient(ItemID.Marble, 50)
+            .AddIngredient(ItemID.SoulofMight, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

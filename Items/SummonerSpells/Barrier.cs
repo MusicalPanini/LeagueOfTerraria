@@ -13,10 +13,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Barrier Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Barrier";
+            return "TerraLeague/Items/SummonerSpells/Barrier";
         }
 
         public override string GetSpellName()
@@ -68,7 +69,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            //Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
+            //Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 70, 0.75f);
 
             TerraLeague.DustElipce(128, 128, 0, player.MountedCenter, 174, default, 2, 180, true, 0.02f);

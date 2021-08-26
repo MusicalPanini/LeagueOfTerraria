@@ -23,15 +23,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\n+1 melee and ranged life steal"/* +
                 "\n12% decreased maximum life" +
                 "\n12% increased damage taken"*/);
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
 
             Active = new Damnation(250, 60);
             Passives = new Passive[]
@@ -41,8 +42,8 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;//0.03;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;//0.03;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12f;
@@ -53,14 +54,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Cutlass>(), 1);
-            recipe.AddIngredient(ItemType<RecurveBow>(), 1);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddIngredient(ItemID.BrokenHeroSword, 1);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Cutlass>(), 1)
+            .AddIngredient(ItemType<RecurveBow>(), 1)
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddIngredient(ItemID.BrokenHeroSword, 1)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

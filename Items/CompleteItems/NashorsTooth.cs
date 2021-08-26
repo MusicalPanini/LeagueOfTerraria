@@ -13,18 +13,19 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nashor's Tooth");
-            Tooltip.SetDefault("7% increased minion damage" +
+            Tooltip.SetDefault("7% increased summon damage" +
                 "\n25% increased melee speed" +
                 "\nIncreases ability haste by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -33,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.07;
+            player.GetDamage(DamageClass.Summon) += 0.07f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.meleeSpeed += 0.25f;
             base.UpdateAccessory(player, hideVisual);
@@ -41,15 +42,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Stinger>(), 1);
-            recipe.AddIngredient(ItemType<Codex>(), 1);
-            recipe.AddIngredient(ItemID.Excalibur, 1);
-            recipe.AddIngredient(ItemType<VoidBar>(), 8);
-            recipe.AddIngredient(ItemID.SoulofFright, 4);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Stinger>(), 1)
+            .AddIngredient(ItemType<Codex>(), 1)
+            .AddIngredient(ItemID.Excalibur, 1)
+            .AddIngredient(ItemType<VoidBar>(), 8)
+            .AddIngredient(ItemID.SoulofFright, 4)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

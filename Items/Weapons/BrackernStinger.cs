@@ -3,6 +3,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -15,27 +16,28 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Brackern Stinger");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 9;
-            item.width = 32;
-            item.height = 32;
-            item.melee = true;
-            item.useTime = 45;
-            item.useAnimation = 45;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 2;
-            item.value = 10000;
-            item.rare = ItemRarityID.Green;
-            item.UseSound = new LegacySoundStyle(2, 101);
-            item.shootSpeed = 1f;
-            item.shoot = ProjectileType<BrackernStinger_Whip>();
-            item.noMelee = true;
-            item.noUseGraphic = true;
+            Item.damage = 9;
+            Item.width = 32;
+            Item.height = 32;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 45;
+            Item.useAnimation = 45;
+            Item.useStyle = ItemUseStyleID.Thrust;
+            Item.knockBack = 2;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = new LegacySoundStyle(2, 101);
+            Item.shootSpeed = 1f;
+            Item.shoot = ProjectileType<BrackernStinger_Whip>();
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new CrystallineExoskeleton(this));
             abilityItem.ChampQuote = "Feel my sting!";
             abilityItem.IsAbilityItem = true;
@@ -48,23 +50,22 @@ namespace TerraLeague.Items.Weapons
             return false;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0,
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0,
                 Main.rand.Next(-100, 100) * 0.001f * player.gravDir);
             return false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.AntlionMandible, 6);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 10);
-            recipe.AddIngredient(ItemID.Amethyst, 1);
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+                .AddIngredient(ItemID.AntlionMandible, 6)
+                .AddRecipeGroup("TerraLeague:GoldGroup", 10)
+                .AddIngredient(ItemID.Amethyst, 1)
+                .AddIngredient(ItemType<Sunstone>(), 10)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

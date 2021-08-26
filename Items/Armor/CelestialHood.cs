@@ -15,15 +15,16 @@ namespace TerraLeague.Items.Armor
             Tooltip.SetDefault("Increases maximum mana by 30" +
                 "\nIncreases ability haste by 20" +
                 "\nIncreases item and summoner spell haste by 15");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 20;
-            item.value = 6000 * 5;
-            item.rare = ItemRarityID.Green;
-            item.defense = 3;
+            Item.width = 22;
+            Item.height = 20;
+            Item.value = 6000 * 5;
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 3;
         }
 
 
@@ -35,15 +36,10 @@ namespace TerraLeague.Items.Armor
             player.GetModPlayer<PLAYERGLOBAL>().itemHaste += 15;
         }
 
-        public override void UpdateVanity(Player player, EquipType type)
-        {
-            base.UpdateVanity(player, type);
-        }
-
         public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
         {
             drawAltHair = true;
-            base.DrawHair(ref drawHair, ref drawAltHair);
+            //base.DrawHair(ref drawHair, ref drawAltHair);
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -62,19 +58,16 @@ namespace TerraLeague.Items.Armor
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             player.setBonus = "Gain " + LeagueTooltip.TooltipValue(0, false, "%", new System.Tuple<int, ScaleType>(25, ScaleType.Haste)) + " increased critical strike chance";
-            player.meleeCrit += modPlayer.abilityHasteLastStep / 4;
-            player.rangedCrit += modPlayer.abilityHasteLastStep / 4;
-            player.magicCrit += modPlayer.abilityHasteLastStep / 4;
+            player.GetCritChance(DamageClass.Generic) += modPlayer.abilityHasteLastStep / 4;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 10);
-            recipe.AddIngredient(ItemID.Silk, 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 10)
+            .AddIngredient(ItemID.Silk, 10)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

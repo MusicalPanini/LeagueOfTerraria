@@ -9,7 +9,7 @@ namespace TerraLeague.Buffs
     {
         int damage = 0;
 
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Onslaught");
             Description.SetDefault("Rapidly attack near by enemies");
@@ -41,7 +41,7 @@ namespace TerraLeague.Buffs
                     Vector2 pos = new Vector2(X, Y);
                     Vector2 vel = (npc.Center - pos).SafeNormalize(Vector2.One);
 
-                    Projectile.NewProjectileDirect(pos, vel, ModContent.ProjectileType<Projectiles.Severum_Onslaught>(), damage, 0, player.whoAmI, npc.whoAmI);
+                    Projectile.NewProjectileDirect(player.GetProjectileSource_Item(new Items.Weapons.Severum().Item), pos, vel, ModContent.ProjectileType<Projectiles.Severum_Onslaught>(), damage, 0, player.whoAmI, npc.whoAmI);
                 }
             }
 

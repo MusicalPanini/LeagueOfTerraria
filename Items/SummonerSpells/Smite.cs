@@ -12,11 +12,12 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Smite Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Smite";
+            return "TerraLeague/Items/SummonerSpells/Smite";
         }
 
         public override string GetSpellName()
@@ -60,7 +61,7 @@ namespace TerraLeague.Items.SummonerSpells
             int npc = Targeting.NPCMouseIsHovering();
             if (npc != -1)
             {
-                Projectile.NewProjectile(new Vector2(Main.npc[npc].Center.X + Main.rand.NextFloat(-400, 400), Main.npc[npc].Center.Y - 1500), Vector2.Zero, ProjectileType<Summoner_Smite>(), GetDamageStat(), 0, player.whoAmI, npc);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(Item), new Vector2(Main.npc[npc].Center.X + Main.rand.NextFloat(-400, 400), Main.npc[npc].Center.Y - 1500), Vector2.Zero, ProjectileType<Summoner_Smite>(), GetDamageStat(), 0, player.whoAmI, npc);
 
                 SetCooldowns(player, spellSlot);
             }

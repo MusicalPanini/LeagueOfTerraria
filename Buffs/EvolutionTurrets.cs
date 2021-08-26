@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class EvolutionTurrets : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Evolution Turret");
             Description.SetDefault("A machine that fights for you!");

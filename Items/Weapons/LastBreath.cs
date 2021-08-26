@@ -16,25 +16,26 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Last Breath");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
         {
-            item.damage = 22;
-            item.melee = true;
-            item.width = 58;
-            item.height = 56;
-            item.useTime = 35;
-            item.useAnimation = 35;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 2;
-            item.value = 48000;
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item1;
-            item.crit = 25;
-            item.autoReuse = true;
-            item.shootSpeed = 8f;
+            Item.damage = 22;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 58;
+            Item.height = 56;
+            Item.useTime = 35;
+            Item.useAnimation = 35;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 2;
+            Item.value = 48000;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item1;
+            Item.crit = 25;
+            Item.autoReuse = true;
+            Item.shootSpeed = 8f;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new SteelTempest(this));
             abilityItem.ChampQuote = "No cure for fools";
             abilityItem.IsAbilityItem = true;
@@ -42,12 +43,12 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Katana, 1);
-            recipe.AddIngredient(ItemID.AnkletoftheWind, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Katana, 1)
+            .AddIngredient(ItemID.AnkletoftheWind, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

@@ -12,24 +12,25 @@ namespace TerraLeague.Items
         {
             DisplayName.SetDefault("True Ice Chunk");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 24;
-            item.height = 22;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.buyPrice(0, 0, 7, 50);
+            Item.maxStack = 999;
+            Item.width = 24;
+            Item.height = 22;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(0, 0, 7, 50);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.IceBlock, 32);
-            recipe.AddTile(TileID.IceMachine);
-            recipe.SetResult(this, 2);
-            recipe.AddRecipe();
+            CreateRecipe(2)
+            .AddIngredient(ItemID.IceBlock, 32)
+            .AddTile(TileID.IceMachine)
+            .Register();
+            
         }
     }
 }

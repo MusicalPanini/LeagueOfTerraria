@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/RampantGrowth";
+            return "TerraLeague/AbilityImages/RampantGrowth";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.5);
+            return (int)(abilityItem.Item.damage * 0.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -65,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
-              ) + " minion damage";
+              ) + " summon damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -81,10 +81,10 @@ namespace TerraLeague.Items.Weapons.Abilities
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 10);
                 int projType = ProjectileType<StrangleThornsTome_Seed>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.SUM);
-                float knockback = abilityItem.item.knockBack;
+                float knockback = abilityItem.Item.knockBack;
 
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(position, velocity * 1.25f, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity * 1.25f, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);
             }
         }

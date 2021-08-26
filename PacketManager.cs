@@ -15,6 +15,7 @@ using static Terraria.ModLoader.ModContent;
 using System.Collections.Generic;
 using Terraria.Localization;
 using TerraLeague.UI;
+using TerraLeague.Common.ModSystems;
 
 namespace TerraLeague
 {
@@ -1685,7 +1686,7 @@ namespace TerraLeague
                 if (moditem != null)
                 {
                     moditem.SetDefaults();
-                    AbilityItemGLOBAL abilityItem = moditem.item.GetGlobalItem<AbilityItemGLOBAL>();
+                    AbilityItemGLOBAL abilityItem = moditem.Item.GetGlobalItem<AbilityItemGLOBAL>();
                     abilityItem.GetAbility(AbilityType).Efx(Main.player[Caster]);
                 }
             }
@@ -1722,7 +1723,7 @@ namespace TerraLeague
                         }
                     }
                 }
-                Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f));
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f));
             }
         }
 
@@ -1788,7 +1789,7 @@ namespace TerraLeague
             bool active = reader.ReadBoolean();
             TerraLeague.Log("Recieved Global Black Mist is now set to " + active, Color.SeaGreen);
 
-            TerraLeagueWORLDGLOBAL.BlackMistEvent = active;
+            WorldSystem.BlackMistEvent = active;
         }
     }
 }

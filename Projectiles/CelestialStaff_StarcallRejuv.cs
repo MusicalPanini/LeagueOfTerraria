@@ -12,46 +12,46 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             DisplayName.SetDefault("Starcall Rejuvenation");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.alpha = 255;
-            projectile.timeLeft = 1000;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
-            Vector2 move = player.Center - projectile.Center;
+            Vector2 move = player.Center - Projectile.Center;
 
             AdjustMagnitude(ref move);
-            projectile.velocity = (projectile.velocity + move);
-            AdjustMagnitude(ref projectile.velocity);
+            Projectile.velocity = (Projectile.velocity + move);
+            AdjustMagnitude(ref Projectile.velocity);
 
-            if (projectile.Hitbox.Intersects(player.Hitbox))
+            if (Projectile.Hitbox.Intersects(player.Hitbox))
             {
                 HitPlayer(player);
             }
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 1.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(248, 137, 89), 1.5f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 1.5f);
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(237, 137, 164), 1.5f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -73,7 +73,7 @@ namespace TerraLeague.Projectiles
 
         public void HitPlayer(Player player)
         {
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
             player.AddBuff(BuffType<Rejuvenation>(), 300);
 
             for (int i = 0; i < 8; i++)
@@ -85,7 +85,7 @@ namespace TerraLeague.Projectiles
                 dust.noGravity = true;
             }
 
-            projectile.Kill();
+            Projectile.Kill();
         }
 
 

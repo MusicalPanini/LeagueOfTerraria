@@ -15,26 +15,26 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 10;
-            projectile.alpha = 0;
-            projectile.timeLeft = 60;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.aiStyle = 0;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 24;
+            Projectile.height = 10;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 60;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.aiStyle = 0;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation();
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Firework_Blue);
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FireworksRGB);
             dust.color = new Color(0, 125, 255);
             dust.noGravity = true;
-            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
+            Lighting.AddLight(Projectile.position, 0f, 0f, 0.5f);
         }
 
         public override void Kill(int timeLeft)
@@ -42,16 +42,16 @@ namespace TerraLeague.Projectiles
             Dust dust;
             for (int i = 0; i < 24; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Firework_Blue, 0f, 0f, 100, default, 1);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.FireworksRGB, 0f, 0f, 100, default, 1);
                 dust.noGravity = true;
                 dust.velocity *= 2f;
             }
             for (int i = 0; i < 8; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Firework_Blue, 0f, 0f, 100, default, 1);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.FireworksRGB, 0f, 0f, 100, default, 1);
                 dust.velocity *= 1f;
             }
-            Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14, Terraria.Audio.SoundType.Sound), projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14, Terraria.Audio.SoundType.Sound), Projectile.position);
             base.Kill(timeLeft);
         }
 
@@ -68,16 +68,16 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.velocity = Vector2.Zero;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 115;
-            projectile.height = 115;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 3;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 115;
+            Projectile.height = 115;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 3;
         }
     }
 }

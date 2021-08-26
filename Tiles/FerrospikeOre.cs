@@ -9,21 +9,21 @@ namespace TerraLeague.Tiles
 {
     public class FerrospikeOre : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSpelunker[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true; 
             Main.tileSpelunker[Type] = true;
-            Main.tileValue[Type] = 420;
+            Main.tileOreFinderPriority[Type] = 420;
             Main.tileLighted[Type] = true;
-            soundType = SoundID.Tink;
-            dustType = DustID.Moss_Blue;
-            drop = ItemType<Ferrospike>();
+            SoundType = SoundID.Tink;
+            DustType = DustID.BlueMoss;
+            ItemDrop = ItemType<Ferrospike>();
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ferrospike");
             AddMapEntry(new Color(25, 25, 50), name);
-            minPick = 65; 
+            MinPick = 65; 
         }
 
         public override bool CanExplode(int i, int j)

@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Rage : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rage");
             Description.SetDefault("Movement speed increased by 10%!");

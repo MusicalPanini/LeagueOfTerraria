@@ -16,42 +16,42 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.alpha = 255;
-            projectile.timeLeft = 180;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.tileCollide = true;
-            projectile.extraUpdates = 2;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 180;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 2;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 12, -0.25f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 12, -0.25f);
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            Lighting.AddLight(projectile.position, Color.White.ToVector3());
+            Lighting.AddLight(Projectile.position, Color.White.ToVector3());
 
             for (int i = 0; i < 3; i++)
             {
                 
-                Dust dust = Dust.NewDustPerfect(projectile.position, 66);
+                Dust dust = Dust.NewDustPerfect(Projectile.position, 264);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.1f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
-            if (projectile.timeLeft < 30)
+            if (Projectile.timeLeft < 30)
             {
-                projectile.alpha += 9;
+                Projectile.alpha += 9;
             }
         }
 
@@ -59,7 +59,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 17; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Rainbow, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 264, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0, default, 1f);
                 dust.noGravity = true;
             }
         }

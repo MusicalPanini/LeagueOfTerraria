@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Echo : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Echo");
             Description.SetDefault("Your next magic attack will deal extra damage and fire 8 homing projectiles in all directions");

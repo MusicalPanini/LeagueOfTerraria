@@ -9,7 +9,7 @@ namespace TerraLeague.Tiles
 {
     public class TargonStone_Arena : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true; 
@@ -17,12 +17,12 @@ namespace TerraLeague.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
 
-            soundType = SoundID.Tink;
-            dustType = DustID.Stone;
-            drop = ItemType<TargonStoneBlock>(); 
+            SoundType = SoundID.Tink;
+            DustType = DustID.Stone;
+            ItemDrop = ItemType<TargonStoneBlock>(); 
             ModTranslation name = CreateMapEntryName();
             AddMapEntry(new Color(172, 154, 138), name); 
-            minPick = 100; 
+            MinPick = 100; 
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class UmbralTrespassing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Umbral Trespassing");
             Description.SetDefault("Hiding in their soul");

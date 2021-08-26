@@ -18,31 +18,40 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 1.2f;
-            projectile.timeLeft = 900;
-            projectile.ranged = true;
-            projectile.extraUpdates = 12;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1.2f;
+            Projectile.timeLeft = 900;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.extraUpdates = 2;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft < 896)
+            if (Projectile.timeLeft < 896)
             {
-                Dust dust = Dust.NewDustPerfect(projectile.position, 112, Vector2.Zero, 0, new Color(59, 0, 255), 1f);
-                dust.noGravity = true;
-                dust.alpha = 100;
+                for (int i = 0; i < 10; i++)
+                {
+                    float x2 = Projectile.position.X - Projectile.velocity.X / 10f * (float)i;
+                    float y2 = Projectile.position.Y - Projectile.velocity.Y / 10f * (float)i;
+                    int num141 = Dust.NewDust(new Vector2(x2, y2), 1, 1, 112, 0f, 0f, 0, new Color(59, 0, 255), 0.5f);
+                    Main.dust[num141].alpha = Projectile.alpha;
+                    Main.dust[num141].position.X = x2;
+                    Main.dust[num141].position.Y = y2;
+                    Dust obj77 = Main.dust[num141];
+                    obj77.velocity *= 0f;
+                    Main.dust[num141].noGravity = true;
+                }
             }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
@@ -50,7 +59,7 @@ namespace TerraLeague.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             TerraLeagueNPCsGLOBAL modNPC = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>();
-            PLAYERGLOBAL modPlayer = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
+            PLAYERGLOBAL modPlayer = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>();
 
 
             target.AddBuff(BuffType<CausticWounds>(), 240);
@@ -60,18 +69,18 @@ namespace TerraLeague.Projectiles
             int stacks = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CausticStacks;
             if (stacks == 5)
             {
-                projectile.magic = true;
+                Projectile.DamageType = DamageClass.Magic;
 
                 int damCap = (int)(modPlayer.MAG + 50);
 
                 damage += (target.lifeMax - target.life) / 4 > damCap ? damCap : (target.lifeMax - target.life) / 4;
 
-                projectile.netUpdate = true;
-                projectile.ai[0] = 1;
+                Projectile.netUpdate = true;
+                Projectile.ai[0] = 1;
 
                 modPlayer.CausticWoundsEffect(target);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    modPlayer.PacketHandler.SendCausticEFX(-1, projectile.owner, target.whoAmI);
+                    modPlayer.PacketHandler.SendCausticEFX(-1, Projectile.owner, target.whoAmI);
 
             }
             if (stacks > 5)

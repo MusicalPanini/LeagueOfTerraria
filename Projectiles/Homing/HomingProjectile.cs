@@ -25,14 +25,14 @@ namespace TerraLeague.Projectiles.Homing
         public bool Player_OnlyTargetTeam = false;
         public bool Player_CanTargetDead = false;
 
-        public int TargetWhoAmI { get { return (int)projectile.ai[0]; } set { projectile.ai[0] = value; } }
-        public bool CouldNotFindTarget { get { return -1 == (int)projectile.ai[0]; } }
-        public bool NeedsNewTarget { get { return -2 == (int)projectile.ai[0]; } }
+        public int TargetWhoAmI { get { return (int)Projectile.ai[0]; } set { Projectile.ai[0] = value; } }
+        public bool CouldNotFindTarget { get { return -1 == (int)Projectile.ai[0]; } }
+        public bool NeedsNewTarget { get { return -2 == (int)Projectile.ai[0]; } }
         public Entity TargetEntity { get { if (TargetPlayers) { return Main.player[TargetWhoAmI]; } else { return Main.npc[TargetWhoAmI]; } } }
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            if (projectile.owner == Main.LocalPlayer.whoAmI)
+            if (Projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 writer.Write(targetingRange);
                 writer.Write(MaxVelocity);
@@ -67,7 +67,7 @@ namespace TerraLeague.Projectiles.Homing
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
 
         public override void AI()
@@ -80,7 +80,7 @@ namespace TerraLeague.Projectiles.Homing
         public virtual void HomingAI()
         {
             if (MaxVelocity == -1)
-                MaxVelocity = projectile.velocity.Length();
+                MaxVelocity = Projectile.velocity.Length();
 
             if (NeedsNewTarget)
             {
@@ -100,14 +100,14 @@ namespace TerraLeague.Projectiles.Homing
             }
             else
             {
-                Vector2 NewVelocity = (TurningFactor * projectile.velocity) + ((1 - TurningFactor) * TerraLeague.CalcVelocityToPoint(projectile.Center, TargetEntity.Center, MaxVelocity));
+                Vector2 NewVelocity = (TurningFactor * Projectile.velocity) + ((1 - TurningFactor) * TerraLeague.CalcVelocityToPoint(Projectile.Center, TargetEntity.Center, MaxVelocity));
 
 #pragma warning disable CS1718 // Comparison made to same variable
                 if (NewVelocity != NewVelocity)
 #pragma warning restore CS1718 // Comparison made to same variable
-                    projectile.velocity = Vector2.Zero;
+                    Projectile.velocity = Vector2.Zero;
                 else
-                    projectile.velocity = NewVelocity;
+                    Projectile.velocity = NewVelocity;
             }
         }
 
@@ -119,7 +119,7 @@ namespace TerraLeague.Projectiles.Homing
             if (CanRetarget)
                 GetNewTarget();
             else
-                projectile.Kill();
+                Projectile.Kill();
 
         }
 
@@ -128,16 +128,16 @@ namespace TerraLeague.Projectiles.Homing
             if (CanRetarget)
                 TargetWhoAmI = -2;
             else
-                projectile.Kill();
+                Projectile.Kill();
         }
 
         public virtual void GetNewTarget()
         {
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
             if (TargetPlayers)
-                TargetWhoAmI = Targeting.GetClosestPlayer(projectile.Center, targetingRange, -1, -1);
+                TargetWhoAmI = Targeting.GetClosestPlayer(Projectile.Center, targetingRange, -1, -1);
             else
-                TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, targetingRange, -1, -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
+                TargetWhoAmI = Targeting.GetClosestNPC(Projectile.Center, targetingRange, -1, -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
         }
 
         public override bool? CanHitNPC(NPC target)
@@ -156,7 +156,7 @@ namespace TerraLeague.Projectiles.Homing
         {
             if (TargetPlayers)
             {
-                return projectile.Hitbox.Intersects(player.Hitbox);
+                return Projectile.Hitbox.Intersects(player.Hitbox);
             }
 
             return false;
@@ -164,8 +164,8 @@ namespace TerraLeague.Projectiles.Homing
 
         public virtual void OnHitFriendlyPlayer(Player player)
         {
-            projectile.netUpdate = true;
-            projectile.penetrate--;
+            Projectile.netUpdate = true;
+            Projectile.penetrate--;
         }
     }
 }

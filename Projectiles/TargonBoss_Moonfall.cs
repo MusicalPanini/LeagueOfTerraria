@@ -24,45 +24,49 @@ namespace TerraLeague.Projectiles
         public override void SetDefaults()
         {
             effectRadius = 16 * 40;
-            projectile.width = effectRadius * 2;
-            projectile.height = effectRadius * 2;
-            projectile.timeLeft = (150);
-            projectile.penetrate = -1;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
-            projectile.alpha = 255;
+            Projectile.width = effectRadius * 2;
+            Projectile.height = effectRadius * 2;
+            Projectile.timeLeft = (150);
+            Projectile.penetrate = -1;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
+            Projectile.alpha = 255;
         }
 
         public override void AI()
         {
-            TerraLeague.DustBorderRing((int)(effectRadius), projectile.Center, 263, TargonBossNPC.DianaColor, 1);
-
-            if (projectile.timeLeft % 30 == 1)
+            if (Projectile.timeLeft % 30 == 1)
             {
-                float rad = effectRadius - (effectRadius * projectile.timeLeft / 150f);
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0f - (0.05f * projectile.timeLeft / 30));
-                TerraLeague.DustElipce(rad, rad, 0, projectile.Center, 263, TargonBossNPC.DianaColor, 1.5f, 180, true);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 15, 0f - (0.05f * Projectile.timeLeft / 30));
             }
 
-            if (projectile.timeLeft == 1)
-                projectile.hostile = true;
+            if (Projectile.timeLeft == 1)
+                Projectile.hostile = true;
         }
 
         public override void Kill(int timeLeft)
         {
-            TerraLeague.DustElipce(2, 2, 0, projectile.Center, 263, TargonBossNPC.DianaColor, 1f, 180, true, 10);
-            Main.PlaySound(new LegacySoundStyle(2, 74), projectile.Center);
+            TerraLeague.DustElipce(2, 2, 0, Projectile.Center, 263, TargonBossNPC.DianaColor, 1f, 180, true, 30);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 74), Projectile.Center);
 
             base.Kill(timeLeft);
         }
 
         public override bool CanHitPlayer(Player target)
         {
-            if (!Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, effectRadius))
+            if (!Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, effectRadius))
                 return false;
             return base.CanHitPlayer(target);
+        }
+
+        public override void PostDraw(Color lightColor)
+        {
+            TerraLeague.DrawCircle(Projectile.Center, effectRadius, TargonBossNPC.DianaColor);
+            TerraLeague.DrawCircle(Projectile.Center, effectRadius - (effectRadius * Projectile.timeLeft / 150f), TargonBossNPC.DianaColor);
+
+            base.PostDraw(lightColor);
         }
     }
 }

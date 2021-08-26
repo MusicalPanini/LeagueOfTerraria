@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TerraLeague.Projectiles.Beam;
 using Terraria;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,14 +18,14 @@ namespace TerraLeague.Projectiles
     {
         public override void SetDefaults()
         {
-            projectile.width = 88;
-            projectile.height = 10;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.magic = true;
-            projectile.hide = false;
-            projectile.timeLeft = 300;
+            Projectile.width = 88;
+            Projectile.height = 10;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.hide = false;
+            Projectile.timeLeft = 300;
 
             dust1 = DustID.AmberBolt;
             dust2 = DustID.AmberBolt;
@@ -51,13 +52,13 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            Projectile sigil = Main.projectile[(int)projectile.ai[0]];
-            projectile.Center = sigil.Center;
+            Projectile sigil = Main.projectile[(int)Projectile.ai[0]];
+            Projectile.Center = sigil.Center;
 
-            if (projectile.timeLeft <= 17)
-                projectile.alpha += 15;
+            if (Projectile.timeLeft <= 17)
+                Projectile.alpha += 15;
 
-            BeamAI(projectile.Center, projectile.Center + Vector2.UnitY);
+            BeamAI(Projectile.Center, Projectile.Center + Vector2.UnitY);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -72,7 +73,7 @@ namespace TerraLeague.Projectiles
 
             for (Distance = moveDistance; Distance <= MaxDistance; Distance += 5f)
             {
-                var start = projectile.Left + projectile.velocity * Distance;
+                var start = Projectile.Left + Projectile.velocity * Distance;
                 if (enableTileCollision)
                 {
                     if (Collision.SolidCollision(start, 80, 1))
@@ -99,30 +100,28 @@ namespace TerraLeague.Projectiles
         {
             for (float i = moveDistance; i <= Distance; i += 4)
             {
-                Vector2 origin = projectile.Center + i * projectile.velocity;
+                Vector2 origin = Projectile.Center + i * Projectile.velocity;
                 if (Main.rand.NextBool(5))
                 {
-                    Dust dust = Dust.NewDustDirect(origin - new Vector2(44, 0), 88, 10, DustID.AmberBolt, 0, -3, 0, default, 1.5f * (1 - (projectile.alpha / 255f)));
+                    Dust dust = Dust.NewDustDirect(origin - new Vector2(44, 0), 88, 10, DustID.AmberBolt, 0, -3, 0, default, 1.5f * (1 - (Projectile.alpha / 255f)));
                     dust.noGravity = true;
                 }
             }
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Left + (Distance + 4) * projectile.velocity, 88, 10, dust1, 0, -3, 0, default, 4 * (1 - (projectile.alpha / 255f)));
+                Dust dust = Dust.NewDustDirect(Projectile.Left + (Distance + 4) * Projectile.velocity, 88, 10, dust1, 0, -3, 0, default, 4 * (1 - (Projectile.alpha / 255f)));
                 dust.noGravity = true;
             }
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            bool preDraw = base.PreDraw(spriteBatch, lightColor);
-
-            Projectile sigil = Main.projectile[(int)projectile.ai[0]];
-            Texture2D texture = Main.projectileTexture[sigil.type];
+            Projectile sigil = Main.projectile[(int)Projectile.ai[0]];
+            Texture2D texture = TextureAssets.Projectile[sigil.type].Value;
             if (texture != null)
             {
-                spriteBatch.Draw
+                Main.spriteBatch.Draw
                 (
                     texture,
                     new Vector2
@@ -131,7 +130,7 @@ namespace TerraLeague.Projectiles
                         sigil.position.Y - Main.screenPosition.Y + sigil.height - (texture.Height) * 0.5f
                     ),
                     new Rectangle(0, (texture.Height) * sigil.frame, texture.Width, texture.Height),
-                    Color.White * (1 - (projectile.alpha / 255f)),
+                    Color.White * (1 - (Projectile.alpha / 255f)),
                     sigil.rotation,
                     new Vector2(texture.Width, texture.Width) * 0.5f,
                     sigil.scale,
@@ -140,7 +139,7 @@ namespace TerraLeague.Projectiles
                 );
             }
 
-            return preDraw;
+            return base.PreDraw(ref lightColor);
         }
     }
 }

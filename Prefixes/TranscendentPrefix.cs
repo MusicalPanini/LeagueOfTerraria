@@ -13,17 +13,19 @@ namespace TerraLeague.Prefixes
     {
         public override PrefixCategory Category { get { return PrefixCategory.Accessory; } }
 
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Transcendent");
+            base.SetStaticDefaults();
+        }
+
         public TranscendentPrefix()
         {
         }
 
-        public override bool Autoload(ref string name)
+        public override void ModifyValue(ref float valueMult)
         {
-            if (base.Autoload(ref name))
-            {
-                mod.AddPrefix("Transcendent", new TranscendentPrefix());
-            }
-            return false;
+            valueMult += 1.3225f;
         }
 
         public override void Apply(Item item)

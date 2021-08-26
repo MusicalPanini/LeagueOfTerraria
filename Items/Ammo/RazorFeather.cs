@@ -11,35 +11,35 @@ namespace TerraLeague.Items.Ammo
         {
             DisplayName.SetDefault("Razor Feather");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
 
         public override void SetDefaults()
         {
-            item.shootSpeed = 1f;
-            item.shoot = ProjectileType<MagicalPlumage_DeadlyFeather>();
-            item.damage = 6;
-            item.width = 8;
-            item.height = 8;
-            item.maxStack = 999;
-            item.consumable = true;
-            item.ammo = ItemType<RazorFeather>();
-            item.notAmmo = false;
-            item.knockBack = 1f;
-            item.value = 10;
-            item.ranged = true;
-            item.rare = ItemRarityID.Blue;
+            Item.shootSpeed = 1f;
+            Item.shoot = ProjectileType<MagicalPlumage_DeadlyFeather>();
+            Item.damage = 6;
+            Item.width = 8;
+            Item.height = 8;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.ammo = ItemType<RazorFeather>();
+            Item.notAmmo = false;
+            Item.knockBack = 1f;
+            Item.value = 10;
+            Item.DamageType = DamageClass.Ranged;
+            Item.rare = ItemRarityID.Blue;
 
             base.SetDefaults();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<ManaBar>(), 1);
-            recipe.AddIngredient(ItemID.Feather, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 100);
-            recipe.AddRecipe();
+            CreateRecipe(100)
+            .AddIngredient(GetInstance<ManaBar>(), 1)
+            .AddIngredient(ItemID.Feather, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

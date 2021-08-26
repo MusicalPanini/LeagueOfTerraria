@@ -20,48 +20,43 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Burning Vengance");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 23;
-            item.noMelee = true;
-            item.magic = true;
-            item.useTime = 5;
-            item.useAnimation = 10;
-            item.shootSpeed = 14;
-            item.mana = 6;
-            item.rare = ItemRarityID.Pink;
-            item.value = 300000;
-            item.width = 28;
-            item.height = 32;
-            item.knockBack = 1;
-            item.UseSound = new LegacySoundStyle(2, 34);
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = ProjectileType<BurningVengance_Flame>();
-            item.autoReuse = true;
+            Item.damage = 23;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 5;
+            Item.useAnimation = 10;
+            Item.shootSpeed = 14;
+            Item.mana = 6;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = 300000;
+            Item.width = 28;
+            Item.height = 32;
+            Item.knockBack = 1;
+            Item.UseSound = new LegacySoundStyle(2, 34);
+            Item.useStyle = ItemUseStyleID.Thrust;
+            Item.shoot = ProjectileType<BurningVengance_Flame>();
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new PillarOfFlame(this));
             abilityItem.SetAbility(AbilityType.R, new Pyroclasm(this));
             abilityItem.ChampQuote = "The inferno begins";
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.SpellTome, 1);
-            recipe.AddIngredient(ItemID.LivingFireBlock, 20);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddTile(TileID.Bookcases);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.SpellTome, 1)
+            .AddIngredient(ItemID.LivingFireBlock, 20)
+            .AddIngredient(ItemID.SoulofFright, 10)
+            .AddTile(TileID.Bookcases)
+            .Register();
         }
     }
 }

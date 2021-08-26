@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/TwilightShroud";
+            return "TerraLeague/AbilityImages/TwilightShroud";
         }
 
         public override string GetAbilityTooltip()
@@ -58,10 +58,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 for (int i = 0; i < 9; i++)
                 {
-                    Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
-                    Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
-                    Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
-                    Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
                 }
                 SetCooldowns(player, type);
             }
@@ -69,10 +69,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            player.itemAnimation = ItemUseStyleID.SwingThrow;
+            player.itemAnimation = ItemUseStyleID.Swing;
             player.itemAnimationMax = 24;
             player.reuseDelay = 24;
-            Main.PlaySound(new LegacySoundStyle(2, 11).WithPitchVariance(-1), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 11).WithPitchVariance(-1), player.Center);
         }
     }
 }

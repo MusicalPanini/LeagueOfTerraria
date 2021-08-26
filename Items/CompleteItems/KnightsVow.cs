@@ -18,16 +18,17 @@ namespace TerraLeague.Items.CompleteItems
                  "\nIncreases ability haste by 10" +
                  "\nAbsorbs 25% of damage done to players on your team" +
                  "\nOnly active above 25% life");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 34;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 34;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -45,14 +46,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ChainVest>(), 1);
-            recipe.AddIngredient(ItemType<Kindlegem>(), 1);
-            recipe.AddIngredient(ItemID.PaladinsShield, 1);
-            recipe.AddIngredient(ItemID.HallowedHelmet, 1);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ChainVest>(), 1)
+            .AddIngredient(ItemType<Kindlegem>(), 1)
+            .AddIngredient(ItemID.PaladinsShield, 1)
+            .AddIngredient(ItemID.HallowedHelmet, 1)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

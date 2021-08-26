@@ -22,31 +22,31 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 26;
-            projectile.height = 26;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = 100;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.magic = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 26;
+            Projectile.height = 26;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = 100;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            projectile.rotation += projectile.velocity.X * 0.05f;
-            Lighting.AddLight(projectile.position, 0.5f, 0.45f, 0.30f);
-            projectile.velocity.Y += 0.4f;
+            Projectile.rotation += Projectile.velocity.X * 0.05f;
+            Lighting.AddLight(Projectile.position, 0.5f, 0.45f, 0.30f);
+            Projectile.velocity.Y += 0.4f;
 
-            Vector2 dustPos = projectile.position.RotatedBy(MathHelper.Pi + projectile.rotation, projectile.Center);
+            Vector2 dustPos = Projectile.position.RotatedBy(MathHelper.Pi + Projectile.rotation, Projectile.Center);
 
             Dust dust = Dust.NewDustPerfect(dustPos, DustID.Smoke);
             dust.noGravity = true;
 
-            dust = Dust.NewDustPerfect(dustPos, DustID.Fire);
+            dust = Dust.NewDustPerfect(dustPos, 6);
             dust.noGravity = true;
             dust.velocity *= 0;
 
@@ -66,38 +66,38 @@ namespace TerraLeague.Projectiles
             if (bounces <= 0)
                 Prime();
             else
-                Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y);
 
             return false;
         }
 
         public void Rebound()
         {
-            if (projectile.velocity.X != projectile.oldVelocity.X)
+            if (Projectile.velocity.X != Projectile.oldVelocity.X)
             {
-                projectile.velocity.X = -projectile.oldVelocity.X;
+                Projectile.velocity.X = -Projectile.oldVelocity.X;
             }
-            else if (projectile.velocity.Y != projectile.oldVelocity.Y)
+            else if (Projectile.velocity.Y != Projectile.oldVelocity.Y)
             {
-                if (projectile.oldVelocity.Y > 0)
+                if (Projectile.oldVelocity.Y > 0)
                 {
-                    //if (projectile.oldVelocity.Y < 6)
-                        projectile.velocity.Y = -6;
+                    //if (Projectile.oldVelocity.Y < 6)
+                        Projectile.velocity.Y = -6;
 
-                    if (projectile.oldVelocity.X > 6)
-                        projectile.velocity.X = 6;
-                    if (projectile.oldVelocity.X < -6)
-                        projectile.velocity.X = -6;
-                    //else if (projectile.oldVelocity.Y > 10)
-                    //    projectile.velocity.Y = -10;
+                    if (Projectile.oldVelocity.X > 6)
+                        Projectile.velocity.X = 6;
+                    if (Projectile.oldVelocity.X < -6)
+                        Projectile.velocity.X = -6;
+                    //else if (Projectile.oldVelocity.Y > 10)
+                    //    Projectile.velocity.Y = -10;
                     //else
-                    //    projectile.velocity.Y *= -1f;
+                    //    Projectile.velocity.Y *= -1f;
 
                     bounces--;
                 }
                 else
                 {
-                    projectile.velocity.Y = 6;
+                    Projectile.velocity.Y = 6;
                 }
 
                 
@@ -110,36 +110,36 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            hitDirection = projectile.Center.X > target.Center.X ? -1 : 1;
+            hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
         public override void Kill(int timeLeft)
         {
-            if (projectile.penetrate == 1)
+            if (Projectile.penetrate == 1)
             {
                 Prime();
             }
             else
             {
-                Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
 
                 Dust dust;
                 for (int i = 0; i < 20; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
                     dust.velocity *= 0.5f;
 
                 }
                 for (int i = 0; i < 50; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 3f);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 3f);
                     dust.noGravity = true;
                     dust.velocity *= 3f;
                     dust.color = new Color(255, 0, 220);
 
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 2f);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 2f);
                     dust.color = new Color(255, 0, 220);
                     dust.noGravity = true;
 
@@ -150,16 +150,16 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.tileCollide = false;
-            projectile.velocity = Vector2.Zero;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 128;
-            projectile.height = 128;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 128;
+            Projectile.height = 128;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 2;
         }
     }
 }

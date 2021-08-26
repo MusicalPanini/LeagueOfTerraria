@@ -9,7 +9,7 @@ namespace TerraLeague.Buffs
 {
     public class Revived : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Revived");
             Description.SetDefault("You've been sparked with new energy!" +

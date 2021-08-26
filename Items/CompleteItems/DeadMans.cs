@@ -16,15 +16,16 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("Increases maximum life by 30" +
                 "\nIncreases armor by 6" +
                 "\nImmunity to Weakness and Broken Armor");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -43,16 +44,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ChainVest>(), 1);
-            recipe.AddIngredient(ItemType<GiantsBelt>(), 1);
-            recipe.AddIngredient(ItemID.ArmorBracing, 1);
-            recipe.AddIngredient(ItemID.NecroBreastplate, 1);
-            recipe.AddIngredient(ItemType<BrassBar>(), 10);
-            recipe.AddIngredient(ItemID.SoulofMight, 8);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ChainVest>(), 1)
+            .AddIngredient(ItemType<GiantsBelt>(), 1)
+            .AddIngredient(ItemID.ArmorBracing, 1)
+            .AddIngredient(ItemID.NecroBreastplate, 1)
+            .AddIngredient(ItemType<BrassBar>(), 10)
+            .AddIngredient(ItemID.SoulofMight, 8)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

@@ -17,16 +17,17 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("20% increased melee speed" +
                 "\n15% increased melee critical strike chance" +
                 "\n10% increased movement speed");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 34;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 34;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -37,7 +38,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += 0.20f;
-            player.meleeCrit += 15;
+            player.GetCritChance(DamageClass.Melee) += 15;
             player.moveSpeed += 0.1f;
             player.accRunSpeed *= 1.1f;
             base.UpdateAccessory(player, hideVisual);
@@ -45,16 +46,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Dagger>(), 2);
-            recipe.AddIngredient(ItemType<Zeal>(), 1);
-            recipe.AddIngredient(ItemID.Sickle, 1);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddIngredient(ItemID.Ectoplasm, 5);
-            recipe.AddIngredient(ItemID.SpectreBar, 12);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Dagger>(), 2)
+            .AddIngredient(ItemType<Zeal>(), 1)
+            .AddIngredient(ItemID.Sickle, 1)
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddIngredient(ItemID.Ectoplasm, 5)
+            .AddIngredient(ItemID.SpectreBar, 12)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

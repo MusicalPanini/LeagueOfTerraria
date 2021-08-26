@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,31 +17,31 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 15;
-            projectile.height = 15;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 60;
-            projectile.melee = true;
-            projectile.tileCollide = true;
+            Projectile.width = 15;
+            Projectile.height = 15;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 60;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = true;
         }
 
         public override void AI()
         {
             Dust dust;
-            if (projectile.soundDelay == 0 && (int)projectile.ai[0] == 1)
+            if (Projectile.soundDelay == 0 && (int)Projectile.ai[0] == 1)
             {
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 15), projectile.Center);
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 34), projectile.Center);
+                Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 15), Projectile.Center);
+                Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 34), Projectile.Center);
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.TopazBolt, 0, 0, 0, default, 2f);
+            dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz, 0, 0, 0, default, 2f);
             dust.noGravity = true;
-            dust.velocity = projectile.velocity * 2;
+            dust.velocity = Projectile.velocity * 2;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -51,7 +52,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            //TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 8, 1f);
+            //TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 8, 1f);
             return true;
         }
 

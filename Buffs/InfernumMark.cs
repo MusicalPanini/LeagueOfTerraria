@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class InfernumMark : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Infernum");
             Main.debuff[Type] = true;

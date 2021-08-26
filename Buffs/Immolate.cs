@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class Immolate : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Immolate");
             Description.SetDefault("Your burning nearby enemies");

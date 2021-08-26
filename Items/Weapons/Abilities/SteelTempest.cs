@@ -34,11 +34,11 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().gathering3)
             {
-                return "AbilityImages/GatheringStorm";
+                return "TerraLeague/AbilityImages/GatheringStorm";
             }
             else
             {
-                return "AbilityImages/SteelTempest";
+                return "TerraLeague/AbilityImages/SteelTempest";
             }
         }
 
@@ -62,9 +62,9 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override int GetAbilityBaseDamage(Player player)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().gathering3)
-                return (int)(abilityItem.item.damage * 2);
+                return (int)(abilityItem.Item.damage * 2);
             else
-                return (int)(abilityItem.item.damage);
+                return (int)(abilityItem.Item.damage);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -114,10 +114,9 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int knockback = 12;
                     player.ClearBuff(BuffType<LastBreath3>());
 
-                    Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
-                    proj.magic = false;
-                    proj.melee = true;
-                    Projectile.NewProjectile(position, velocity / 4, ProjectileType<LastBreath_SteelTempest>(), damage, knockback, player.whoAmI, 0, 1);
+                    Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
+                    proj.DamageType = Terraria.ModLoader.DamageClass.Melee;
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity / 4, ProjectileType<LastBreath_SteelTempest>(), damage, knockback, player.whoAmI, 0, 1);
 
                     SetCooldowns(player, type);
                 }
@@ -131,7 +130,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int knockback = 5;
                     player.ClearBuff(BuffType<LastBreath3>());
 
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
             }

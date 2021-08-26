@@ -22,16 +22,16 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.GolemFist);
-            projectile.aiStyle = 0;
-            projectile.alpha = 255;
+            Projectile.CloneDefaults(ProjectileID.GolemFist);
+            Projectile.aiStyle = 0;
+            Projectile.alpha = 255;
         }
         public override void AI()
         {
-            if (projectile.alpha > 0)
-                projectile.alpha -= 20;
-            Player player = Main.player[projectile.owner];
-            player.itemRotation = player.AngleTo(projectile.Center);
+            if (Projectile.alpha > 0)
+                Projectile.alpha -= 20;
+            Player player = Main.player[Projectile.owner];
+            player.itemRotation = player.AngleTo(Projectile.Center);
             if (player.itemRotation > MathHelper.PiOver2)
             {
                 player.itemRotation -= MathHelper.Pi;
@@ -43,14 +43,14 @@ namespace TerraLeague.Projectiles
 
             if (player.dead)
             {
-                projectile.Kill();
+                Projectile.Kill();
                 return;
             }
             player.itemAnimation = 2;
             player.itemTime = 2;
-            if (projectile.alpha == 0)
+            if (Projectile.alpha == 0)
             {
-                if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))
+                if (Projectile.position.X + (float)(Projectile.width / 2) > player.position.X + (float)(player.width / 2))
                 {
                     player.ChangeDir(1);
                 }
@@ -59,55 +59,55 @@ namespace TerraLeague.Projectiles
                     player.ChangeDir(-1);
                 }
             }
-            Vector2 vector15 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
+            Vector2 vector15 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
             float num167 = player.position.X + (float)(player.width / 2) - vector15.X;
             float num168 = player.position.Y + (float)(player.height / 2) - vector15.Y;
             float maxDistance = (float)Math.Sqrt((double)(num167 * num167 + num168 * num168));
-            if (projectile.ai[0] == 0f)
+            if (Projectile.ai[0] == 0f)
             {
                 if (maxDistance > 300)
                 {
-                    projectile.ai[0] = 1f;
+                    Projectile.ai[0] = 1f;
                 }
-                projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
-                projectile.ai[1] += 1f;
-                if (projectile.ai[1] > 8f)
+                Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
+                Projectile.ai[1] += 1f;
+                if (Projectile.ai[1] > 8f)
                 {
-                    projectile.ai[1] = 8f;
+                    Projectile.ai[1] = 8f;
                 }
-                if (projectile.velocity.X < 0f)
+                if (Projectile.velocity.X < 0f)
                 {
-                    projectile.spriteDirection = -1;
+                    Projectile.spriteDirection = -1;
 
                 }
                 else
                 {
-                    projectile.spriteDirection = 1;
+                    Projectile.spriteDirection = 1;
 
                 }
             }
-            else if (projectile.ai[0] == 1f)
+            else if (Projectile.ai[0] == 1f)
             {
-                projectile.tileCollide = false;
-                projectile.rotation = (float)Math.Atan2((double)num168, (double)num167) - 1.57f;
+                Projectile.tileCollide = false;
+                Projectile.rotation = (float)Math.Atan2((double)num168, (double)num167) - 1.57f;
                 float num170 = 13f;
                 if (maxDistance < 50f)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 maxDistance = num170 / maxDistance;
                 num167 *= maxDistance;
                 num168 *= maxDistance;
-                projectile.velocity.X = num167;
-                projectile.velocity.Y = num168;
-                if (projectile.velocity.X < 0f)
+                Projectile.velocity.X = num167;
+                Projectile.velocity.Y = num168;
+                if (Projectile.velocity.X < 0f)
                 {
-                    projectile.spriteDirection = 1;
+                    Projectile.spriteDirection = 1;
 
                 }
                 else
                 {
-                    projectile.spriteDirection = -1;
+                    Projectile.spriteDirection = -1;
                 }
             }
             base.AI();
@@ -115,7 +115,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.ai[0] = 1f;
+            Projectile.ai[0] = 1f;
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -126,21 +126,21 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 10), projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 10), Projectile.Center);
             for (int i = 0; i < 6; i++)
             {
-                Dust.NewDustDirect(projectile.Center, 8, 8, DustID.SnowBlock,0,0,0,default, 0.75f);
+                Dust.NewDustDirect(Projectile.Center, 8, 8, 51,0,0,0,default, 0.75f);
             }
-            projectile.ai[0] = 1f;
+            Projectile.ai[0] = 1f;
             return false;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/ColossusFist_Chain");
+            Texture2D texture = ModContent.Request<Texture2D>("TerraLeague/Projectiles/ColossusFist_Chain").Value;
 
-            Vector2 position = projectile.Center;
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 position = Projectile.Center;
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             mountedCenter.Y += 4;
             Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
@@ -165,14 +165,14 @@ namespace TerraLeague.Projectiles
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
                     Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                    color2 = projectile.GetAlpha(color2);
+                    color2 = Projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }
             }
-            Texture2D robotBase = mod.GetTexture("Projectiles/ColossusFist_Base");
+            Texture2D robotBase = ModContent.Request<Texture2D>("TerraLeague/Projectiles/ColossusFist_Base").Value;
             origin = new Vector2((float)robotBase.Width * 0.5f, (float)robotBase.Height * 0.5f);
             Color color3 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-            spriteBatch.Draw(robotBase, mountedCenter - Main.screenPosition, sourceRectangle, color3, rotation, new Vector2((float)robotBase.Width * 0.5f, robotBase.Height), 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(robotBase, mountedCenter - Main.screenPosition, sourceRectangle, color3, rotation, new Vector2((float)robotBase.Width * 0.5f, robotBase.Height), 1f, SpriteEffects.None, 0f);
             return true;
         }
     }

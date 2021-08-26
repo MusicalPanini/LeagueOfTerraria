@@ -19,15 +19,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases resist by 4" +
                 "\nIncreases your max number of sentries" +
                 "\nIncreases life regeneration by 2");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
             Active = new VoidCaller(20, 3, 15, 60);
         }
 
@@ -44,14 +45,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<RaptorCloak>(), 1);
-            recipe.AddIngredient(ItemType<NegatronCloak>(), 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 100);
-            recipe.AddIngredient(ItemID.SoulofSight, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<RaptorCloak>(), 1)
+            .AddIngredient(ItemType<NegatronCloak>(), 1)
+            .AddIngredient(ItemType<VoidFragment>(), 100)
+            .AddIngredient(ItemID.SoulofSight, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

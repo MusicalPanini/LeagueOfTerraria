@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Sentry";
+            return "TerraLeague/AbilityImages/Sentry";
         }
 
         public override string GetAbilityTooltip()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage / 3);
+            return (int)(abilityItem.Item.damage / 3);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -92,7 +92,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int knockback = 2;
 
                 player.FindSentryRestingSpot(projType, out int xPos, out int yPos, out int yDis);
-                Projectile.NewProjectile((float)xPos, (float)(yPos - yDis) - 3, 0f, 0f, projType, damage, knockback, player.whoAmI, -1);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), new Vector2((float)xPos, (float)(yPos - yDis) - 3), Vector2.Zero, projType, damage, knockback, player.whoAmI, -1);
 
                 SetCooldowns(player, type);
             }
@@ -100,7 +100,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            var sound = Main.PlaySound(new LegacySoundStyle(2, 13), player.Center);
+            var sound = Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 13), player.Center);
             if (sound != null)
                 sound.Pitch = 1f;
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 13, 1f);

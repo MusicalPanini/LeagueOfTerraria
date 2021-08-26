@@ -19,15 +19,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases ability haste by 10" +
                 "\nIncreases item haste by 10" +
                 "\nGrants immunity to knockback and fire blocks");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Active = new FrostfireCovenant(40, 10, 90);
         }
@@ -46,16 +47,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Aegis>(), 1);
-            recipe.AddIngredient(ItemType<GlacialShroud>(), 1);
-            recipe.AddIngredient(ItemID.LivingFireBlock, 10);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 10);
-            recipe.AddIngredient(ItemType<HextechCore>(), 1);
-            recipe.AddIngredient(ItemID.SoulofSight, 12);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Aegis>(), 1)
+            .AddIngredient(ItemType<GlacialShroud>(), 1)
+            .AddIngredient(ItemID.LivingFireBlock, 10)
+            .AddIngredient(ItemType<TrueIceChunk>(), 10)
+            .AddIngredient(ItemType<HextechCore>(), 1)
+            .AddIngredient(ItemID.SoulofSight, 12)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

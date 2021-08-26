@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -20,56 +21,57 @@ namespace TerraLeague.Projectiles
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             DisplayName.SetDefault("Dancing Blade");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 26;
-            projectile.height = 62;
-            projectile.alpha = 0;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.minion = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 3600;
+            Projectile.width = 26;
+            Projectile.height = 62;
+            Projectile.alpha = 0;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 3600;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft == 3600)
+            if (Projectile.timeLeft == 3600)
             {
-                baseDamage = projectile.damage;
-                projectile.damage = 0;
+                baseDamage = Projectile.originalDamage;
+                Projectile.damage = 0;
             }
 
-            if (/*Main.mouseLeftRelease */ !Main.player[projectile.owner].channel && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
+            if (/*Main.mouseLeftRelease */ !Main.player[Projectile.owner].channel && Projectile.timeLeft < 3600 && Projectile.owner == Main.LocalPlayer.whoAmI || Projectile.alpha != 0 || Main.player[Projectile.owner].dead || !Main.player[Projectile.owner].active)
             {
-                projectile.alpha += 20;
-                if (projectile.alpha > 250)
+                Projectile.alpha += 20;
+                if (Projectile.alpha > 250)
                 {
                     DeadMode();
                 }
             }
 
-            Player player = Main.player[projectile.owner];
-            projectile.netUpdate = true;
+            Player player = Main.player[Projectile.owner];
+            Projectile.netUpdate = true;
             //player.itemTime = 5;
 
-            if (projectile.ai[0] == 0 && projectile.owner == Main.LocalPlayer.whoAmI)
+            if (Projectile.ai[0] == 0 && Projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 float num114 = 14;
 
-                Vector2 vector10 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
+                Vector2 vector10 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
                 float num115 = (float)Main.mouseX + Main.screenPosition.X - vector10.X;
                 float num116 = (float)Main.mouseY + Main.screenPosition.Y - vector10.Y;
-                if (Main.player[projectile.owner].gravDir == -1f)
+                if (Main.player[Projectile.owner].gravDir == -1f)
                 {
                     num116 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - vector10.Y;
                 }
@@ -80,61 +82,61 @@ namespace TerraLeague.Projectiles
                     num115 *= num117;
                     num116 *= num117;
                     int num118 = (int)(num115 * 1000f);
-                    int num119 = (int)(projectile.velocity.X * 1000f);
+                    int num119 = (int)(Projectile.velocity.X * 1000f);
                     int num120 = (int)(num116 * 1000f);
-                    int num121 = (int)(projectile.velocity.Y * 1000f);
+                    int num121 = (int)(Projectile.velocity.Y * 1000f);
                     if (num118 != num119 || num120 != num121)
                     {
-                        projectile.netUpdate = true;
+                        Projectile.netUpdate = true;
                     }
 
 
-                    if (Vector2.Distance(projectile.position, Main.MouseWorld) < 600)
+                    if (Vector2.Distance(Projectile.position, Main.MouseWorld) < 600)
                     {
-                        projectile.velocity.X = num115 * Vector2.Distance(projectile.position, Main.MouseWorld) / 600;
-                        projectile.velocity.Y = num116 * Vector2.Distance(projectile.position, Main.MouseWorld) / 600;
+                        Projectile.velocity.X = num115 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 600;
+                        Projectile.velocity.Y = num116 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 600;
                     }
                     else
                     {
-                        projectile.velocity.X = num115;
-                        projectile.velocity.Y = num116;
+                        Projectile.velocity.X = num115;
+                        Projectile.velocity.Y = num116;
                     }
                 }
                 else
                 {
                     int num122 = (int)(num115 * 1000f);
-                    int num123 = (int)(projectile.velocity.X * 1000f);
+                    int num123 = (int)(Projectile.velocity.X * 1000f);
                     int num124 = (int)(num116 * 1000f);
-                    int num125 = (int)(projectile.velocity.Y * 1000f);
+                    int num125 = (int)(Projectile.velocity.Y * 1000f);
                     if (num122 != num123 || num124 != num125)
                     {
-                        projectile.netUpdate = true;
+                        Projectile.netUpdate = true;
                     }
 
-                    if (Vector2.Distance(projectile.position, Main.MouseWorld) < 600)
+                    if (Vector2.Distance(Projectile.position, Main.MouseWorld) < 600)
                     {
-                        projectile.velocity.X = num115 * Vector2.Distance(projectile.position, Main.MouseWorld) / 600;
-                        projectile.velocity.Y = num116 * Vector2.Distance(projectile.position, Main.MouseWorld) / 600;
+                        Projectile.velocity.X = num115 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 600;
+                        Projectile.velocity.Y = num116 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 600;
                     }
                     else
                     {
-                        projectile.velocity.X = num115;
-                        projectile.velocity.Y = num116;
+                        Projectile.velocity.X = num115;
+                        Projectile.velocity.Y = num116;
                     }
                 }
 
                 
             }
 
-            if ((int)projectile.ai[0] == 0)
+            if ((int)Projectile.ai[0] == 0)
             {
-                projectile.damage = (int)((projectile.velocity.Length() / 14) * baseDamage);
-                projectile.rotation = (projectile.velocity.X / 8);
-                projectile.ai[1] = 12 - (int)projectile.velocity.Length() / 2;
-                positions.Add(projectile.Center);
-                angles.Add(projectile.rotation);
-                damage.Add(projectile.damage);
-                iFrames.Add((int)projectile.ai[1]);
+                Projectile.originalDamage = (int)((Projectile.velocity.Length() / 14) * baseDamage);
+                Projectile.rotation = (Projectile.velocity.X / 8);
+                Projectile.ai[1] = 12 - (int)Projectile.velocity.Length() / 2;
+                positions.Add(Projectile.Center);
+                angles.Add(Projectile.rotation);
+                damage.Add(Projectile.originalDamage);
+                iFrames.Add((int)Projectile.ai[1]);
 
                 Projectile proj;
                 int projOwned = player.ownedProjectileCounts[ProjectileType<XanCrestBlades_DancingBlade>()];
@@ -143,12 +145,12 @@ namespace TerraLeague.Projectiles
                 {
                     if (positions.Count >= (6 * i))
                     {
-                        proj = Main.projectile.FirstOrDefault(x => (int)x.ai[0] == i && x.owner == projectile.owner && projectile.type == x.type);
+                        proj = Main.projectile.FirstOrDefault(x => (int)x.ai[0] == i && x.owner == Projectile.owner && Projectile.type == x.type);
                         if (proj != null)
                         {
                             proj.Center = positions[positions.Count - (6 * i)];
                             proj.rotation = angles[angles.Count - (6 * i)];
-                            proj.damage = damage[damage.Count - (6 * i)];
+                            proj.originalDamage = damage[damage.Count - (6 * i)];
                             proj.ai[1] = iFrames[iFrames.Count - (6 * i)];
                         }
                     }
@@ -164,27 +166,29 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            if (projectile.rotation < 0)
-                projectile.spriteDirection = 1;
-            else if (projectile.rotation > 0)
-                projectile.spriteDirection = -1;
+            if (Projectile.rotation < 0)
+                Projectile.spriteDirection = 1;
+            else if (Projectile.rotation > 0)
+                Projectile.spriteDirection = -1;
 
-            projectile.timeLeft = 3000;
+            Projectile.timeLeft = 3000;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 
-            target.immune[projectile.owner] = (int)projectile.ai[1]; 
+            target.immune[Projectile.owner] = (int)Projectile.ai[1]; 
             
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            //if (projectile.ai[0] == 1f)
+            //if (Projectile.ai[0] == 1f)
             //{
             //    crit = true;
             //}
+
+            //damage *= (int)((Projectile.velocity.Length() / 14));
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
@@ -201,17 +205,17 @@ namespace TerraLeague.Projectiles
 
         public void DeadMode()
         {
-            projectile.Kill();
+            Projectile.Kill();
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int k = 0; k < projectile.oldPos.Length; k++)
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, 1, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, 1, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
             return true;
         }

@@ -14,51 +14,50 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Light Pistol");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 12;
-            item.ranged = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 52;
-            item.height = 26;
-            item.useAnimation = 16;
-            item.reuseDelay = 20;
-            item.useTime = 8;
-            item.shootSpeed = 8f;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 6000;
-            item.rare = ItemRarityID.Orange;
-            item.scale = 0.9f;
-            item.shoot = ProjectileType<LightPistol_Bullet>();
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
-            item.autoReuse = true;
+            Item.damage = 12;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.width = 52;
+            Item.height = 26;
+            Item.useAnimation = 16;
+            Item.reuseDelay = 20;
+            Item.useTime = 8;
+            Item.shootSpeed = 8f;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 6000;
+            Item.rare = ItemRarityID.Orange;
+            Item.scale = 0.9f;
+            Item.shoot = ProjectileType<LightPistol_Bullet>();
+            Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new PiercingLight(this));
             abilityItem.ChampQuote = "Everybody deserves a second shot";
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 46f;
+            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 46f;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
                 position += muzzleOffset;
             }
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<SilversteelBar>(), 16)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
         public override Vector2? HoldoutOffset()

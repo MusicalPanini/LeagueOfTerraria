@@ -19,7 +19,7 @@ namespace TerraLeague.Projectiles.Homing
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            if (projectile.owner == Main.LocalPlayer.whoAmI)
+            if (Projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 for (int i = 0; i < HaveHit.Length; i++)
                 {
@@ -48,8 +48,8 @@ namespace TerraLeague.Projectiles.Homing
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.netUpdate = true;
-            projectile.timeLeft = PostHitTimeLeft;
+            Projectile.netUpdate = true;
+            Projectile.timeLeft = PostHitTimeLeft;
 
             if (exlusiveTargeting)
             {
@@ -64,20 +64,20 @@ namespace TerraLeague.Projectiles.Homing
 
         public override void GetNewTarget()
         {
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
 
             if (exlusiveTargeting)
-                TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, 480, HaveHit, true, true);
+                TargetWhoAmI = Targeting.GetClosestNPC(Projectile.Center, 480, HaveHit, true, true);
             else
-                TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, 480);
+                TargetWhoAmI = Targeting.GetClosestNPC(Projectile.Center, 480);
 
             if (!CouldNotFindTarget)
             {
-                Main.npc[TargetWhoAmI].immune[projectile.owner] = 0;
+                Main.npc[TargetWhoAmI].immune[Projectile.owner] = 0;
             }
             else
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
         }
 
@@ -89,7 +89,7 @@ namespace TerraLeague.Projectiles.Homing
 
             if (exclusiveTargeting)
             {
-                HaveHit = new int[projectile.penetrate];
+                HaveHit = new int[Projectile.penetrate];
                 for (int i = 0; i < HaveHit.Length; i++)
                 {
                     HaveHit[i] = -1;

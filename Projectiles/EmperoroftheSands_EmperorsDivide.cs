@@ -20,18 +20,19 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 238;
-            projectile.timeLeft = 90;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.minion = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -1;
+            Projectile.width = 24;
+            Projectile.height = 238;
+            Projectile.timeLeft = 90;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -46,22 +47,22 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 90)
-                projectile.friendly = true;
-            if(projectile.velocity.Length() > 0 && projectile.timeLeft <= 75)
+            if (Projectile.timeLeft == 90)
+                Projectile.friendly = true;
+            if(Projectile.velocity.Length() > 0 && Projectile.timeLeft <= 75)
             {
-                projectile.velocity.X *= .8f;
-                projectile.velocity.Y *= .8f;
+                Projectile.velocity.X *= .8f;
+                Projectile.velocity.Y *= .8f;
             }
 
-            projectile.knockBack = 30 * (projectile.velocity.Length() / 16);
+            Projectile.knockBack = 30 * (Projectile.velocity.Length() / 16);
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Sand, 0, 0, projectile.alpha);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Sand, 0, 0, Projectile.alpha);
             }
-            if (projectile.timeLeft < 30)
+            if (Projectile.timeLeft < 30)
             {
-                projectile.alpha += 9;
+                Projectile.alpha += 9;
             }
         }
     }

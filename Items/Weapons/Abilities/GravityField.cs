@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/GravityField";
+            return "TerraLeague/AbilityImages/GravityField";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.4);
+            return (int)(abilityItem.Item.damage * 1.4);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -87,8 +87,8 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.SUM) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 0;
 
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
+                SetAnimation(player, abilityItem.Item.useTime, abilityItem.Item.useAnimation, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }
@@ -96,7 +96,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 82), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 82), player.Center);
         }
     }
 }

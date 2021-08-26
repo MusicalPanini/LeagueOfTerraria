@@ -44,7 +44,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 // For Server
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
+                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type);
 
                     var players = Targeting.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
 
@@ -65,7 +65,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         override public void Efx(Player user)
         {
             TerraLeague.DustRing(261, user, new Color(255, 255, 0, 0));
-            Main.PlaySound(new LegacySoundStyle(2, 29), user.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29), user.Center);
             TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 267, new Color(255, 255, 0, 0), 2);
         }
     }

@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class DestroyerBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Destroyer");
             Description.SetDefault("Increased knockback");

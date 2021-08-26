@@ -6,13 +6,12 @@ namespace TerraLeague.Buffs
 {
     public class Torment : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Torment");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

@@ -19,60 +19,60 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 92;
-            projectile.height = 92;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = attackDuration + (fadeDuration * 2);
-            projectile.magic = true;
-            projectile.extraUpdates = 0;
+            Projectile.width = 92;
+            Projectile.height = 92;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = attackDuration + (fadeDuration * 2);
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.extraUpdates = 0;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, 1f, 1f, 0f);
+            Lighting.AddLight(Projectile.Center, 1f, 1f, 0f);
 
-            if (projectile.timeLeft > fadeDuration)
+            if (Projectile.timeLeft > fadeDuration)
             {
-                if (projectile.alpha > 0)
+                if (Projectile.alpha > 0)
                 {
-                    projectile.alpha -= 15;
+                    Projectile.alpha -= 15;
                 }
-                if (projectile.alpha < 0)
+                if (Projectile.alpha < 0)
                 {
-                    projectile.alpha = 0;
+                    Projectile.alpha = 0;
                 }
 
-                //if (projectile.timeLeft <= attackDuration && projectile.timeLeft % 4 == 0)
+                //if (Projectile.timeLeft <= attackDuration && Projectile.timeLeft % 4 == 0)
                 //{
-                //    if (projectile.timeLeft % 16 == 0)
+                //    if (Projectile.timeLeft % 16 == 0)
                 //    {
-                //        TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 9, 0.5f);
+                //        TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 9, 0.5f);
                 //    }
 
-                //    float x = Main.rand.NextFloat(projectile.Center.X - attackWidth, projectile.Center.X + attackWidth) - 12;
-                //    float y = Main.rand.NextFloat(projectile.position.Y + 24, projectile.position.Y + 68);
-                //    Projectile proj = Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, 16), ModContent.ProjectileType<SolariSet_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                //    float x = Main.rand.NextFloat(Projectile.Center.X - attackWidth, Projectile.Center.X + attackWidth) - 12;
+                //    float y = Main.rand.NextFloat(Projectile.position.Y + 24, Projectile.position.Y + 68);
+                //    Projectile proj = Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, 16), ModContent.ProjectileType<SolariSet_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 //}
 
-                if (projectile.timeLeft <= attackDuration)
+                if (Projectile.timeLeft <= attackDuration)
                 {
-                    if (projectile.timeLeft % 8 == 0)
+                    if (Projectile.timeLeft % 8 == 0)
                     {
-                        TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 9, 0.5f);
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 9, 0.5f);
                     }
 
-                    if (projectile.timeLeft == attackDuration)
+                    if (Projectile.timeLeft == attackDuration)
                     {
-                        TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 91, -0.5f);
-                        Projectile.NewProjectileDirect(projectile.Center, Vector2.UnitY, ModContent.ProjectileType<SolariSet_SolarLaser>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI);
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 91, -0.5f);
+                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.UnitY, ModContent.ProjectileType<SolariSet_SolarLaser>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
                     }
                 }
             }
             else
             {
-                projectile.alpha += 15;
+                Projectile.alpha += 15;
             }
         }
 
@@ -85,16 +85,10 @@ namespace TerraLeague.Projectiles
         {
             //for (int i = 0; i < 10; i++)
             //{
-            //    Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, new Color(255, 192, 0), 0.5f);
+            //    Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 192, Projectile.velocity.X / 2, Projectile.velocity.Y / 2, 100, new Color(255, 192, 0), 0.5f);
             //}
 
             base.Kill(timeLeft);
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
-            
-            base.PostDraw(spriteBatch, lightColor);
         }
     }
 }

@@ -11,32 +11,32 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Vial of True Magic");
             
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.rare = ItemRarityID.Orange;
-            item.width = 12;
-            item.height = 30;
+            Item.maxStack = 999;
+            Item.rare = ItemRarityID.Orange;
+            Item.width = 12;
+            Item.height = 30;
             base.SetDefaults();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<RawMagic>(), 10);
-            recipe.AddIngredient(ItemID.Bottle);
-            recipe.AddTile(TileID.Bottles);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<RawMagic>(), 10)
+            .AddIngredient(ItemID.Bottle)
+            .AddTile(TileID.Bottles)
+            .Register();
 
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(ItemType<RawMagic>(), 5);
-            recipe2.AddIngredient(ItemID.Bottle);
-            recipe2.AddTile(TileID.CrystalBall);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+
+            CreateRecipe()
+            .AddIngredient(ItemType<RawMagic>(), 5)
+            .AddIngredient(ItemID.Bottle)
+            .AddTile(TileID.CrystalBall)
+            .Register();
         }
     }
 }

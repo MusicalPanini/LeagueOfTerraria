@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Shrouded : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Twilight Shroud");
             Description.SetDefault("You are hidden in the shroud");

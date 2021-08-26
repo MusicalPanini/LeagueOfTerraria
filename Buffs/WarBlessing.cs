@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class WarBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Warrior");
             Description.SetDefault("10% increased damage");
@@ -16,17 +16,11 @@ namespace TerraLeague.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.meleeDamage += 0.1f;
-            player.rangedDamage += 0.1f;
-            player.magicDamage += 0.1f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.1;
+            player.GetDamage(DamageClass.Generic) += 0.1f;
 
             if (player.GetModPlayer<PLAYERGLOBAL>().bottleOfStardust)
             {
-                player.meleeDamage += 0.1f;
-                player.rangedDamage += 0.1f;
-                player.magicDamage += 0.1f;
-                player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.1;
+                player.GetDamage(DamageClass.Generic) += 0.1f;
             }
         }
         public override void ModifyBuffTip(ref string tip, ref int rare)

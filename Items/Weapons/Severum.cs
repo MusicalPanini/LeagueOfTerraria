@@ -14,6 +14,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Severum");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -25,24 +26,24 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 115;
-            item.melee = true;
-            item.channel = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 32;
-            item.height = 32;
-            item.useAnimation = 14;
-            item.useTime = 14;
-            item.shootSpeed = 80;
-            item.knockBack = 2;
-            item.value = 310000 * 5;
-            item.rare = ItemRarityID.Purple;
-            item.shoot = ProjectileType<Severum_Slash>();
-            item.UseSound = null;
-            item.autoReuse = true;
-            item.noMelee = true;
+            Item.damage = 115;
+            Item.DamageType = DamageClass.Melee;
+            Item.channel = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.width = 32;
+            Item.height = 32;
+            Item.useAnimation = 14;
+            Item.useTime = 14;
+            Item.shootSpeed = 80;
+            Item.knockBack = 2;
+            Item.value = 310000 * 5;
+            Item.rare = ItemRarityID.Purple;
+            Item.shoot = ProjectileType<Severum_Slash>();
+            Item.UseSound = null;
+            Item.autoReuse = true;
+            Item.noMelee = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new Onslaught(this));
             abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Sev));
             abilityItem.ChampQuote = "Harvest death for life";
@@ -64,18 +65,12 @@ namespace TerraLeague.Items.Weapons
             return base.CanUseItem(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.LunarBar, 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.LunarBar, 16)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
         public override Vector2? HoldoutOffset()

@@ -12,29 +12,30 @@ namespace TerraLeague.Items.PetrifiedWood
         {
             DisplayName.SetDefault("Petrified Wood");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 24;
-            item.height = 22;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
-            item.createTile = TileType<PetWoodTile>();
+            Item.maxStack = 999;
+            Item.width = 24;
+            Item.height = 22;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.createTile = TileType<PetWoodTile>();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PetWall>(), 4);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<PetWall>(), 4)
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
     }
 }

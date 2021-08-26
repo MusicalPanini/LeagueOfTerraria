@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/ThreadedVolley";
+            return "TerraLeague/AbilityImages/ThreadedVolley";
         }
 
         public override string GetAbilityTooltip()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.2);
+            return (int)(abilityItem.Item.damage * 1.2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -88,11 +88,11 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG) + GetAbilityScaledDamage(player, DamageType.SUM);
                 int knockback = 3;
 
-                Main.PlaySound(new LegacySoundStyle(2, 70), player.Center);
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 70), player.Center);
 
                 for (int i = 0; i < 4 + player.maxMinions; i++)
                 {
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, i, 100 / (4 + player.maxMinions));
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, i, 100 / (4 + player.maxMinions));
                 }
                 SetAnimation(player, position + velocity);
                 SetCooldowns(player, type);

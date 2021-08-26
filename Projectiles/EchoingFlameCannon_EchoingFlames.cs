@@ -16,36 +16,36 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 15;
-            projectile.height = 15;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 45;
-            projectile.ranged = true;
-            projectile.extraUpdates = 4;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -1;
-            projectile.tileCollide = false;
+            Projectile.width = 15;
+            Projectile.height = 15;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 45;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.extraUpdates = 4;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 74));
+                Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 74));
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.CursedTorch, 0, 0, 0, default, 4f);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.CursedTorch, 0, 0, 0, default, 4f);
             dust.noGravity = true;
             dust.noLight = true;
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.CursedTorch, 0, 3, 0, default, 1f);
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.CursedTorch, 0, 3, 0, default, 1f);
                 //dust.noLight = true;
             }
         }

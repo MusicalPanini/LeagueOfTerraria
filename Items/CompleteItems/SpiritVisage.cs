@@ -17,16 +17,17 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases resist by 6" +
                 "\nIncreases life regeneration by 2" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -47,15 +48,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Kindlegem>(), 1);
-            recipe.AddIngredient(ItemType<Cowl>(), 1);
-            recipe.AddIngredient(ItemID.ChlorophytePlateMail, 1);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 6);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Kindlegem>(), 1)
+            .AddIngredient(ItemType<Cowl>(), 1)
+            .AddIngredient(ItemID.ChlorophytePlateMail, 1)
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddIngredient(ItemID.ChlorophyteBar, 6)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class DarkSphere : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Sphere");
             Description.SetDefault("You are manipulating spheres of negative emotion!");

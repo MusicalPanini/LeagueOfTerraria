@@ -18,35 +18,35 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slicing Maelstrom");
-            Main.projFrames[projectile.type] = 4;
-            ProjectileID.Sets.DontAttachHideToAlpha[projectile.type] = true;
+            Main.projFrames[Projectile.type] = 4;
+            ProjectileID.Sets.DontAttachHideToAlpha[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 150;
-            projectile.height = 150;
-            projectile.timeLeft = 150;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
+            Projectile.width = 150;
+            Projectile.height = 150;
+            Projectile.timeLeft = 150;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
         }
 
         public override void AI()
         {
-            if (Main.projectile[(int)projectile.ai[0]].active)
-                projectile.Center = Main.projectile[(int)projectile.ai[0]].Center;
+            if (Main.projectile[(int)Projectile.ai[0]].active)
+                Projectile.Center = Main.projectile[(int)Projectile.ai[0]].Center;
             else
-                projectile.Kill();
+                Projectile.Kill();
 
-            Lighting.AddLight(projectile.Center, 0f, 1f, 1f);
-            projectile.rotation += 0.05f;
+            Lighting.AddLight(Projectile.Center, 0f, 1f, 1f);
+            Projectile.rotation += 0.05f;
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 0, new Color(0, 255, 255), 1f);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, 0, 0, 0, new Color(0, 255, 255), 1f);
             dust.noGravity = true;
 
             AnimateProjectile();
@@ -54,18 +54,18 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
+            Projectile.frameCounter++;
             framecount2++;
-            if (projectile.frameCounter >= 3)
+            if (Projectile.frameCounter >= 3)
             {
-                projectile.frame++;
-                projectile.frame %= 4; 
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4; 
+                Projectile.frameCounter = 0;
             }
             if (framecount2 >= 30)
             {
                 framecount2 = 0;
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 53, 0.25f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 53, 0.25f);
             }
         }
     }

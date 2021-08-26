@@ -13,27 +13,29 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Perfect Hex Core");
             Tooltip.SetDefault("The perfect power source");
             base.SetStaticDefaults();
+
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 99;
-            item.width = 26;
-            item.height = 32;
-            item.rare = ItemRarityID.Pink;
-            item.value = Item.buyPrice(0, 6, 0, 0);
-            item.uniqueStack = false;
+            Item.maxStack = 99;
+            Item.width = 26;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = Item.buyPrice(0, 6, 0, 0);
+            Item.uniqueStack = false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<HexCrystal>());
-            recipe.AddIngredient(ItemID.Bottle, 1);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 2);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<HexCrystal>())
+            .AddIngredient(ItemID.Bottle, 1)
+            .AddIngredient(ItemID.MeteoriteBar, 2)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

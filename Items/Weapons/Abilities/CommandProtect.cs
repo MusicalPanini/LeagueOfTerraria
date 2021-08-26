@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/CommandProtect";
+            return "TerraLeague/AbilityImages/CommandProtect";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.4f);
+            return (int)(abilityItem.Item.damage * 0.4f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), true, "") + " shielding";
+            return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), true, "", new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)) + " shielding";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -102,7 +102,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
             TerraLeague.DustBorderRing(300, player.MountedCenter, 226, default, 2);
             TerraLeague.DustRing(226, player, default);
         }

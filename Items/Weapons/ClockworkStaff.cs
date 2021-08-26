@@ -4,6 +4,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,6 +18,7 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Clockwork Staff");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -27,22 +29,22 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 70;
-            item.summon = true;
-            item.mana = 20;
-            item.width = 48;
-            item.height = 48;
-            item.useTime = 36;
-            item.useAnimation = 36;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 100000;
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = new LegacySoundStyle(2, 113);
-            item.shoot = ProjectileType<ClockworkStaff_TheBall>();
+            Item.damage = 70;
+            Item.DamageType = DamageClass.Summon;
+            Item.mana = 20;
+            Item.width = 48;
+            Item.height = 48;
+            Item.useTime = 36;
+            Item.useAnimation = 36;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 100000;
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = new LegacySoundStyle(2, 113);
+            Item.shoot = ProjectileType<ClockworkStaff_TheBall>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new CommandProtect(this));
             abilityItem.ChampQuote = "Time tick-ticks away";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -54,12 +56,12 @@ namespace TerraLeague.Items.Weapons
             return true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (player.ownedProjectileCounts[type] > 0)
             {
                 Projectile projectile = Main.projectile.FirstOrDefault(x => x.type == ProjectileType<ClockworkStaff_TheBall>() || x.owner == player.whoAmI);
-
+                
                 return false;
             }
             else
@@ -68,18 +70,19 @@ namespace TerraLeague.Items.Weapons
 
                 if (player.altFunctionUse != 2)
                 {
-                    return true;
+                    Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
+                    proj.originalDamage = Item.damage;
+                    return false;
                 }
                 return false;
             }
-
         }
 
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
             {
-                player.MinionNPCTargetAim();
+                player.MinionNPCTargetAim(true);
             }
             else
             {
@@ -90,12 +93,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PerfectHexCore>());
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 14);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<PerfectHexCore>())
+            .AddRecipeGroup("TerraLeague:Tier3Bar", 14)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

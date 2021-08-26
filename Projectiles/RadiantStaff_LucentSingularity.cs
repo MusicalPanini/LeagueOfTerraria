@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
+using Terraria.Audio;
 
 namespace TerraLeague.Projectiles
 {
@@ -16,17 +17,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.timeLeft = 360;
-            projectile.penetrate = 1000;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.alpha = 255;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.timeLeft = 360;
+            Projectile.penetrate = 1000;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.alpha = 255;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -38,118 +39,129 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.width == 8)
+            if (Projectile.width == 8)
             {
-                if (projectile.velocity.X < 0 && projectile.Center.X < projectile.ai[0])
+                if (Projectile.velocity.X < 0 && Projectile.Center.X < Projectile.ai[0])
                 {
-                    if (projectile.velocity.Y < 0 && projectile.Center.Y < projectile.ai[1])
+                    if (Projectile.velocity.Y < 0 && Projectile.Center.Y < Projectile.ai[1])
                     {
-                        projectile.Center = new Vector2(projectile.ai[0], projectile.ai[1]);
+                        Projectile.Center = new Vector2(Projectile.ai[0], Projectile.ai[1]);
                         Prime();
                     }
-                    else if (projectile.velocity.Y >= 0 && projectile.Center.Y > projectile.ai[1])
+                    else if (Projectile.velocity.Y >= 0 && Projectile.Center.Y > Projectile.ai[1])
                     {
-                        projectile.Center = new Vector2(projectile.ai[0], projectile.ai[1]);
+                        Projectile.Center = new Vector2(Projectile.ai[0], Projectile.ai[1]);
                         Prime();
                     }
                 }
-                else if (projectile.velocity.X >= 0 && projectile.Center.X > projectile.ai[0])
+                else if (Projectile.velocity.X >= 0 && Projectile.Center.X > Projectile.ai[0])
                 {
-                    if (projectile.velocity.Y < 0 && projectile.Center.Y < projectile.ai[1])
+                    if (Projectile.velocity.Y < 0 && Projectile.Center.Y < Projectile.ai[1])
                     {
-                        projectile.Center = new Vector2(projectile.ai[0], projectile.ai[1]);
+                        Projectile.Center = new Vector2(Projectile.ai[0], Projectile.ai[1]);
                         Prime();
                     }
-                    else if (projectile.velocity.Y >= 0 && projectile.Center.Y > projectile.ai[1])
+                    else if (Projectile.velocity.Y >= 0 && Projectile.Center.Y > Projectile.ai[1])
                     {
-                        projectile.Center = new Vector2(projectile.ai[0], projectile.ai[1]);
+                        Projectile.Center = new Vector2(Projectile.ai[0], Projectile.ai[1]);
                         Prime();
                     }
                 }
 
-                if (projectile.timeLeft < 300)
+                if (Projectile.timeLeft < 300)
                 {
                     Prime();
                 }
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                    int dustBoxWidth = projectile.width - 12;
-                    int dustBoxHeight = projectile.height - 12;
+                    Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                    int dustBoxWidth = Projectile.width - 12;
+                    int dustBoxHeight = Projectile.height - 12;
                     Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.GoldFlame, 0f, 0f, 100, default, 1.5f);
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
-                    dust.velocity += projectile.velocity * 0.1f;
-                    dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                    dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                    dust.velocity += Projectile.velocity * 0.1f;
+                    dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                    dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
                 }
             }
             else
             {
-                if (projectile.soundDelay == 0)
+                if (Projectile.soundDelay == 0)
                 {
-                    projectile.soundDelay = 25;
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f - (projectile.timeLeft / 300f));
+                    Projectile.soundDelay = 25;
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 15, 0.5f - (Projectile.timeLeft / 300f));
                 }
 
-                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One*8), 16, 16, DustID.GoldFlame, 0, 0, 0, default, 1.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - (Vector2.One*8), 16, 16, DustID.GoldFlame, 0, 0, 0, default, 1.5f);
                 dust.velocity *= 0;
                 dust.noGravity = true;
 
-                TerraLeague.DustBorderRing(projectile.width / 2, projectile.Center, 246, default, 1);
+                TerraLeague.DustBorderRing(Projectile.width / 2, Projectile.Center, 246, default, 1, true, true, 0.05f);
 
-                if (projectile.timeLeft % 15 == 0)
+                if (Projectile.timeLeft % 15 == 0)
                 {
-                    Targeting.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2f, BuffType<Buffs.Slowed>(), 15, true, true);
+                    Targeting.GiveNPCsInRangeABuff(Projectile.Center, Projectile.width / 2f, BuffType<Buffs.Slowed>(), 15, true, true);
                 }
             }
 
-            if (projectile.timeLeft <= 2)
-                projectile.friendly = true;
+            if (Projectile.timeLeft <= 2)
+                Projectile.friendly = true;
             
-            if (projectile.timeLeft < 30)
+            if (Projectile.timeLeft < 30)
             {
-                projectile.alpha += 9;
+                Projectile.alpha += 9;
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            projectile.friendly = true;
-            Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 20), projectile.position);
+            Projectile.friendly = true;
+            Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 20), Projectile.position);
 
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 15, 0.5f);
 
-            TerraLeague.DustRing(246, projectile, default);
+            TerraLeague.DustRing(246, Projectile, default);
 
             base.Kill(timeLeft);
         }
 
         public void Prime()
         {
-            projectile.velocity = Vector2.Zero;
-            projectile.timeLeft = 299;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 256;
-            projectile.height = 256;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+            Projectile.velocity = Vector2.Zero;
+            Projectile.timeLeft = 299;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 256;
+            Projectile.height = 256;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
         }
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (projectile.friendly && !target.townNPC)
-                return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+            if (Projectile.friendly && !target.townNPC)
+                return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width / 2);
             else
                 return false;
         }
 
         public override bool? CanCutTiles()
         {
-            return projectile.friendly;
+            return Projectile.friendly;
+        }
+
+        public override void PostDraw(Color lightColor)
+        {
+            if (Projectile.width != 8)
+            {
+                int rad = (Projectile.width / 2);
+                TerraLeague.DrawCircle(Projectile.Center, rad, Color.Yellow);
+                TerraLeague.DrawCircle(Projectile.Center, rad - (rad * Projectile.timeLeft / 300f), Color.Yellow * 0.5f);
+            }
+            base.PostDraw(lightColor);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class DeadlyPlumage : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Deadly Plumage");
             Description.SetDefault("You ranged attack speed and movement speed have been increased!");

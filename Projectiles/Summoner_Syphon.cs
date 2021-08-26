@@ -21,17 +21,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 2;
-            projectile.alpha = 255;
-            projectile.scale = 1.2f;
-            projectile.timeLeft = 305;
-            projectile.extraUpdates = 4;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 2;
+            Projectile.alpha = 255;
+            Projectile.scale = 1.2f;
+            Projectile.timeLeft = 305;
+            Projectile.extraUpdates = 2;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
 
             CanOnlyHitTarget = true;
             TargetPlayers = false;
@@ -42,28 +42,35 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if(projectile.soundDelay == 0)
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 54, -0.5f);
-            projectile.soundDelay = 100;
+            if(Projectile.soundDelay == 0)
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 54, -0.5f);
+            Projectile.soundDelay = 100;
 
-            if (projectile.timeLeft == 301)
+            if (Projectile.timeLeft == 301)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust2 = Dust.NewDustDirect(Main.npc[(int)projectile.ai[0]].position, Main.npc[(int)projectile.ai[0]].width, Main.npc[(int)projectile.ai[0]].height, DustID.PortalBolt, 0, 0, 0, new Color(255, 0, 0), 2);
-                    dust2.noGravity = true;
+                    float x2 = Projectile.position.X - Projectile.velocity.X / 10f * (float)i;
+                    float y2 = Projectile.position.Y - Projectile.velocity.Y / 10f * (float)i;
+                    int num141 = Dust.NewDust(new Vector2(x2, y2), 1, 1, DustID.PortalBolt, 0f, 0f, 0, new Color(255, 0, 0), 0.5f);
+                    Main.dust[num141].alpha = Projectile.alpha;
+                    Main.dust[num141].position.X = x2;
+                    Main.dust[num141].position.Y = y2;
+                    Dust obj77 = Main.dust[num141];
+                    obj77.velocity *= 0f;
+                    Main.dust[num141].noGravity = true;
                 }
             }
 
-            if ((int)projectile.ai[1] == 0)
+            if ((int)Projectile.ai[1] == 0)
             {
                 if (!TargetEntity.active)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 else
                 {
-                    projectile.Center = TargetEntity.Center;
+                    Projectile.Center = TargetEntity.Center;
                 }
             }
             else
@@ -72,30 +79,30 @@ namespace TerraLeague.Projectiles
 
                 if (TargetPlayers && TargetWhoAmI >= 0)
                 {
-                    if (projectile.Hitbox.Intersects(TargetEntity.Hitbox))
+                    if (Projectile.Hitbox.Intersects(TargetEntity.Hitbox))
                     {
                         OnHitFriendlyPlayer(Main.player[TargetWhoAmI]);
                     }
                 }
             }
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 263, Vector2.Zero, 0, new Color(255, 0, 110), 1f);
+            Dust dust = Dust.NewDustPerfect(Projectile.position, 263, Vector2.Zero, 0, new Color(255, 0, 110), 1f);
             dust.noGravity = true;
         }
 
         public override void OnHitFriendlyPlayer(Player player)
         {
             player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(10, true);
-            projectile.Kill();
+            Projectile.Kill();
             base.OnHitFriendlyPlayer(player);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.netUpdate = true;
-            projectile.timeLeft = 302;
-            projectile.ai[1] = 1;
-            projectile.ai[0] = projectile.owner;
+            Projectile.netUpdate = true;
+            Projectile.timeLeft = 302;
+            Projectile.ai[1] = 1;
+            Projectile.ai[0] = Projectile.owner;
             TargetPlayers = true;
 
             base.OnHitNPC(target, damage, knockback, crit);
@@ -105,7 +112,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, projectile.velocity.X, projectile.velocity.Y, 0, new Color(255, 0, 0), 2);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBolt, Projectile.velocity.X, Projectile.velocity.Y, 0, new Color(255, 0, 0), 2);
                 dust.noGravity = true;
             }
 
@@ -114,7 +121,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)projectile.ai[1] == 0)
+            if ((int)Projectile.ai[1] == 0)
                 return base.CanHitNPC(target);
             else
                 return false;

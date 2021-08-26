@@ -24,7 +24,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 text += "\n" + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain 1% melee and ranged damage per " + manaToADConversion + " max mana");
 
             if (manaToAPConversion > 0)
-                text += "\n" + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain 1% magic and minion damage per " + manaToAPConversion + " max mana");
+                text += "\n" + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain 1% magic and summon damage per " + manaToAPConversion + " max mana");
 
             return text;
         }
@@ -36,14 +36,14 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (manaToADConversion > 0)
             {
-                player.meleeDamage += (player.statManaMax2 / manaToADConversion) * 0.01f;
-                player.rangedDamage += (player.statManaMax2 / manaToADConversion) * 0.01f;
+                player.GetDamage(DamageClass.Melee) += (player.statManaMax2 / manaToADConversion) * 0.01f;
+                player.GetDamage(DamageClass.Ranged) += (player.statManaMax2 / manaToADConversion) * 0.01f;
             }
 
             if (manaToAPConversion > 0)
             {
-                player.magicDamage += (player.statManaMax2 / manaToAPConversion) * 0.01f;
-                player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += (player.statManaMax2 / manaToAPConversion) * 0.01f;
+                player.GetDamage(DamageClass.Magic) += (player.statManaMax2 / manaToAPConversion) * 0.01f;
+                player.GetDamage(DamageClass.Summon) += (player.statManaMax2 / manaToAPConversion) * 0.01f;
             }
 
             base.UpdateAccessory(player, modItem);

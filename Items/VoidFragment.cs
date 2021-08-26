@@ -11,18 +11,19 @@ namespace TerraLeague.Items
     {
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 4));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
             DisplayName.SetDefault("Void Fragment");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 28;
-            item.height = 28;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.buyPrice(0, 0, 0, 50);
+            Item.maxStack = 999;
+            Item.width = 28;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(0, 0, 0, 50);
         }
     }
 }

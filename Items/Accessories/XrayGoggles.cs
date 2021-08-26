@@ -13,15 +13,16 @@ namespace TerraLeague.Items.Accessories
             DisplayName.SetDefault("X-ray Goggles");
             Tooltip.SetDefault("Gain vision of Enemies and Traps");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 24;
-            item.rare = ItemRarityID.Orange;
-            item.value = Item.buyPrice(0, 18, 0, 0);
-            item.accessory = true;
+            Item.width = 30;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.buyPrice(0, 18, 0, 0);
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class Highlander : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Highlander");
             Description.SetDefault("Increased movement and melee speed, and immunity to slows");

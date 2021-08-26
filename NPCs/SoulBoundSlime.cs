@@ -2,8 +2,10 @@
 using TerraLeague.Items;
 using TerraLeague.Items.Banners;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.NPCs
@@ -13,31 +15,31 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soulbound Slime");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.BlueSlime];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.BlueSlime];
         }
         public override void SetDefaults()
         {
-            npc.width = 44;
-            npc.height = 32;
-            npc.aiStyle = 1;
-            npc.damage = 18;
-            npc.defense = 6;
-            npc.lifeMax = 50;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
-            npc.knockBackResist = 0.05f;
-            npc.value = 25f;
-            aiType = NPCID.BlueSlime;
-            animationType = NPCID.BlueSlime;
+            NPC.width = 44;
+            NPC.height = 32;
+            NPC.aiStyle = 1;
+            NPC.damage = 18;
+            NPC.defense = 6;
+            NPC.lifeMax = 50;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.knockBackResist = 0.05f;
+            NPC.value = 25f;
+            AIType = NPCID.BlueSlime;
+            AnimationType = NPCID.BlueSlime;
             base.SetDefaults();
-            npc.scale = 1f;
-            banner = npc.type;
-            bannerItem = ItemType<SoulBoundSlimeBanner>();
+            NPC.scale = 1f;
+            Banner = NPC.type;
+            BannerItem = ItemType<SoulBoundSlimeBanner>();
         }
 
         public override bool PreAI()
         {
-            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+            Lighting.AddLight(NPC.Center, new Color(5, 245, 150).ToVector3());
 
             return base.PreAI();
         }
@@ -66,18 +68,18 @@ namespace TerraLeague.NPCs
         {
             for (int k = 0; k < 60; k++)
             {
-                Dust.NewDust(npc.position, npc.width, npc.height, DustID.t_Slime, hitDirection, -2, 150, new Color(5, 245, 150), 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.t_Slime, hitDirection, -2, 150, new Color(5, 245, 150), 1f);
             }
 
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
-            int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.Gel, Main.rand.Next(1,4));
-            Main.item[item].color = new Color(67,248,175);
-            base.NPCLoot();
+            npcLoot.Add(ItemDropRule.Common(ItemType<DamnedSoul>(), 1));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 1, 3));
+            //Main.item[item].color = new Color(67,248,175);
+            base.ModifyNPCLoot(npcLoot);
         }
     }
 }

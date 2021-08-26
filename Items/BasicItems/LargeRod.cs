@@ -12,35 +12,35 @@ namespace TerraLeague.Items.BasicItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Needlessly Large Rod");
-            Tooltip.SetDefault("4% increased magic and minion damage");
+            Tooltip.SetDefault("4% increased magic and summon damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Green;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
+            player.GetDamage(DamageClass.Magic) += 0.04f;
+            player.GetDamage(DamageClass.Summon) += 0.04f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 10);
-            recipe.AddIngredient(ItemID.Bone, 5);
-            recipe.AddIngredient(ItemType<ManaBar>(), 2);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.anyWood = true;
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddRecipeGroup("Wood", 10)
+            .AddIngredient(ItemID.Bone, 5)
+            .AddIngredient(ItemType<ManaBar>(), 2)
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
     }
 }

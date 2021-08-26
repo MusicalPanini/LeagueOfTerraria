@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Biomes;
 using TerraLeague.Items.Banners;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,26 +19,26 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Marble Slime");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.BlueSlime];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.BlueSlime];
         }
         public override void SetDefaults()
         {
-            npc.width = 32;
-            npc.height = 24;
-            npc.aiStyle = 1;
-            npc.damage = 12;
-            npc.defense = 9;
-            npc.lifeMax = 55;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
-            npc.knockBackResist = 0.05f;
-            npc.value = 25f;
-            aiType = NPCID.BlueSlime;
-            animationType = NPCID.BlueSlime;
+            NPC.width = 32;
+            NPC.height = 24;
+            NPC.aiStyle = 1;
+            NPC.damage = 12;
+            NPC.defense = 9;
+            NPC.lifeMax = 55;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.knockBackResist = 0.05f;
+            NPC.value = 25f;
+            AIType = NPCID.BlueSlime;
+            AnimationType = NPCID.BlueSlime;
             base.SetDefaults();
-            npc.scale = 1.3f;
-            banner = npc.type;
-            bannerItem = ModContent.ItemType<MarbleSlimeBanner>();
+            NPC.scale = 1.3f;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<MarbleSlimeBanner>();
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
@@ -54,17 +57,31 @@ namespace TerraLeague.NPCs
         {
             for (int k = 0; k < 60; k++)
             {
-                Dust.NewDust(npc.position, npc.width, npc.height, DustID.t_Slime, hitDirection, -2, 150, new Color(50, 50, 50), 1f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.t_Slime, hitDirection, -2, 150, new Color(50, 50, 50), 1f);
             }
 
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.Gel, Main.rand.Next(1, 4));
-            Main.item[item].color = new Color(255, 255, 255);
-            base.NPCLoot();
+            npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 1, 3));
+            // Main.item[item].color = new Color(255, 255, 255);
+
+            base.ModifyNPCLoot(npcLoot);
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				// Sets the spawning conditions of this NPC that is listed in the bestiary.
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
+                ModContent.GetInstance<SurfaceMarbleBiome>().ModBiomeBestiaryInfoElement,
+
+				// Sets the description of this NPC that is listed in the bestiary.
+				new FlavorTextBestiaryInfoElement("These Slimes being too goopy were unable to be petrified like the forest it resideds in. Instead it is able to petrify its prey before digesting it.")
+            });
         }
     }
 }

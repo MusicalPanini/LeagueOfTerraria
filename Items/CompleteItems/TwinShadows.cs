@@ -13,39 +13,40 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Twin Shadows");
-            Tooltip.SetDefault("8% increased minion damage" +
+            Tooltip.SetDefault("8% increased summon damage" +
                 "\n5% increased movement speed" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 36;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 28;
+            Item.height = 36;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Active = new SpectralPursuit(40, 15, 90);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;
+            player.GetDamage(DamageClass.Summon) += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.moveSpeed += 0.05f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Codex>(), 1);
-            recipe.AddIngredient(ItemType<AetherWisp>(), 1);
-            recipe.AddIngredient(ItemType<BlackIceChunk>(), 6);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Codex>(), 1)
+            .AddIngredient(ItemType<AetherWisp>(), 1)
+            .AddIngredient(ItemType<BlackIceChunk>(), 6)
+            .AddIngredient(ItemID.SoulofFright, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Riftwalk";
+            return "TerraLeague/AbilityImages/Riftwalk";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2);
+            return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -117,7 +117,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                         player.velocity.Y = 0;
 
-                        Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(0, 0), ProjectileType<NetherBladeofHorok_RiftwalkHitbox>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, -1);
+                        Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), player.MountedCenter, new Vector2(0, 0), ProjectileType<NetherBladeofHorok_RiftwalkHitbox>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, -1);
                         player.CheckMana(GetBaseManaCost(), true);
 
                         DoEfx(player, type);
@@ -129,7 +129,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 19, SoundType.Sound));
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 19, SoundType.Sound));
         }
     }
 }

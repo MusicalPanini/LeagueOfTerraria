@@ -17,7 +17,7 @@ namespace TerraLeague.Gores
             gore.numFrames = 8;
             gore.frame = (byte)Main.rand.Next(8);
             gore.frameCounter = (byte)Main.rand.Next(8);
-            updateType = 910;
+            UpdateType = 910;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -16,45 +17,45 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 78;
-            projectile.height = 78;
-            projectile.timeLeft = 300;
-            projectile.penetrate = -1;
-            projectile.aiStyle = 0;
-            projectile.ranged = true;
+            Projectile.width = 78;
+            Projectile.height = 78;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = 0;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                projectile.soundDelay = 8;
-                Main.PlaySound(SoundID.Item7, projectile.position);
+                Projectile.soundDelay = 8;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item7, Projectile.position);
             }
 
-                projectile.spriteDirection = (int)projectile.ai[0];
+            Projectile.spriteDirection = (int)Projectile.ai[0];
 
-                projectile.rotation += 0.5f * (int)projectile.ai[0];
+            Projectile.rotation += 0.5f * (int)Projectile.ai[0];
 
-            if (projectile.velocity.Y < 15)
+            if (Projectile.velocity.Y < 15)
             {
-                projectile.velocity.Y += 0.3f;
+                Projectile.velocity.Y += 0.3f;
             }
-            Lighting.AddLight(projectile.position, 0.75f, 0, 0);
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Wet, 0, 0, 0, new Color(255, 0, 0));
+            Lighting.AddLight(Projectile.position, 0.75f, 0, 0);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 211, 0, 0, 0, new Color(255, 0, 0));
             dust.noGravity = true;
             dust.scale = 1.4f;
 
-            if (projectile.timeLeft % 30 == 0)
+            if (Projectile.timeLeft % 30 == 0)
             {
-                Projectile.NewProjectile(projectile.Center, projectile.velocity, ProjectileType<DarksteelThrowingAxe_PathMarker>(), 0, 0, projectile.owner);
+                Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Projectile.velocity, ProjectileType<DarksteelThrowingAxe_PathMarker>(), 0, 0, Projectile.owner);
             }
 
-            if (new Rectangle((int)projectile.position.X - 30, (int)projectile.position.Y - 30, 102, 102).Intersects(Main.player[projectile.owner].Hitbox) && projectile.timeLeft < 270)
+            if (new Rectangle((int)Projectile.position.X - 30, (int)Projectile.position.Y - 30, 102, 102).Intersects(Main.player[Projectile.owner].Hitbox) && Projectile.timeLeft < 270)
             {
-                Main.player[projectile.owner].AddBuff(BuffType<Buffs.SpinningAxe>(), 240);
-                Main.PlaySound(SoundID.Grab, projectile.position);
-                projectile.Kill();
+                Main.player[Projectile.owner].AddBuff(BuffType<Buffs.SpinningAxe>(), 240);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Grab, Projectile.position);
+                Projectile.Kill();
             }
 
             base.AI();
@@ -78,9 +79,9 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Iron, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
             }
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 4, -0.5f);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 4, -0.5f);
             return true;
         }
     }

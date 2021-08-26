@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Onslaught";
+            return "TerraLeague/AbilityImages/Onslaught";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.2f);
+            return (int)(abilityItem.Item.damage * 0.2f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)

@@ -17,6 +17,7 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Heart of the Tempest");
 
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,42 +27,37 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 60;
-            item.width = 30;
-            item.height = 30;
-            item.melee = true;
-            item.useTime = 25;
-            item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 2.5f;
-            item.value = 350000;
-            item.rare = ItemRarityID.Lime;
-            item.UseSound = SoundID.Item1;
-            item.shootSpeed = 16f;
-            item.shoot = ProjectileType<HeartoftheTempest_Yoyo>();
-            item.noMelee = true;
-            item.channel = true;
-            item.noUseGraphic = true;
+            Item.damage = 60;
+            Item.width = 30;
+            Item.height = 30;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 25;
+            Item.useAnimation = 25;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 2.5f;
+            Item.value = 350000;
+            Item.rare = ItemRarityID.Lime;
+            Item.UseSound = SoundID.Item1;
+            Item.shootSpeed = 16f;
+            Item.shoot = ProjectileType<HeartoftheTempest_Yoyo>();
+            Item.noMelee = true;
+            Item.channel = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new LightningRush(this));
             abilityItem.ChampQuote = "I am the wind!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return true;
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<HarmonicBar>(), 16)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

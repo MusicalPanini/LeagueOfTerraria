@@ -17,15 +17,15 @@ namespace TerraLeague.Projectiles
     {
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 22;
-            projectile.friendly = false;
-            projectile.hostile = true;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.magic = true;
-            projectile.hide = false;
-            projectile.timeLeft = 150;
+            Projectile.width = 22;
+            Projectile.height = 22;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.hide = false;
+            Projectile.timeLeft = 150;
 
             dust1 = DustID.AmberBolt;
             dust2 = DustID.AmberBolt;
@@ -46,8 +46,8 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            projectile.velocity.Normalize();
-            BeamAI(projectile.Center);
+            Projectile.velocity.Normalize();
+            BeamAI(Projectile.Center);
         }
     }
 }

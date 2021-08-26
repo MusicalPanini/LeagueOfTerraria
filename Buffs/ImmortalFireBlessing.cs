@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class ImmortalFireBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Immortal Fire");
             Description.SetDefault("Reduced cooldown of healing potions" +

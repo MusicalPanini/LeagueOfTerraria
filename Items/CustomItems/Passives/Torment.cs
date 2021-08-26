@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
         {
-            if (proj.magic || proj.minion)
+            if (proj.DamageType == DamageClass.Magic || proj.DamageType == DamageClass.Summon)
                 target.AddBuff(BuffType<Buffs.Torment>(), debuffDuration * 60);
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
         }

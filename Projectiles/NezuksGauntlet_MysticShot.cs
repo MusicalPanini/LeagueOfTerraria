@@ -18,35 +18,35 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 12;
-            projectile.height = 12;
-            projectile.alpha = 255;
-            projectile.timeLeft = 60;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.extraUpdates = 1;
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 60;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
             for (int i = 0; i < 5; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                int dustBoxWidth = projectile.width - 12;
-                int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.DiamondBolt, 0f, 0f, 100, default, 1.5f);
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.GemDiamond, 0f, 0f, 100, default, 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.2f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.2f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
-            Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.MagicMirror, projectile.velocity.X, projectile.velocity.Y, 50, default, 1f);
+            Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1f);
             dust2.noGravity = true;
             dust2.velocity *= 0.6f;
         }
@@ -55,7 +55,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 5; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.DiamondBolt, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 50, default, 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemDiamond, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, 50, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.6f;
             }
@@ -69,15 +69,15 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (target.HasBuff(BuffType<Buffs.EssenceFluxDebuff>()))
             {
                 modPlayer.magicFlatDamage += EssenceFlux.GetFluxDamage(modPlayer);
 
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 12, 0.5f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 12, 0.5f);
 
-                projectile.magic = true;
+                Projectile.DamageType = DamageClass.Magic;
                 player.ManaEffect(100);
                 player.statMana += 100;
             }

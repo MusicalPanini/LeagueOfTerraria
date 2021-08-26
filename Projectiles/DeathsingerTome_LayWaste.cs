@@ -17,62 +17,62 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Death Singer's Tome");
-            Main.projFrames[projectile.type] = 5;
+            Main.projFrames[Projectile.type] = 5;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 75;
-            projectile.height = 75;
-            projectile.timeLeft = 42;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1f;
-            projectile.alpha = 255;
+            Projectile.width = 75;
+            Projectile.height = 75;
+            Projectile.timeLeft = 42;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1f;
+            Projectile.alpha = 255;
         }
 
         public override void AI()
         {
-            projectile.Center = new Vector2(projectile.ai[0], projectile.ai[1]);
+            Projectile.Center = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 
             int num = Main.rand.Next(0, 3);
             Dust dust;
             if (num == 0)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.RedsWingsRun, 0, -1, 150);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 186, 0, -1, 150);
                 dust.velocity.X *= 0.3f;
                 dust.color = new Color(0, 255, 150);
                 dust.noGravity = false;
-                dust.alpha = projectile.alpha;
+                dust.alpha = Projectile.alpha;
             }
             else if (num == 2)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.RedsWingsRun, 0, -1, 150);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 186, 0, -1, 150);
                 dust.velocity.X *= 0.3f;
                 dust.color = new Color(0, 255, 0);
                 dust.noGravity = false;
-                dust.alpha = projectile.alpha;
+                dust.alpha = Projectile.alpha;
             }
 
-            Lighting.AddLight(projectile.Center, 0f, 0.75f, 0.3f);
-            if (projectile.timeLeft > 12)
+            Lighting.AddLight(Projectile.Center, 0f, 0.75f, 0.3f);
+            if (Projectile.timeLeft > 12)
             {
-                projectile.alpha -= 1;
+                Projectile.alpha -= 1;
             }
-            if (projectile.timeLeft == 12)
+            if (Projectile.timeLeft == 12)
             {
-                projectile.friendly = true;
-                projectile.frame++;
-                projectile.alpha = 20;
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 54, -0.6f);
+                Projectile.friendly = true;
+                Projectile.frame++;
+                Projectile.alpha = 20;
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 54, -0.6f);
 
                 for (int i = 0; i < 15; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.RedsWingsRun, 0, -1, 150);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 186, 0, -1, 150);
                     dust.color = new Color(0, 255, 150);
                     dust.noGravity = false;
                 }
@@ -81,7 +81,7 @@ namespace TerraLeague.Projectiles
                 for (int i = 0; i < 200; i++)
                 {
                     NPC npc = Main.npc[i];
-                    if (projectile.Hitbox.Intersects(npc.Hitbox) && npc.active && !npc.townNPC)
+                    if (Projectile.Hitbox.Intersects(npc.Hitbox) && npc.active && !npc.townNPC)
                     {
                         totalHit++;
                         if (totalHit > 1)
@@ -90,26 +90,26 @@ namespace TerraLeague.Projectiles
                 }
 
                 if (totalHit == 1)
-                    projectile.damage *= 2;
+                    Projectile.damage *= 2;
             }
-            if (projectile.timeLeft <= 12)
+            if (Projectile.timeLeft <= 12)
             {
                 AnimateProjectile();
             }
-            if (projectile.timeLeft == 11)
+            if (Projectile.timeLeft == 11)
             {
-                projectile.friendly = false;
+                Projectile.friendly = false;
             }
         }
 
         public void AnimateProjectile() 
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 3)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 3)
             {
-                projectile.frame++;
-                projectile.frame %= 5;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 5;
+                Projectile.frameCounter = 0;
             }
         }
     }

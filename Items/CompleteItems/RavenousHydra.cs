@@ -20,6 +20,7 @@ namespace TerraLeague.Items.CompleteItems
                 //"\n12% reduced maximum life" +
                 //"\n12% increased damage taken" +
                 "\nCan only have one Hydra item equiped at a time");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
@@ -34,11 +35,11 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -47,7 +48,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.07f;
+            player.GetDamage(DamageClass.Melee) += 0.07f;
             player.lifeRegen += 2;
 
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;// 0.05;
@@ -59,16 +60,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Tiamat>(), 1);
-            recipe.AddIngredient(ItemType<VampiricScepter>(), 1);
-            recipe.AddIngredient(ItemType<Pickaxe>(), 1);
-            recipe.AddIngredient(ItemID.Gungnir, 1);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 10);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Tiamat>(), 1)
+            .AddIngredient(ItemType<VampiricScepter>(), 1)
+            .AddIngredient(ItemType<Pickaxe>(), 1)
+            .AddIngredient(ItemID.Gungnir, 1)
+            .AddIngredient(ItemType<DarksteelBar>(), 10)
+            .AddIngredient(ItemID.ChlorophyteBar, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

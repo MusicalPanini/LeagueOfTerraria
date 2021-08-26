@@ -16,58 +16,58 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.friendly = true;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.timeLeft = 240;
-            projectile.melee = true;
-            projectile.extraUpdates = 60;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -1;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.friendly = true;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 240;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.extraUpdates = 60;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if ((int)projectile.ai[1] == 1)
+            if ((int)Projectile.ai[1] == 1)
             {
-                NPC target = Main.npc[(int)projectile.ai[0]];
-                if (!projectile.Hitbox.Intersects(target.Hitbox))
+                NPC target = Main.npc[(int)Projectile.ai[0]];
+                if (!Projectile.Hitbox.Intersects(target.Hitbox))
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
             }
 
-            Dust dust = Dust.NewDustPerfect(projectile.Center, 235/*182*/, Vector2.Zero);
+            Dust dust = Dust.NewDustPerfect(Projectile.Center, 235/*182*/, Vector2.Zero);
             dust.noGravity = true;
             dust.velocity *= 0;
             dust.noLight = true;
-            dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 235, Vector2.Zero);
+            dust = Dust.NewDustPerfect(Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.Zero), 235, Vector2.Zero);
             dust.noGravity = true;
             dust.velocity *= 0;
             dust.noLight = true;
 
-            //Lighting.AddLight(projectile.Center, 1f, 0.0f, 0f);
+            //Lighting.AddLight(Projectile.Center, 1f, 0.0f, 0f);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.ai[1] = 1;
-            projectile.penetrate = 2;
-            //Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 2;
-            Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal += 2;
-            //Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileID.VampireHeal, 0, 0, projectile.owner, projectile.owner, 1);
-            projectile.friendly = false;
+            Projectile.ai[1] = 1;
+            Projectile.penetrate = 2;
+            //Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 2;
+            Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal += 2;
+            //Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileID.VampireHeal, 0, 0, Projectile.owner, Projectile.owner, 1);
+            Projectile.friendly = false;
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.whoAmI == (int)projectile.ai[0])
+            if (target.whoAmI == (int)Projectile.ai[0])
             {
                 return base.CanHitNPC(target);
             }
@@ -82,7 +82,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanCutTiles()
         {
-            return projectile.friendly;
+            return Projectile.friendly;
         }
     }
 }

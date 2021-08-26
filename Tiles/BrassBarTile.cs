@@ -10,7 +10,7 @@ namespace TerraLeague.Tiles
 {
     public class BrassBarTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileShine[Type] = 1100;
             Main.tileSolid[Type] = true;
@@ -25,7 +25,7 @@ namespace TerraLeague.Tiles
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Brass Bar");
             AddMapEntry(new Color(185, 165, 112), name);
-            dustType = DustID.Hay;
+            DustType = DustID.Gold;
         }
 
         public override bool Drop(int i, int j)

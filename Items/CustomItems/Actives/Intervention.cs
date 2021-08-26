@@ -46,7 +46,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 SetCooldown(player);
                 int lifeToHeal = modifiedHealPower(player);
 
-                Projectile.NewProjectileDirect(Main.MouseWorld, Vector2.Zero, ProjectileType<Item_HealField>(), lifeToHeal, 0, player.whoAmI);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), Main.MouseWorld, Vector2.Zero, ProjectileType<Item_HealField>(), lifeToHeal, 0, player.whoAmI);
             }
         }
 

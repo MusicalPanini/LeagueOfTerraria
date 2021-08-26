@@ -15,37 +15,38 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spellbinder");
-            Tooltip.SetDefault("5% minion damage" +
+            Tooltip.SetDefault("5% summon damage" +
                 "\n10% increased movement speed");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Active = new Overdrive(10, 90);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05f;
+            player.GetDamage(DamageClass.Summon) += 0.05f;
             player.moveSpeed += 0.1f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<AetherWisp>(), 1);
-            recipe.AddIngredient(ItemType<LargeRod>(), 1);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 10);
-            recipe.AddIngredient(ItemType<PrototypeHexCore>(), 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<AetherWisp>(), 1)
+            .AddIngredient(ItemType<LargeRod>(), 1)
+            .AddIngredient(ItemID.MeteoriteBar, 10)
+            .AddIngredient(ItemType<PrototypeHexCore>(), 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/PlasmaFission";
+            return "TerraLeague/AbilityImages/PlasmaFission";
         }
 
         public override string GetAbilityTooltip()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2);
+            return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -102,7 +102,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 1;
 
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
 
                 SetAnimation(player, 20, 20, position + velocity);
                 DoEfx(player, type);

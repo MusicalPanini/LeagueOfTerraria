@@ -15,27 +15,28 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Drakebane");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 26;
-            item.width = 64;
-            item.height = 64;
-            item.melee = true;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 2;
-            item.value = 6000;
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = new LegacySoundStyle(2, 101);
-            item.shootSpeed = 1f;
-            item.shoot = ProjectileType<Drakebane_Whip>();
-            item.noMelee = true;
-            item.noUseGraphic = true;
+            Item.damage = 26;
+            Item.width = 64;
+            Item.height = 64;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 2;
+            Item.value = 6000;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = new LegacySoundStyle(2, 101);
+            Item.shootSpeed = 1f;
+            Item.shoot = ProjectileType<Drakebane_Whip>();
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new DemacianStandard(this));
             abilityItem.ChampQuote = "Righteous retribution!";
             abilityItem.IsAbilityItem = true;
@@ -50,11 +51,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 12);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<SilversteelBar>(), 12)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

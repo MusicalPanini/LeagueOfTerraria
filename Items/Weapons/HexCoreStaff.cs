@@ -17,6 +17,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Hex Core Staff");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,26 +27,26 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 48;
-            item.width = 48;
-            item.height = 48;
-            item.magic = true;
-            item.useTime = 25;
-            item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 0;
-            item.value = 100000;
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
-            item.shootSpeed = 8f;
-            item.shoot = ProjectileType<HexCoreStaff_ChaosStorm>();
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = false;
-            item.mana = 40;
-            item.channel = true;
+            Item.damage = 48;
+            Item.width = 48;
+            Item.height = 48;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 25;
+            Item.useAnimation = 25;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 0;
+            Item.value = 100000;
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
+            Item.shootSpeed = 8f;
+            Item.shoot = ProjectileType<HexCoreStaff_ChaosStorm>();
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = false;
+            Item.mana = 40;
+            Item.channel = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new GravityField(this));
             abilityItem.ChampQuote = "Join the glorious evolution";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -57,19 +58,13 @@ namespace TerraLeague.Items.Weapons
             return player.ownedProjectileCounts[ProjectileType<HexCoreStaff_ChaosStorm>()] < 1;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return true;
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PerfectHexCore>());
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 14);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<PerfectHexCore>())
+            .AddRecipeGroup("TerraLeague:Tier3Bar", 14)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

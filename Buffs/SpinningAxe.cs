@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class SpinningAxe : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spinning Axe");
             Description.SetDefault("Your next Darksteel Throwing Axe will deal additional damage" +

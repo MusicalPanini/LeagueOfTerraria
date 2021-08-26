@@ -21,17 +21,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 1.2f;
-            projectile.timeLeft = 301;
-            projectile.extraUpdates = 16;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1.2f;
+            Projectile.timeLeft = 301;
+            Projectile.extraUpdates = 16;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
 
             CanOnlyHitTarget = true;
             CanRetarget = false;
@@ -41,11 +41,11 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if(projectile.soundDelay == 0)
-                Main.PlaySound(new LegacySoundStyle(2, 73), projectile.Center);
-            projectile.soundDelay = 100;
+            if(Projectile.soundDelay == 0)
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 73), Projectile.Center);
+            Projectile.soundDelay = 100;
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, DustID.Fire, Vector2.Zero, 0, default, 2f);
+            Dust dust = Dust.NewDustPerfect(Projectile.position, 6, Vector2.Zero, 0, default, 2f);
             dust.noGravity = true;
 
             HomingAI();
@@ -63,10 +63,10 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire,0,0,0,default,2);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6,0,0,0,default,2);
                 dust.noGravity = true;
             }
-            Main.PlaySound(SoundID.Dig, projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 
             base.Kill(timeLeft);
         }

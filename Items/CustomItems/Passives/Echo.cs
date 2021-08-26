@@ -41,7 +41,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (passiveStat >= 100 && proj.magic)
+            if (passiveStat >= 100 && proj.DamageType == DamageClass.Magic)
             {
                 int bonusDamage = baseDamage + (int)(modPlayer.MAG * magicScaling / 100d);
                 damage += bonusDamage;
@@ -51,7 +51,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 for (int i = 0; i < 8; i++)
                 {
-                    Projectile.NewProjectileDirect(target.position, new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(45 * i)), ProjectileType<Item_Echo>(), bonusDamage, 0, player.whoAmI, -2, target.whoAmI);
+                    Projectile.NewProjectileDirect(player.GetProjectileSource_Item(player.HeldItem), target.position, new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(45 * i)), ProjectileType<Item_Echo>(), bonusDamage, 0, player.whoAmI, -2, target.whoAmI);
                 }
                 passiveStat = 0;
                 modPlayer.echo = false;
@@ -89,7 +89,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void Efx(Player user, NPC effectedNPC)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 12).WithPitchVariance(-0.6f), effectedNPC.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 12).WithPitchVariance(-0.6f), effectedNPC.Center);
         }
     }
 }

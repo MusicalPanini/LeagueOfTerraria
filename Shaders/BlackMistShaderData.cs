@@ -20,7 +20,7 @@ namespace TerraLeague.Shaders
 
         public override void Update(GameTime gameTime)
         {
-            Vector2 vector = new Vector2(0f - Main.windSpeed, -1f) * new Vector2(0.01f, 0.001f);
+            Vector2 vector = new Vector2(0f - Main.windSpeedCurrent, -1f) * new Vector2(0.01f, 0.001f);
             vector.Normalize();
             vector *= new Vector2(0.025f, 0);
             if (!Main.gamePaused && Main.hasFocus)
@@ -31,7 +31,7 @@ namespace TerraLeague.Shaders
             _texturePosition.Y %= 10f;
             base.UseDirection(vector);
             base.Update(gameTime);
-            Main.bgColor = Color.Green;
+            Main.ColorOfTheSkies = Color.Green;
 
             float quotient;
             if (Main.time <= 3600)
@@ -41,14 +41,14 @@ namespace TerraLeague.Shaders
             else
                 quotient = 1;
 
-            if (_passName == "FilterSandstormForeground")
+            //if (_passname == "FilterSandstormForeground")
+            //{
+            //    base.UseOpacity(0.2f * quotient * TerraLeague.fogIntensity);
+            //    base.UseIntensity(3.5f * quotient * TerraLeague.fogIntensity);
+            //}
+            //else
             {
-                base.UseOpacity(0.2f * quotient * TerraLeague.fogIntensity);
-                base.UseIntensity(3.5f * quotient * TerraLeague.fogIntensity);
-            }
-            else
-            {
-                base.UseIntensity(5 * quotient * TerraLeague.fogIntensity);
+                base.UseIntensity(0.75f * quotient * TerraLeague.fogIntensity);
                 base.UseOpacity(1 * quotient * TerraLeague.fogIntensity);
             }
         }

@@ -57,7 +57,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 if (npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().pox)
                 {
                     SetCooldown(player);
-                    Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Item_DiseaseHarvest>(), stackDamage + (int)(magicScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100d), 0, player.whoAmI, i, manaRestore);
+                    Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), player.Center, Vector2.Zero, ProjectileType<Item_DiseaseHarvest>(), stackDamage + (int)(magicScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100d), 0, player.whoAmI, i, manaRestore);
                 }
             }
         }

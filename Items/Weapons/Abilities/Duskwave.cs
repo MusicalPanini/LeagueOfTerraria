@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Duskwave";
+            return "TerraLeague/AbilityImages/Duskwave";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5f);
+            return (int)(abilityItem.Item.damage * 1.5f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -91,7 +91,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 for (int i = 0; i < 16; i++)
                 {
-                    Projectile.NewProjectileDirect(position, new Vector2(16, 0).RotatedBy(MathHelper.TwoPi / 16 * i) * 0.75f, projType, damage, knockback, player.whoAmI, 0, 1);
+                    Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, new Vector2(16, 0).RotatedBy(MathHelper.TwoPi / 16 * i) * 0.75f, projType, damage, knockback, player.whoAmI, 0, 1);
                 }
 
                 player.GetModPlayer<PLAYERGLOBAL>().infernumAmmo -= 10;

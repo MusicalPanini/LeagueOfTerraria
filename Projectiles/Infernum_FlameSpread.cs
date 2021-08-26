@@ -17,35 +17,35 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 60;
-            projectile.ranged = true;
-            projectile.extraUpdates = 4;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -1;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 60;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.extraUpdates = 4;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, 0.5f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 45, 0.5f);
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
             if (Main.rand.Next(0, 1) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default, 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemSapphire, 0, 0, 0, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
 
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default, 0.75f);
+                Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemSapphire, 0, 0, 0, default, 0.75f);
             }
         }
 
@@ -58,7 +58,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if ((int)projectile.ai[1] == 1)
+            if ((int)Projectile.ai[1] == 1)
                 crit = true;
             else
                 crit = false;
@@ -78,7 +78,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.whoAmI == (int)projectile.ai[0])
+            if (target.whoAmI == (int)Projectile.ai[0])
                 return false;
             return base.CanHitNPC(target);
         }

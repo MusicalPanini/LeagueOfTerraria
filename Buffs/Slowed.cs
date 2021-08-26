@@ -8,13 +8,12 @@ namespace TerraLeague.Buffs
     public class Slowed : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slowed");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
@@ -27,7 +26,7 @@ namespace TerraLeague.Buffs
             {
                 npc.DelBuff(buffIndex);
             }
-            if (!npc.boss)
+            if (!Terraria.ID.NPCID.Sets.ShouldBeCountedAsBoss[npc.type])
             {
                 if (initial)
                 {

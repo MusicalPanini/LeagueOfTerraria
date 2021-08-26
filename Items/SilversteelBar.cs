@@ -15,34 +15,35 @@ namespace TerraLeague.Items
         {
             DisplayName.SetDefault("Silver-Steel Bar");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 99;
-            item.width = 30;
-            item.height = 24;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.buyPrice(0, 2, 75, 0);
-            item.uniqueStack = false;
-            item.createTile = TileType<SilversteelBarTile>();
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
+            Item.maxStack = 99;
+            Item.width = 30;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(0, 2, 75, 0);
+            Item.uniqueStack = false;
+            Item.createTile = TileType<SilversteelBarTile>();
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Petricite>(), 1);
-            recipe.AddRecipeGroup("TerraLeague:SilverGroup", 2);
-            recipe.AddIngredient(ItemID.HellstoneBar, 1);
-            recipe.AddTile(TileID.Hellforge);
-            recipe.SetResult(this, 4);
-            recipe.AddRecipe();
+            CreateRecipe(4)
+            .AddIngredient(ItemType<Petricite>(), 1)
+            .AddRecipeGroup("TerraLeague:SilverGroup", 2)
+            .AddIngredient(ItemID.HellstoneBar, 1)
+            .AddTile(TileID.Hellforge)
+            .Register();
+            
         }
     }
 }

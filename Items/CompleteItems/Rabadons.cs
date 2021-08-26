@@ -15,16 +15,17 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Rabadon's Deathcap");
             Tooltip.SetDefault("12% increased magic damage" +
                 "\n8% increased magic critical strike chance");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 80, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 80, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -34,22 +35,22 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage *= 1.12f;
-            player.magicCrit += 8;
+            player.GetDamage(DamageClass.Magic) *= 1.12f;
+            player.GetCritChance(DamageClass.Magic) += 8;
 
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LargeRod>(), 2);
-            recipe.AddIngredient(ItemID.RuneHat, 1);
-            recipe.AddIngredient(ItemID.SorcererEmblem, 2);
-            recipe.AddIngredient(ItemID.FragmentNebula, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LargeRod>(), 2)
+            .AddIngredient(ItemID.RuneHat, 1)
+            .AddIngredient(ItemID.SorcererEmblem, 2)
+            .AddIngredient(ItemID.FragmentNebula, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

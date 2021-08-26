@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/TestofSpirit";
+            return "TerraLeague/AbilityImages/TestofSpirit";
         }
 
         public override string GetAbilityTooltip()
@@ -65,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = 1;
                 int knockback = 0;
 
-                Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
 
                 SetAnimation(player, 30, 30, position + velocity);
                 DoEfx(player, type);

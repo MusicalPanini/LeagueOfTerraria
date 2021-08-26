@@ -1,5 +1,6 @@
 ﻿using TerraLeague.Items.Accessories;
 using TerraLeague.NPCs;
+using TerraLeague.NPCs.TargonBoss;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,16 +13,17 @@ namespace TerraLeague.Items.BossBags
 		{
 			DisplayName.SetDefault("Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 		}
 
 		public override void SetDefaults()
 		{
-			item.maxStack = 999;
-			item.consumable = true;
-			item.width = 24;
-			item.height = 24;
-			item.rare = ItemRarityID.Expert;
-			item.expert = true;
+			Item.maxStack = 999;
+			Item.consumable = true;
+			Item.width = 24;
+			Item.height = 24;
+			Item.rare = ItemRarityID.Expert;
+			Item.expert = true;
 		}
 
 		public override bool CanRightClick()
@@ -41,6 +43,6 @@ namespace TerraLeague.Items.BossBags
 			player.QuickSpawnItem(ModContent.ItemType<BottleOfStardust>());
 		}
 
-		public override int BossBagNPC => ModContent.NPCType<TargonSigil>();
+		public override int BossBagNPC => ModContent.NPCType<TargonBossNPC>();
 	}
 }

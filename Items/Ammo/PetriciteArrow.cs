@@ -12,33 +12,34 @@ namespace TerraLeague.Items.Ammo
             DisplayName.SetDefault("Petricite Arrow");
             Tooltip.SetDefault("Critical strikes deal 50% more damage");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
 
         public override void SetDefaults()
         {
-            item.shootSpeed = 3f;
-            item.shoot = ProjectileType<Arrow_PetriciteArrow>();
-            item.damage = 9;
-            item.width = 10;
-            item.height = 28;
-            item.maxStack = 999;
-            item.consumable = true;
-            item.ammo = AmmoID.Arrow;
-            item.knockBack = 1f;
-            item.value = 40;
-            item.rare = ItemRarityID.Blue;
-            item.ranged = true;
+            Item.shootSpeed = 3f;
+            Item.shoot = ProjectileType<Arrow_PetriciteArrow>();
+            Item.damage = 9;
+            Item.width = 10;
+            Item.height = 28;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.ammo = AmmoID.Arrow;
+            Item.knockBack = 1f;
+            Item.value = 40;
+            Item.rare = ItemRarityID.Blue;
+            Item.DamageType = DamageClass.Ranged;
             base.SetDefaults();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<Petricite>(), 1);
-            recipe.AddIngredient(ItemID.WoodenArrow, 100);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 100);
-            recipe.AddRecipe();
+            CreateRecipe(100)
+            .AddIngredient(GetInstance<Petricite>(), 1)
+            .AddIngredient(ItemID.WoodenArrow, 100)
+            .AddTile(TileID.Anvils)
+            .Register();
+
         }
     }
 }

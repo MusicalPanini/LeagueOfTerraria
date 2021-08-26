@@ -16,57 +16,56 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 44;
-            projectile.height = 64;
-            projectile.penetrate = -1;
-            projectile.scale = 1f;
-            projectile.timeLeft = Projectile.SentryLifeTime;
-            projectile.minion = true;
-            projectile.sentry = true;
-            projectile.tileCollide = true;
+            Projectile.width = 44;
+            Projectile.height = 64;
+            Projectile.penetrate = -1;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = Projectile.SentryLifeTime;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.tileCollide = true;
         }
 
         public override void AI()
         {
-            if (Main.player[projectile.owner].ownedProjectileCounts[projectile.type] != 0)
+            if (Main.player[Projectile.owner].ownedProjectileCounts[Projectile.type] != 0)
             {
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
-                    if (Main.projectile[i].owner == projectile.owner && Main.projectile[i].type == projectile.type)
+                    if (Main.projectile[i].owner == Projectile.owner && Main.projectile[i].type == Projectile.type)
                     {
-                        if (Main.projectile[i].timeLeft > projectile.timeLeft)
+                        if (Main.projectile[i].timeLeft > Projectile.timeLeft)
                         {
-                            projectile.Kill();
+                            Projectile.Kill();
                         }
                     }
                 }
             }
 
-            if ((int)projectile.ai[0] == -1)
+            if ((int)Projectile.ai[0] == -1)
             {
-                projectile.ai[0] = Targeting.GetClosestNPC(projectile.Center, 700, projectile.position, 24, 24, -1, Main.player[projectile.owner].MinionAttackTargetNPC);
+                Projectile.ai[0] = Targeting.GetClosestNPC(Projectile.Center, 700, Projectile.position, 24, 24, -1, Main.player[Projectile.owner].MinionAttackTargetNPC);
             }
 
-            if ((int)projectile.ai[0] != -1)
+            if ((int)Projectile.ai[0] != -1)
             {
-                NPC npc = Main.npc[(int)projectile.ai[0]];
+                NPC npc = Main.npc[(int)Projectile.ai[0]];
 
-                if (!npc.active || !Collision.CanHitLine(projectile.position, 24, 24, npc.position, npc.width, npc.height))
+                if (!npc.active || !Collision.CanHitLine(Projectile.position, 24, 24, npc.position, npc.width, npc.height))
                 {
-                    projectile.ai[0] = -1;
+                    Projectile.ai[0] = -1;
                     return;
                 }
 
-                Player player = Main.player[projectile.owner];
+                Player player = Main.player[Projectile.owner];
 
-                if (projectile.ai[1] > 5 && player.ownedProjectileCounts[ModContent.ProjectileType<Crescendum_SentryProj>()] <= player.maxMinions + 5)
+                if (Projectile.ai[1] > 5 && player.ownedProjectileCounts[ModContent.ProjectileType<Crescendum_SentryProj>()] <= player.maxMinions + 5)
                 {
-                    Projectile.NewProjectileDirect(projectile.Center, (projectile.Center - npc.Center).SafeNormalize(-Vector2.UnitY) * -16, ModContent.ProjectileType<Crescendum_SentryProj>(), projectile.damage, projectile.knockBack, projectile.owner);
-                    projectile.ai[1] = 0;
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, (Projectile.Center - npc.Center).SafeNormalize(-Vector2.UnitY) * -16, ModContent.ProjectileType<Crescendum_SentryProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.ai[1] = 0;
                 }
                 else
                 {
-                    projectile.ai[1]++;
+                    Projectile.ai[1]++;
                 }
 
             }

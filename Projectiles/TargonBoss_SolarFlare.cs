@@ -16,32 +16,32 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.hostile = true;
-            projectile.tileCollide = true;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 80;
-            projectile.extraUpdates = 7;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.hostile = true;
+            Projectile.tileCollide = true;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 80;
+            Projectile.extraUpdates = 7;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, 1f, 1f, 0f);
+            Lighting.AddLight(Projectile.Center, 1f, 1f, 0f);
 
-            if (projectile.ai[1] == 0f && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+            if (Projectile.ai[1] == 0f && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
             {
-                projectile.ai[1] = 1f;
-                projectile.netUpdate = true;
+                Projectile.ai[1] = 1f;
+                Projectile.netUpdate = true;
             }
-            if (projectile.ai[1] != 0f)
+            if (Projectile.ai[1] != 0f)
             {
-                projectile.tileCollide = true;
+                Projectile.tileCollide = true;
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default, 2f);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, 0, 0, 150, default, 2f);
             dust.velocity *= 0;
             dust.noGravity = true;
             dust.fadeIn = 0;
@@ -52,7 +52,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 4; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default, 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, 0, 0, 150, default, 2f);
                 dust.noGravity = true;
             }
 

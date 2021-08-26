@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class SandSolder : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sand Solder");
             Description.SetDefault("A solder made of sand will fight for you!");

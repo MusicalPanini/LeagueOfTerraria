@@ -14,20 +14,21 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shurelya's Reverie");
-            Tooltip.SetDefault("7% increased magic and minion damage" +
+            Tooltip.SetDefault("7% increased magic and summon damage" +
                 "\n5% increased movement speed" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases mana regeneration by 60%" +
                 "\nIncreases ability haste by 15");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 30, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 30, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.accessory = true;
 
             Active = new FleetFoot(500, 4, 90);
         }
@@ -41,8 +42,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.07;
-            player.magicDamage += 0.07f;
+            player.GetDamage(DamageClass.Summon) += 0.07f;
+            player.GetDamage(DamageClass.Magic) += 0.07f;
             player.moveSpeed += 0.05f;
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
@@ -51,16 +52,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Kindlegem>(), 1);
-            recipe.AddIngredient(ItemType<AetherWisp>(), 1);
-            recipe.AddIngredient(ItemType<FaerieCharm>(), 1);
-            recipe.AddIngredient(ItemID.AncientBattleArmorMaterial, 1); // Forbidden Fragment
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
-            recipe.AddIngredient(ItemID.SoulofLight, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Kindlegem>(), 1)
+            .AddIngredient(ItemType<AetherWisp>(), 1)
+            .AddIngredient(ItemType<FaerieCharm>(), 1)
+            .AddIngredient(ItemID.AncientBattleArmorMaterial, 1) // Forbidden Fragment
+            .AddIngredient(ItemType<Sunstone>(), 10)
+            .AddIngredient(ItemID.SoulofLight, 5)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

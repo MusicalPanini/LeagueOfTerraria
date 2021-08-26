@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class Vessel : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Vessel");
             Main.debuff[Type] = true;

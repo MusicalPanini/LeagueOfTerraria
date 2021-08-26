@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TerraLeague.Buffs;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -39,7 +40,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         /// <returns></returns>
         virtual public string GetIconTexturePath()
         {
-            return "AbilityImages/Template";
+            return "TerraLeague/AbilityImages/Template";
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public void DoEfx(Player player, AbilityType type, bool SendToServer = true)
         {
             if (SendToServer && Main.netMode == NetmodeID.MultiplayerClient)
-                PacketHandler.SendEfx(-1, player.whoAmI, abilityItem.item.type, player.whoAmI, type);
+                PacketHandler.SendEfx(-1, player.whoAmI, abilityItem.Item.type, player.whoAmI, type);
 
             Efx(player);
         }
@@ -236,7 +237,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (!player.channel)
             {
-                player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.item.type);
+                player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.Item.type);
 
                 float xDist = player.MountedCenter.X - target.X;
                 float yDist = player.MountedCenter.Y - target.Y;
@@ -260,7 +261,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (!player.channel)
             {
-                player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.item.type);
+                player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.Item.type);
 
                 float xDist = player.MountedCenter.X - target.X;
                 float yDist = player.MountedCenter.Y - target.Y;
@@ -271,8 +272,8 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 player.itemRotation = (float)Math.Atan2((double)(yDist * (float)facing), (double)(xDist * (float)facing));
 
-                int useTime = TerraLeague.ScaleWithUseTimeMulti(abilityItem.item.useTime, abilityItem.item, player);
-                int useAnimation = TerraLeague.ScaleWithUseTimeMulti(abilityItem.item.useAnimation, abilityItem.item, player);
+                int useTime = TerraLeague.ScaleWithUseTimeMulti(abilityItem.Item.useTime, abilityItem.Item, player);
+                int useAnimation = TerraLeague.ScaleWithUseTimeMulti(abilityItem.Item.useAnimation, abilityItem.Item, player);
 
                 player.ChangeDir(-facing);
                 player.itemLocation = Vector2.Zero;
@@ -285,7 +286,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         protected int GetPositionOfAbilityInArray(ModItem modItem)
         {
-            var abilityItem = modItem.item.GetGlobalItem<AbilityItemGLOBAL>();
+            var abilityItem = modItem.Item.GetGlobalItem<AbilityItemGLOBAL>();
             for (int i = 0; i < 4; i++)
             {
                 if (abilityItem.GetAbility((AbilityType)i) != null)

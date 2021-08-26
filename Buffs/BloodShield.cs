@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class BloodShield : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blood Shield");
             Description.SetDefault("You have a shield made of your enemies blood!");

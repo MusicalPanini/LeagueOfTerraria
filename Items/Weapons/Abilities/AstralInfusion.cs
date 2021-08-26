@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/AsteralInfusion";
+            return "TerraLeague/AbilityImages/AsteralInfusion";
         }
 
         public override string GetAbilityTooltip()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.5f);
+            return (int)(abilityItem.Item.damage * 0.5f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -98,7 +98,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int knockback = 0;
 
                     SetAnimation(player, 10, 10, Main.player[target].Center);
-                    Projectile.NewProjectile(position, velocity, projType, healing, knockback, player.whoAmI, target);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, healing, knockback, player.whoAmI, target);
                     SetCooldowns(player, type);
                 }
             }
@@ -106,7 +106,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item20, player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item20, player.Center);
         }
     }
 }

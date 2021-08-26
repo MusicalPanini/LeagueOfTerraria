@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
 {
     public class FlashofBrilliance : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flash of Brilliance!");
             Description.SetDefault("Your next attack will cast a burst of random magic");

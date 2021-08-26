@@ -14,26 +14,26 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sand Solder");
-            //Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            Main.projFrames[projectile.type] = 6;
+            //Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            Main.projFrames[Projectile.type] = 6;
 
-            drawOriginOffsetY -= 12;
-            drawOffsetX -= 12;
+            DrawOriginOffsetY -= 12;
+            DrawOffsetX -= 12;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 24;
-            projectile.netImportant = true;
-            projectile.alpha = 0;
-            projectile.timeLeft = 100;
-            projectile.friendly = true;
-            projectile.minion = true;
-            projectile.minionSlots = 1f;
-            projectile.penetrate = -1;
+            Projectile.width = 24;
+            Projectile.height = 24;
+            Projectile.netImportant = true;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 100;
+            Projectile.friendly = true;
+            Projectile.minion = true;
+            Projectile.minionSlots = 1f;
+            Projectile.penetrate = -1;
 
             // Animation
             attackFrame = 1;
@@ -55,32 +55,32 @@ namespace TerraLeague.Projectiles
             idleFrameCount = 1;
 
             AIPrioritiseNearPlayer = false;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 30;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft == 100)
+            if (Projectile.timeLeft == 100)
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Sand, 0f, 0, 0, default, 3f);
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y + 16), Projectile.width, Projectile.height, DustID.Sand, 0f, 0, 0, default, 3f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 2;
 
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Sand, 0f, 0, 0, default, 2f);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y + 16), Projectile.width, Projectile.height, DustID.Sand, 0f, 0, 0, default, 2f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 3;
                 }
             }
 
-            if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<SandSolder>()))
-                projectile.timeLeft = 10;
+            if (Main.player[Projectile.owner].HasBuff(ModContent.BuffType<SandSolder>()))
+                Projectile.timeLeft = 10;
 
             if (Main.rand.Next(0, 4) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.BottomLeft, projectile.width - 4, 2, DustID.Sand);
+                Dust dust = Dust.NewDustDirect(Projectile.BottomLeft, Projectile.width - 4, 2, DustID.Sand);
                 dust.position.Y -= 2;
                 dust.velocity.Y *= 0.2f;
                 dust.fadeIn = 0.5f;
@@ -89,7 +89,7 @@ namespace TerraLeague.Projectiles
 
             if (Main.rand.Next(0, 30) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Sand);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Sand);
                 dust.fadeIn = 0.5f;
             }
 

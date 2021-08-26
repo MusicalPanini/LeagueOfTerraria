@@ -12,51 +12,51 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Winds of War");
-            Main.projFrames[projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 6;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 162;
-            projectile.height = 42;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 180;
-            projectile.magic = true;
-            projectile.tileCollide = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            Projectile.width = 162;
+            Projectile.height = 42;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 180;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft > 100)
+            if (Projectile.timeLeft > 100)
             {
-                if (projectile.alpha > 0)
+                if (Projectile.alpha > 0)
                 {
-                    projectile.alpha -= 10;
+                    Projectile.alpha -= 10;
                 }
-                if (projectile.alpha < 100)
+                if (Projectile.alpha < 100)
                 {
-                    projectile.alpha = 100;
+                    Projectile.alpha = 100;
                 }
             }
-            else if (projectile.timeLeft < 155/10f)
+            else if (Projectile.timeLeft < 155/10f)
             {
-                projectile.alpha += 10;
+                Projectile.alpha += 10;
 
-                if (projectile.alpha > 255)
+                if (Projectile.alpha > 255)
                 {
-                    projectile.alpha = 255;
+                    Projectile.alpha = 255;
                 }
             }
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, -3, projectile.alpha/2, default, 0.5f);
-            if (projectile.owner == Main.LocalPlayer.whoAmI && (int)projectile.ai[0] > 0 && projectile.timeLeft == 175)
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0, -3, Projectile.alpha/2, default, 0.5f);
+            if (Projectile.owner == Main.LocalPlayer.whoAmI && (int)Projectile.ai[0] > 0 && Projectile.timeLeft == 175)
             {
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center + new Vector2(0, -42), Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, projectile.owner, (int)projectile.ai[0] - 1);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center + new Vector2(0, -42), Vector2.Zero, Projectile.type, Projectile.damage, Projectile.knockBack, Projectile.owner, (int)Projectile.ai[0] - 1);
                 proj.tileCollide = false;
             }
 
@@ -75,12 +75,12 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 4)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 4)
             {
-                projectile.frame++;
-                projectile.frame %= 6;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 6;
+                Projectile.frameCounter = 0;
             }
         }
     }

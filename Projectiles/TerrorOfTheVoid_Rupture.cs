@@ -17,59 +17,59 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 256;
-            projectile.height = 128;
-            projectile.friendly = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 180;
-            projectile.magic = true;
-            projectile.tileCollide = true;
-            projectile.scale = 4;
-            drawOriginOffsetX = -128;
-            drawOriginOffsetY = 192;
-            projectile.hide = false;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 256;
+            Projectile.height = 128;
+            Projectile.friendly = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 180;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = true;
+            Projectile.scale = 4;
+            DrawOriginOffsetX = -128;
+            DrawOriginOffsetY = 192;
+            Projectile.hide = false;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft > 90)
+            if (Projectile.timeLeft > 90)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    Dust dustIndex = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 96 * 5), projectile.width, 32, DustID.Moss_Purple, 0f, 0f, 0, default, 1.5f);
+                    Dust dustIndex = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y + 96 * 5), Projectile.width, 32, DustID.PurpleMoss, 0f, 0f, 0, default, 1.5f);
                 }
             }
 
-            if (projectile.timeLeft == 90)
+            if (Projectile.timeLeft == 90)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 89, -1f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 89, -1f);
 
-                projectile.position.Y += projectile.height;
-                projectile.velocity.Y = -projectile.height/8;
-                projectile.alpha = 0;
-                projectile.extraUpdates = 0;
-                projectile.friendly = true;
-                projectile.tileCollide = false;
+                Projectile.position.Y += Projectile.height;
+                Projectile.velocity.Y = -Projectile.height/8;
+                Projectile.alpha = 0;
+                Projectile.extraUpdates = 0;
+                Projectile.friendly = true;
+                Projectile.tileCollide = false;
             }
-            if (projectile.timeLeft == 84)
+            if (Projectile.timeLeft == 84)
             {
-                projectile.velocity *= 0;
-                projectile.extraUpdates = 0;
-                projectile.friendly = false;
+                Projectile.velocity *= 0;
+                Projectile.extraUpdates = 0;
+                Projectile.friendly = false;
                 for (int i = 0; i < 40; i++)
                 {
-                    Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Moss_Purple, 0f, -8f, projectile.alpha, default, 3);
+                    Dust dustIndex = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleMoss, 0f, -8f, Projectile.alpha, default, 3);
                 }
             }
-            else if (projectile.timeLeft < 52)
+            else if (Projectile.timeLeft < 52)
             {
-                projectile.alpha += 15;
+                Projectile.alpha += 15;
 
-                if (projectile.alpha <= 0)
-                    projectile.Kill();
+                if (Projectile.alpha <= 0)
+                    Projectile.Kill();
             }
         }
 
@@ -88,11 +88,6 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             base.Kill(timeLeft);
-        }
-
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
-        {
-            //drawCacheProjsBehindNPCsAndTiles.Add(index);
         }
     }
 }

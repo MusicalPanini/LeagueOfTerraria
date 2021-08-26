@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class UmbralTrespass : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Umbral Trespass");
             Main.debuff[Type] = true;

@@ -14,7 +14,7 @@ namespace TerraLeague.Tiles
 {
     public class BossTrophy : ModTile
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -23,14 +23,18 @@ namespace TerraLeague.Tiles
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
-			dustType = 7;
-			disableSmartCursor = true;
+			DustType = 7;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Trophy");
 			AddMapEntry(new Color(120, 85, 60), name);
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool HasSmartInteract()
+        {
+            return true;
+        }
+
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			TrophyType style = (TrophyType)(frameX / 18);
 			int item = 0;

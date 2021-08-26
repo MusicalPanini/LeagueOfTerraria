@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using TerraLeague.Common.ItemDropRules;
+using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -12,26 +14,29 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Hextech Key Fragment");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 300;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 12;
-            item.height = 20;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 10000;
+            Item.maxStack = 999;
+            Item.width = 12;
+            Item.height = 20;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = 10000;
         }
     }
 
     public class KeyFragGlobalNPC : GlobalNPC
     {
-        public override void NPCLoot(NPC npc)
+        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
-            if (npc.lifeMax > 5 && !npc.SpawnedFromStatue && Main.rand.Next(0, 15) == 0 && !npc.townNPC && Main.hardMode)
-                Item.NewItem(npc.getRect(), ItemType<HextechKeyFragment>());
+            KeyDropRule keyDropRule = new KeyDropRule();
+            IItemDropRule conditionalRule = new LeadingConditionRule(keyDropRule);
+            IItemDropRule rule = ItemDropRule.Common(ItemType<HextechKeyFragment>(), chanceDenominator: 15);
 
-            base.NPCLoot(npc);
+            conditionalRule.OnSuccess(rule);
+            globalLoot.Add(conditionalRule);
         }
     }
 }

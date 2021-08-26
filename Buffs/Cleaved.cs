@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Cleaved : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cleaved");
             Description.SetDefault("Your armor is being reduced");

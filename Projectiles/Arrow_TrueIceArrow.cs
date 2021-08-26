@@ -18,26 +18,26 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.alpha = 0;
-            projectile.timeLeft = 1200;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.aiStyle = 1;
-            aiType = ProjectileID.WoodenArrowFriendly;
+            Projectile.arrow = true;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1200;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.aiStyle = 1;
+            AIType = ProjectileID.WoodenArrowFriendly;
         }
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default);
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, default);
             dust.noGravity = true;
-            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
+            Lighting.AddLight(Projectile.position, 0f, 0f, 0.5f);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -55,8 +55,8 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.Kill();
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+            Projectile.Kill();
             return false;
         }
 
@@ -64,7 +64,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ice, 0f, 0f, 100, default, 0.7f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, default, 0.7f);
             }
         }
 
@@ -74,7 +74,7 @@ namespace TerraLeague.Projectiles
             if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().slowed)
             {
                 crit = true;
-                float multiplier = (Main.player[projectile.owner].rangedCrit + 75) * 0.01333f;
+                float multiplier = (Main.player[Projectile.owner].GetCritChance(DamageClass.Ranged) + 75) * 0.01333f;
                 float dam = damage * 0.5f * multiplier;
                 damage = (int)dam;
             }

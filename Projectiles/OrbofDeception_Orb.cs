@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using TerraLeague.Buffs;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,50 +14,50 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
             DisplayName.SetDefault("Orb of Deception");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
-            projectile.alpha = 0;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.scale = 1f;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 240;
+            Projectile.width = 30;
+            Projectile.height = 30;
+            Projectile.alpha = 0;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.scale = 1f;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 240;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             AnimateProjectile();
 
             for (int i = 0; i < 3; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X, projectile.position.Y);
-                int dustBoxWidth = projectile.width;
-                int dustBoxHeight = projectile.height;
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X, Projectile.position.Y);
+                int dustBoxWidth = Projectile.width;
+                int dustBoxHeight = Projectile.height;
                 Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.PortalBolt, 0f, 0f, 100, new Color(229, 242, 249), 1.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.1f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
 
             //player.itemTime = 5;
-            if (projectile.timeLeft > 210)
+            if (Projectile.timeLeft > 210)
             {
-                if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))
+                if (Projectile.position.X + (float)(Projectile.width / 2) > player.position.X + (float)(player.width / 2))
                 {
                     player.ChangeDir(1);
                 }
@@ -66,14 +67,14 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            if (projectile.ai[0] == 0f)
+            if (Projectile.ai[0] == 0f)
             {
-                projectile.ai[1] += 1f;
-                if (projectile.ai[1] >= 25f)
+                Projectile.ai[1] += 1f;
+                if (Projectile.ai[1] >= 25f)
                 {
-                    projectile.ai[0] = 1f;
-                    projectile.ai[1] = 0f;
-                    projectile.netUpdate = true;
+                    Projectile.ai[0] = 1f;
+                    Projectile.ai[1] = 0f;
+                    Projectile.netUpdate = true;
                 }
             }
             else
@@ -81,69 +82,69 @@ namespace TerraLeague.Projectiles
                 float returnSpeed = 16f;
                 float acceleration = 0.5f;
 
-                float xDif = player.Center.X - projectile.Center.X;
-                float yDif = player.Center.Y - projectile.Center.Y;
-                float distance = projectile.Distance(player.Center);
+                float xDif = player.Center.X - Projectile.Center.X;
+                float yDif = player.Center.Y - Projectile.Center.Y;
+                float distance = Projectile.Distance(player.Center);
 
                 if (distance > 3000f)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 distance = returnSpeed / distance;
                 xDif *= distance;
                 yDif *= distance;
 
-                if (projectile.velocity.X < xDif)
+                if (Projectile.velocity.X < xDif)
                 {
-                    projectile.velocity.X = projectile.velocity.X + acceleration;
-                    if (projectile.velocity.X < 0f && xDif > 0f)
+                    Projectile.velocity.X = Projectile.velocity.X + acceleration;
+                    if (Projectile.velocity.X < 0f && xDif > 0f)
                     {
-                        projectile.velocity.X = projectile.velocity.X + acceleration;
+                        Projectile.velocity.X = Projectile.velocity.X + acceleration;
                     }
                 }
-                else if (projectile.velocity.X > xDif)
+                else if (Projectile.velocity.X > xDif)
                 {
-                    projectile.velocity.X = projectile.velocity.X - acceleration;
-                    if (projectile.velocity.X > 0f && xDif < 0f)
+                    Projectile.velocity.X = Projectile.velocity.X - acceleration;
+                    if (Projectile.velocity.X > 0f && xDif < 0f)
                     {
-                        projectile.velocity.X = projectile.velocity.X - acceleration;
-                    }
-                }
-
-                if (projectile.velocity.Y < yDif)
-                {
-                    projectile.velocity.Y = projectile.velocity.Y + acceleration;
-                    if (projectile.velocity.Y < 0f && yDif > 0f)
-                    {
-                        projectile.velocity.Y = projectile.velocity.Y + acceleration;
-                    }
-                }
-                else if (projectile.velocity.Y > yDif)
-                {
-                    projectile.velocity.Y = projectile.velocity.Y - acceleration;
-                    if (projectile.velocity.Y > 0f && yDif < 0f)
-                    {
-                        projectile.velocity.Y = projectile.velocity.Y - acceleration;
+                        Projectile.velocity.X = Projectile.velocity.X - acceleration;
                     }
                 }
 
-                if (Main.myPlayer == projectile.owner)
+                if (Projectile.velocity.Y < yDif)
                 {
-                    Rectangle rectangle = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
+                    Projectile.velocity.Y = Projectile.velocity.Y + acceleration;
+                    if (Projectile.velocity.Y < 0f && yDif > 0f)
+                    {
+                        Projectile.velocity.Y = Projectile.velocity.Y + acceleration;
+                    }
+                }
+                else if (Projectile.velocity.Y > yDif)
+                {
+                    Projectile.velocity.Y = Projectile.velocity.Y - acceleration;
+                    if (Projectile.velocity.Y > 0f && yDif < 0f)
+                    {
+                        Projectile.velocity.Y = Projectile.velocity.Y - acceleration;
+                    }
+                }
+
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Rectangle rectangle = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
                     Rectangle value2 = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
                     if (rectangle.Intersects(value2))
                     {
-                        projectile.Kill();
+                        Projectile.Kill();
                     }
                 }
 
-                if (projectile.ai[0] == 0f)
+                if (Projectile.ai[0] == 0f)
                 {
-                    Vector2 velocity = projectile.velocity;
+                    Vector2 velocity = Projectile.velocity;
                     velocity.Normalize();
                     return;
                 }
-                Vector2 vector4 = projectile.Center - player.Center;
+                Vector2 vector4 = Projectile.Center - player.Center;
                 vector4.Normalize();
             }
         }
@@ -152,7 +153,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, DustID.Cloud, 0f, 0f, 0, new Color(255, 255, 255), 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, 8, 8, DustID.Cloud, 0f, 0f, 0, new Color(255, 255, 255), 1f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
@@ -160,7 +161,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (projectile.ai[0] == 1f)
+            if (Projectile.ai[0] == 1f)
                 crit = true;
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
@@ -174,31 +175,31 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-                projectile.frame++;
-                projectile.frame %= 4;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
             }
         }
 
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
         {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Main.spriteBatch.Draw
             (
                 texture,
                 new Vector2
                 (
-                    projectile.position.X - Main.screenPosition.X + projectile.width * 0.5f,
-                    projectile.position.Y - Main.screenPosition.Y + projectile.height - (texture.Height / 4) * 0.5f
+                    Projectile.position.X - Main.screenPosition.X + Projectile.width * 0.5f,
+                    Projectile.position.Y - Main.screenPosition.Y + Projectile.height - (texture.Height / 4) * 0.5f
                 ),
-                new Rectangle(0, (texture.Height / 4) * projectile.frame, texture.Width, texture.Height/4),
+                new Rectangle(0, (texture.Height / 4) * Projectile.frame, texture.Width, texture.Height/4),
                 Color.White,
-                projectile.rotation,
+                Projectile.rotation,
                 new Vector2(texture.Width, texture.Width) * 0.5f,
-                projectile.scale,
+                Projectile.scale,
                 SpriteEffects.None,
                 0f
             );

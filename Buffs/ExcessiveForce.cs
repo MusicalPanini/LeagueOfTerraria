@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class ExcessiveForce : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Excessive Force");
             Description.SetDefault("Your next melee attack will deal additional damage and splash outward from the enemy");

@@ -15,16 +15,17 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Catalyst of Aeons");
             Tooltip.SetDefault("\nIncreases maximum life by 20" +
                 "\nIncreases maximum mana by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -42,15 +43,15 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemType<SapphireCrystal>(), 1);
-            recipe.AddIngredient(ItemID.MagicCuffs, 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 50);
-            recipe.AddIngredient(ItemID.Amethyst, 5);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemType<SapphireCrystal>(), 1)
+            .AddIngredient(ItemID.MagicCuffs, 1)
+            .AddIngredient(ItemType<VoidFragment>(), 50)
+            .AddIngredient(ItemID.Amethyst, 5)
+            .AddTile(TileID.Furnaces)
+            .Register();
+            
         }
     }
 }

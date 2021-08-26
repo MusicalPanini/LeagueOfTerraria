@@ -54,13 +54,6 @@ namespace TerraLeague.Items.Weapons
                 return true;
             }
         }
-        public override bool CloneNewInstances
-        {
-            get
-            {
-                return true;
-            }
-        }
 
         public override GlobalItem Clone(Item item, Item itemClone)
         {

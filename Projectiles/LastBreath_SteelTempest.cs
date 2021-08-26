@@ -18,31 +18,31 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.penetrate = -1;
-            projectile.alpha = 0;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.friendly = true;
-            projectile.timeLeft = 20;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 0;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 20;
         }
 
         public float movementFactor
         {
             get
             {
-                return projectile.ai[0];
+                return Projectile.ai[0];
             }
             set
             {
-                projectile.ai[0] = value;
+                Projectile.ai[0] = value;
             }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
             if (!enemyHit)
             {
@@ -66,34 +66,34 @@ namespace TerraLeague.Projectiles
         {
             
 
-            if (projectile.timeLeft == 20)
+            if (Projectile.timeLeft == 20)
             {
-                if (projectile.ai[1] != 0)
+                if (Projectile.ai[1] != 0)
                 {
-                    projectile.friendly = false;
-                    Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 117).WithPitchVariance(0.8f), projectile.Center);
+                    Projectile.friendly = false;
+                    Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 117).WithPitchVariance(0.8f), Projectile.Center);
                 }
                 else
                 {
-                    Main.PlaySound(SoundID.Item1, projectile.Center);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
                 }
             }
 
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
-            player.itemTime = projectile.timeLeft;
-            projectile.position.X = player.MountedCenter.X - (float)(projectile.width / 2);
-            projectile.position.Y = player.MountedCenter.Y - (float)(projectile.height / 2);
-            player.direction = projectile.direction;
+            player.itemTime = Projectile.timeLeft;
+            Projectile.position.X = player.MountedCenter.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = player.MountedCenter.Y - (float)(Projectile.height / 2);
+            player.direction = Projectile.direction;
 
-            if (projectile.velocity.X < 0)
-                projectile.spriteDirection = -1;
+            if (Projectile.velocity.X < 0)
+                Projectile.spriteDirection = -1;
             if (!player.frozen)
             {
                 if (movementFactor == 0f) 
                 {
                     movementFactor = 5f; 
-                    projectile.netUpdate = true;
+                    Projectile.netUpdate = true;
                 }
                 if (player.itemTime < 20 / 2) 
                 {
@@ -104,9 +104,9 @@ namespace TerraLeague.Projectiles
                     movementFactor += 3f;
                 }
             }
-            projectile.position += projectile.velocity * movementFactor;
+            Projectile.position += Projectile.velocity * movementFactor;
 
-            projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+            Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
         }
     }
 }

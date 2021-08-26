@@ -14,47 +14,42 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("The Chain Warden's Scythe");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 50;
-            item.height = 46;
-            item.value = 54000;
-            item.rare = ItemRarityID.Green;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.useAnimation = 40;
-            item.useTime = 40;
-            item.knockBack = 6F;
-            item.damage = 14;
-            item.scale = 1;
-            item.noUseGraphic = true;
-            item.UseSound = SoundID.Item1;
-            item.shootSpeed = 14F;
-            item.melee = true;
-            item.channel = true;
-            item.shoot = ProjectileType<ChainWardensScythe_Scythe>();
+            Item.width = 50;
+            Item.height = 46;
+            Item.value = 54000;
+            Item.rare = ItemRarityID.Green;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = 40;
+            Item.useTime = 40;
+            Item.knockBack = 6F;
+            Item.damage = 14;
+            Item.scale = 1;
+            Item.noUseGraphic = true;
+            Item.UseSound = SoundID.Item1;
+            Item.shootSpeed = 14F;
+            Item.DamageType = DamageClass.Melee;
+            Item.channel = true;
+            Item.shoot = ProjectileType<ChainWardensScythe_Scythe>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new DarkPassage(this));
             abilityItem.ChampQuote = "What delightful agony we shall inflict";
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddRecipeGroup("TerraLeague:DemonGroup", 16)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

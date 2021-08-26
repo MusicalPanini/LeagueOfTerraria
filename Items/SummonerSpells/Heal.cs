@@ -20,10 +20,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Heal Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Heal";
+            return "TerraLeague/Items/SummonerSpells/Heal";
         }
 
         public override string GetSpellName()
@@ -122,7 +123,7 @@ namespace TerraLeague.Items.SummonerSpells
 
             if (playSound)
             {
-                Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29), player.Center);
             }
         }
     }

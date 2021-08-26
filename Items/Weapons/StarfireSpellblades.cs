@@ -15,76 +15,74 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Starfire Spellblade");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
         {
             return "Gains attack speed and damage each half second in combat" +
                 "\nAfter 6 seconds, the sword will ascend and fire waves of starfire" +
-                "\nThe wave deals " + LeagueTooltip.TooltipValue((int)(item.damage * 1.5), false, "",
+                "\nThe wave deals " + LeagueTooltip.TooltipValue((int)(Item.damage * 1.5), false, "",
                 new System.Tuple<int, ScaleType>(30, ScaleType.Melee),
                 new System.Tuple<int, ScaleType>(50, ScaleType.Summon)
                 ) + " melee damage";
-           // "\nThe wave deals " + (int)(item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
+           // "\nThe wave deals " + (int)(Item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
         }
 
         public override void SetDefaults()
         {
-            item.damage = 55;
-            item.width = 56;
-            item.height = 56;       
-            item.melee = true;
-            item.useTime = 24;
-            item.useAnimation = 24;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 6;
-            item.value = 200000;
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.damage = 55;
+            Item.width = 56;
+            Item.height = 56;       
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 6;
+            Item.value = 200000;
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new DivineJudgement(this));
             abilityItem.ChampQuote = "As evil grows, so shall I";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {
-            mult = 1 + (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks * 0.2f);
-
-            base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
+            //mult = 1 + (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks * 0.2f);
         }
 
         public override void UpdateInventory(Player player)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks >= 6)
             {
-                byte prefix = item.prefix;
-                item.SetDefaults(ItemType<StarfireSpellbladesAscended>());
-                item.prefix = prefix;
+                int prefix = Item.prefix;
+                Item.SetDefaults(ItemType<StarfireSpellbladesAscended>());
+                Item.prefix = prefix;
             }
 
             base.UpdateInventory(player);
         }
 
-        public override float MeleeSpeedMultiplier(Player player)
+        public override float UseSpeedMultiplier(Player player)
         {
-            return base.MeleeSpeedMultiplier(player) + (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks * 0.05f);
+            return base.UseSpeedMultiplier(player) + (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks * 0.05f);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.BrokenHeroSword, 2);
-            recipe.AddIngredient(ItemID.SoulofLight, 20);
-            recipe.AddIngredient(ItemID.FallenStar, 10);
-            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 20);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.BrokenHeroSword, 2)
+            .AddIngredient(ItemID.SoulofLight, 20)
+            .AddIngredient(ItemID.FallenStar, 10)
+            .AddIngredient(ItemType<FragmentOfTheAspect>(), 1)
+            .AddIngredient(ItemType<CelestialBar>(), 20)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

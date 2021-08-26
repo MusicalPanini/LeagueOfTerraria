@@ -16,30 +16,31 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Darksteel Dagger");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 20;
-            item.width = 14;
-            item.height = 28;
-            item.magic = true;
-            item.useTime = 23;
-            item.useAnimation = 23;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 2;
-            item.mana = 8;
-            item.value = 6000;
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
-            item.shootSpeed = 14f;
-            item.shoot = ProjectileType<DarksteelDagger_Dagger>();
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.noUseGraphic = true;
+            Item.damage = 20;
+            Item.width = 14;
+            Item.height = 28;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 23;
+            Item.useAnimation = 23;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 2;
+            Item.mana = 8;
+            Item.value = 6000;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
+            Item.shootSpeed = 14f;
+            Item.shoot = ProjectileType<DarksteelDagger_Dagger>();
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new DeathLotus(this));
             abilityItem.ChampQuote = "Better dead than dull";
             abilityItem.IsAbilityItem = true;
@@ -49,19 +50,12 @@ namespace TerraLeague.Items.Weapons
         {
             return base.CanUseItem(player);
         }
-
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return true;
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 14);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<DarksteelBar>(), 14)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

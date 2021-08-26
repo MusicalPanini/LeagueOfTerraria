@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Bio-ArcaneBarrage";
+            return "TerraLeague/AbilityImages/Bio-ArcaneBarrage";
         }
 
         public override string GetAbilityTooltip()

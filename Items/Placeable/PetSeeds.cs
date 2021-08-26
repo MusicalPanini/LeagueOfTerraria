@@ -12,22 +12,23 @@ namespace TerraLeague.Items.Placeable
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Petrified Seeds");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.value = 75;
-            item.rare = ItemRarityID.White;
-            item.width = 16;
-            item.height = 16;
-            item.maxStack = 99;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
-            item.createTile = TileType<PetrifiedGrass>();
+            Item.value = 75;
+            Item.rare = ItemRarityID.White;
+            Item.width = 16;
+            Item.height = 16;
+            Item.maxStack = 99;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.createTile = TileType<PetrifiedGrass>();
         }
 
         public override bool CanUseItem(Player player)
@@ -35,7 +36,7 @@ namespace TerraLeague.Items.Placeable
             int X = Main.MouseWorld.ToTileCoordinates().X;
             int Y = Main.MouseWorld.ToTileCoordinates().Y;
 
-            if (Main.tile[X, Y].type == TileID.Dirt && Main.tile[X, Y].active())
+            if (Main.tile[X, Y].type == TileID.Dirt && Main.tile[X, Y].IsActive)
             {
                 WorldGen.KillTile(X, Y, false, false, true);
                 return base.CanUseItem(player);

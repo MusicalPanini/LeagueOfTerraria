@@ -13,32 +13,32 @@ namespace TerraLeague.Items
         {
             DisplayName.SetDefault("Celestial Bar");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 99;
-            item.width = 30;
-            item.height = 24;
-            item.rare = ItemRarityID.Orange;
-            item.value = Item.buyPrice(0, 2, 0, 0);
-            item.uniqueStack = false;
-            item.createTile = TileType<CelestialBarTile>();
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.maxStack = 99;
+            Item.width = 30;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.buyPrice(0, 2, 0, 0);
+            Item.uniqueStack = false;
+            Item.createTile = TileType<CelestialBarTile>();
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TargonGraniteBlock>(), 16);
-            recipe.AddIngredient(ItemID.FallenStar, 1);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this, 4);
-            recipe.AddRecipe();
+            CreateRecipe(4)
+            .AddIngredient(ItemType<TargonGraniteBlock>(), 16)
+            .AddIngredient(ItemID.FallenStar, 1)
+            .AddTile(TileID.Furnaces)
+            .Register();
         }
     }
 }

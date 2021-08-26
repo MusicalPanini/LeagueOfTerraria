@@ -28,26 +28,26 @@ namespace TerraLeague.Items.CustomItems.Passives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             string text = TooltipName("LIFELINE");
 
-            if (modItem.item.type == ItemType<Maw>())
+            if (modItem.Item.type == ItemType<Maw>())
             {
                 text += LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Negate the next projectile damage you take while below 30% life, and summon a ") + LeagueTooltip.TooltipValue(200, true, "") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " Magic Shield") +
                     "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown\nTriggering LIFELINE grants LIFEGRIP") +
                     "\n" + TooltipName("LIFEGRIP") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Grants 5% life steal, melee and ranged damage, and 5 resist");
             }
-            else if (modItem.item.type == ItemType<Steraks>())
+            else if (modItem.Item.type == ItemType<Steraks>())
             {
                 text += LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Negate the next damage you take while below 30% life, and summon a ") + LeagueTooltip.TooltipValue(0, true, "", new System.Tuple<int, ScaleType>(50, ScaleType.MaxLife)) + LeagueTooltip.CreateColorString(PassiveSecondaryColor," Shield") +
                     "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown\nTriggering LIFELINE grants STERAK'S FURY") +
                     "\n" + TooltipName("STERAK'S FURY") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Grants 20 defence and immunity to most debuffs");
 
             }
-            else if (modItem.item.type == ItemType<Hexdrinker>())
+            else if (modItem.Item.type == ItemType<Hexdrinker>())
             {
                 text += LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Negate the next projectile damage you take while below 30% life and summon a ") + LeagueTooltip.TooltipValue(80, true, "") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " Magic Shield") +
                     "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown");
 
             }
-            else if (modItem.item.type == ItemType<PhantomDancer>())
+            else if (modItem.Item.type == ItemType<PhantomDancer>())
             {
                 text += LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Negate the next damage you take while below 30% life and summon a ") + LeagueTooltip.TooltipValue(100, true, "") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, " Shield") +
                     "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown");
@@ -72,7 +72,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (TerraLeague.FindAccessorySlotOnPlayer(player, modItem) != -1)
                 {
-                    if (modItem.item.type == ItemType<Maw>() || modItem.item.type == ItemType<Hexdrinker>())
+                    if (modItem.Item.type == ItemType<Maw>() || modItem.Item.type == ItemType<Hexdrinker>())
                     {
                         player.armorEffectDrawShadow = true;
                         if (Main.rand.Next(0, 5) == 0)
@@ -99,9 +99,9 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     if (TerraLeague.FindAccessorySlotOnPlayer(player, modItem) != -1)
                     {
-                        if (modItem.item.type == ItemType<Steraks>())
+                        if (modItem.Item.type == ItemType<Steraks>())
                             DoEffect(player, modItem);
-                        if (modItem.item.type == ItemType<PhantomDancer>())
+                        if (modItem.Item.type == ItemType<PhantomDancer>())
                             DoEffect(player, modItem);
                     }
                 }
@@ -120,13 +120,13 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     if (TerraLeague.FindAccessorySlotOnPlayer(player, modItem) != -1)
                     {
-                        if (modItem.item.type == ItemType<Steraks>())
+                        if (modItem.Item.type == ItemType<Steraks>())
                             DoEffect(player, modItem);
-                        if (modItem.item.type == ItemType<PhantomDancer>())
+                        if (modItem.Item.type == ItemType<PhantomDancer>())
                             DoEffect(player, modItem);
-                        if (modItem.item.type == ItemType<Maw>())
+                        if (modItem.Item.type == ItemType<Maw>())
                             DoEffect(player, modItem);
-                        if (modItem.item.type == ItemType<Hexdrinker>())
+                        if (modItem.Item.type == ItemType<Hexdrinker>())
                             DoEffect(player, modItem);
                     }
                 }
@@ -145,13 +145,13 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     if (TerraLeague.FindAccessorySlotOnPlayer(player, modItem) != -1)
                     {
-                        if (modItem.item.type == ItemType<Steraks>())
+                        if (modItem.Item.type == ItemType<Steraks>())
                             DoEffect(player, modItem);
-                        if (modItem.item.type == ItemType<PhantomDancer>())
+                        if (modItem.Item.type == ItemType<PhantomDancer>())
                             DoEffect(player, modItem);
-                        if (modItem.item.type == ItemType<Maw>())
+                        if (modItem.Item.type == ItemType<Maw>())
                             DoEffect(player, modItem);
-                        if (modItem.item.type == ItemType<Hexdrinker>())
+                        if (modItem.Item.type == ItemType<Hexdrinker>())
                             DoEffect(player, modItem);
                     }
                 }
@@ -209,7 +209,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         override public void Efx(Player User)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), User.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), User.position);
         }
     }
 }

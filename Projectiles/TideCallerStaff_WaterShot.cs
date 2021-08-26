@@ -16,56 +16,56 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.alpha = 255;
-            projectile.timeLeft = 90;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.aiStyle = 0;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 90;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.aiStyle = 0;
         }
 
         public override void AI()
         {
-            if (projectile.velocity.X < 0)
-                projectile.spriteDirection = -1;
+            if (Projectile.velocity.X < 0)
+                Projectile.spriteDirection = -1;
 
-            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
+            Lighting.AddLight(Projectile.position, 0f, 0f, 0.5f);
 
             for (int i = 0; i < 3; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                int dustBoxWidth = projectile.width - 12;
-                int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.IcyMerman, 0f, 0f, 100, default, 1.5f);
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Ice, 0f, 0f, 100, default, 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.1f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
             if (Main.rand.Next(5) == 0)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                int dustBoxWidth = projectile.width - 12;
-                int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.DungeonWater, 0f, 0f, 100, default, 0.5f);
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.WaterCandle, 0f, 0f, 100, default, 0.5f);
                 dust.velocity *= 0.25f;
-                dust.velocity += projectile.velocity * 0.5f;
+                dust.velocity += Projectile.velocity * 0.5f;
             }
-            if (projectile.timeLeft < 30)
-                projectile.alpha += 9;
+            if (Projectile.timeLeft < 30)
+                Projectile.alpha += 9;
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 17; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Wet, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default, 1f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 211, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0, default, 1f);
             }
         }
 

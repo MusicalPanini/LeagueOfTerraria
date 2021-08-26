@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Pyroclasm";
+            return "TerraLeague/AbilityImages/Pyroclasm";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 4);
+            return (int)(abilityItem.Item.damage * 4);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -87,7 +87,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int knockback = 0;
 
                     SetAnimation(player, 20, 20, position + velocity);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, Targeting.NPCMouseIsHovering(30, true), -1);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, Targeting.NPCMouseIsHovering(30, true), -1);
                     SetCooldowns(player, type);
                 }
             }

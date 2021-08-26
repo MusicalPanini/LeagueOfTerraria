@@ -14,35 +14,36 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Harmonic Bar");
             Tooltip.SetDefault("'A balance of peace and power'");
             base.SetStaticDefaults();
+
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 99;
-            item.width = 30;
-            item.height = 24;
-            item.uniqueStack = false;
-            item.rare = ItemRarityID.Lime;
-            item.value = Item.buyPrice(0, 5, 0, 0);
-            item.createTile = TileType<Tiles.HarmonicBarTile>();
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
+            Item.maxStack = 99;
+            Item.width = 30;
+            Item.height = 24;
+            Item.uniqueStack = false;
+            Item.rare = ItemRarityID.Lime;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.createTile = TileType<Tiles.HarmonicBarTile>();
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ManaBar>(), 1);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 3);
-            recipe.AddIngredient(ItemID.SoulofLight, 2);
-            recipe.AddIngredient(ItemID.SoulofNight, 2);
-            recipe.AddTile(TileID.AdamantiteForge);
-            recipe.SetResult(this, 4);
-            recipe.AddRecipe();
+            CreateRecipe(4)
+            .AddIngredient(ItemType<ManaBar>(), 1)
+            .AddIngredient(ItemID.ChlorophyteBar, 3)
+            .AddIngredient(ItemID.SoulofLight, 2)
+            .AddIngredient(ItemID.SoulofNight, 2)
+            .AddTile(TileID.AdamantiteForge)
+            .Register();
         }
     }
 }

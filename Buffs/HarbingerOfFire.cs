@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class HarbingerOfFire : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Harbinger of Fire");
             Description.SetDefault("Heat courses through your soul!" +

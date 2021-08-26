@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class SolarFlareCharged : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Solar Flare");
             Description.SetDefault("The power of the sun is ready to be unleashed");

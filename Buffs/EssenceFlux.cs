@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class EssenceFluxDebuff : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Essence Flux");
             Description.SetDefault("You feel funny");

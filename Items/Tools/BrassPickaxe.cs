@@ -10,34 +10,34 @@ namespace TerraLeague.Items.Tools
         {
             DisplayName.SetDefault("Bilgewater Brass Pickaxe");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 7;
-            item.melee = true;
-            item.autoReuse = true;
-            item.useTurn = true;
-            item.width = 32;
-            item.height = 32;
-            item.useTime = 14;
-            item.useAnimation = 17;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 2f;
-            item.value = 2000;
-            item.rare = ItemRarityID.Blue;
-            item.pick = 48;
-            item.UseSound = SoundID.Item1;
+            Item.damage = 7;
+            Item.DamageType = DamageClass.Melee;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.useTime = 14;
+            Item.useAnimation = 17;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 2f;
+            Item.value = 2000;
+            Item.rare = ItemRarityID.Blue;
+            Item.pick = 48;
+            Item.UseSound = SoundID.Item1;
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BrassBar>(), 18);
-            recipe.AddIngredient(ItemID.Wood, 4);
-            recipe.anyWood = true;
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BrassBar>(), 18)
+            .AddRecipeGroup("Wood", 4)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
             base.AddRecipes();
         }
     }

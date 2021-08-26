@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Audio;
 using TerraLeague.Items.Weapons.Abilities;
+using Terraria.DataStructures;
 
 namespace TerraLeague.Items.Weapons
 {
@@ -19,6 +20,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("The Death Singer's Tome");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -29,21 +31,21 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 28;
-            item.noMelee = true;
-            item.magic = true;
-            item.mana = 10;
-            item.rare = ItemRarityID.Orange;
-            item.value = 10000;
-            item.width = 28;
-            item.height = 32;
-            item.useTime = 35;
-            item.useAnimation = 35;
-            item.UseSound = new LegacySoundStyle(2,8);
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = ProjectileType<DeathsingerTome_LayWaste>();
+            Item.damage = 28;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 10;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = 10000;
+            Item.width = 28;
+            Item.height = 32;
+            Item.useTime = 35;
+            Item.useAnimation = 35;
+            Item.UseSound = new LegacySoundStyle(2,8);
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.shoot = ProjectileType<DeathsingerTome_LayWaste>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new Defile(this));
             abilityItem.SetAbility(AbilityType.R, new Requiem(this));
             abilityItem.ChampQuote = "I am the Nightbringer~";
@@ -51,23 +53,22 @@ namespace TerraLeague.Items.Weapons
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectileDirect(Main.MouseWorld, Vector2.Zero, type, damage, 0, player.whoAmI, Main.MouseWorld.X, Main.MouseWorld.Y);
+            Projectile.NewProjectileDirect(source, Main.MouseWorld, Vector2.Zero, type, damage, 0, player.whoAmI, Main.MouseWorld.X, Main.MouseWorld.Y);
 
             return false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Book, 1);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddIngredient(ItemID.HellstoneBar, 20);
-            recipe.AddIngredient(ItemID.Bone, 50);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Book, 1)
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddIngredient(ItemID.HellstoneBar, 20)
+            .AddIngredient(ItemID.Bone, 50)
+            .AddTile(TileID.DemonAltar)
+            .Register();
         }
     }
 }

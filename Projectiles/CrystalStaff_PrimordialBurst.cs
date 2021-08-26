@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,41 +18,41 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.timeLeft = 300;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.magic = true;
-            projectile.alpha = 255;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.timeLeft = 300;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.alpha = 255;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 8, 0f);
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 113, -0.5f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 8, 0f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 113, -0.5f);
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            if (projectile.ai[0] != -2)
+            if (Projectile.ai[0] != -2)
             {
-                projectile.friendly = true;
+                Projectile.friendly = true;
 
-                NPC npc = Main.npc[(int)projectile.ai[0]];
+                NPC npc = Main.npc[(int)Projectile.ai[0]];
 
-                if (!npc.active && projectile.owner == Main.LocalPlayer.whoAmI)
-                    projectile.Kill();
+                if (!npc.active && Projectile.owner == Main.LocalPlayer.whoAmI)
+                    Projectile.Kill();
 
                 float MaxSpeed = 18;
 
-                float XDist = (float)npc.Center.X - projectile.Center.X;
-                float YDist = (float)npc.Center.Y - projectile.Center.Y;
+                float XDist = (float)npc.Center.X - Projectile.Center.X;
+                float YDist = (float)npc.Center.Y - Projectile.Center.Y;
 
                 float TrueDist = (float)System.Math.Sqrt((double)(XDist * XDist + YDist * YDist));
                 if (TrueDist > MaxSpeed)
@@ -60,23 +61,23 @@ namespace TerraLeague.Projectiles
                     XDist *= TrueDist;
                     YDist *= TrueDist;
                     int num118 = (int)(XDist * 1000f);
-                    int num119 = (int)(projectile.velocity.X * 1000f);
+                    int num119 = (int)(Projectile.velocity.X * 1000f);
                     int num120 = (int)(YDist * 1000f);
-                    int num121 = (int)(projectile.velocity.Y * 1000f);
+                    int num121 = (int)(Projectile.velocity.Y * 1000f);
                     if (num118 != num119 || num120 != num121)
                     {
-                        projectile.netUpdate = true;
+                        Projectile.netUpdate = true;
                     }
 
-                    if (projectile.timeLeft > 270)
+                    if (Projectile.timeLeft > 270)
                     {
-                        projectile.velocity.X = XDist * (1 - ((projectile.timeLeft - 270) / 30f));
-                        projectile.velocity.Y = YDist * (1 - ((projectile.timeLeft - 270) / 30f));
+                        Projectile.velocity.X = XDist * (1 - ((Projectile.timeLeft - 270) / 30f));
+                        Projectile.velocity.Y = YDist * (1 - ((Projectile.timeLeft - 270) / 30f));
                     }
                     else
                     {
-                        projectile.velocity.X = XDist;
-                        projectile.velocity.Y = YDist;
+                        Projectile.velocity.X = XDist;
+                        Projectile.velocity.Y = YDist;
                     }
 
                 }
@@ -84,10 +85,10 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position + Vector2.One * 4, projectile.width - 8, projectile.height - 8, i == 1 ? 173 : 172, 0, 0, 0, default, 3f);
+                Dust dust = Dust.NewDustDirect(Projectile.position + Vector2.One * 4, Projectile.width - 8, Projectile.height - 8, i == 1 ? 173 : 172, 0, 0, 0, default, 3f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
-                dust.velocity += projectile.velocity * 0.3f;
+                dust.velocity += Projectile.velocity * 0.3f;
             }
         }
 
@@ -103,7 +104,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)projectile.ai[0] == target.whoAmI)
+            if ((int)Projectile.ai[0] == target.whoAmI)
                 return base.CanHitNPC(target);
             else
                 return false;
@@ -112,25 +113,25 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
-            Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(1f), projectile.position);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 45, -0.5f);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(1f), Projectile.position);
 
             Dust dust;
             for (int i = 0; i < 25; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.DungeonWater, 0, 0, 0, default, 2f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.WaterCandle, 0, 0, 0, default, 2f);
                 dust.velocity *= 1.4f;
                 dust.noGravity = true;
             }
             for (int i = 0; i < 40; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.ShadowbeamStaff, 0, 0, 0, default, 2f);
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, 0, 0, 0, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
                 dust.color = new Color(255, 0, 220);
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.DungeonWater, 0, 0, 0, default, 2f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.WaterCandle, 0, 0, 0, default, 2f);
                 dust.velocity *= 3f;
                 dust.color = new Color(255, 0, 220);
                 dust.noGravity = true;

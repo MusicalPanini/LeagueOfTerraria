@@ -12,68 +12,67 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Demacian Standard");
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 14;
-            projectile.height = 64;
-            projectile.timeLeft = 60*8;
-            projectile.penetrate = 1000;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
-            projectile.alpha = 0;
-            projectile.extraUpdates = 1;
+            Projectile.width = 14;
+            Projectile.height = 64;
+            Projectile.timeLeft = 60*8;
+            Projectile.penetrate = 1000;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
+            Projectile.alpha = 0;
+            Projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
-            if (projectile.friendly && projectile.velocity.Length() < 0.1f && projectile.tileCollide)
+            if (Projectile.friendly && Projectile.velocity.Length() < 0.1f && Projectile.tileCollide)
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    Collision.HitTiles(projectile.Bottom, projectile.oldVelocity, projectile.width, 1);
+                    Collision.HitTiles(Projectile.Bottom, Projectile.oldVelocity, Projectile.width, 1);
                 }
-                Main.PlaySound(Terraria.ID.SoundID.Item10, projectile.position);
-                projectile.extraUpdates = 0;
-                projectile.timeLeft = 60 * 6;
-                projectile.friendly = false;
+                Terraria.Audio.SoundEngine.PlaySound(Terraria.ID.SoundID.Item10, Projectile.position);
+                Projectile.extraUpdates = 0;
+                Projectile.timeLeft = 60 * 6;
+                Projectile.friendly = false;
             }
 
-            Lighting.AddLight(projectile.Center, 0.75f, 0.75f, 0.75f);
+            Lighting.AddLight(Projectile.Center, 0.75f, 0.75f, 0.75f);
 
-            if (projectile.ai[1] == 0f && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+            if (Projectile.ai[1] == 0f && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
             {
-                projectile.ai[1] = 1f;
-                projectile.netUpdate = true;
+                Projectile.ai[1] = 1f;
+                Projectile.netUpdate = true;
             }
-            if (projectile.ai[1] != 0f)
+            if (Projectile.ai[1] != 0f)
             {
-                projectile.tileCollide = true;
+                Projectile.tileCollide = true;
             }
 
-            if (projectile.friendly)
+            if (Projectile.friendly)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Stone);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Stone);
                 dust.velocity /= 3;
             }
             else
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(0, -2) + projectile.BottomLeft, projectile.width, 3, DustID.Firework_Yellow);
+                Dust dust = Dust.NewDustDirect(new Vector2(0, -2) + Projectile.BottomLeft, Projectile.width, 3, 204, 0, 0, 0, default, 1.3f);
                 dust.noGravity = true;
                 dust.velocity.X *= 2;
                 dust.velocity.Y = 0;
-                dust.scale = 0.8f;
 
-                TerraLeague.DustBorderRing(500, projectile.Center, 204, default, 2, true, true, 0.075f);
+                TerraLeague.DustBorderRing(500, Projectile.Center, 204, default, 1.5f, true, true, 0.025f);
             }
 
-            var players = Targeting.GetAllPlayersInRange(projectile.Center, 500, -1, Main.player[projectile.owner].team);
+            var players = Targeting.GetAllPlayersInRange(Projectile.Center, 500, -1, Main.player[Projectile.owner].team);
             for (int i = 0; i < players.Count; i++)
             {
                 Player target = Main.player[players[i]];
@@ -85,12 +84,12 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-                projectile.frame++;
-                projectile.frame %= 4; 
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4; 
+                Projectile.frameCounter = 0;
             }
         }
 
@@ -102,6 +101,16 @@ namespace TerraLeague.Projectiles
         public override bool? CanCutTiles()
         {
             return false;
+        }
+
+        public override void PostDraw(Color lightColor)
+        {
+            if (!Projectile.friendly)
+            {
+                TerraLeague.DrawCircle(Projectile.Center, 500, Color.PaleGoldenrod);
+            }
+
+            base.PostDraw(lightColor);
         }
     }
 }

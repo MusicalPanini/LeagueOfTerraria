@@ -18,16 +18,17 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases maximum life by 20" +
                 "\nIncreases maximum mana by 30" +
                 "\nIncreases ability haste by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 30;
-            item.value = Item.buyPrice(0, 53, 33, 33);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 30;
+            Item.height = 30;
+            Item.value = Item.buyPrice(0, 53, 33, 33);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -38,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.15f;
+            player.GetDamage(DamageClass.Melee) += 0.15f;
             player.meleeSpeed += 0.15f;
             player.moveSpeed += 0.07f;
             player.statLifeMax2 += 20;
@@ -50,16 +51,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Sheen>(), 1);
-            recipe.AddIngredient(ItemType<Phage>(), 1);
-            recipe.AddIngredient(ItemType<Stinger>(), 1);
-            recipe.AddIngredient(ItemType<HarmonicBar>(), 3);
-            recipe.AddIngredient(ItemID.ShroomiteBar, 3);
-            recipe.AddIngredient(ItemID.SpectreBar, 3);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Sheen>(), 1)
+            .AddIngredient(ItemType<Phage>(), 1)
+            .AddIngredient(ItemType<Stinger>(), 1)
+            .AddIngredient(ItemType<HarmonicBar>(), 3)
+            .AddIngredient(ItemID.ShroomiteBar, 3)
+            .AddIngredient(ItemID.SpectreBar, 3)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

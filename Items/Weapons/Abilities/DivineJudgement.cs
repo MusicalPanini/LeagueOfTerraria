@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/DivineJudgement";
+            return "TerraLeague/AbilityImages/DivineJudgement";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2);
+            return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -69,7 +69,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
                 new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MEL), ScaleType.Melee),
                 new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
-                ) + " minion damage";
+                ) + " summon damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -91,7 +91,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int knockback = 10;
 
                     DoEfx(Main.player[target], type);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, target);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, target);
                     SetCooldowns(player, type);
                 }
             }
@@ -99,7 +99,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿projectile tile hitboxs no work (Not Supported Yet)
+Marble Trees (Not Supported Yet)
+Summoner NPC happiness (Not Supported Yet)
+
+Fix all dust god damn why (Most things fixed)
+Armor resprites (Necromancer robe legs bugged)
+Targon stone not smothing during level gen
+targon arena can fill with water
+Set up bestiary entries for all mobs
+Marble grass not connecting textures (to other grass)
+Give Black Mist biome background (Or event background if thats a thing)
+
+petricite dresser (Not Implemented Yet)
+Items that draw over player do not now (Atlas Gauntlets)
+Teleport (need to test Unity potion part)
+
+TextureAssets.Projectile[Projectile.type].Value

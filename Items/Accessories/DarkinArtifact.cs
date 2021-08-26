@@ -13,15 +13,16 @@ namespace TerraLeague.Items.Accessories
             DisplayName.SetDefault("Darkin Artifact");
             Tooltip.SetDefault("Take on the form of a Darkin!");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.rare = ItemRarityID.Pink;
-            item.value = 200000;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = 200000;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -36,13 +37,13 @@ namespace TerraLeague.Items.Accessories
 
         public override void AddRecipes()
         {
-            //ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(GetInstance("TrueIceChunk"), 2);
-            //recipe.AddIngredient(ItemID.PurpleIceBlock, 32);
-            //recipe.AddIngredient(ItemID.SoulofNight, 8);
-            //recipe.AddTile(TileID.IceMachine);
-            //recipe.SetResult(this, 2);
-            //recipe.AddRecipe();
+            //CreateRecipe()
+            //.AddIngredient(GetInstance("TrueIceChunk"), 2);
+            //.AddIngredient(ItemID.PurpleIceBlock, 32);
+            //.AddIngredient(ItemID.SoulofNight, 8);
+            //.AddTile(TileID.IceMachine);
+            //.SetResult(this, 2);
+            //
         }
     }
 
@@ -51,14 +52,6 @@ namespace TerraLeague.Items.Accessories
         public override bool DrawHead()
         {
             return false;
-        }
-
-        public override void UpdateVanity(Player player, EquipType type)
-        {
-            //if (Main.rand.NextBool(20))
-            //{
-            //    Dust.NewDust(player.position, player.width, player.height, DustType<Dusts.Sparkle>());
-            //}
         }
     }
 

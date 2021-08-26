@@ -25,69 +25,69 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.timeLeft = 301;
-            projectile.extraUpdates = 35;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 301;
+            Projectile.extraUpdates = 35;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
 
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                number = (int)projectile.knockBack;
-                projectile.knockBack = 0;
+                number = (int)Projectile.knockBack;
+                Projectile.knockBack = 0;
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Gore gore = Gore.NewGoreDirect(projectile.Center, default, Main.rand.Next(61, 64), 1f);
+                    Gore gore = Gore.NewGoreDirect(Projectile.Center, default, Main.rand.Next(61, 64), 1f);
                     gore.velocity.Y = gore.velocity.Y + 1.5f;
                 }
             }
-            projectile.soundDelay = 10;
+            Projectile.soundDelay = 10;
 
-            if (leftBlocks && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+            if (leftBlocks && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
             {
                 leftBlocks = false;
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
             }
             if (!leftBlocks)
             {
-                projectile.tileCollide = true;
+                Projectile.tileCollide = true;
             }
 
             for (int i = 0; i < 3; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                int dustBoxWidth = projectile.width - 12;
-                int dustBoxHeight = projectile.height - 12;
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
                 Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.AncientLight, 0f, 0f, 100, new Color(0, 0, 255, 150), 1f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.1f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
-            Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 106, 0, 150), 1f);
+            Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 106, 0, 150), 1f);
             dust2.noGravity = true;
             dust2.velocity *= 3f;
-            Lighting.AddLight(projectile.position, 0f, 0f, 1f);
+            Lighting.AddLight(Projectile.position, 0f, 0f, 1f);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.timeLeft > 2)
+            if (Projectile.timeLeft > 2)
                 Prime();
 
             return false;
@@ -99,31 +99,31 @@ namespace TerraLeague.Projectiles
             {
                 if (number == 0)
                 {
-                    Vector2 pos = new Vector2(projectile.ai[0] + (spacing) + (Main.rand.Next(-randSpread, randSpread)), projectile.ai[1] - 700);
-                    Vector2 targetPos = new Vector2(projectile.ai[0] + (spacing), projectile.ai[1]);
+                    Vector2 pos = new Vector2(Projectile.ai[0] + (spacing) + (Main.rand.Next(-randSpread, randSpread)), Projectile.ai[1] - 700);
+                    Vector2 targetPos = new Vector2(Projectile.ai[0] + (spacing), Projectile.ai[1]);
                     Vector2 vel = TerraLeague.CalcVelocityToPoint(pos, targetPos, 4);
-                    Projectile.NewProjectileDirect(pos, vel, projectile.type, projectile.damage, 1, projectile.owner, targetPos.X, targetPos.Y);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), pos, vel, Projectile.type, Projectile.damage, 1, Projectile.owner, targetPos.X, targetPos.Y);
 
-                    pos = new Vector2(projectile.ai[0] + (-spacing) + (Main.rand.Next(-randSpread, randSpread)), projectile.ai[1] - 700);
-                    targetPos = new Vector2(projectile.ai[0] + (-spacing), projectile.ai[1]);
+                    pos = new Vector2(Projectile.ai[0] + (-spacing) + (Main.rand.Next(-randSpread, randSpread)), Projectile.ai[1] - 700);
+                    targetPos = new Vector2(Projectile.ai[0] + (-spacing), Projectile.ai[1]);
                     vel = TerraLeague.CalcVelocityToPoint(pos, targetPos, 4);
-                    Projectile.NewProjectileDirect(pos, vel, projectile.type, projectile.damage, -1, projectile.owner, targetPos.X, targetPos.Y);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), pos, vel, Projectile.type, Projectile.damage, -1, Projectile.owner, targetPos.X, targetPos.Y);
                 }
                 else
                 {
-                    Vector2 pos = new Vector2(projectile.ai[0] + (spacing * number/Math.Abs(number)) + (Main.rand.Next(-randSpread, randSpread)), projectile.ai[1] - 700);
-                    Vector2 targetPos = new Vector2(projectile.ai[0] + (spacing * number / Math.Abs(number)), projectile.ai[1]);
+                    Vector2 pos = new Vector2(Projectile.ai[0] + (spacing * number/Math.Abs(number)) + (Main.rand.Next(-randSpread, randSpread)), Projectile.ai[1] - 700);
+                    Vector2 targetPos = new Vector2(Projectile.ai[0] + (spacing * number / Math.Abs(number)), Projectile.ai[1]);
 
                     Vector2 vel = TerraLeague.CalcVelocityToPoint(pos, targetPos, 4);
 
-                    Projectile.NewProjectileDirect(pos, vel, projectile.type, projectile.damage, number > 0 ? number + 1 : number - 1, projectile.owner, targetPos.X, targetPos.Y);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), pos, vel, Projectile.type, Projectile.damage, number > 0 ? number + 1 : number - 1, Projectile.owner, targetPos.X, targetPos.Y);
                 }
             }
 
-            Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(3, 53), Projectile.position);
             for (int i = 0; i < 50; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 0, 255, 150), 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 0, 255, 150), 2f);
                 dust.velocity *= 3f;
                 dust.noGravity = true;
             }
@@ -143,16 +143,16 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.tileCollide = false;
-            projectile.velocity = Vector2.Zero;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 64;
-            projectile.height = 64;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 64;
+            Projectile.height = 64;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 2;
         }
     }
 }

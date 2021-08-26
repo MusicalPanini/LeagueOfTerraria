@@ -8,9 +8,9 @@ namespace TerraLeague.Dusts
     {
         Vector2 displacment = Vector2.Zero;
 
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            updateType = -1;
+            UpdateType = -1;
         }
 
         public override void OnSpawn(Dust dust)

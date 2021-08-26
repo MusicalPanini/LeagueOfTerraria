@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Items.SummonerSpells;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,15 +15,16 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Sunstone");
             Tooltip.SetDefault("'Feels warm'");
             base.SetStaticDefaults();
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 20;
-            item.height = 24;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.buyPrice(0, 1, 0, 0);
+            Item.maxStack = 999;
+            Item.width = 20;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
         }
     }
 }

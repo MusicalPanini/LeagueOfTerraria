@@ -29,7 +29,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/PiercingDarkness";
+            return "TerraLeague/AbilityImages/PiercingDarkness";
         }
 
         public override string GetAbilityTooltip()
@@ -40,9 +40,9 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override int GetAbilityBaseDamage(Player player)
         {
             if (checkingForHealing)
-                return (int)(abilityItem.item.damage / 3);
+                return (int)(abilityItem.Item.damage / 3);
             else
-                return (int)(abilityItem.item.damage * 2);
+                return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -108,7 +108,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 checkingForHealing = true;
                 int healing = modPlayer.ScaleValueWithHealPower(GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG) + GetAbilityScaledDamage(player, DamageType.MAG));
 
-                Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI, healing);
+                Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, healing);
 
                 SetAnimation(player, 30, 30, position + velocity);
                 DoEfx(player, type);

@@ -17,15 +17,16 @@ namespace TerraLeague.Items.Accessories
                 "\n6% reduced mana usage" +
                 "\nAutomatically use mana potions when needed");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 44;
-            item.rare = ItemRarityID.Pink;
-            item.value = 100000;
-            item.accessory = true;
+            Item.width = 20;
+            Item.height = 44;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = 100000;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -43,13 +44,12 @@ namespace TerraLeague.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ManaFlower, 1);
-            recipe.AddIngredient(ItemType<Nightbloom>(), 1);
-            recipe.AddIngredient(ItemID.GreaterManaPotion, 1);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.ManaFlower, 1)
+            .AddIngredient(ItemType<Nightbloom>(), 1)
+            .AddIngredient(ItemID.GreaterManaPotion, 1)
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

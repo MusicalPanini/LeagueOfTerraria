@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Rejuvenation : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rejuvenation");
             Description.SetDefault("Life regen and movement speed increased!");

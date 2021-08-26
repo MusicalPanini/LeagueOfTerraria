@@ -9,6 +9,11 @@ using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Buffs;
 using TerraLeague.Items.BossBags;
 using TerraLeague.NPCs.TargonBoss;
+using Terraria.GameContent.Bestiary;
+using TerraLeague.Biomes;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using System;
 
 namespace TerraLeague.NPCs
 {
@@ -17,59 +22,81 @@ namespace TerraLeague.NPCs
         int rerolls = 3;
         int currentBlessing = Main.rand.Next(0, 8);
 
+        public override void Load()
+        {
+            IL.Terraria.GameContent.ShopHelper.IsNotReallyTownNPC += HookNotReallyTownNPC;
+            //IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookInteractionRange;
+        }
+        private static void HookNotReallyTownNPC(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            if (!c.TryGotoNext(i => i.MatchRet()))
+            {
+                return; // Patch unable to be applied
+            }
+
+            // Push the Int instance onto the stack
+            c.Emit(OpCodes.Ldloc_0);
+            // Call a delegate using the int and Player from the stack.
+            c.EmitDelegate<Func<bool, int, bool>>((returnValue, type) => {
+                // Regular c# code
+                return type == Terraria.ModLoader.ModContent.NPCType<TargonSigil>();
+            });
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Targon's Peak");
         }
         public override void SetDefaults()
         {
-            npc.townNPC = true;
-            npc.lifeMax = 400;
-            npc.defense = 0;
-            npc.damage = 0;
-            npc.width = 80;
-            npc.height = 100;
-            npc.HitSound = SoundID.NPCHit4;
-            npc.DeathSound = SoundID.NPCDeath14;
-            npc.value = 0f;
-            npc.npcSlots = 0f;
-            npc.knockBackResist = 0f;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.dontTakeDamage = true;
-            npc.netAlways = true;
-            npc.dontTakeDamageFromHostiles = true;
-            npc.dontCountMe = true;
-            
+            NPC.townNPC = true;
+            NPC.lifeMax = 400;
+            NPC.defense = 0;
+            NPC.damage = 0;
+            NPC.width = 80;
+            NPC.height = 100;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath14;
+            NPC.value = 0f;
+            NPC.npcSlots = 0f;
+            NPC.knockBackResist = 0f;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.dontTakeDamage = true;
+            NPC.netAlways = true;
+            NPC.dontTakeDamageFromHostiles = true;
+            NPC.dontCountMe = true;
         }
 
         public override bool PreAI()
         {
-            npc.homeless = true;
+            NPC.homeless = true;
             return base.PreAI();
         }
 
         public override void AI()
         {
             if (NPC.CountNPCS(NPCType<TargonSigil>()) > 1)
-                npc.active = false;
+                NPC.active = false;
 
             if (Main.dayTime && Main.time == 0)
                 rerolls = 3;
 
             if (Main.rand.Next(20) == 0)
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.AncientLight, 0f, 0f, 150, new Color(0, 150, 255), 0.5f);
+                Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.AncientLight, 0f, 0f, 150, new Color(0, 150, 255), 0.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.fadeIn = 1f;
             }
 
-            npc.spriteDirection = -1;
-            npc.Center = new Vector2(TerraLeagueWORLDGLOBAL.TargonCenterX * 16, 45 * 16);
-            npc.position.Y += (float)System.Math.Sin(Main.time * 0.1);
+            NPC.spriteDirection = -1;
+            NPC.Center = new Vector2(Common.ModSystems.WorldSystem.TargonCenterX * 16, 45 * 16);
+            NPC.position.Y += (float)System.Math.Sin(Main.time * 0.1);
 
-            Lighting.AddLight(npc.Center, 0, 0.3f, 1f);
+            Lighting.AddLight(NPC.Center, 0, 0.3f, 1f);
             base.AI();
         }
 
@@ -89,21 +116,21 @@ namespace TerraLeague.NPCs
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void OnKill()
         {
             if (Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCType<NPCs.TargonSigil>()) == 0)
-                NPC.NewNPC(TerraLeagueWORLDGLOBAL.TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
-            base.NPCLoot();
+                NPC.NewNPC(Common.ModSystems.WorldSystem.TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
+            base.OnKill();
         }
 
         public override string GetChat()
         {
             string text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
-            if (!TerraLeagueWORLDGLOBAL.TargonUnlocked)
+            if (!Common.ModSystems.WorldSystem.TargonUnlocked)
             {
                 return text + "\n\nYou are not worthy of their challenge just yet.";
             }
-            else if (!TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
+            else if (!Common.ModSystems.DownedBossSystem.downedTargonBoss)
             {
                 if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
                 {
@@ -136,7 +163,7 @@ namespace TerraLeague.NPCs
 
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if (TerraLeagueWORLDGLOBAL.TargonUnlocked && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
+            if (Common.ModSystems.WorldSystem.TargonUnlocked && !Common.ModSystems.DownedBossSystem.downedTargonBoss)
             {
                 if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
                     button = "Teleport to Arena";
@@ -157,11 +184,11 @@ namespace TerraLeague.NPCs
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
-            if (NPC.downedBoss1 && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
+            if (NPC.downedBoss1 && !Common.ModSystems.DownedBossSystem.downedTargonBoss)
             {
                 if (firstButton)
                 {
-                    Vector2 teleportPos = new Vector2((TerraLeagueWORLDGLOBAL.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
+                    Vector2 teleportPos = new Vector2((Common.ModSystems.WorldSystem.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
 
                     Main.LocalPlayer.Teleport(teleportPos, 1, 0);
                     NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, Main.LocalPlayer.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
@@ -175,7 +202,7 @@ namespace TerraLeague.NPCs
                     string text = "You gained the " + Lang.GetBuffName(GetBuffID());
                     int buffTime = 60 * 60 * 60; // Frames * seconds * minutes * gameDays = 60 MINUTES
                     Main.LocalPlayer.AddBuff(GetBuffID(), buffTime);
-                    TerraLeague.PlaySoundWithPitch(npc.Center, 2, 29, -1);
+                    TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 29, -1);
                     Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown = 60 * 60 * 120;
                     Main.npcChatText = text;
                     GetRandomBlessing();
@@ -198,7 +225,7 @@ namespace TerraLeague.NPCs
             {
                 if (!firstButton)
                 {
-                    Vector2 teleportPos = new Vector2((TerraLeagueWORLDGLOBAL.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
+                    Vector2 teleportPos = new Vector2((Common.ModSystems.WorldSystem.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
 
                     Main.LocalPlayer.Teleport(teleportPos, 1, 0);
                     NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, Main.LocalPlayer.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
@@ -279,6 +306,18 @@ namespace TerraLeague.NPCs
         public override bool CheckConditions(int left, int right, int top, int bottom)
         {
             return false;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				// Sets the spawning conditions of this NPC that is listed in the bestiary.
+                ModContent.GetInstance<TargonPeakBiome>().ModBiomeBestiaryInfoElement,
+
+				// Sets the description of this NPC that is listed in the bestiary.
+				new FlavorTextBestiaryInfoElement("At the peak of Mount Targon, the border of Man and God, rests a large slab of stardust infused Targon Granite. This Sigil acts as the physical link between the material realm and the stars, communicating the messages of The Celestials.")
+            });
         }
     }
 }

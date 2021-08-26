@@ -14,16 +14,17 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Warden's Mail");
             Tooltip.SetDefault("Armor increased by 4");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -38,15 +39,15 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ClothArmor>(), 2);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 6);
-            recipe.AddRecipeGroup("TerraLeague:IronGroup", 8);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 4);
-            recipe.AddIngredient(ItemID.Obsidian, 20);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ClothArmor>(), 2)
+            .AddIngredient(ItemType<TrueIceChunk>(), 6)
+            .AddRecipeGroup("TerraLeague:IronGroup", 8)
+            .AddIngredient(ItemType<SilversteelBar>(), 4)
+            .AddIngredient(ItemID.Obsidian, 20)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

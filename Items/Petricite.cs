@@ -13,34 +13,35 @@ namespace TerraLeague.Items
         {
             DisplayName.SetDefault("Petricite Slab");
             base.SetStaticDefaults();
+
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 99;
-            item.width = 30;
-            item.height = 24;
-            item.uniqueStack = false;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.buyPrice(0, 0, 15, 0);
-            item.createTile = TileType<Tiles.PetriciteBarTile>();
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
+            Item.maxStack = 99;
+            Item.width = 30;
+            Item.height = 24;
+            Item.uniqueStack = false;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.buyPrice(0, 0, 15, 0);
+            Item.createTile = TileType<Tiles.PetriciteBarTile>();
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PetWood>(), 32);
-            recipe.AddIngredient(ItemType<Limestone>(), 16);
-            recipe.AddIngredient(ItemID.AshBlock, 16);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this, 4);
-            recipe.AddRecipe();
+            CreateRecipe(4)
+            .AddIngredient(ItemType<PetWood>(), 32)
+            .AddIngredient(ItemType<Limestone>(), 16)
+            .AddIngredient(ItemID.AshBlock, 16)
+            .AddTile(TileID.Furnaces)
+            .Register();
         }
     }
 }

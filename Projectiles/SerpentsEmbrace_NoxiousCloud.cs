@@ -21,50 +21,50 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = false;
-            projectile.magic = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.scale = 1.5f;
+            Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.scale = 1.5f;
             base.SetDefaults();
         }
 
         public override void AI()
         {
-            projectile.tileCollide = false;
-            projectile.ai[1] += 1f;
-            if (projectile.ai[1] > 15f)
+            Projectile.tileCollide = false;
+            Projectile.ai[1] += 1f;
+            if (Projectile.ai[1] > 15f)
             {
-                projectile.ai[0] += 10f;
+                Projectile.ai[0] += 10f;
             }
-            if (projectile.ai[0] > 255f)
+            if (Projectile.ai[0] > 255f)
             {
-                projectile.Kill();
-                projectile.ai[0] = 255f;
+                Projectile.Kill();
+                Projectile.ai[0] = 255f;
             }
-            projectile.alpha = (int)(100.0 + (double)projectile.ai[0] * 0.7);
-            projectile.rotation += projectile.velocity.X * 0.1f;
-            projectile.rotation += (float)projectile.direction * 0.003f;
-            projectile.velocity *= 0.9f;
-            Rectangle projectileHitBox = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
+            Projectile.alpha = (int)(100.0 + (double)Projectile.ai[0] * 0.7);
+            Projectile.rotation += Projectile.velocity.X * 0.1f;
+            Projectile.rotation += (float)Projectile.direction * 0.003f;
+            Projectile.velocity *= 0.9f;
+            Rectangle projectileHitBox = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
             for (int i = 0; i < 1000; i++)
             {
-                if (i != projectile.whoAmI && Main.projectile[i].active && Main.projectile[i].type == projectile.type)
+                if (i != Projectile.whoAmI && Main.projectile[i].active && Main.projectile[i].type == Projectile.type)
                 {
                     Rectangle targetHitBox = new Rectangle((int)Main.projectile[i].position.X, (int)Main.projectile[i].position.Y, Main.projectile[i].width, Main.projectile[i].height);
                     if (projectileHitBox.Intersects(targetHitBox))
                     {
-                        Vector2 vector77 = Main.projectile[i].Center - projectile.Center;
+                        Vector2 vector77 = Main.projectile[i].Center - Projectile.Center;
                         if (vector77.X == 0f && vector77.Y == 0f)
                         {
-                            if (i < projectile.whoAmI)
+                            if (i < Projectile.whoAmI)
                             {
                                 vector77.X = -1f;
                                 vector77.Y = 1f;
@@ -77,7 +77,7 @@ namespace TerraLeague.Projectiles
                         }
                         vector77.Normalize();
                         vector77 *= 0.005f;
-                        projectile.velocity -= vector77;
+                        Projectile.velocity -= vector77;
                         Projectile projectile2 = Main.projectile[i];
                         projectile2.velocity += vector77;
                     }

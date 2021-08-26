@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Common.ModSystems;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -133,7 +134,7 @@ namespace TerraLeague
                 Main.time = 0;
             }
 
-            TerraLeagueWORLDGLOBAL.BlackMistEvent = true;
+            WorldSystem.BlackMistEvent = true;
         }
     }
 }

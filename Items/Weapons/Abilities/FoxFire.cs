@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/FoxFire";
+            return "TerraLeague/AbilityImages/FoxFire";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -91,7 +91,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 for (int i = 1; i < projCount + 1; i++)
                 {
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, ((MathHelper.TwoPi * i) / projCount));
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), position, velocity, projType, damage, knockback, player.whoAmI, ((MathHelper.TwoPi * i) / projCount));
                 }
                 DoEfx(player, type);
                 SetCooldowns(player, type);
@@ -100,7 +100,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 20).WithPitchVariance(0.8f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 20).WithPitchVariance(0.8f), player.Center);
         }
     }
 }

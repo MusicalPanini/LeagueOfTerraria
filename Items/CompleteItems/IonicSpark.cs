@@ -17,15 +17,16 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Ionic Spark");
             Tooltip.SetDefault("12% increased ranged attack speed" +
                 "\nIncreases maximum life by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -43,15 +44,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<RecurveBow>(), 1);
-            recipe.AddIngredient(ItemType<KircheisShard>(), 1);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddRecipeGroup("TerraLeague:IronGroup", 5);
-            recipe.AddIngredient(ItemID.Wire, 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<RecurveBow>(), 1)
+            .AddIngredient(ItemType<KircheisShard>(), 1)
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddRecipeGroup("TerraLeague:IronGroup", 5)
+            .AddIngredient(ItemID.Wire, 10)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

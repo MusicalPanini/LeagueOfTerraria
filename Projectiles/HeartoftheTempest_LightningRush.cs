@@ -17,38 +17,38 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lightning Rush");
-            Main.projFrames[projectile.type] = 4;
-            ProjectileID.Sets.DontAttachHideToAlpha[projectile.type] = true;
+            Main.projFrames[Projectile.type] = 4;
+            ProjectileID.Sets.DontAttachHideToAlpha[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
-            projectile.timeLeft = 1000;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
-            projectile.hide = true;
+            Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
+            Projectile.hide = true;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (player.active && modPlayer.lightningRush || projectile.timeLeft > 990)
-                projectile.Center = player.MountedCenter;
+            if (player.active && modPlayer.lightningRush || Projectile.timeLeft > 990)
+                Projectile.Center = player.MountedCenter;
             else
-                projectile.Kill();
+                Projectile.Kill();
 
-            Lighting.AddLight(projectile.Center, 0f, 1f, 1f);
+            Lighting.AddLight(Projectile.Center, 0f, 1f, 1f);
 
-            Dust dust = Dust.NewDustPerfect(projectile.Center, 226, null, 0, default, 2);
+            Dust dust = Dust.NewDustPerfect(Projectile.Center, 226, null, 0, default, 2);
             dust.noGravity = true;
         }
 

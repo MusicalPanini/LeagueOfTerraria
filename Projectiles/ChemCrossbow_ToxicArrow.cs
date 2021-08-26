@@ -18,23 +18,23 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.alpha = 0;
-            projectile.timeLeft = 1200;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.aiStyle = 1;
-            projectile.arrow = true;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1200;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.aiStyle = 1;
+            Projectile.arrow = true;
         }
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, new Color(0,255,0));
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, new Color(0,255,0));
             dust.noGravity = true;
             dust.noLight = true;
         }
@@ -58,8 +58,8 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.Kill();
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+            Projectile.Kill();
             return false;
         }
 
@@ -67,7 +67,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ice, 0f, 0f, 100, new Color(0, 255, 0), 0.7f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, new Color(0, 255, 0), 0.7f);
                 dust.noLight = true;
             }
         }

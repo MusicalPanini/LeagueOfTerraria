@@ -17,43 +17,43 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             DisplayName.SetDefault("Malefic Visions");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.alpha = 255;
-            projectile.timeLeft = 60 * 5;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -2;
-            projectile.minion = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 60 * 5;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -2;
+            Projectile.minion = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (projectile.localAI[0] == 30)
+            if (Projectile.localAI[0]  == 30)
             {
-                projectile.friendly = true;
-                projectile.localAI[0] = 0;
+                Projectile.friendly = true;
+                Projectile.localAI[0]  = 0;
             }
             else
             {
-                projectile.friendly = false;
-                projectile.localAI[0]++;
+                Projectile.friendly = false;
+                Projectile.localAI[0] ++;
             }
 
-            NPC npc = Main.npc[(int)projectile.ai[0]];
-            projectile.Center = npc.Center;
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            Projectile.Center = npc.Center;
 
-            for (int i = 0; i < (npc.width*npc.height)/200; i++)
+            for (int i = 0; i < (npc.width* npc.height)/200; i++)
             {
                 Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Shadowflame, 0f, 0f, 100, default, 1.5f);
                 dust.noGravity = true;
@@ -62,7 +62,7 @@ namespace TerraLeague.Projectiles
             }
 
             if (!npc.active)
-                projectile.Kill();
+                Projectile.Kill();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -79,7 +79,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            if (timeLeft > 0 && projectile.owner == Main.LocalPlayer.whoAmI)
+            if (timeLeft > 0 && Projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 float distance = 700f;
                 NPC target = null;
@@ -89,7 +89,7 @@ namespace TerraLeague.Projectiles
 
                     if (npcCheck.active && !npcCheck.friendly && npcCheck.lifeMax > 5 && !npcCheck.dontTakeDamage && !npcCheck.immortal)
                     {
-                        Vector2 newMove = Main.npc[k].Center - projectile.Center;
+                        Vector2 newMove = Main.npc[k].Center - Projectile.Center;
                         float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                         if (distanceTo < distance)
                         {
@@ -101,14 +101,14 @@ namespace TerraLeague.Projectiles
 
                 if (target != null)
                 {
-                    Projectile.NewProjectile(projectile.Center, new Vector2(0, -10), ModContent.ProjectileType<VoidProphetsStaff_MaleficVisions>(), projectile.damage, 0, projectile.owner, target.whoAmI);
+                    Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, new Vector2(0, -10), ModContent.ProjectileType<VoidProphetsStaff_MaleficVisions>(), Projectile.damage, 0, Projectile.owner, target.whoAmI);
                 }
             }
         }
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.whoAmI == (int)projectile.ai[0])
+            if (target.whoAmI == (int)Projectile.ai[0])
                 return base.CanHitNPC(target);
             else
                 return false;

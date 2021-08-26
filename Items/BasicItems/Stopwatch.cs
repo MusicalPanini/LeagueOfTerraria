@@ -14,16 +14,17 @@ namespace TerraLeague.Items.BasicItems
         {
             DisplayName.SetDefault("Magic Stopwatch");
             Tooltip.SetDefault("\'Seems fragile\'");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.accessory = true;
+            Item.material = true;
 
             Active = new Stasis(2, 120, true);
         }
@@ -40,14 +41,14 @@ namespace TerraLeague.Items.BasicItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Stopwatch, 1);
-            recipe.AddIngredient(ItemType<HextechCore>(), 2);
-            recipe.AddIngredient(ItemID.SoulofLight, 6);
-            recipe.AddIngredient(ItemID.SoulofNight, 6);
-            recipe.AddTile(TileID.CrystalBall);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Stopwatch, 1)
+            .AddIngredient(ItemType<HextechCore>(), 2)
+            .AddIngredient(ItemID.SoulofLight, 6)
+            .AddIngredient(ItemID.SoulofNight, 6)
+            .AddTile(TileID.CrystalBall)
+            .Register();
+            
         }
 
         public override bool OnCooldown(Player player)

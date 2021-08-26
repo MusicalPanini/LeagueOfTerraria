@@ -15,17 +15,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.alpha = 255;
-            projectile.timeLeft = 60;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.minion = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.extraUpdates = 1;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 60;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = Terraria.ModLoader.DamageClass.Summon;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.extraUpdates = 1;
 
         }
 
@@ -33,18 +33,18 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Teleporter, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 159, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1.2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
-            Lighting.AddLight(projectile.position, 0.5f, 0.5f, 0f);
+            Lighting.AddLight(Projectile.position, 0.5f, 0.5f, 0f);
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 5; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Teleporter, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 50, default, 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 159, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, 50, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.6f;
             }

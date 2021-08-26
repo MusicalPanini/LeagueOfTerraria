@@ -15,15 +15,16 @@ namespace TerraLeague.Items.Armor
             "\nIncreases your max life by 10" +
             "\nEnemies are more likely to target you");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 26;
-            item.value = 50000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 5;
+            Item.width = 24;
+            Item.height = 26;
+            Item.value = 50000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 5;
         }
 
         public override void UpdateEquip(Player player)
@@ -35,11 +36,11 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<SilversteelBar>(), 15)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -58,7 +59,7 @@ namespace TerraLeague.Items.Armor
         {
             player.setBonus = "+5% melee damage" +
                 "\nGain 10 magic shield every 5 seconds (up tp 50)";
-            player.meleeDamage += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
         }
     }
 }

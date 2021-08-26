@@ -43,7 +43,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void Efx(Player user)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), user.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), user.position);
             TerraLeague.DustRing(43, user, new Microsoft.Xna.Framework.Color(255, 255, 255));
         }
     }

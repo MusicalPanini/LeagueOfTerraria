@@ -1,9 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Biomes;
+using TerraLeague.Gores;
 using TerraLeague.Items;
 using TerraLeague.Items.Banners;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.NPCs
@@ -13,27 +18,27 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fallen Crimera");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Crimera];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Crimera];
         }
         public override void SetDefaults()
         {
-            npc.width = 18;
-            npc.height = 40;
-            npc.aiStyle = 5;
-            npc.damage = 24;
-            npc.defense = 8;
-            npc.lifeMax = 50;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath2;
-            npc.knockBackResist = 0.5f;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            aiType = NPCID.Crimera;
-            animationType = NPCID.Crimera;
-            npc.scale = 1f;
-            npc.value = 100;
-            banner = npc.type;
-            bannerItem = ItemType<FallenCrimeraBanner>();
+            NPC.width = 18;
+            NPC.height = 40;
+            NPC.aiStyle = 5;
+            NPC.damage = 24;
+            NPC.defense = 8;
+            NPC.lifeMax = 50;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath2;
+            NPC.knockBackResist = 0.5f;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            AIType = NPCID.Crimera;
+            AnimationType = NPCID.Crimera;
+            NPC.scale = 1f;
+            NPC.value = 100;
+            Banner = NPC.type;
+            BannerItem = ItemType<FallenCrimeraBanner>();
             base.SetDefaults();
         }
 
@@ -48,7 +53,7 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI()
         {
-            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+            Lighting.AddLight(NPC.Center, new Color(5, 245, 150).ToVector3());
 
             return base.PreAI();
         }
@@ -65,12 +70,12 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
             {
                 int count = 0;
-                while ((double)count < damage / (double)npc.lifeMax * 50.0)
+                while ((double)count < damage / (double)NPC.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(100, 100, 100), 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(100, 100, 100), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                     count++;
@@ -80,31 +85,41 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }
 
-                Gore gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+                Gore gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y - 10f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_1>(), NPC.scale);
                 gore.velocity *= 0.3f;
-                gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_2"), npc.scale);
+                gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 15f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_2>(), NPC.scale);
                 gore.velocity *= 0.3f;
-                gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_3"), npc.scale);
+                gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)NPC.height - 20f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_3>(), NPC.scale);
                 gore.velocity *= 0.3f;
             }
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
+            npcLoot.Add(ItemDropRule.Common(ItemType<DamnedSoul>()));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, 3));
 
-            if (Main.rand.Next(0, 3) == 0)
-            {
-                int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.Vertebrae);
-                Main.item[item].color = new Color(100, 200, 150);
-            }
-            base.NPCLoot();
+            base.ModifyNPCLoot(npcLoot);
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				// Sets the spawning conditions of this NPC that is listed in the bestiary.
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
+                ModContent.GetInstance<BlackMistBiome>().ModBiomeBestiaryInfoElement,
+
+				// Sets the description of this NPC that is listed in the bestiary.
+				new FlavorTextBestiaryInfoElement("The most common horror to be born from the Crimson and claimed by the mist, its endless hunger now seeks all things living.")
+            });
         }
     }
 }

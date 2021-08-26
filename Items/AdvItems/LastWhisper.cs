@@ -13,15 +13,16 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Last Whisper");
             Tooltip.SetDefault("3% increased melee and ranged damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -30,27 +31,25 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.03f;
-            player.rangedDamage += 0.03f;
+            player.GetDamage(DamageClass.Melee) += 0.03f;
+            player.GetDamage(DamageClass.Ranged) += 0.03f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LongSword>(), 1);
-            recipe.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe.AddIngredient(ItemID.DemonBow, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 1)
+            .AddIngredient(ItemID.SharkToothNecklace, 1)
+            .AddIngredient(ItemID.DemonBow, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
 
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(ItemType<LongSword>(), 1);
-            recipe2.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe2.AddIngredient(ItemID.TendonBow, 1);
-            recipe2.AddTile(TileID.Anvils);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 1)
+            .AddIngredient(ItemID.SharkToothNecklace, 1)
+            .AddIngredient(ItemID.TendonBow, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Contaminate";
+            return "TerraLeague/AbilityImages/Contaminate";
         }
 
         public override string GetAbilityTooltip()
@@ -94,7 +94,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     if (npc.HasBuff(BuffType<DeadlyVenom>()))
                     {
                         SetCooldowns(player, type);
-                        Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<ChemCrossbow_Contaminate>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, npcs[i]);
+                        Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), player.Center, Vector2.Zero, ProjectileType<ChemCrossbow_Contaminate>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, npcs[i]);
                     }
                 }
             }

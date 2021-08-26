@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Accessories
             Tooltip.SetDefault("Increases block placement & tool range by 3" +
                 "\n50% increased mining speed");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 28;
-            item.rare = ItemRarityID.Orange;
-            item.value = Item.buyPrice(0, 18, 0, 0);
-            item.accessory = true;
+            Item.width = 22;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.buyPrice(0, 18, 0, 0);
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

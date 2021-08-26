@@ -16,28 +16,28 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 10;
-            projectile.height = 4;
-            projectile.alpha = 0;
-            projectile.timeLeft = 60;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.arrow = true;
+            Projectile.width = 10;
+            Projectile.height = 4;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 60;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default,0.7f);
-            projectile.rotation = projectile.velocity.ToRotation();
-            if (projectile.velocity.X < 0)
+            Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, default,0.7f);
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            if (Projectile.velocity.X < 0)
             {
-                projectile.rotation = projectile.velocity.ToRotation();
-                projectile.scale = -1f;
-                projectile.spriteDirection = -1;
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                Projectile.scale = -1f;
+                Projectile.spriteDirection = -1;
             }
         }
 
@@ -55,7 +55,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
             return true;
         }
 
@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ice, 0f, 0f, 100, default, 0.7f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, default, 0.7f);
             }
         }
     }

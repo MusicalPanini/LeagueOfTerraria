@@ -17,36 +17,37 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("8% increased magic damage" +
                 "\nIncreases armor by 5" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
             Active = new Stasis(2, 120);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.08f;
+            player.GetDamage(DamageClass.Magic) += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste -= 10;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Seekers>(), 1);
-            recipe.AddIngredient(ItemType<Stopwatch>(), 1);
-            recipe.AddIngredient(ItemType<Codex>(), 1);
-            recipe.AddIngredient(ItemID.Glass, 20);
-            recipe.AddIngredient(ItemID.Ectoplasm, 8);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Seekers>(), 1)
+            .AddIngredient(ItemType<Stopwatch>(), 1)
+            .AddIngredient(ItemType<Codex>(), 1)
+            .AddIngredient(ItemID.Glass, 20)
+            .AddIngredient(ItemID.Ectoplasm, 8)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

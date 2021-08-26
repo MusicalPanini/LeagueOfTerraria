@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using TerraLeague.Buffs;
+using TerraLeague.Gores;
 using TerraLeague.NPCs;
 using Terraria;
 using Terraria.Audio;
@@ -21,59 +22,59 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 1000;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.hostile = true;
-            projectile.netImportant = true;
-            projectile.hide = true;
-            projectile.ai[1] = -1;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 1000;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.hostile = true;
+            Projectile.netImportant = true;
+            Projectile.hide = true;
+            Projectile.ai[1] = -1;
         }
 
         public override void AI()
         {
-            NPC npc = Main.npc[(int)projectile.ai[0]];
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
 
-            if ((int)projectile.ai[1] == -2)
+            if ((int)Projectile.ai[1] == -2)
             {
-                if (projectile.soundDelay == 0)
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 4, -0.5f);
-                projectile.soundDelay = 10;
+                if (Projectile.soundDelay == 0)
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 4, -0.5f);
+                Projectile.soundDelay = 10;
             }
 
             if (!npc.active)
             {
                 ChainBreak(npc.Center);
-                projectile.Kill();
+                Projectile.Kill();
             }
 
-            if ((int)projectile.ai[1] >= 0)
+            if ((int)Projectile.ai[1] >= 0)
             {
-                Player player = Main.player[(int)projectile.ai[1]];
-                projectile.Center = player.MountedCenter;
+                Player player = Main.player[(int)Projectile.ai[1]];
+                Projectile.Center = player.MountedCenter;
             }
 
-            if (-1 != (int)projectile.ai[1])
-                DustChain(npc, (int)projectile.Distance(npc.Center) / 16, 1f);
+            if (-1 != (int)Projectile.ai[1])
+                DustChain(npc, (int)Projectile.Distance(npc.Center) / 16, 1f);
 
             if (Main.netMode == NetmodeID.Server)
             {
-                if ((int)projectile.ai[1] == -1)
+                if ((int)Projectile.ai[1] == -1)
                 {
                     for (int i = 0; i < Main.player.Length; i++)
                     {
                         if (Main.player[i].active)
                         {
-                            if (!Main.player[i].dead && projectile.Hitbox.Intersects(Main.player[i].Hitbox))
+                            if (!Main.player[i].dead && Projectile.Hitbox.Intersects(Main.player[i].Hitbox))
                             {
-                                projectile.ai[1] = i;
-                                projectile.timeLeft = 180;
-                                projectile.netUpdate = true;
+                                Projectile.ai[1] = i;
+                                Projectile.timeLeft = 180;
+                                Projectile.netUpdate = true;
                                 break;
                             }
                         }
@@ -84,19 +85,19 @@ namespace TerraLeague.Projectiles
 
         public override bool CanHitPlayer(Player target)
         {
-            if (target.whoAmI == (int)projectile.ai[1])
+            if (target.whoAmI == (int)Projectile.ai[1])
                 return false;
             return base.CanHitPlayer(target);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            if ((int)projectile.ai[1] == -1)
+            if ((int)Projectile.ai[1] == -1)
             {
-                projectile.ai[1] = target.whoAmI;
-                projectile.timeLeft = 180;
+                Projectile.ai[1] = target.whoAmI;
+                Projectile.timeLeft = 180;
                 target.AddBuff(BuffID.Slow, 180);
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
             }
 
             base.OnHitPlayer(target, damage, crit);
@@ -109,12 +110,12 @@ namespace TerraLeague.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (-1 != (int)projectile.ai[1])
+            if (-1 != (int)Projectile.ai[1])
             {
-                NPC npc = Main.npc[(int)projectile.ai[0]];
+                NPC npc = Main.npc[(int)Projectile.ai[0]];
                 float point = 0f;
                 return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), npc.Center,
-                    projectile.Center, 12, ref point);
+                    Projectile.Center, 12, ref point);
             }
 
             return base.Colliding(projHitbox, targetHitbox);
@@ -122,69 +123,69 @@ namespace TerraLeague.Projectiles
 
         void DustChain(NPC npc, int loops, float scale)
         {
-            //Vector2 ChainLine = projectile.Center - npc.Center;
+            //Vector2 ChainLine = Projectile.Center - NPC.Center;
             //ChainLine.Normalize();
 
             //for (int i = 0; i < loops; i++)
             //{
-            //    int distance = Main.rand.Next((int)projectile.Distance(npc.Center));
+            //    int distance = Main.rand.Next((int)Projectile.Distance(NPC.Center));
             //    Vector2 dustPoint = ChainLine * distance;
 
-            //    Dust dust = Dust.NewDustDirect(dustPoint + npc.Center, 1, 1, 248, 0, 0, 100, new Color(159, 0, 255), scale);
+            //    Dust dust = Dust.NewDustDirect(dustPoint + NPC.Center, 1, 1, 248, 0, 0, 100, new Color(159, 0, 255), scale);
             //    dust.noGravity = true;
             //}
         }
 
         public void ChainBreak(Vector2 source)
         {
-            Vector2 ChainLine = projectile.position - source;
+            Vector2 ChainLine = Projectile.position - source;
             ChainLine.Normalize();
-            int links = (int)projectile.Distance(source) / 64;
+            int links = (int)Projectile.Distance(source) / 64;
 
             for (int i = 0; i < links; i++)
             {
                 int distance = 64 * i;
                 Vector2 gorePoint = ChainLine * distance;
 
-                int gore = Gore.NewGore(gorePoint + source, Vector2.Zero, mod.GetGoreSlot("Gores/SoulShackleGoreA"), 2f);
+                int gore = Gore.NewGore(gorePoint + source, Vector2.Zero, GoreType<SoulShackleGoreA>(), 2f);
 
                 Main.gore[gore].timeLeft /= 10;
 
                 gorePoint = ChainLine * (distance + 16);
-                gore = Gore.NewGore(gorePoint + source, Vector2.Zero, mod.GetGoreSlot("Gores/SoulShackleGoreB"), 2f);
+                gore = Gore.NewGore(gorePoint + source, Vector2.Zero, GoreType<SoulShackleGoreB>(), 2f);
                 Main.gore[gore].timeLeft /= 15;
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            NPC npc = Main.npc[(int)projectile.ai[0]];
-            if ((int)projectile.ai[1] == -2)
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            if ((int)Projectile.ai[1] == -2)
                 ChainBreak(npc.Center);
             base.Kill(timeLeft);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if ((int)projectile.ai[1] == -1)
+            if ((int)Projectile.ai[1] == -1)
             {
-                projectile.timeLeft = 120;
-                projectile.netUpdate = true;
-                projectile.velocity *= 0;
-                projectile.position += projectile.oldVelocity;
-                projectile.ai[1] = -2;
+                Projectile.timeLeft = 120;
+                Projectile.netUpdate = true;
+                Projectile.velocity *= 0;
+                Projectile.position += Projectile.oldVelocity;
+                Projectile.ai[1] = -2;
             }
             
             return false;
         }
 
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/TargonBoss_SoulShackles_Chain");
+            Texture2D texture = ModContent.Request<Texture2D>("TerraLeague/Projectiles/TargonBoss_SoulShackles_Chain").Value;
 
-            Vector2 mountedCenter = Main.npc[(int)projectile.ai[0]].Center;
-            Vector2 position = projectile.Center + new Vector2(projectile.width, 0).RotatedBy(TerraLeague.CalcAngle(projectile.Center, mountedCenter));
+            Vector2 mountedCenter = Main.npc[(int)Projectile.ai[0]].Center;
+            Vector2 position = Projectile.Center + new Vector2(Projectile.width, 0).RotatedBy(TerraLeague.CalcAngle(Projectile.Center, mountedCenter));
             //mountedCenter.Y += 4;
             Rectangle? sourceRectangle = new Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
@@ -217,11 +218,9 @@ namespace TerraLeague.Projectiles
             return true;
         }
 
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            drawCacheProjsBehindNPCs.Add(index);
-
-            base.DrawBehind(index, drawCacheProjsBehindNPCsAndTiles, drawCacheProjsBehindNPCs, drawCacheProjsBehindProjectiles, drawCacheProjsOverWiresUI);
+            behindNPCs.Add(index);
         }
 
         public override bool? CanCutTiles()

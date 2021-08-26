@@ -25,7 +25,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             if (cooldownCount <= 0)
             {
-                Projectile.NewProjectileDirect(Main.MouseWorld, Vector2.Zero, ProjectileType<Item_CleanseField>(), 0, 0, player.whoAmI);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), Main.MouseWorld, Vector2.Zero, ProjectileType<Item_CleanseField>(), 0, 0, player.whoAmI);
                 SetCooldown(player);
             }
         }

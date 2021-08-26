@@ -19,15 +19,15 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.alpha = 0;
-            projectile.timeLeft = 1000;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.alpha = 255;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1000;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.alpha = 255;
 
             CanOnlyHitTarget = true;
             TargetPlayers = true;
@@ -38,22 +38,22 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 3; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                int dustBoxWidth = projectile.width - 12;
-                int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.IcyMerman, 0, 0, 50, new Color(0, 255, 100), 1.5f);
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Ice, 0, 0, 50, new Color(0, 255, 100), 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.1f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
             HomingAI();
 
             if (TargetPlayers && TargetWhoAmI >= 0)
             {
-                if (projectile.Hitbox.Intersects(TargetEntity.Hitbox))
+                if (Projectile.Hitbox.Intersects(TargetEntity.Hitbox))
                 {
                     OnHitFriendlyPlayer(Main.player[TargetWhoAmI]);
                 }
@@ -64,19 +64,19 @@ namespace TerraLeague.Projectiles
         {
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 4, 0);
 
-            projectile.netUpdate = true;
-            if (projectile.owner == Main.LocalPlayer.whoAmI)
+            Projectile.netUpdate = true;
+            if (Projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                if (player.whoAmI != projectile.owner)
-                    Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(projectile.damage, player.whoAmI, -1, projectile.owner);
+                if (player.whoAmI != Projectile.owner)
+                    Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(Projectile.damage, player.whoAmI, -1, Projectile.owner);
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += projectile.damage;
+                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += Projectile.damage;
                 }
             }
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IcyMerman, 0, 0, 50, new Color(0, 255, 100), 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, 0, 0, 50, new Color(0, 255, 100), 1.2f);
                 dust.noGravity = true;
             }
 

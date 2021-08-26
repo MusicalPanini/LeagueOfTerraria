@@ -23,16 +23,16 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.timeLeft = 1000;
-            projectile.penetrate = 1000;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.alpha = 150;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = 1000;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 150;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -43,45 +43,45 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if ((int)projectile.localAI[1] == 0)
+            if ((int)Projectile.localAI[1] == 0)
             {
-                if (projectile.alpha > 0)
-                    projectile.alpha -= 10;
-                if (projectile.alpha < 0)
-                    projectile.alpha = 0;
+                if (Projectile.alpha > 0)
+                    Projectile.alpha -= 10;
+                if (Projectile.alpha < 0)
+                    Projectile.alpha = 0;
 
-                if (projectile.timeLeft == 1000)
-                    projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+                if (Projectile.timeLeft == 1000)
+                    Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
 
-                projectile.velocity = Vector2.Zero;
+                Projectile.velocity = Vector2.Zero;
 
-                projectile.Center = new Vector2(Main.player[projectile.owner].MountedCenter.X + stonePos[(int)projectile.ai[0] % 5].X + projectile.ai[0], Main.player[projectile.owner].MountedCenter.Y + stonePos[(int)projectile.ai[0] % 5].Y + projectile.ai[0] /*+ (16 * (projectile.alpha / 255f))*/);
+                Projectile.Center = new Vector2(Main.player[Projectile.owner].MountedCenter.X + stonePos[(int)Projectile.ai[0] % 5].X + Projectile.ai[0], Main.player[Projectile.owner].MountedCenter.Y + stonePos[(int)Projectile.ai[0] % 5].Y + Projectile.ai[0] /*+ (16 * (Projectile.alpha / 255f))*/);
 
-                if (projectile.timeLeft == 970 - ((int)projectile.ai[0] * (int)projectile.ai[1]))
+                if (Projectile.timeLeft == 970 - ((int)Projectile.ai[0] * (int)Projectile.ai[1]))
                 {
-                    projectile.localAI[1] = 1;
-                    projectile.velocity = new Vector2(0, -20).RotatedBy(projectile.rotation);
-                    projectile.friendly = true;
-                    projectile.tileCollide = true;
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 19, -1f);
+                    Projectile.localAI[1] = 1;
+                    Projectile.velocity = new Vector2(0, -20).RotatedBy(Projectile.rotation);
+                    Projectile.friendly = true;
+                    Projectile.tileCollide = true;
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 19, -1f);
                 }
             }
             else
             {
-                Dust.NewDustDirect(projectile.position, 16, 16, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+                Dust.NewDustDirect(Projectile.position, 16, 16, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
                 dust.velocity *= 1.5f;
 
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1f);
             }
             
             base.Kill(timeLeft);
@@ -101,16 +101,16 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.tileCollide = false;
-            projectile.timeLeft = 3;
-            projectile.velocity = Vector2.Zero;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 60;
-            projectile.height = 60;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 3;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 60;
+            Projectile.height = 60;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
         }
     }
 }

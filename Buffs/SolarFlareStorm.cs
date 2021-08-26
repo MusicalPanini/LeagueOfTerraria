@@ -9,7 +9,7 @@ namespace TerraLeague.Buffs
     public class SolarFlareStorm : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Solar Flare Storm");
             Description.SetDefault("The power of the sun is ready to be unleashed");
@@ -27,7 +27,7 @@ namespace TerraLeague.Buffs
                 float x = Main.rand.NextFloat(player.MountedCenter.X - Main.screenWidth / 2, player.MountedCenter.X + Main.screenWidth / 2);
                 float y = Main.rand.NextFloat(Main.screenPosition.Y, Main.screenPosition.Y + Main.screenHeight/4);
 
-                Projectile.NewProjectileDirect(new Vector2(x, y), Vector2.Zero, ModContent.ProjectileType<SolariSet_SolarSigil>(), (int)(100 * player.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep), 2, player.whoAmI);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(new Items.Armor.SolariHeadPiece().Item), new Vector2(x, y), Vector2.Zero, ModContent.ProjectileType<SolariSet_SolarSigil>(), (int)(100 * player.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep), 2, player.whoAmI);
             }
         }
 

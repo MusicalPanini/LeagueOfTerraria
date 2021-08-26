@@ -13,22 +13,23 @@ namespace TerraLeague.Items.Placeable
         {
             DisplayName.SetDefault("Targon Monolith");
             Tooltip.SetDefault("'Bring the stars wherever you go'");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 40;
-            item.maxStack = 999;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
-            item.createTile = TileType<Tiles.TargonMonolith>();
-            item.value = 50000;
-            item.rare = ItemRarityID.Orange;
+            Item.width = 32;
+            Item.height = 40;
+            Item.maxStack = 999;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.createTile = TileType<Tiles.TargonMonolith>();
+            Item.value = 50000;
+            Item.rare = ItemRarityID.Orange;
         }
     }
 }

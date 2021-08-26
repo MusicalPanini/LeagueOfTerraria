@@ -10,6 +10,7 @@ using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
 using System;
 using TerraLeague.Items.SummonerSpells;
+using Terraria.ModLoader.Utilities;
 
 namespace TerraLeague.NPCs
 {
@@ -157,7 +158,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Blue, 0f, 0f, 100, default);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 113, 0f, 0f, 100, default);
                     dust.velocity *= 0.2f;
                     dust.scale *= 1.2f;
                     dust.alpha *= 200;
@@ -168,14 +169,14 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 10);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RedsWingsRun, 0, -1, 150);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
                     dust.velocity.X *= 0.3f;
                     dust.color = new Color(255, 0, 0);
                     dust.noGravity = false;
                 }
                 else if (num == 2)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RedsWingsRun, 0, -1, 150);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
                     dust.velocity.X *= 0.3f;
 
                     dust.noGravity = false;
@@ -185,7 +186,7 @@ namespace TerraLeague.NPCs
             if (requiem)
             {
                 Color color = Main.rand.NextBool() ? new Color(0, 255, 140) : new Color(0, 255, 0);
-                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 4, npc.position.Y - 320 + npc.height / 3f), 1, 300 + npc.height / 2, DustID.RedsWingsRun, 0f, 2f, 197, color, 2f);
+                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 4, npc.position.Y - 320 + npc.height / 3f), 1, 300 + npc.height / 2, 186, 0f, 2f, 197, color, 2f);
                 dust.noGravity = true;
                 dust.velocity.X *= 0.1f;
                 dust.fadeIn = 2.6f;
@@ -194,14 +195,14 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default);
+                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default);
                 }
             }
             if (abyssalCurse)
             {
                 if (Main.rand.Next(0, 4) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, DustID.Demonite, 0f, 0f, 100, default);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, 14, 0f, 0f, 100, default);
                     dust.color = new Color(255, 0, 255);
                     dust.alpha = 150;
                     dust.scale = 1f;
@@ -213,7 +214,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 3) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Purple, 0f, 0f, 255, new Color(59, 0, 255));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 255, new Color(59, 0, 255));
                     dust.alpha = 150;
                     dust.noGravity = true;
                     dust.noLight = true;
@@ -223,7 +224,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, DustID.Teleporter, 0f, 0f, 50, default);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, 159, 0f, 0f, 50, default);
                     dust.noGravity = true;
                 }
             }
@@ -231,7 +232,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Demonite, 0f, 0f, 100, default, 1f);
+                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 14, 0f, 0f, 100, default, 1f);
                     dust.color = new Color(255, 0, 0);
                     dust.velocity.X = 0;
                     dust.velocity.Y = 0.5f;
@@ -241,7 +242,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, -12f, 100, default, 6);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, -12f, 100, default, 6);
                     dust.noGravity = true;
                 }
             }
@@ -249,13 +250,13 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default, 2f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default, 2f);
                     dust.noGravity = true;
                 }
 
                 if (Main.rand.Next(0, 4) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 100, default, 1f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default, 1f);
                     dust.velocity.Y = -Math.Abs(dust.velocity.Y * 2f);
                 }
             }
@@ -263,7 +264,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 8) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Purple, 0f, 0f, 100, new Color(59, 0, 255));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 100, new Color(59, 0, 255));
                     dust.noGravity = true;
                     dust.velocity *= 0;
                 }
@@ -272,19 +273,19 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, new Color(255, 0, 0), 4);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, new Color(255, 0, 0), 4);
                     dust.noGravity = true;
-                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, new Color(255, 0, 0), 1);
+                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, new Color(255, 0, 0), 1);
                 }
             }
             if (infernumMark)
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -2f, 0, default, 2);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.GemSapphire, 0f, -2f, 0, default, 2);
                     dust.noGravity = true;
                     dust.velocity.X *= 0.1f;
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.SapphireBolt, 0f, -3f, 0, default, 0.5f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.GemSapphire, 0f, -3f, 0, default, 0.5f);
                     dust.velocity.X *= 0.2f;
                 }
             }
@@ -292,27 +293,27 @@ namespace TerraLeague.NPCs
             {
                 if (Main.rand.Next(0, 2) == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Green, 0f, 0f, 0, new Color(0, 255, 201), 2);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 2);
                     dust.noGravity = true;
                     dust.velocity *= 0;
 
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Clentaminator_Green, 0f, 0f, 0, new Color(0, 255, 201), 1);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 1);
                     dust.noGravity = true;
                     dust.velocity *= 0;
                 }
             }
             if (harbingersInferno)
             {
-                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default, 3);
+                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default, 3);
                 dust.noGravity = true;
-                Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Fire, 0f, 0f, 0, default, 1);
+                Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default, 1);
             }
             if (cleaved)
             {
                 int num = Main.rand.Next(0, 8);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.RedsWingsRun, 0, 1, 200, new Color(50, 0, 20));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, 1, 200, new Color(50, 0, 20));
                     dust.velocity.X *= 0.1f;
                     dust.velocity.Y -= 3f;
                     dust.noGravity = false;
@@ -323,7 +324,7 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Plantera_Green, 0f, -1f, 125, new Color(0, 192, 255), 1f);
+                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 167, 0f, -1f, 125, new Color(0, 192, 255), 1f);
                     dust.velocity.X *= 0.1f;
                     dust.velocity.Y = -System.Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -345,7 +346,7 @@ namespace TerraLeague.NPCs
                 int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Plantera_Green, 0, 0, 0, default, 1.25f);
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 167, 0, 0, 0, default, 1.25f);
                     dust.velocity.X *= 0f;
                     dust.velocity.Y = System.Math.Abs(dust.velocity.Y);
                     dust.noGravity = true;
@@ -372,13 +373,13 @@ namespace TerraLeague.NPCs
             }
             if (calibrumMark)
             {
-                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Clentaminator_Cyan, 0, -2, 100, default, 1f);
+                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 111, 0, -2, 100, default, 1f);
                 dust.noGravity = true;
                 dust.velocity.X *= 0;
             }
             if (gravitumMark)
             {
-                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 16, npc.position.Y - 16), 32, 32, DustID.UndergroundHallowedEnemies, 0f, 0f, 100, new Color(0, 0, 0), 1f);
+                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 16, npc.position.Y - 16), 32, 32, DustID.HallowedTorch, 0f, 0f, 100, new Color(0, 0, 0), 1f);
                 dust.noGravity = true;
                 dust.fadeIn = 1.2f;
                 dust.velocity = (dust.position - npc.Center) * -0.05f;
@@ -586,7 +587,7 @@ namespace TerraLeague.NPCs
                     npc.lifeRegen = 0;
                 }
 
-                if (npc.boss)
+                if (NPCID.Sets.ShouldBeCountedAsBoss[npc.type])
                 {
                     regen = 500;
                 }
@@ -688,6 +689,7 @@ namespace TerraLeague.NPCs
                     Player player = Main.player[projectile.owner];
                     int vessel = NPC.NewNPC((int)player.Bottom.X + (64 * player.direction), (int)player.Bottom.Y, npc.type);
                     Main.npc[vessel].life = npc.life;
+                    Main.npc[vessel].SpawnedFromStatue = true;
                     Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTarget = npc.whoAmI;
                     Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vessel = true;
                     Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTimer = 420;
@@ -718,15 +720,14 @@ namespace TerraLeague.NPCs
             }
         }
 
-        public override bool PreNPCLoot(NPC npc)
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (vessel)
-                return false;
-
-            return base.PreNPCLoot(npc);
+            //if (vessel)
+            //    return false;
+            base.ModifyNPCLoot(npc, npcLoot);
         }
 
-        public override void NPCLoot(NPC npc)
+        public override void OnKill(NPC npc)
         {
             if (icebornSubjugation)
             {
@@ -746,7 +747,7 @@ namespace TerraLeague.NPCs
                             break;
                     }
 
-                    Projectile.NewProjectileDirect(npc.Center, new Vector2(0, Main.rand.NextFloat(9, 12)).RotatedByRandom(MathHelper.TwoPi), type, npc.lifeMax/5, 1, icebornSubjugationOwner, npc.whoAmI);
+                    Projectile.NewProjectileDirect(Main.player[icebornSubjugationOwner].GetProjectileSource_Item(new Items.Weapons.DarkIceTome().Item), npc.Center, new Vector2(0, Main.rand.NextFloat(9, 12)).RotatedByRandom(MathHelper.TwoPi), type, npc.lifeMax / 5, 1, icebornSubjugationOwner, npc.whoAmI);
                 }
             }
             if (seeded)
@@ -755,11 +756,11 @@ namespace TerraLeague.NPCs
                 {
                     int x = Main.rand.Next(-5, 4);
                     x *= Main.rand.Next(0, 2) == 0 ? 1 : -1;
-                    Projectile.NewProjectile(npc.Center, new Vector2(x, -8), ProjectileType<StrangleThornsTome_Seed>(), 0, 0, 255);
+                    Projectile.NewProjectile(null, npc.Center, new Vector2(x, -8), ProjectileType<StrangleThornsTome_Seed>(), 0, 0, 255);
                 }
             }
 
-            base.NPCLoot(npc);
+            base.OnKill(npc);
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
@@ -798,81 +799,152 @@ namespace TerraLeague.NPCs
 
         public double OnHitDamage(NPC npc, Player player, int Damage, float knockBack = 0, int hitDirection = 0, bool crit = false)
         {
-            if (!npc.active || npc.life <= 0)
+            bool flag = Main.netMode == 0;
+            double damage;
+            if (npc.active && npc.life > 0)
             {
-                return 0.0;
-            }
-            double num = (double)Damage;
-            int num2 = npc.defense;
-            if (npc.ichor)
-            {
-                num2 -= 20;
-            }
-            if (npc.betsysCurse)
-            {
-                num2 -= 40;
-            }
-            if (num2 < 0)
-            {
-                num2 = 0;
-            }
-            if (NPCLoader.StrikeNPC(npc, ref num, num2, ref knockBack, hitDirection, ref crit))
-            {
-                num = Main.CalculateDamage((int)num, num2);
+                damage = (double)Damage;
+                int defence
+                    = npc.defense;
+                if (npc.ichor)
+                {
+                    defence -= 15;
+                }
+                if (npc.betsysCurse)
+                {
+                    defence -= 40;
+                }
+                if (defence < 0)
+                {
+                    defence = 0;
+                }
+                damage = Main.CalculateDamageNPCsTake((int)damage, defence);
                 if (crit)
                 {
-                    num *= 1.5;
+                    damage *= 2.0;
                 }
                 if (npc.takenDamageMultiplier > 1f)
                 {
-                    num *= (double)npc.takenDamageMultiplier;
+                    damage *= (double)npc.takenDamageMultiplier;
                 }
-            }
-            if ((npc.takenDamageMultiplier > 1f || Damage != 9999) && npc.lifeMax > 1)
-            {
-                if (npc.friendly)
+                if ((npc.takenDamageMultiplier > 1f || Damage != 9999) && npc.lifeMax > 1)
                 {
-                    Color color = crit ? Color.Purple : Color.MediumPurple;
-                    CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y + 40, npc.width, npc.height), color, (int)num, false, false);
-                }
-                else
-                {
-                    Color color2 = crit ? Color.Purple : Color.MediumPurple;
-                    
-                    CombatText.NewText(new Rectangle((int)npc.position.X + 32, (int)npc.position.Y, npc.width, npc.height), color2, (int)num, false, false);
-                }
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                {
-                    PacketHandler.SendBattleText(-1, player.whoAmI, (int)num, npc.whoAmI, crit);
-                }
-            }
-            if (num >= 1.0)
-            {
-                if (!npc.immortal)
-                {
-                    if (npc.realLife >= 0)
+                    if (npc.friendly)
                     {
-                        Main.npc[npc.realLife].life -= (int)num;
-                        npc.life = Main.npc[npc.realLife].life;
-                        npc.lifeMax = Main.npc[npc.realLife].lifeMax;
+                        Color color = crit ? CombatText.DamagedFriendlyCrit : CombatText.DamagedFriendly;
+                        CombatText.NewText(new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), color, (int)damage, crit, false);
                     }
                     else
                     {
-                        npc.life -= (int)num;
+                        Color color2 = crit ? Color.Purple : Color.MediumPurple;
+                        CombatText.NewText(new Rectangle((int)npc.position.X + 32, (int)npc.position.Y, npc.width, npc.height), color2, (int)damage, crit, false);
                     }
                 }
-                if (npc.realLife >= 0)
+                if (damage >= 1.0)
                 {
-                    Main.npc[npc.realLife].checkDead();
+                    if (!npc.immortal)
+                    {
+                        if (npc.realLife >= 0)
+                        {
+                            Main.npc[npc.realLife].life -= (int)damage;
+                            npc.life = Main.npc[npc.realLife].life;
+                            npc.lifeMax = Main.npc[npc.realLife].lifeMax;
+                        }
+                        else
+                        {
+                            npc.life -= (int)damage;
+                        }
+                    }
+                    npc.HitEffect(hitDirection, damage);
+                    if (npc.realLife >= 0)
+                    {
+                        Main.npc[npc.realLife].checkDead();
+                    }
+                    else
+                    {
+                        npc.checkDead();
+                    }
+                    return damage;
                 }
-                else
-                {
-                    npc.HitEffect(hitDirection, num);
-                    npc.checkDead();
-                }
-                return num;
+                return 0.0;
             }
             return 0.0;
+            
+            //if (!npc.active || NPC.life <= 0)
+            //{
+            //    return 0.0;
+            //}
+            //double num = (double)Damage;
+            //int num2 = NPC.defense;
+            //if (npc.ichor)
+            //{
+            //    num2 -= 20;
+            //}
+            //if (npc.betsysCurse)
+            //{
+            //    num2 -= 40;
+            //}
+            //if (num2 < 0)
+            //{
+            //    num2 = 0;
+            //}
+            //if (NPCLoader.StrikeNPC(npc, ref num, num2, ref knockBack, hitDirection, ref crit))
+            //{
+            //    num = Main.CalculateDamageNPCsTake((int)num, num2);
+            //    if (crit)
+            //    {
+            //        num *= 1.5;
+            //    }
+            //    if (npc.takenDamageMultiplier > 1f)
+            //    {
+            //        num *= (double)npc.takenDamageMultiplier;
+            //    }
+            //}
+            //if ((npc.takenDamageMultiplier > 1f || Damage != 9999) && NPC.lifeMax > 1)
+            //{
+            //    if (npc.friendly)
+            //    {
+            //        Color color = crit ? Color.Purple : Color.MediumPurple;
+            //        CombatText.NewText(new Rectangle((int)NPC.position.X, (int)NPC.position.Y + 40, NPC.width, NPC.height), color, (int)num, false, false);
+            //    }
+            //    else
+            //    {
+            //        Color color2 = crit ? Color.Purple : Color.MediumPurple;
+
+            //        CombatText.NewText(new Rectangle((int)NPC.position.X + 32, (int)NPC.position.Y, NPC.width, NPC.height), color2, (int)num, false, false);
+            //    }
+            //    if (Main.netMode == NetmodeID.MultiplayerClient)
+            //    {
+            //        PacketHandler.SendBattleText(-1, player.whoAmI, (int)num, npc.whoAmI, crit);
+            //    }
+            //}
+            //if (num >= 1.0)
+            //{
+            //    if (!npc.immortal)
+            //    {
+            //        if (npc.realLife >= 0)
+            //        {
+            //            Main.npc[npc.realLife].life -= (int)num;
+            //            NPC.life = Main.npc[npc.realLife].life;
+            //            NPC.lifeMax = Main.npc[npc.realLife].lifeMax;
+            //        }
+            //        else
+            //        {
+            //            NPC.life -= (int)num;
+            //        }
+            //    }
+            //    if (npc.realLife >= 0)
+            //    {
+            //        Main.npc[npc.realLife].checkDead();
+            //    }
+            //    else
+            //    {
+            //        npc.HitEffect(hitDirection, num);
+            //        npc.checkDead();
+            //    }
+            //    return num;
+            //}
+            //return 0.0;
         }
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
@@ -882,11 +954,12 @@ namespace TerraLeague.NPCs
             else
                 return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (vessel)
             {
-                Texture2D texture = mod.GetTexture("Gores/VesselLink");
+                Texture2D texture = Request<Texture2D>("TerraLeague/Gores/VesselLink").Value;
 
                 Vector2 position = npc.Center + new Vector2(0, 6);
                 Vector2 center = Main.npc[vesselTarget].Center;
@@ -920,17 +993,17 @@ namespace TerraLeague.NPCs
                 }
             }
 
-            return base.PreDraw(npc, spriteBatch, drawColor);
+            return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
 
-        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (frozen)
             {
-                Texture2D texture = mod.GetTexture("Gores/FrozenEffect");
+                Texture2D texture = Request<Texture2D>("TerraLeague/Gores/FrozenEffect").Value;
                 Color color = Color.White;
                 color.A = 200;
-                spriteBatch.Draw
+                Main.spriteBatch.Draw
                 (
                     texture,
                     new Vector2
@@ -958,28 +1031,28 @@ namespace TerraLeague.NPCs
                 switch (CausticStacks)
                 {
                     case 1:
-                        texture = mod.GetTexture("Gores/Caustic1");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Caustic1").Value;
                         break;
                     case 2:
-                        texture = mod.GetTexture("Gores/Caustic2");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Caustic2").Value;
                         break;
                     case 3:
-                        texture = mod.GetTexture("Gores/Caustic3");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Caustic3").Value;
                         break;
                     case 4:
-                        texture = mod.GetTexture("Gores/Caustic4");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Caustic4").Value;
                         break;
                     case 5:
-                        texture = mod.GetTexture("Gores/Caustic5");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Caustic5").Value;
                         break;
                     default:
-                        texture = mod.GetTexture("Gores/Caustic5");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Caustic5").Value;
                         break;
                 }
 
                 if (CausticStacks < 5 || (CausticStacks >= 5 && timeLeft > 210))
                 {
-                    spriteBatch.Draw
+                    Main.spriteBatch.Draw
                     (
                         texture,
                         new Vector2
@@ -1005,26 +1078,26 @@ namespace TerraLeague.NPCs
                 switch (DeadlyVenomStacks)
                 {
                     case 0:
-                        texture = mod.GetTexture("Gores/DeadlyVenom1");
+                        texture = Request<Texture2D>("TerraLeague/Gores/DeadlyVenom1").Value;
                         break;
                     case 1:
-                        texture = mod.GetTexture("Gores/DeadlyVenom2");
+                        texture = Request<Texture2D>("TerraLeague/Gores/DeadlyVenom2").Value;
                         break;
                     case 2:
-                        texture = mod.GetTexture("Gores/DeadlyVenom3");
+                        texture = Request<Texture2D>("TerraLeague/Gores/DeadlyVenom3").Value;
                         break;
                     case 3:
-                        texture = mod.GetTexture("Gores/DeadlyVenom4");
+                        texture = Request<Texture2D>("TerraLeague/Gores/DeadlyVenom4").Value;
                         break;
                     case 4:
-                        texture = mod.GetTexture("Gores/DeadlyVenom5");
+                        texture = Request<Texture2D>("TerraLeague/Gores/DeadlyVenom5").Value;
                         break;
                     default:
-                        texture = mod.GetTexture("Gores/DeadlyVenom1");
+                        texture = Request<Texture2D>("TerraLeague/Gores/DeadlyVenom1").Value;
                         break;
                 }
 
-                spriteBatch.Draw
+                Main.spriteBatch.Draw
                 (
                     texture,
                     new Vector2
@@ -1044,11 +1117,11 @@ namespace TerraLeague.NPCs
 
             if (pox)
             {
-                Texture2D texture = mod.GetTexture("Gores/Pox");
+                Texture2D texture = Request<Texture2D>("TerraLeague/Gores/Pox").Value;
 
                 for (int i = 0; i < PoxStacks + 1; i++)
                 {
-                    spriteBatch.Draw
+                    Main.spriteBatch.Draw
                     (
                         texture,
                         new Vector2
@@ -1069,11 +1142,11 @@ namespace TerraLeague.NPCs
 
             if (hemorrhage)
             {
-                Texture2D texture = mod.GetTexture("Gores/Hemorrhage");
+                Texture2D texture = Request<Texture2D>("TerraLeague/Gores/Hemorrhage").Value;
 
                 for (int i = 0; i < HemorrhageStacks + 1; i++)
                 {
-                    spriteBatch.Draw
+                    Main.spriteBatch.Draw
                     (
                         texture,
                         new Vector2
@@ -1099,29 +1172,29 @@ namespace TerraLeague.NPCs
                 switch (CleavedStacks)
                 {
                     case 0:
-                        texture = mod.GetTexture("Gores/Cleaved1");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Cleaved1").Value;
                         break;
                     case 1:
-                        texture = mod.GetTexture("Gores/Cleaved2");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Cleaved2").Value;
                         break;
                     case 2:
-                        texture = mod.GetTexture("Gores/Cleaved3");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Cleaved3").Value;
                         break;
                     case 3:
-                        texture = mod.GetTexture("Gores/Cleaved4");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Cleaved4").Value;
                         break;
                     case 4:
-                        texture = mod.GetTexture("Gores/Cleaved5");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Cleaved5").Value;
                         break;
                     case 5:
-                        texture = mod.GetTexture("Gores/Cleaved6");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Cleaved6").Value;
                         break;
                     default:
-                        texture = mod.GetTexture("Gores/Cleaved1");
+                        texture = Request<Texture2D>("TerraLeague/Gores/Cleaved1").Value;
                         break;
                 }
 
-                spriteBatch.Draw
+                Main.spriteBatch.Draw
                 (
                     texture,
                     new Vector2
@@ -1141,9 +1214,9 @@ namespace TerraLeague.NPCs
 
             if (grievousWounds)
             {
-                Texture2D texture = mod.GetTexture("Gores/GrievousWounds");
+                Texture2D texture = Request<Texture2D>("TerraLeague/Gores/GrievousWounds").Value;
 
-                spriteBatch.Draw
+                Main.spriteBatch.Draw
                 (
                     texture,
                     new Vector2
@@ -1161,8 +1234,7 @@ namespace TerraLeague.NPCs
                 );
             }
 
-            
-            base.PostDraw(npc, spriteBatch, drawColor);
+            base.PostDraw(npc, spriteBatch, screenPos, drawColor);
         }
 
         public void VesselStriked(int attacker, int damage, bool crit)

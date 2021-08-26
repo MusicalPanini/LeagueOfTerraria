@@ -13,47 +13,47 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frost Storm");
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 400;
-            projectile.height = 400;
-            projectile.timeLeft = 600;
-            projectile.penetrate = 1000;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
-            projectile.alpha = 180;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 400;
+            Projectile.height = 400;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = 1000;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
+            Projectile.alpha = 180;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if ((int)projectile.ai[0] >= 0)
+            if ((int)Projectile.ai[0] >= 0)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
-                projectile.ai[0] = -1;
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 82, -0.7f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 45, -0.5f);
+                Projectile.ai[0] = -1;
             }
 
-            if (!Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().frostHarbinger)
-                projectile.Kill();
+            if (!Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().frostHarbinger)
+                Projectile.Kill();
 
-            projectile.Center = Main.player[projectile.owner].Center;
+            Projectile.Center = Main.player[Projectile.owner].Center;
 
-            if (projectile.timeLeft < 15)
+            if (Projectile.timeLeft < 15)
             {
-                projectile.alpha += 5;
+                Projectile.alpha += 5;
             }
 
-            if (projectile.timeLeft % 15 == 0)
+            if (Projectile.timeLeft % 15 == 0)
             {
-                Targeting.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2, BuffType<Buffs.Slowed>(), 15, true, true);
+                Targeting.GiveNPCsInRangeABuff(Projectile.Center, Projectile.width / 2, BuffType<Buffs.Slowed>(), 15, true, true);
             }
 
             AnimateProjectile();
@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
             {
                 if (target.townNPC)
                     return false;
-                return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2f);
+                return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width / 2f);
             }
             else
                 return false;
@@ -73,18 +73,18 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.friendly = false;
-            projectile.frameCounter++;
+            Projectile.friendly = false;
+            Projectile.frameCounter++;
             framecount2++;
-            if (projectile.frameCounter >= 5)
+            if (Projectile.frameCounter >= 5)
             {
-                projectile.frame++;
-                projectile.frame %= 4;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
             }
             if (framecount2 >= 20)
             {
-                projectile.friendly = true;
+                Projectile.friendly = true;
                 framecount2 = 0;
             }
         }

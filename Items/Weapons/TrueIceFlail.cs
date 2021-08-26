@@ -14,6 +14,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("True Ice Flail");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,25 +27,25 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = 160000;
-            item.rare = ItemRarityID.Pink;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.useAnimation = 40;
-            item.useTime = 40;
-            item.knockBack = 6F;
-            item.damage = 54;
-            item.scale = 1;
-            item.noUseGraphic = true;
-            item.UseSound = SoundID.Item1;
-            item.shootSpeed = 13F;
-            item.melee = true;
-            item.channel = true;
-            item.shoot = ProjectileType<TrueIceFlail_Ball>();
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = 160000;
+            Item.rare = ItemRarityID.Pink;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = 40;
+            Item.useTime = 40;
+            Item.knockBack = 6F;
+            Item.damage = 54;
+            Item.scale = 1;
+            Item.noUseGraphic = true;
+            Item.UseSound = SoundID.Item1;
+            Item.shootSpeed = 13F;
+            Item.DamageType = DamageClass.Melee;
+            Item.channel = true;
+            Item.shoot = ProjectileType<TrueIceFlail_Ball>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new GlacialPrison(this));
             abilityItem.ChampQuote = "The cold does not forgive";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -53,13 +54,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
-            recipe.AddIngredient(ItemID.Sunfury, 1);
-            recipe.AddIngredient(ItemID.FrostCore, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<TrueIceChunk>(), 4)
+            .AddIngredient(ItemID.Sunfury, 1)
+            .AddIngredient(ItemID.FrostCore, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

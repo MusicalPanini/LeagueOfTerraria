@@ -14,16 +14,17 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Chain Vest");
             Tooltip.SetDefault("Armor increased by 4");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Green;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -33,14 +34,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ClothArmor>(), 1);
-            recipe.AddIngredient(ItemID.Granite, 20);
-            recipe.AddIngredient(ItemID.Chain, 10);
-            recipe.AddIngredient(ItemID.Leather, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ClothArmor>(), 1)
+            .AddIngredient(ItemID.Granite, 20)
+            .AddIngredient(ItemID.Chain, 10)
+            .AddIngredient(ItemID.Leather, 5)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

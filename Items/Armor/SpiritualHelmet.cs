@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Armor
             Tooltip.SetDefault("Increases ability and item haste by 10" +
                 "\nMAG increased by 30");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 16;
-            item.value = 45000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 2;
+            Item.width = 22;
+            Item.height = 16;
+            Item.value = 45000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 2;
         }
 
         public override void UpdateEquip(Player player)
@@ -34,12 +35,12 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ManaBar>(), 15);
-            recipe.AddIngredient(ItemID.Emerald, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ManaBar>(), 15)
+            .AddIngredient(ItemID.Emerald, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

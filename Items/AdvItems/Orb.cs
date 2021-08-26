@@ -15,15 +15,16 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Oblivion Orb");
             Tooltip.SetDefault("3% increased magic damage" +
                 "\nIncreases health by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -32,7 +33,7 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.03f;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
             player.statLifeMax2 += 20;
 
             base.UpdateAccessory(player, hideVisual);
@@ -40,14 +41,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemType<AmpTome>(), 1);
-            recipe.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 50);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemType<AmpTome>(), 1)
+            .AddIngredient(ItemID.SharkToothNecklace, 1)
+            .AddIngredient(ItemType<VoidFragment>(), 50)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

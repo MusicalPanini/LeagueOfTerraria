@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Feast";
+            return "TerraLeague/AbilityImages/Feast";
         }
 
         public override string GetAbilityTooltip()
@@ -43,7 +43,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -99,8 +99,8 @@ namespace TerraLeague.Items.Weapons.Abilities
                     stacks = 3;
 
 
-                Projectile.NewProjectileDirect(position, velocity, ProjectileType<TerrorOfTheVoid_FeastTop>(), damage, knockback, player.whoAmI, stacks);
-                Projectile.NewProjectileDirect(position, velocity, ProjectileType<TerrorOfTheVoid_FeastBot>(), damage, knockback, player.whoAmI, stacks);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, ProjectileType<TerrorOfTheVoid_FeastTop>(), damage, knockback, player.whoAmI, stacks);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, ProjectileType<TerrorOfTheVoid_FeastBot>(), damage, knockback, player.whoAmI, stacks);
 
                 SetCooldowns(player, type);
             }

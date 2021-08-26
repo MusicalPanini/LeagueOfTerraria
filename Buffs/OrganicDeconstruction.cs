@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class OrganicDeconstruction : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Organic Deconstruction");
             Description.SetDefault("You take 10% more magic damage");

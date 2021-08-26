@@ -16,16 +16,17 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Thornmail");
             Tooltip.SetDefault("Increases maximum life by 20" +
                 "\nIncreases armor by 8");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 34;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 34;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -42,16 +43,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Bramble>(), 1);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemType<Wardens>(), 1);
-            recipe.AddIngredient(ItemID.Spike, 10);
-            recipe.AddIngredient(ItemID.TurtleScaleMail, 1);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 6);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Bramble>(), 1)
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemType<Wardens>(), 1)
+            .AddIngredient(ItemID.Spike, 10)
+            .AddIngredient(ItemID.TurtleScaleMail, 1)
+            .AddIngredient(ItemID.ChlorophyteBar, 6)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

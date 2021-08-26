@@ -16,15 +16,16 @@ namespace TerraLeague.Items.Accessories
                 "\nWhile below 50% life increase mana regeneration by 3" +
                 "\nIncreases length of invincibility after taking damage");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 32;
-            item.rare = ItemRarityID.Pink;
-            item.value = 100000;
-            item.accessory = true;
+            Item.width = 26;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = 100000;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -41,12 +42,11 @@ namespace TerraLeague.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.CrossNecklace, 1);
-            recipe.AddIngredient(ItemType<Nightbloom>(), 1);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.CrossNecklace, 1)
+            .AddIngredient(ItemType<Nightbloom>(), 1)
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

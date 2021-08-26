@@ -42,7 +42,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (cooldownCount <= 0 && (proj.magic || TerraLeague.IsMinionDamage(proj)))
+            if (cooldownCount <= 0 && (proj.DamageType == DamageClass.Magic || proj.DamageType == DamageClass.Summon))
             {
                 damage += extraDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 Efx(player, target);
@@ -60,10 +60,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         override public void Efx(Player player, NPC HitNPC)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 30).WithPitchVariance(0.3f), HitNPC.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 30).WithPitchVariance(0.3f), HitNPC.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, DustID.MagicMirror, 0, 0, 0, new Color(0, 0, 255, 150), 1.5f);
+                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, DustID.YellowStarDust, 0, 0, 0, new Color(0, 0, 255, 150), 1.5f);
             }
         }
     }

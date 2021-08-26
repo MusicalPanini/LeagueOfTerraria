@@ -2,6 +2,7 @@
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -16,27 +17,28 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Atlas Gauntlets");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 70;
-            item.width = 52;          
-            item.height = 30;         
-            item.melee = true;        
-            item.useTime = 10;
-            item.useAnimation = 10;
-            item.useStyle = ItemUseStyleID.HoldingOut;          
-            item.knockBack = 6;    
-            item.value = 100000;
-            item.rare = ItemRarityID.Pink; 
-            item.shoot = ProjectileType<AtlasGauntlets_Right>();
-            item.shootSpeed = 10;
-            item.noUseGraphic = true;
-            item.noMelee = true;
-            item.autoReuse = true;
+            Item.damage = 70;
+            Item.width = 52;
+            Item.height = 30;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
+            Item.useStyle = ItemUseStyleID.Thrust;
+            Item.knockBack = 6;    
+            Item.value = 100000;
+            Item.rare = ItemRarityID.Pink; 
+            Item.shoot = ProjectileType<AtlasGauntlets_Right>();
+            Item.shootSpeed = 10;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new ExcessiveForce(this));
             abilityItem.ChampQuote = "Here comes the punch line!";
             abilityItem.IsAbilityItem = true;
@@ -49,31 +51,26 @@ namespace TerraLeague.Items.Weapons
             return base.CanUseItem(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            item.knockBack = 6;
+            Item.knockBack = 6;
             if (player.ownedProjectileCounts[ProjectileType<AtlasGauntlets_Right>()] == 0)
             {
                 type = ProjectileType<AtlasGauntlets_Right>();
-                return true;
             }
             else if (player.ownedProjectileCounts[ProjectileType<AtlasGauntlets_Left>()] == 0)
             {
                 type = ProjectileType<AtlasGauntlets_Left>();
-                return true;
             }
-
-            return false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PerfectHexCore>());
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 14);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<PerfectHexCore>())
+            .AddRecipeGroup("TerraLeague:Tier3Bar", 14)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

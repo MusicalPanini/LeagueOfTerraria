@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class RequiemChannel : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Channeling Requiem");
             Description.SetDefault("The world is about to experience beauty..");

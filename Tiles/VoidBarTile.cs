@@ -10,7 +10,7 @@ namespace TerraLeague.Tiles
 {
     public class VoidBarTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileShine[Type] = 1100;
             Main.tileSolid[Type] = true;
@@ -26,7 +26,7 @@ namespace TerraLeague.Tiles
             name.SetDefault("Void Bar");
             AddMapEntry(new Color(255, 0, 255), name);
 
-            dustType = DustID.Shadowflame;
+            DustType = DustID.Shadowflame;
         }
 
         public override bool Drop(int i, int j)

@@ -14,6 +14,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Pow Pow");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -24,68 +25,65 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.ranged = true;
-            item.width = 76;
-            item.height = 46;
-            item.useAnimation = 12;
-            item.useTime = 4;
-            item.reuseDelay = 14;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 0;
-            item.value = 60000;
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 31);
-            item.shoot = ProjectileID.PurificationPowder;
-            item.autoReuse = true;
-            item.shootSpeed = 13f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 15;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 76;
+            Item.height = 46;
+            Item.useAnimation = 12;
+            Item.useTime = 4;
+            Item.reuseDelay = 14;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 0;
+            Item.value = 60000;
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 31);
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.autoReuse = true;
+            Item.shootSpeed = 13f;
+            Item.useAmmo = AmmoID.Bullet;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new Zap(this));
             abilityItem.ChampQuote = "SAY HELLO TO MY FRIENDS OF VARYING SIZES!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY + 6)) * 25f;
+            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(velocity.X, velocity.Y + 6)) * 25f;
             
             position += muzzleOffset;
 
-            Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(3));
+            Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(3));
 
-            speedX = perturbedSpeed.X;
-            speedY = perturbedSpeed.Y;
-
-            return true;
+            velocity = perturbedSpeed;
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().excited)
-                mult = 2;
+                damage *= 2;
 
-            base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
+            base.ModifyWeaponDamage(player, ref damage, ref flat);
         }
 
-        public override float UseTimeMultiplier(Player player)
+        public override float UseSpeedMultiplier(Player player)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().excited)
             {
-                return base.UseTimeMultiplier(player) * 1.3f;
+                return base.UseSpeedMultiplier(player) * 1.3f;
             }
             else
             {
-                return base.UseTimeMultiplier(player);
+                return base.UseSpeedMultiplier(player);
             }
         }
 
         public override bool ConsumeAmmo(Player player)
         {
-            int num = (int)(item.useAnimation * UseTimeMultiplier(player)) - item.useAnimation;
+            int num = (int)(Item.useAnimation * UseTimeMultiplier(player)) - Item.useAnimation;
 
                 return !(player.itemAnimation < (player.itemAnimationMax) - 2);
         }
@@ -97,15 +95,14 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.IllegalGunParts, 1);
-            recipe.AddIngredient(ItemID.Minishark, 1);
-            recipe.AddIngredient(ItemID.ClockworkAssaultRifle, 1);
-            recipe.AddIngredient(ItemID.SoulofSight, 10);
-            recipe.AddIngredient(ItemID.PinkPaint, 3);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.IllegalGunParts, 1)
+            .AddIngredient(ItemID.Minishark, 1)
+            .AddIngredient(ItemID.ClockworkAssaultRifle, 1)
+            .AddIngredient(ItemID.SoulofSight, 10)
+            .AddIngredient(ItemID.PinkPaint, 3)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

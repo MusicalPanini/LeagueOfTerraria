@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class PetricitePlating : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Petricite Plating");
             Description.SetDefault("Your petricite armor is absorbing magic!");

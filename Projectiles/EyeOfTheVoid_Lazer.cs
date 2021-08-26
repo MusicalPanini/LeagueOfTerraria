@@ -17,16 +17,16 @@ namespace TerraLeague.Projectiles
     {
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 22;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.magic = true;
-            projectile.hide = true;
+            Projectile.width = 22;
+            Projectile.height = 22;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.hide = true;
 
-            dust1 = DustID.Clentaminator_Purple;
-            dust2 = DustID.Clentaminator_Purple;
+            dust1 = 112;
+            dust2 = 112;
             dustScale = 2;
 
             trackMouse = true;

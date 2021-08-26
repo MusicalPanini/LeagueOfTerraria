@@ -26,12 +26,12 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/CelestialExpansion";
+            return "TerraLeague/AbilityImages/CelestialExpansion";
         }
 
         public override string GetAbilityTooltip()
         {
-            return "Expands the range and size of your Forged Stars and increases all minion damage output";
+            return "Expands the range and size of your Forged Stars and increases all summon damage output";
         }
 
         public override int GetAbilityBaseDamage(Player player)

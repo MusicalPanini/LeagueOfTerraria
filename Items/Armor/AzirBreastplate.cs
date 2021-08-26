@@ -12,41 +12,36 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Sunstone Breastplate");
-            Tooltip.SetDefault("5% increased minion damage" +
+            Tooltip.SetDefault("5% increased summon damage" +
                 "\nIncreases your max number of minions by 1");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 28;
-            item.value = 6000 * 5;
-            item.rare = ItemRarityID.Green;
-            item.defense = 4;
+            Item.width = 30;
+            Item.height = 28;
+            Item.value = 6000 * 5;
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 4;
         }
 
 
         
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
+            player.GetDamage(DamageClass.Summon) += 0.05f;
             player.maxMinions += 1;
-        }
-
-        public override void UpdateVanity(Player player, EquipType type)
-        {
-            base.UpdateVanity(player, type);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
-            recipe.AddIngredient(ItemID.GoldBar, 20);
-            recipe.AddIngredient(ItemID.Sapphire, 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+                .AddIngredient(ItemType<Sunstone>(), 10)
+                .AddIngredient(ItemID.GoldBar, 20)
+                .AddIngredient(ItemID.Sapphire, 3)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

@@ -12,32 +12,33 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Voidborn Chestpiece");
-            Tooltip.SetDefault("8% increased magic and minion damage");
+            Tooltip.SetDefault("8% increased magic and summon damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = 40000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 5;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = 40000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 5;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.magicDamage += 0.08f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;
+            player.GetDamage(DamageClass.Magic) += 0.08f;
+            player.GetDamage(DamageClass.Summon) += 0.08f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.FossilShirt, 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 80);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.FossilShirt, 1)
+            .AddIngredient(ItemType<VoidFragment>(), 80)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override void UpdateArmorSet(Player player)

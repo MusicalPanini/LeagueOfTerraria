@@ -16,16 +16,17 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("Increases maximum life by 30" +
                 "\nIncreases armor by 8" +
                 "\nPuts a shell around the owner when below 50% life that reduces damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 30;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -46,16 +47,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Wardens>(), 1);
-            recipe.AddIngredient(ItemType<GiantsBelt>(), 1);
-            recipe.AddIngredient(ItemID.FrozenTurtleShell, 1);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 10);
-            recipe.AddIngredient(ItemID.HallowedBar, 10);
-            recipe.AddIngredient(ItemID.Ectoplasm, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Wardens>(), 1)
+            .AddIngredient(ItemType<GiantsBelt>(), 1)
+            .AddIngredient(ItemID.FrozenTurtleShell, 1)
+            .AddIngredient(ItemType<SilversteelBar>(), 10)
+            .AddIngredient(ItemID.HallowedBar, 10)
+            .AddIngredient(ItemID.Ectoplasm, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

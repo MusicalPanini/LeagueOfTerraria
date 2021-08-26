@@ -13,17 +13,18 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hextech Alternator");
-            Tooltip.SetDefault("4% increased magic and minion damage");
+            Tooltip.SetDefault("4% increased magic and summon damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 52;
-            item.height = 20;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 52;
+            Item.height = 20;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -33,23 +34,23 @@ namespace TerraLeague.Items.AdvItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
+            player.GetDamage(DamageClass.Magic) += 0.04f;
+            player.GetDamage(DamageClass.Summon) += 0.04f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<AmpTome>(), 2);
-            //recipe.AddIngredient(ItemID.Revolver, 1);
-            //recipe.AddIngredient(ItemID.SpaceGun, 1);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 10);
-            recipe.AddIngredient(ItemID.Wire, 10);
-            recipe.AddIngredient(ItemID.FallenStar, 4);
-            recipe.AddIngredient(ItemType<PrototypeHexCore>(), 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<AmpTome>(), 2)
+            //.AddIngredient(ItemID.Revolver, 1);
+            //.AddIngredient(ItemID.SpaceGun, 1);
+            .AddIngredient(ItemID.MeteoriteBar, 10)
+            .AddIngredient(ItemID.Wire, 10)
+            .AddIngredient(ItemID.FallenStar, 4)
+            .AddIngredient(ItemType<PrototypeHexCore>(), 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

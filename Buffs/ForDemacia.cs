@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class ForDemacia : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("For Demacia!");
             Description.SetDefault("Increased attack speed by 10%");

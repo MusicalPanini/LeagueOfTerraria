@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class ToxicShot : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Toxic Shot");
             Description.SetDefault("Your ranged attacks are toxic");

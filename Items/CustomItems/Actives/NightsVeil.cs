@@ -36,7 +36,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
+                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type);
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         override public void Efx(Player user)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29), user.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29), user.Center);
         }
     }
 }

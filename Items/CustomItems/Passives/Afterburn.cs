@@ -49,7 +49,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (proj.melee || proj.ranged)
+            if (proj.DamageType == DamageClass.Melee || proj.DamageType == DamageClass.Ranged)
             {
                 OnHitDamage += (int)(meleeScaling * modPlayer.MEL / 100d) + (int)(rangedScaling * modPlayer.RNG / 100d) + (int)(magicScaling * modPlayer.MAG / 100d) + (int)(minionScaling * modPlayer.SUM / 100d);
             }

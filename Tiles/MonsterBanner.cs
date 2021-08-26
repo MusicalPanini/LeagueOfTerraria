@@ -5,6 +5,7 @@ using TerraLeague.NPCs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
@@ -13,7 +14,7 @@ namespace TerraLeague.Tiles
 {
     public class MonsterBanner : ModTile
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -25,8 +26,8 @@ namespace TerraLeague.Tiles
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
-			dustType = -1;
-			disableSmartCursor = true;
+			DustType = -1;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
@@ -104,76 +105,75 @@ namespace TerraLeague.Tiles
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			if (closer)
-			{
-				Player player = Main.LocalPlayer;
-				BannerType style = (BannerType)(Main.tile[i, j].frameX / 18);
+            if (closer)
+            {
+                Player player = Main.LocalPlayer;
+                BannerType style = (BannerType)(Main.tile[i, j].frameX / 18);
                 switch (style)
                 {
                     case BannerType.MarbleSlime:
-						player.NPCBannerBuff[NPCType<MarbleSlime>()] = true;
-						break;
+                        Main.SceneMetrics.NPCBannerBuff[NPCType<MarbleSlime>()] = true;
+                        break;
                     case BannerType.MountainSlime:
-						player.NPCBannerBuff[NPCType<MountainSlime>()] = true;
+						Main.SceneMetrics.NPCBannerBuff[NPCType<MountainSlime>()] = true;
                         break;
                     case BannerType.SoulBoundSlime:
-						player.NPCBannerBuff[NPCType<SoulBoundSlime>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<SoulBoundSlime>()] = true;
                         break;
                     case BannerType.Undying:
-						player.NPCBannerBuff[NPCType<TheUndying_1>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<TheUndying_1>()] = true;
                         break;
                     case BannerType.UndyingArcher:
-						player.NPCBannerBuff[NPCType<TheUndying_Archer>()] = true;
-						break;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<TheUndying_Archer>()] = true;
+                        break;
                     case BannerType.UndyingNecro:
-						player.NPCBannerBuff[NPCType<TheUndying_Necromancer>()] = true;
-						break;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<TheUndying_Necromancer>()] = true;
+                        break;
                     case BannerType.UnleashedSpirit:
-						player.NPCBannerBuff[NPCType<UnleashedSpirit>()] = true;
-						break;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<UnleashedSpirit>()] = true;
+                        break;
                     case BannerType.MistEater:
-						player.NPCBannerBuff[NPCType<MistEater>()] = true;
-						break;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<MistEater>()] = true;
+                        break;
                     case BannerType.MistDevor:
-						player.NPCBannerBuff[NPCType<MistDevourer_Head>()] = true;
-						break;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<MistDevourer_Head>()] = true;
+                        break;
                     case BannerType.FallenCrimera:
-						player.NPCBannerBuff[NPCType<FallenCrimera>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<FallenCrimera>()] = true;
                         break;
                     case BannerType.HMCrimson_UNUSED:
                         break;
                     case BannerType.SpectralBiter:
-						player.NPCBannerBuff[NPCType<SpectralBitter>()] = true;
-						break;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<SpectralBitter>()] = true;
+                        break;
                     case BannerType.ShelledHorror:
-						player.NPCBannerBuff[NPCType<ShelledHorror>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<ShelledHorror>()] = true;
                         break;
                     case BannerType.PHMOcean_UNUSED:
                         break;
                     case BannerType.SpectralShark:
-						player.NPCBannerBuff[NPCType<SpectralShark>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<SpectralShark>()] = true;
                         break;
                     case BannerType.Scuttlegeist:
-						player.NPCBannerBuff[NPCType<Scuttlegeist>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<Scuttlegeist>()] = true;
                         break;
                     case BannerType.EtherealRemitter:
-						player.NPCBannerBuff[NPCType<EtherealRemitter>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<EtherealRemitter>()] = true;
                         break;
                     case BannerType.Mistwraith:
-						player.NPCBannerBuff[NPCType<Mistwraith>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<Mistwraith>()] = true;
                         break;
                     case BannerType.PHMDesert_UNUSED:
                         break;
                     case BannerType.ShadowArtilery:
-						player.NPCBannerBuff[NPCType<ShadowArtilery>()] = true;
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<ShadowArtilery>()] = true;
                         break;
-					case BannerType.BansheeHive:
-						player.NPCBannerBuff[NPCType<BansheeHive>()] = true;
-						break;
+                    case BannerType.BansheeHive:
+                         Main.SceneMetrics.NPCBannerBuff[NPCType<BansheeHive>()] = true;
+                        break;
                 }
-				player.hasBanner = true;
-			}
-		}
+            }
+        }
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
 		{

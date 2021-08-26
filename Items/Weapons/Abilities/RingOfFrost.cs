@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/RingOfFrost";
+            return "TerraLeague/AbilityImages/RingOfFrost";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -82,7 +82,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 0;
 
-                Projectile.NewProjectile(position, Vector2.Zero, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, Vector2.Zero, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);
             }
         }

@@ -11,23 +11,25 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Hextech Key");
             Tooltip.SetDefault("Used to open Hextech Chests");
             base.SetStaticDefaults();
+
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 16;
-            item.height = 30;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 30000;
+            Item.maxStack = 999;
+            Item.width = 16;
+            Item.height = 30;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = 30000;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HextechKeyFragment>(), 3);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<HextechKeyFragment>(), 3)
+            .Register();
+            
         }
     }
 }

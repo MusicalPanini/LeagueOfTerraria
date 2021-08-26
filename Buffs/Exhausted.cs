@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Exhausted : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Exhausted");
             Main.debuff[Type] = true;

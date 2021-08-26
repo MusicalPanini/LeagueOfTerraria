@@ -13,11 +13,12 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Vanish Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Vanish";
+            return "TerraLeague/Items/SummonerSpells/Vanish";
         }
 
         public override string GetSpellName()
@@ -39,7 +40,7 @@ namespace TerraLeague.Items.SummonerSpells
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.player.AddBuff(BuffType<Vanished>(), 300);
+            modPlayer.Player.AddBuff(BuffType<Vanished>(), 300);
             Efx(player);
             PacketHandler.SendVanish(-1, player.whoAmI, player.whoAmI);
             Targeting.ForceNPCStoRetarget(player);
@@ -48,7 +49,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 11).WithPitchVariance(-1), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 11).WithPitchVariance(-1), player.Center);
             for (int i = 0; i < 8; i++)
             {
                 //Gore.NewGorePerfect(new Vector2(player.position.X + (float)(player.width / 2) - 24f), new Vector2(2, 0).RotatedBy(MathHelper.TwoPi * i / 8f), Main.rand.Next(61, 64), 1.5f);

@@ -9,7 +9,7 @@ namespace TerraLeague.Tiles
 {
     class PetWoodTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
@@ -37,8 +37,8 @@ namespace TerraLeague.Tiles
             Main.tileMerge[Type][TileID.CorruptGrass] = true;
             Main.tileMerge[TileID.CorruptGrass][Type] = true;
 
-            Main.tileMerge[Type][TileID.FleshGrass] = true;
-            Main.tileMerge[TileID.FleshGrass][Type] = true;
+            Main.tileMerge[Type][TileID.CrimsonGrass] = true;
+            Main.tileMerge[TileID.CrimsonGrass][Type] = true;
 
             Main.tileMerge[Type][TileID.JungleGrass] = true;
             Main.tileMerge[TileID.JungleGrass][Type] = true;
@@ -63,10 +63,10 @@ namespace TerraLeague.Tiles
 
             Main.tileLighted[Type] = true; 
 
-            dustType = DustID.SnowBlock;
-            drop = ItemType<PetWood>(); 
+            DustType = DustID.WhiteTorch;
+            ItemDrop = ItemType<PetWood>(); 
             AddMapEntry(new Color(170, 170, 170)); 
-            minPick = 0; 
+            MinPick = 0; 
         }
     }
 }

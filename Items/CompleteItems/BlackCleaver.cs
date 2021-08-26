@@ -16,15 +16,16 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("15% increased melee damage" +
                 "\nIncreases health by 40" +
                 "\nIncreases ability haste by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 80, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 80, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -35,21 +36,21 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
-            player.meleeDamage += 0.15f;
+            player.GetDamage(DamageClass.Melee) += 0.15f;
             player.statLifeMax2 += 40;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Phage>(), 1);
-            recipe.AddIngredient(ItemType<Kindlegem>(), 1);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 18);
-            recipe.AddIngredient(ItemID.ChlorophyteGreataxe, 1);
-            recipe.AddIngredient(ItemID.FragmentSolar, 10);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Phage>(), 1)
+            .AddIngredient(ItemType<Kindlegem>(), 1)
+            .AddIngredient(ItemType<DarksteelBar>(), 18)
+            .AddIngredient(ItemID.ChlorophyteGreataxe, 1)
+            .AddIngredient(ItemID.FragmentSolar, 10)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
+            
         }
     }
 }

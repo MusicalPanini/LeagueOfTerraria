@@ -15,16 +15,17 @@ namespace TerraLeague.Items.AdvItems
                 "\nIncreases armor by 3" +
                 "\nIncreases ability haste by 10" +
                 "\nGrants immunity to knockback");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -37,22 +38,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SapphireCrystal>(), 1);
-            recipe.AddIngredient(ItemType<ClothArmor>(), 1);
-            recipe.AddIngredient(ItemID.CobaltShield, 1);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 2);
-            recipe.AddIngredient(ItemID.IceBlock, 20);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-
-            ModRecipe shield = new ModRecipe(mod);
-            shield.AddRecipeGroup("TerraLeague:Tier1Bar", 10);
-            shield.AddIngredient(ItemID.SoulofLight, 10);
-            shield.AddTile(TileID.Anvils);
-            shield.SetResult(ItemID.CobaltShield);
-            shield.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<SapphireCrystal>(), 1)
+            .AddIngredient(ItemType<ClothArmor>(), 1)
+            .AddIngredient(ItemID.CobaltShield, 1)
+            .AddIngredient(ItemType<TrueIceChunk>(), 2)
+            .AddIngredient(ItemID.IceBlock, 20)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

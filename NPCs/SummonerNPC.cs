@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TerraLeague.Items;
 using TerraLeague.Items.SummonerSpells;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -20,31 +21,31 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Summoner");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Guide];
-            NPCID.Sets.ExtraFramesCount[npc.type] = NPCID.Sets.ExtraFramesCount[NPCID.Guide];
-            NPCID.Sets.AttackFrameCount[npc.type] = NPCID.Sets.AttackFrameCount[NPCID.Guide];
-            NPCID.Sets.DangerDetectRange[npc.type] = 700;
-            NPCID.Sets.AttackType[npc.type] = NPCID.Sets.AttackType[NPCID.Guide];
-            NPCID.Sets.AttackTime[npc.type] = 90;
-            NPCID.Sets.AttackAverageChance[npc.type] = 30;
-            NPCID.Sets.HatOffsetY[npc.type] = -4;
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Guide];
+            NPCID.Sets.ExtraFramesCount[NPC.type] = NPCID.Sets.ExtraFramesCount[NPCID.Guide];
+            NPCID.Sets.AttackFrameCount[NPC.type] = NPCID.Sets.AttackFrameCount[NPCID.Guide];
+            NPCID.Sets.DangerDetectRange[NPC.type] = 700;
+            NPCID.Sets.AttackType[NPC.type] = NPCID.Sets.AttackType[NPCID.Guide];
+            NPCID.Sets.AttackTime[NPC.type] = 90;
+            NPCID.Sets.AttackAverageChance[NPC.type] = 30;
+            NPCID.Sets.HatOffsetY[NPC.type] = -4;
             base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
         {
-            npc.townNPC = true;
-            npc.friendly = true;
-            npc.width = 18;
-            npc.height = 40;
-            npc.aiStyle = 7;
-            npc.damage = 10;
-            npc.defense = 15;
-            npc.lifeMax = 250;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
-            npc.knockBackResist = 0.5f;
-            animationType = NPCID.Guide;
+            NPC.townNPC = true;
+            NPC.friendly = true;
+            NPC.width = 18;
+            NPC.height = 40;
+            NPC.aiStyle = 7;
+            NPC.damage = 10;
+            NPC.defense = 15;
+            NPC.lifeMax = 250;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.knockBackResist = 0.5f;
+            AnimationType = NPCID.Guide;
             base.SetDefaults();
         }
 
@@ -209,8 +210,7 @@ namespace TerraLeague.NPCs
                             "\nIt addtionally will increase the amount potions will heal for.";
                         break;
                     case 8:
-                        text = "Cooldown Reduction (CDR) reduces the recharge time of Summoner Spells, Abilities and Active Items" +
-                            "\nThis reduction is capped at 40%.";
+                        text = "Haste (HST) reduces the recharge time of Summoner Spells, Abilities and Active Items";
                         break;
                     default:
                         break;
@@ -342,6 +342,15 @@ namespace TerraLeague.NPCs
         {
             multiplier = 12f;
             randomOffset = 2f;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+				new FlavorTextBestiaryInfoElement("A strange, hooded individual with profound knowledge of strange combat techniques")
+            });
         }
     }
 }

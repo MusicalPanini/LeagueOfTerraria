@@ -15,15 +15,16 @@ namespace TerraLeague.Items.Armor
             Tooltip.SetDefault("4 resist" +
                 "\nIncreased melee knockback" +
                 "\nEnemies are more likely to target you");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 18;
-            item.value = 45000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 4;
+            Item.width = 22;
+            Item.height = 18;
+            Item.value = 45000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 4;
         }
 
         public override void UpdateEquip(Player player)
@@ -35,11 +36,11 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 12);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<SilversteelBar>(), 12)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override void UpdateArmorSet(Player player)

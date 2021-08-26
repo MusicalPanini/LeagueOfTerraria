@@ -11,7 +11,7 @@ namespace TerraLeague.Tiles
     {
         bool pulse = false;
         float bLast = 0.3f;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true; 
@@ -19,13 +19,13 @@ namespace TerraLeague.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
 
-            soundType = SoundID.Tink;
-            dustType = DustID.DungeonWater;
-            drop = ItemType<TargonGraniteBlock>(); 
+            SoundType = SoundID.Tink;
+            DustType = DustID.WaterCandle;
+            ItemDrop = ItemType<TargonGraniteBlock>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Celstial Silicate");
             AddMapEntry(new Color(0, 200, 255), name); 
-            minPick = 100; 
+            MinPick = 100; 
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

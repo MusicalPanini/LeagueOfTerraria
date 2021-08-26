@@ -21,45 +21,47 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Crystal Staff");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 9;
-            item.magic = true;
-            item.noMelee = true;
-            item.mana = 4;
-            item.width = 16;
-            item.height = 32;
-            item.useTime = 37;
-            item.useAnimation = 37;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 3.5f;
-            item.value = 1000;
-            item.rare = ItemRarityID.Blue;
-            item.shootSpeed = 6.5f;
-            item.UseSound = SoundID.Item20;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.SapphireBolt;
+            Item.damage = 9;
+            Item.DamageType = DamageClass.Magic;
+            Item.noMelee = true;
+            Item.mana = 4;
+            Item.width = 16;
+            Item.height = 32;
+            Item.useTime = 37;
+            Item.useAnimation = 37;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 3.5f;
+            Item.value = 1000;
+            Item.rare = ItemRarityID.Blue;
+            Item.shootSpeed = 6.5f;
+            Item.UseSound = SoundID.Item20;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.SapphireBolt;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new DarkMatter(this));
             abilityItem.SetAbility(AbilityType.R, new PrimordialBurst(this));
             abilityItem.ChampQuote = "You deny the darkness in your soul. You deny your power!";
             abilityItem.IsAbilityItem = true;
         }
-
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return true;
-        }
-
         public override void OnCraft(Recipe recipe)
         {
             Main.LocalPlayer.QuickSpawnItem(ItemID.ManaCrystal, 1);
 
             base.OnCraft(recipe);
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<StartingItems.WeaponKit>(), 1)
+            .Register();
         }
     }
 }

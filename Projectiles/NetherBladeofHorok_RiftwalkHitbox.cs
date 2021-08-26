@@ -16,17 +16,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 256;
-            projectile.height = 256;
-            projectile.timeLeft = 1;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.alpha = 255;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 256;
+            Projectile.height = 256;
+            Projectile.timeLeft = 1;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.alpha = 255;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -36,14 +36,14 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            projectile.Center = Main.player[projectile.owner].MountedCenter;
+            Projectile.Center = Main.player[Projectile.owner].MountedCenter;
         }
 
         public override void Kill(int timeLeft)
         {
-            TerraLeague.DustRing(112, projectile, default);
-            TerraLeague.DustBorderRing(256, projectile.Center, 112, default, 2);
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
+            TerraLeague.DustRing(112, Projectile, default);
+            TerraLeague.DustBorderRing(256, Projectile.Center, 112, default, 2);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 82, -0.7f);
 
             base.Kill(timeLeft);
         }
@@ -52,7 +52,7 @@ namespace TerraLeague.Projectiles
         {
             if (target.townNPC)
                 return false;
-            return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+            return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width / 2);
         }
 
         public override bool? CanCutTiles()

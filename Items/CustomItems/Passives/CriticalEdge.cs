@@ -27,7 +27,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (crit && proj.ranged)
+            if (crit && proj.DamageType == DamageClass.Ranged)
                 modPlayer.rangedModifer *= (0.01 * percentIncrease) + 1;
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);

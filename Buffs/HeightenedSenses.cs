@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
 {
     public class HeightenedSenses : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heightened Senses");
             Description.SetDefault("You have sight of enemies, traps and treasure");

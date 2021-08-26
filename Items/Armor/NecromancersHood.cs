@@ -13,15 +13,16 @@ namespace TerraLeague.Items.Armor
             DisplayName.SetDefault("Necromancer's Hood");
             Tooltip.SetDefault("Increases your max number of minions by 1");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 26;
-            item.value = 4000 * 5;
-            item.rare = ItemRarityID.Blue;
-            item.defense = 2;
+            Item.width = 24;
+            Item.height = 26;
+            Item.value = 4000 * 5;
+            Item.rare = ItemRarityID.Blue;
+            Item.defense = 2;
         }
 
         public override void UpdateEquip(Player player)
@@ -31,12 +32,12 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 20);
-            recipe.AddIngredient(ItemID.Silk, 8);
-            recipe.AddTile(TileID.Loom);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<DamnedSoul>(), 20)
+            .AddIngredient(ItemID.Silk, 8)
+            .AddTile(TileID.Loom)
+            .Register();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -54,8 +55,8 @@ namespace TerraLeague.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "+10% minion damage";
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.1f;
+            player.setBonus = "+10% summon damage";
+            player.GetDamage(DamageClass.Summon) += 0.1f;
         }
     }
 }

@@ -89,13 +89,13 @@ namespace TerraLeague.Items.CustomItems
         public void SendEfx(Player player, ModItem modItem)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
-                PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, LeagueItem.GetPassivePositionInArray(modItem as LeagueItem, this));
+                PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type, LeagueItem.GetPassivePositionInArray(modItem as LeagueItem, this));
         }
 
         public void SendEfx(Player player, NPC npc, ModItem modItem)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
-                PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, LeagueItem.GetPassivePositionInArray(modItem as LeagueItem, this), npc.whoAmI);
+                PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type, LeagueItem.GetPassivePositionInArray(modItem as LeagueItem, this), npc.whoAmI);
         }
 
         public void AddStat(Player player, float maxStat, float statToAdd, bool cannotGoNegative = false)

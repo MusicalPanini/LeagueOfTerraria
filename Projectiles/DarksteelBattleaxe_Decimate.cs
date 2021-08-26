@@ -13,86 +13,86 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 1;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
             DisplayName.SetDefault("Darksteel Battleaxe");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 66;
-            projectile.height = 81;
-            projectile.alpha = 0;
-            projectile.timeLeft = 71;
-            projectile.penetrate = 1000;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
+            Projectile.width = 66;
+            Projectile.height = 81;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 71;
+            Projectile.penetrate = 1000;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
             base.SetDefaults();
         }
         
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             //player.itemTime = 10;
             //player.noItems = true;
 
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                if (projectile.ai[0] == 1)
-                    projectile.rotation = -MathHelper.PiOver2;
+                if (Projectile.ai[0] == 1)
+                    Projectile.rotation = -MathHelper.PiOver2;
                 else
-                    projectile.rotation = MathHelper.PiOver2;
+                    Projectile.rotation = MathHelper.PiOver2;
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            if (projectile.timeLeft == 26)
+            if (Projectile.timeLeft == 26)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 71, -1f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 71, -1f);
             }
 
-            if (projectile.timeLeft <= 26)
+            if (Projectile.timeLeft <= 26)
             {
-                projectile.friendly = true;
-                if (projectile.ai[0] == 1)
+                Projectile.friendly = true;
+                if (Projectile.ai[0] == 1)
                 {
-                    projectile.rotation += (2 * MathHelper.Pi) / 15;
-                    projectile.Center = Main.player[projectile.owner].MountedCenter + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
+                    Projectile.rotation += (2 * MathHelper.Pi) / 15;
+                    Projectile.Center = Main.player[Projectile.owner].MountedCenter + new Vector2(33f, 40.5f).RotatedBy(Projectile.rotation);
                 }
                 else
                 {
-                    projectile.spriteDirection = -1;
-                    projectile.rotation -= (2 * MathHelper.Pi) / 15;
-                    projectile.Center = Main.player[projectile.owner].MountedCenter - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
+                    Projectile.spriteDirection = -1;
+                    Projectile.rotation -= (2 * MathHelper.Pi) / 15;
+                    Projectile.Center = Main.player[Projectile.owner].MountedCenter - new Vector2(33f, -40.5f).RotatedBy(Projectile.rotation);
                 }
             }
             else
             {
-                if (projectile.ai[0] == 1)
+                if (Projectile.ai[0] == 1)
                 {
-                    projectile.rotation -= (2 * MathHelper.Pi) / 90;
-                    projectile.Center = Main.player[projectile.owner].MountedCenter + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
+                    Projectile.rotation -= (2 * MathHelper.Pi) / 90;
+                    Projectile.Center = Main.player[Projectile.owner].MountedCenter + new Vector2(33f, 40.5f).RotatedBy(Projectile.rotation);
                 }
                 else
                 {
-                    projectile.spriteDirection = -1;
-                    projectile.rotation += (2 * MathHelper.Pi) / 90;
-                    projectile.Center = Main.player[projectile.owner].MountedCenter - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
+                    Projectile.spriteDirection = -1;
+                    Projectile.rotation += (2 * MathHelper.Pi) / 90;
+                    Projectile.Center = Main.player[Projectile.owner].MountedCenter - new Vector2(33f, -40.5f).RotatedBy(Projectile.rotation);
                 }
             }
 
-            player.direction = projectile.spriteDirection;
+            player.direction = Projectile.spriteDirection;
             
             base.AI();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            PLAYERGLOBAL player = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
+            PLAYERGLOBAL player = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>();
 
             player.lifeToHeal += 7;
 

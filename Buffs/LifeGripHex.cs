@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class LifeGripHex : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Life Grip");
             Description.SetDefault("Your resist has been increased");

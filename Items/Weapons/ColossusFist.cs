@@ -15,40 +15,39 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Colossus Fist");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 10;
-            item.value = 2400;
-            item.rare = ItemRarityID.Green;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.useAnimation = 40;
-            item.useTime = 40;
-            item.knockBack = 7F;
-            item.damage = 17;
-            item.scale = 1;
-            item.noUseGraphic = false;
-            item.UseSound = new LegacySoundStyle(4, 3);
-            item.shootSpeed = 8f;
-            item.melee = true;
-            item.autoReuse = true;
-            item.noUseGraphic = true;
-            item.shoot = ProjectileType<ColossusFist_Fist>();
+            Item.width = 30;
+            Item.height = 10;
+            Item.value = 2400;
+            Item.rare = ItemRarityID.Green;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = 40;
+            Item.useTime = 40;
+            Item.knockBack = 7F;
+            Item.damage = 17;
+            Item.scale = 1;
+            Item.noUseGraphic = false;
+            Item.UseSound = new LegacySoundStyle(4, 3);
+            Item.shootSpeed = 8f;
+            Item.DamageType = DamageClass.Melee;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
+            Item.shoot = ProjectileType<ColossusFist_Fist>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new WindsOfWar(this));
             abilityItem.ChampQuote = "Time to make an impact!";
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             position.Y += 4;
-
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
         public override Vector2? HoldoutOffset()
@@ -58,11 +57,10 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Petricite>(), 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Petricite>(), 16)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

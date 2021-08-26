@@ -13,10 +13,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Lift Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Lift";
+            return "TerraLeague/Items/SummonerSpells/Lift";
         }
 
         public override string GetSpellName()
@@ -63,7 +64,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 25).WithPitchVariance(-0.3f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 25).WithPitchVariance(-0.3f), player.Center);
 
             //Vector2 TopPointA = player.Center + new Vector2(-64 * player.direction, -32);
             //Vector2 MidPointA = player.Center + new Vector2(-48 * player.direction, 0);

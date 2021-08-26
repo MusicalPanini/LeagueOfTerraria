@@ -22,6 +22,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases maximum mana by 25" +
                 "\nIf MANA CHARGE is fully stacked, this will upgrade into Muramana" +
                 "\nCan only have one AWE item equiped at a time");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
@@ -39,11 +40,11 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -56,15 +57,15 @@ namespace TerraLeague.Items.CompleteItems
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
             player.statManaMax2 += 25;
             modPlayer.manaCharge = true;
 
             if (modPlayer.manaChargeStacks >= 750)
             {
                 int where = TerraLeague.FindAccessorySlotOnPlayer(player, this);
-                byte prefix = player.armor[where + 3].prefix;
+                int prefix = player.armor[where + 3].prefix;
 
                 player.armor[where + 3].SetDefaults(ItemType<Muramana>());
                 player.armor[where + 3].Prefix(prefix);
@@ -77,16 +78,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Tear>(), 1);
-            recipe.AddIngredient(ItemType<Pickaxe>(), 1);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 10);
-            recipe.AddIngredient(ItemID.Sapphire, 1);
-            recipe.AddIngredient(ItemID.ManaCrystal, 2);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Tear>(), 1)
+            .AddIngredient(ItemType<Pickaxe>(), 1)
+            .AddIngredient(ItemType<CelestialBar>(), 10)
+            .AddIngredient(ItemID.Sapphire, 1)
+            .AddIngredient(ItemID.ManaCrystal, 2)
+            .AddIngredient(ItemID.SoulofFright, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

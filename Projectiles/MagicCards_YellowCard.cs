@@ -16,18 +16,18 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.timeLeft = 300;
-            projectile.penetrate = 1;
-            projectile.aiStyle = 2;
-            projectile.friendly = true;
-            projectile.magic = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 1;
+            Projectile.aiStyle = 2;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0));
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0));
             dust.noGravity = true;
             dust.scale = 1f;
             dust.velocity *= 0.1f;
@@ -43,11 +43,11 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 37, 0.5f);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 37, 0.5f);
 
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.AncientLight, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, new Color(255, 255, 0));
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.AncientLight, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0, new Color(255, 255, 0));
             }
             base.Kill(timeLeft);
         }
@@ -60,7 +60,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
             return true;
         }
     }

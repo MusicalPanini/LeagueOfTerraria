@@ -13,36 +13,36 @@ namespace TerraLeague.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = Main.projFrames[ProjectileID.OneEyedPirate];
-            Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            Main.projFrames[Projectile.type] = Main.projFrames[ProjectileID.OneEyedPirate];
+            Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
         {
-            projectile.netImportant = true;
-            projectile.aiStyle = 67;
-            projectile.width = 52;
-            projectile.height = 40;
-            projectile.timeLeft = 18000;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.minion = true;
-            projectile.minionSlots = 1;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
+            Projectile.netImportant = true;
+            Projectile.aiStyle = 67;
+            Projectile.width = 52;
+            Projectile.height = 40;
+            Projectile.timeLeft = 18000;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.minion = true;
+            Projectile.minionSlots = 1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
         }
 
         public override void AI()
         {
-            projectile.penetrate = -1;
-            Main.projPet[projectile.type] = true;
-            Player player = Main.player[projectile.owner];
+            Projectile.penetrate = -1;
+            Main.projPet[Projectile.type] = true;
+            Player player = Main.player[Projectile.owner];
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (player.dead)
             {
@@ -50,7 +50,7 @@ namespace TerraLeague.Projectiles.Minions
             }
             if (modPlayer.minions)
             {
-                projectile.timeLeft = 2;
+                Projectile.timeLeft = 2;
             }
 
             base.AI();

@@ -12,16 +12,17 @@ namespace TerraLeague.Items.BasicItems
         {
             DisplayName.SetDefault("Dagger");
             Tooltip.SetDefault("5% increased melee and ranged attack speed");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 2, 50, 0);
-            item.rare = ItemRarityID.Blue;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 2, 50, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -32,13 +33,12 @@ namespace TerraLeague.Items.BasicItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("TerraLeague:IronGroup", 4);
-            recipe.AddIngredient(ItemID.Wood, 4);
-            recipe.anyWood = true;
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddRecipeGroup("TerraLeague:IronGroup", 4)
+            .AddRecipeGroup("Wood", 4)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class CrushingBlow : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Crushing Blow");
             Description.SetDefault("Your movement speed has been increased!" +

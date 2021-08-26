@@ -14,15 +14,16 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Lord Dominik's Regards");
             Tooltip.SetDefault("7% increased ranged damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 60, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 60, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -31,20 +32,20 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.07f;
+            player.GetDamage(DamageClass.Ranged) += 0.07f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LastWhisper>(), 1);
-            recipe.AddIngredient(ItemType<Pickaxe>(), 1);
-            recipe.AddIngredient(ItemID.EyeoftheGolem, 1);
-            recipe.AddIngredient(ItemID.ShroomiteBar, 8);
-            recipe.AddIngredient(ItemID.SoulofSight, 5);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LastWhisper>(), 1)
+            .AddIngredient(ItemType<Pickaxe>(), 1)
+            .AddIngredient(ItemID.EyeoftheGolem, 1)
+            .AddIngredient(ItemID.ShroomiteBar, 8)
+            .AddIngredient(ItemID.SoulofSight, 5)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

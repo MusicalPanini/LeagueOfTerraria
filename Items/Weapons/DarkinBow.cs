@@ -2,6 +2,7 @@
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -14,6 +15,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Darkin Bow");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -25,49 +27,48 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 34;
-            item.ranged = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 24;
-            item.height = 64;
-            item.channel = true;
-            item.useTime = 18;
-            item.useAnimation = 18;
-            item.shootSpeed = 10f;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 100000;
-            item.rare = ItemRarityID.LightRed;
-            item.shoot = ProjectileType<DarkinBow_ArrowControl>();
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 34;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.width = 24;
+            Item.height = 64;
+            Item.channel = true;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
+            Item.shootSpeed = 10f;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 100000;
+            Item.rare = ItemRarityID.LightRed;
+            Item.shoot = ProjectileType<DarkinBow_ArrowControl>();
+            Item.useAmmo = AmmoID.Arrow;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new RainOfArrows(this));
             abilityItem.ChampQuote = "The guilty will know agony";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (type == ProjectileID.WoodenArrowFriendly)
                 type = ProjectileType<DarkinBow_DarkinArrow>();
 
-            Projectile proj = Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<DarkinBow_ArrowControl>(), damage, knockBack, player.whoAmI, type);
-            proj.rotation = new Vector2(speedX, speedY).ToRotation();
+            Projectile proj = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ProjectileType<DarkinBow_ArrowControl>(), damage, knockback, player.whoAmI, type);
+            proj.rotation = velocity.ToRotation();
 
             return false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ShadowFlameBow, 1);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 20);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.ShadowFlameBow, 1)
+            .AddRecipeGroup("TerraLeague:DemonGroup", 20)
+            .AddIngredient(ItemID.SoulofNight, 10)
+            .AddTile(TileID.DemonAltar)
+            .Register();
         }
 
         public override Vector2? HoldoutOffset()

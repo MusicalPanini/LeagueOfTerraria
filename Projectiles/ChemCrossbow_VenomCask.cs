@@ -17,22 +17,22 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 18;
-            projectile.height = 26;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.aiStyle = 2;
+            Projectile.width = 18;
+            Projectile.height = 26;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.aiStyle = 2;
             base.SetDefaults();
         }
         public override void AI()
         {
-            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, new Color(0, 255, 0));
+            Lighting.AddLight(Projectile.position, 0f, 0f, 0.5f);
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, new Color(0, 255, 0));
             dust.noLight = true;
             dust.alpha = 0;
             dust.noLight = false;
@@ -75,26 +75,26 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Shatter, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
 
             Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, new Color(0, 255, 0), 1f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, new Color(0, 255, 0), 1f);
                 dust.velocity *= 1.4f;
                 dust.noLight = true;
             }
             for (int i = 0; i < 80; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, new Color(0, 255, 0), 2f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 167, 0f, 0f, 125, new Color(0, 192, 255), 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, new Color(0, 255, 0),1f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 167, 0f, 0f, 125, new Color(0, 192, 255), 1f);
                 dust.noLight = true;
             }
 
-            if (projectile.owner == Main.myPlayer)
+            if (Projectile.owner == Main.myPlayer)
             {
                 int spawnAmount = Main.rand.Next(12, 21);
                 for (int i = 0; i < spawnAmount; i++)
@@ -102,16 +102,16 @@ namespace TerraLeague.Projectiles
                     Vector2 vector14 = new Vector2((float)Main.rand.Next(-100, 101), (float)Main.rand.Next(-100, 101));
                     vector14.Normalize();
                     vector14 *= (float)Main.rand.Next(10, 201) * 0.01f;
-                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector14.X, vector14.Y, ProjectileType<ChemCrossbow_VenomCloud>(), 1, 1f, projectile.owner, 0f, (float)Main.rand.Next(-45, 1));
+                    Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vector14.X, vector14.Y, ProjectileType<ChemCrossbow_VenomCloud>(), 1, 1f, Projectile.owner, 0f, (float)Main.rand.Next(-45, 1));
                 }
             }
 
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
             base.Kill(timeLeft);
         }
 
@@ -123,16 +123,16 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.velocity = Vector2.Zero;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 150;
-            projectile.height = 150;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 3;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 150;
+            Projectile.height = 150;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 3;
         }
     }
 }

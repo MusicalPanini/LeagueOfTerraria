@@ -16,15 +16,16 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Sterak's Gage");
             Tooltip.SetDefault("Increases maximum life by 40" +
                 "\nIncreases melee knockback");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 80, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 80, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -42,16 +43,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Jaurim>(), 1);
-            recipe.AddIngredient(ItemType<Pickaxe>(), 1);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemID.FragmentSolar, 10);
-            recipe.AddIngredient(ItemType<BrassBar>(), 20);
-            recipe.AddIngredient(ItemID.MechanicalGlove, 1);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Jaurim>(), 1)
+            .AddIngredient(ItemType<Pickaxe>(), 1)
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemID.FragmentSolar, 10)
+            .AddIngredient(ItemType<BrassBar>(), 20)
+            .AddIngredient(ItemID.MechanicalGlove, 1)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
+            
         }
 
         public override string GetStatText()

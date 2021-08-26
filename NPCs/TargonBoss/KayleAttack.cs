@@ -15,27 +15,27 @@ namespace TerraLeague.NPCs.TargonBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Starfire Spellblade");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.EnchantedSword];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.EnchantedSword];
         }
         public override void SetDefaults()
         {
-            npc.width = 48;
-            npc.height = 48;
-            npc.aiStyle = 23;
-            npc.damage = 20;
-            npc.defense = 0;
-            npc.lifeMax = 15;
-            npc.HitSound = SoundID.NPCHit4;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.value = 0;
-            npc.buffImmune[20] = true;
-            npc.buffImmune[24] = true;
-            npc.buffImmune[39] = true;
-            npc.knockBackResist = 0.4f;
-            animationType = NPCID.EnchantedSword;
-            npc.SpawnedFromStatue = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
+            NPC.width = 48;
+            NPC.height = 48;
+            NPC.aiStyle = 23;
+            NPC.damage = 20;
+            NPC.defense = 0;
+            NPC.lifeMax = 15;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.value = 0;
+            NPC.buffImmune[20] = true;
+            NPC.buffImmune[24] = true;
+            NPC.buffImmune[39] = true;
+            NPC.knockBackResist = 0.4f;
+            AnimationType = NPCID.EnchantedSword;
+            NPC.SpawnedFromStatue = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
             base.SetDefaults();
         }
 
@@ -48,78 +48,78 @@ namespace TerraLeague.NPCs.TargonBoss
         {
             if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
             {
-                npc.active = false;
+                NPC.active = false;
             }
 
-            Lighting.AddLight(npc.Center, TargonBossNPC.KayleColor.ToVector3());
+            Lighting.AddLight(NPC.Center, TargonBossNPC.KayleColor.ToVector3());
 
             return base.PreAI();
         }
 
         public override void AI()
         {
-            Lighting.AddLight(new Vector2((int)((npc.position.X + (float)(npc.width / 2)) / 16f), (int)((npc.position.Y + (float)(npc.height / 2)) / 16f)), 0.3f, 0.3f, 0.05f);
+            Lighting.AddLight(new Vector2((int)((NPC.position.X + (float)(NPC.width / 2)) / 16f), (int)((NPC.position.Y + (float)(NPC.height / 2)) / 16f)), 0.3f, 0.3f, 0.05f);
 
-            if (npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead)
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead)
             {
-                npc.TargetClosest(true);
+                NPC.TargetClosest(true);
             }
-            if (npc.ai[0] == 0f)
+            if (NPC.ai[0] == 0f)
             {
                 //float num298 = 9f;
-                //Vector2 vector31 = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-                //float num299 = Main.player[npc.target].position.X + (float)(Main.player[npc.target].width / 2) - vector31.X;
-                //float num300 = Main.player[npc.target].position.Y + (float)(Main.player[npc.target].height / 2) - vector31.Y;
+                //Vector2 vector31 = new Vector2(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
+                //float num299 = Main.player[NPC.target].position.X + (float)(Main.player[NPC.target].width / 2) - vector31.X;
+                //float num300 = Main.player[NPC.target].position.Y + (float)(Main.player[NPC.target].height / 2) - vector31.Y;
                 //float num301 = (float)Math.Sqrt((double)(num299 * num299 + num300 * num300));
                 //float num302 = num301;
                 //num301 = num298 / num301;
                 //num299 *= num301;
                 //num300 *= num301;
-                //npc.velocity.X = num299;
-                //npc.velocity.Y = num300;
-                npc.velocity = TerraLeague.CalcVelocityToPoint(npc.Center, Main.player[npc.target].MountedCenter, 16);
-                npc.rotation = npc.velocity.ToRotation() + MathHelper.PiOver4;
-                npc.ai[0] = 1f;
-                npc.ai[1] = 0f;
-                npc.netUpdate = true;
+                //NPC.velocity.X = num299;
+                //NPC.velocity.Y = num300;
+                NPC.velocity = TerraLeague.CalcVelocityToPoint(NPC.Center, Main.player[NPC.target].MountedCenter, 16);
+                NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver4;
+                NPC.ai[0] = 1f;
+                NPC.ai[1] = 0f;
+                NPC.netUpdate = true;
             }
-            else if (npc.ai[0] == 1f)
+            else if (NPC.ai[0] == 1f)
             {
-                npc.rotation = npc.velocity.ToRotation() + MathHelper.PiOver4;
-                if (npc.justHit)
+                NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver4;
+                if (NPC.justHit)
                 {
-                    npc.ai[0] = 2f;
-                    npc.ai[1] = 0f;
+                    NPC.ai[0] = 2f;
+                    NPC.ai[1] = 0f;
                 }
-                npc.velocity *= 0.99f;
-                npc.ai[1] += 1f;
+                NPC.velocity *= 0.99f;
+                NPC.ai[1] += 1f;
 
-                if (npc.ai[1] >= 200f)
+                if (NPC.ai[1] >= 200f)
                 {
-                    npc.netUpdate = true;
-                    npc.ai[0] = 2f;
-                    npc.ai[1] = 0f;
-                    npc.velocity.X = 0f;
-                    npc.velocity.Y = 0f;
+                    NPC.netUpdate = true;
+                    NPC.ai[0] = 2f;
+                    NPC.ai[1] = 0f;
+                    NPC.velocity.X = 0f;
+                    NPC.velocity.Y = 0f;
                 }
             }
             else
             {
-                if (npc.justHit)
+                if (NPC.justHit)
                 {
-                    npc.ai[0] = 2f;
-                    npc.ai[1] = 0f;
+                    NPC.ai[0] = 2f;
+                    NPC.ai[1] = 0f;
                 }
-                npc.velocity *= 0.99f;
-                npc.ai[1] += 1f;
-                float num303 = npc.ai[1] / 120f;
+                NPC.velocity *= 0.99f;
+                NPC.ai[1] += 1f;
+                float num303 = NPC.ai[1] / 120f;
                 num303 = 0.1f + num303 * 0.4f;
-                npc.rotation += num303 * (float)npc.direction;
-                if (npc.ai[1] >= 120f)
+                NPC.rotation += num303 * (float)NPC.direction;
+                if (NPC.ai[1] >= 120f)
                 {
-                    npc.netUpdate = true;
-                    npc.ai[0] = 0f;
-                    npc.ai[1] = 0f;
+                    NPC.netUpdate = true;
+                    NPC.ai[0] = 0f;
+                    NPC.ai[1] = 0f;
                 }
             }
         }
@@ -133,12 +133,12 @@ namespace TerraLeague.NPCs.TargonBoss
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
             {
                 int num437 = 0;
-                while ((double)num437 < damage / (double)npc.lifeMax * 50.0)
+                while ((double)num437 < damage / (double)NPC.lifeMax * 50.0)
                 {
-                    int num438 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
+                    int num438 = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
                     Main.dust[num438].noGravity = true;
                     int num5 = num437;
                     num437 = num5 + 1;
@@ -149,38 +149,28 @@ namespace TerraLeague.NPCs.TargonBoss
                 int num5;
                 for (int num439 = 0; num439 < 20; num439 = num5 + 1)
                 {
-                    int num440 = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
+                    int num440 = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
                     Dust dust115 = Main.dust[num440];
                     Dust dust2 = dust115;
                     dust2.velocity *= 2f;
                     Main.dust[num440].noGravity = true;
                     num5 = num439;
                 }
-                int num441 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 10f), new Vector2((float)Main.rand.Next(-2, 3), (float)Main.rand.Next(-2, 3)), 61, npc.scale);
+                int num441 = Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2((float)Main.rand.Next(-2, 3), (float)Main.rand.Next(-2, 3)), 61, NPC.scale);
                 Gore gore5 = Main.gore[num441];
                 Gore gore2 = gore5;
                 gore2.velocity *= 0.5f;
-                num441 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 10f), new Vector2((float)Main.rand.Next(-2, 3), (float)Main.rand.Next(-2, 3)), 61, npc.scale);
+                num441 = Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2((float)Main.rand.Next(-2, 3), (float)Main.rand.Next(-2, 3)), 61, NPC.scale);
                 gore5 = Main.gore[num441];
                 gore2 = gore5;
                 gore2.velocity *= 0.5f;
-                num441 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 10f), new Vector2((float)Main.rand.Next(-2, 3), (float)Main.rand.Next(-2, 3)), 61, npc.scale);
+                num441 = Gore.NewGore(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 10f), new Vector2((float)Main.rand.Next(-2, 3), (float)Main.rand.Next(-2, 3)), 61, NPC.scale);
                 gore5 = Main.gore[num441];
                 gore2 = gore5;
                 gore2.velocity *= 0.5f;
             }
 
             base.HitEffect(hitDirection, damage);
-        }
-
-        public override void NPCLoot()
-        {
-            base.NPCLoot();
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-        {
-            base.PostDraw(spriteBatch, drawColor);
         }
     }
 }

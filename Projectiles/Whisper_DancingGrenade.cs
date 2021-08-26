@@ -18,37 +18,37 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 14;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = 4;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.aiStyle = 0;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.netImportant = true;
+            Projectile.width = 20;
+            Projectile.height = 14;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = 4;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.aiStyle = 0;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.netImportant = true;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
-                projectile.rotation = Main.rand.NextFloat(0, 6.282f);
-            projectile.soundDelay = 100;
+            if (Projectile.soundDelay == 0)
+                Projectile.rotation = Main.rand.NextFloat(0, 6.282f);
+            Projectile.soundDelay = 100;
 
-            Lighting.AddLight(projectile.position, 1f * projectile.ai[0], 0.5f * projectile.ai[0], 0.9f * projectile.ai[0]);
-            Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * projectile.ai[0])), new Color(255,50,255));
+            Lighting.AddLight(Projectile.position, 1f * Projectile.ai[0], 0.5f * Projectile.ai[0], 0.9f * Projectile.ai[0]);
+            Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * Projectile.ai[0])), new Color(255,50,255));
 
-            projectile.rotation += projectile.velocity.X * 0.05f;
+            Projectile.rotation += Projectile.velocity.X * 0.05f;
 
-            projectile.velocity.Y += 0.4f;
+            Projectile.velocity.Y += 0.4f;
 
-            if(projectile.velocity.X > 8)
-                projectile.velocity.X = 8;
-            else if(projectile.velocity.X < -8)
-                projectile.velocity.X = -8;
+            if(Projectile.velocity.X > 8)
+                Projectile.velocity.X = 8;
+            else if(Projectile.velocity.X < -8)
+                Projectile.velocity.X = -8;
 
             base.AI();
         }
@@ -57,9 +57,9 @@ namespace TerraLeague.Projectiles
         {
             if (target.statLife <= 0)
             {
-                projectile.ai[0] += 0.3f;
-                projectile.damage = (int)(projectile.damage * 1.44f);
-                projectile.netUpdate = true;
+                Projectile.ai[0] += 0.3f;
+                Projectile.damage = (int)(Projectile.damage * 1.44f);
+                Projectile.netUpdate = true;
             }
             base.OnHitPlayer(target, damage, crit);
         }
@@ -68,9 +68,9 @@ namespace TerraLeague.Projectiles
         {
             //if (target.life <= 0)
             {
-                projectile.ai[0] += 0.3f;
-                projectile.damage = (int)(projectile.damage * 1.44f);
-                projectile.netUpdate = true;
+                Projectile.ai[0] += 0.3f;
+                Projectile.damage = (int)(Projectile.damage * 1.44f);
+                Projectile.netUpdate = true;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
@@ -79,38 +79,38 @@ namespace TerraLeague.Projectiles
         {
             Rebound();
 
-            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 10);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 10);
             return false;
         }
 
         public void Rebound()
         {
-            if (projectile.velocity.X != projectile.oldVelocity.X)
+            if (Projectile.velocity.X != Projectile.oldVelocity.X)
             {
-                projectile.velocity.X = -projectile.oldVelocity.X;
+                Projectile.velocity.X = -Projectile.oldVelocity.X;
             }
-            else if (projectile.velocity.Y != projectile.oldVelocity.Y)
+            else if (Projectile.velocity.Y != Projectile.oldVelocity.Y)
             {
-                if (projectile.oldVelocity.Y > 0)
+                if (Projectile.oldVelocity.Y > 0)
                 {
-                    projectile.velocity.Y = -8;
+                    Projectile.velocity.Y = -8;
                     bounces--;
                 }
                 else
                 {
-                    projectile.velocity.Y = 8;
+                    Projectile.velocity.Y = 8;
                 }
             }
 
             if (bounces == 0)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
             else
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustType<Smoke>(), 0f, 0f, 150, new Color(255, 50, 255));
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustType<Smoke>(), 0f, 0f, 150, new Color(255, 50, 255));
                     dust.velocity *= 1f;
                 }
             }
@@ -118,7 +118,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustType<Smoke>(), 0f, 0f, 100, new Color(255, 50, 255));
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustType<Smoke>(), 0f, 0f, 100, new Color(255, 50, 255));
             dust.velocity *= 1f;
             base.Kill(timeLeft);
         }

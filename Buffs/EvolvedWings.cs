@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class EvolvedWings : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Evolved Wings");
             Description.SetDefault("You've sprouted wings");
@@ -22,7 +22,7 @@ namespace TerraLeague.Buffs
             player.wings = 18;
             player.wingsLogic = 29;
 
-            player.meleeDamage += 0.5f;
+            player.GetDamage(DamageClass.Melee) += 0.5f;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

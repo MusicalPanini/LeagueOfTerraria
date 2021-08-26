@@ -10,36 +10,35 @@ namespace TerraLeague.Items.ManaBarItems
         {
             DisplayName.SetDefault("Mana Infused Hamaxe");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 16;
-            item.melee = true;
-            item.width = 32;
-            item.height = 32;
-            item.useTime = 20;
-            item.useAnimation = 40;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 3f;
-            item.value = 12000;
-            item.rare = ItemRarityID.Orange;
-            item.hammer = 65;
-            item.axe = 23;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.useTurn = true;
-            item.tileBoost += 3;
-            item.scale = 1.5f;
+            Item.damage = 16;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 32;
+            Item.height = 32;
+            Item.useTime = 20;
+            Item.useAnimation = 40;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 3f;
+            Item.value = 12000;
+            Item.rare = ItemRarityID.Orange;
+            Item.hammer = 65;
+            Item.axe = 23;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.tileBoost += 3;
+            Item.scale = 1.5f;
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ManaBar>(), 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-            base.AddRecipes();
+            CreateRecipe()
+            .AddIngredient(ItemType<ManaBar>(), 16)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

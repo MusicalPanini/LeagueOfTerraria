@@ -10,7 +10,7 @@ namespace TerraLeague.Tiles
 {
     public class SilversteelBarTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileShine[Type] = 1100;
             Main.tileSolid[Type] = true;
@@ -26,7 +26,7 @@ namespace TerraLeague.Tiles
             name.SetDefault("Silver-Steel Bar");
             AddMapEntry(new Color(180, 180, 195), name);
 
-            dustType = DustID.Stone;
+            DustType = DustID.Stone;
         }
 
         public override bool Drop(int i, int j)

@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class InTargonArena : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Arena");
             Description.SetDefault("Prove your worth");

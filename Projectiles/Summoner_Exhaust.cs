@@ -20,17 +20,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 1.2f;
-            projectile.timeLeft = 301;
-            projectile.extraUpdates = 16;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1.2f;
+            Projectile.timeLeft = 301;
+            Projectile.extraUpdates = 16;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
 
             CanOnlyHitTarget = true;
             CanRetarget = false;
@@ -40,11 +40,11 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if(projectile.soundDelay == 0)
-                Main.PlaySound(new LegacySoundStyle(2, 88).WithPitchVariance(-0.3f), projectile.Center);
-            projectile.soundDelay = 100;
+            if(Projectile.soundDelay == 0)
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 88).WithPitchVariance(-0.3f), Projectile.Center);
+            Projectile.soundDelay = 100;
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 262, Vector2.Zero, 0, default, 1f);
+            Dust dust = Dust.NewDustPerfect(Projectile.position, 262, Vector2.Zero, 0, default, 1f);
             dust.noGravity = true;
             dust.alpha = 100;
 
@@ -54,18 +54,18 @@ namespace TerraLeague.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffType<Exhausted>(), 600);
-            projectile.ai[1] = 1;
-            projectile.netUpdate = true;
+            Projectile.ai[1] = 1;
+            Projectile.netUpdate = true;
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 
-            Vector2 position = projectile.Center;
-            if (Main.npc[(int)projectile.ai[0]].active)
-                position = Main.npc[(int)projectile.ai[0]].Center;
+            Vector2 position = Projectile.Center;
+            if (Main.npc[(int)Projectile.ai[0]].active)
+                position = Main.npc[(int)Projectile.ai[0]].Center;
 
             int type = 174;
 
@@ -106,7 +106,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 0, default, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, 0, 0, 0, default, 1f);
                 dust.noGravity = true;
                 dust.alpha = 100;
             }

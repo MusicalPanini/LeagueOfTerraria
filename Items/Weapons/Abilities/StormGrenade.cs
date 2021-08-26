@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/StormGrenade";
+            return "TerraLeague/AbilityImages/StormGrenade";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rocketDamageLastStep);
+            return (int)(abilityItem.Item.damage * 1.5 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rocketDamageLastStep);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -65,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
-              ) + " minion damage";
+              ) + " summon damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -84,7 +84,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int knockback = 0;
 
 
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                 SetAnimation(player, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
@@ -93,7 +93,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 11), player.Center);
         }
     }
 }

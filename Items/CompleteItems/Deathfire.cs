@@ -16,22 +16,23 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Deathfire Grasp");
             Tooltip.SetDefault("12% increased magic damage" +
                "\nIncreases ability haste by 15");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 60, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 60, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
 
             Active = new Doom(25, 1000, 120);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.12f;
+            player.GetDamage(DamageClass.Magic) += 0.12f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;
             base.UpdateAccessory(player, hideVisual);
         }
@@ -40,14 +41,14 @@ namespace TerraLeague.Items.CompleteItems
         {
             // Add late game shadow isles material
 
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LargeRod>(), 1);
-            recipe.AddIngredient(ItemType<Codex>(), 1);
-            recipe.AddIngredient(ItemID.Ectoplasm, 12);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddTile(TileID.LihzahrdAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LargeRod>(), 1)
+            .AddIngredient(ItemType<Codex>(), 1)
+            .AddIngredient(ItemID.Ectoplasm, 12)
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddTile(TileID.LihzahrdAltar)
+            .Register();
+            
         }
 
         public override string GetStatText()

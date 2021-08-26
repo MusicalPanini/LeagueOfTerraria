@@ -14,28 +14,29 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Petricite Crossbow");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 14;
-            item.ranged = true;
-            item.noMelee = true;
-            item.width = 56;
-            item.height = 24;
-            item.useTime = 24;
-            item.useAnimation = 24;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 1f;
-            item.value = 2400;
-            item.rare = ItemRarityID.Green;
-            item.shootSpeed = 10f;
-            item.autoReuse = true;
-            item.UseSound = SoundID.Item5;
-            item.shoot = ProjectileID.PurificationPowder;
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 14;
+            Item.DamageType = DamageClass.Ranged;
+            Item.noMelee = true;
+            Item.width = 56;
+            Item.height = 24;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 1f;
+            Item.value = 2400;
+            Item.rare = ItemRarityID.Green;
+            Item.shootSpeed = 10f;
+            Item.autoReuse = true;
+            Item.UseSound = SoundID.Item5;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.useAmmo = AmmoID.Arrow;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new HeightenedSenses(this));
             abilityItem.ChampQuote = "Valor, to me!";
             abilityItem.IsAbilityItem = true;
@@ -48,11 +49,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Petricite>(), 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Petricite>(), 16)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

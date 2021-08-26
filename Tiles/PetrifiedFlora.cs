@@ -8,14 +8,16 @@ namespace TerraLeague.Tiles
 {
     public class PetrifiedFlora : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileCut[Type] = true;
             Main.tileSolid[Type] = false;
             Main.tileMergeDirt[Type] = true;
-            soundType = SoundID.Grass;
-            dustType = DustID.Ghost;
+            SoundType = SoundID.Grass;
+            DustType = DustID.Cloud;
+            TileID.Sets.SwaysInWindBasic[Type] = true;
+
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.newTile.WaterDeath = false;

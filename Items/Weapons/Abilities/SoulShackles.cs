@@ -29,7 +29,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/SoulShackles";
+            return "TerraLeague/AbilityImages/SoulShackles";
         }
 
         public override string GetAbilityTooltip()
@@ -41,7 +41,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 4);
+            return (int)(abilityItem.Item.damage * 4);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -100,7 +100,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 for (int i = 0; i < npcs.Count; i++)
                 {
                     SetCooldowns(player, type);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, npcs[i]);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, npcs[i]);
                 }
             }
         }

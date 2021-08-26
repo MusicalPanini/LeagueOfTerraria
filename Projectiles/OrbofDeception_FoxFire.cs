@@ -18,29 +18,29 @@ namespace TerraLeague.Projectiles
         }
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.alpha = 255;
-            projectile.timeLeft = 300;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
-            projectile.ai[0] += .07f;
-            projectile.Center = player.MountedCenter + offset.RotatedBy(projectile.ai[0]);
+            Player player = Main.player[Projectile.owner];
+            Projectile.ai[0] += .07f;
+            Projectile.Center = player.MountedCenter + offset.RotatedBy(Projectile.ai[0]);
 
-            Lighting.AddLight(projectile.position, 1f, 1f, 1f);
+            Lighting.AddLight(Projectile.position, 1f, 1f, 1f);
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Frost, projectile.velocity.X, projectile.velocity.Y, 200, new Color(255, 255, 255), 1.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, Projectile.velocity.X, Projectile.velocity.Y, 200, new Color(255, 255, 255), 1.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0.3f;
@@ -51,7 +51,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, DustID.Frost, 0, 0, 50, new Color(255, 255, 255), 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, 16, 16, DustID.Ice, 0, 0, 50, new Color(255, 255, 255), 1.2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

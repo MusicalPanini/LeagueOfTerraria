@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Sunfire : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sunfire");
             Main.debuff[Type] = true;

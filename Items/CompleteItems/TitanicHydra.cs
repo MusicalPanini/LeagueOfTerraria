@@ -18,6 +18,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases maximum life by 20" +
                 "\nIncreases life regeneration by 30%" +
                 "\nCan only have one Hydra item equiped at a time");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
@@ -32,11 +33,11 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -46,7 +47,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.07f;
+            player.GetDamage(DamageClass.Melee) += 0.07f;
             player.lifeRegen += 2;
             player.statLifeMax2 += 20;
 
@@ -55,16 +56,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Tiamat>(), 1);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemType<Jaurim>(), 1);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 10);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
-            recipe.AddIngredient(ItemID.Gungnir, 1);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Tiamat>(), 1)
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemType<Jaurim>(), 1)
+            .AddIngredient(ItemType<DarksteelBar>(), 10)
+            .AddIngredient(ItemID.ChlorophyteBar, 10)
+            .AddIngredient(ItemID.Gungnir, 1)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

@@ -16,15 +16,16 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Morellonomicon");
             Tooltip.SetDefault("5% increased magic damage" +
                 "\nIncreases health by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -34,7 +35,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.05f;
+            player.GetDamage(DamageClass.Magic) += 0.05f;
             player.statLifeMax2 += 20;
 
             base.UpdateAccessory(player, hideVisual);
@@ -42,15 +43,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Orb>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemID.SpellTome, 1);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddTile(TileID.CrystalBall);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Orb>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemID.SpellTome, 1)
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddIngredient(ItemID.SoulofFright, 10)
+            .AddTile(TileID.CrystalBall)
+            .Register();
+            
         }
     }
 }

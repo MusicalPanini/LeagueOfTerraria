@@ -22,24 +22,24 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 100;
-            item.magic = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 40;
-            item.height = 24;
-            item.useAnimation = 30;
-            item.useTime = 30;
-            item.shootSpeed = 12f;
-            item.noMelee = true;
-            item.knockBack = 0;
-            item.value = 1;
-            item.rare = ItemRarityID.Expert;
-            item.scale = 0.9f;
-            item.shoot = ProjectileType<SolariSet_LargeSolarSigil>();
-            //item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
-            item.autoReuse = false;
+            Item.damage = 100;
+            Item.DamageType = DamageClass.Magic;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.width = 40;
+            Item.height = 24;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
+            Item.shootSpeed = 12f;
+            Item.noMelee = true;
+            Item.knockBack = 0;
+            Item.value = 1;
+            Item.rare = ItemRarityID.Expert;
+            Item.scale = 0.9f;
+            Item.shoot = ProjectileType<SolariSet_LargeSolarSigil>();
+            //Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
+            Item.autoReuse = false;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             //abilityItem.SetAbility(AbilityType.Q, new Defile(this));
             //abilityItem.SetAbility(AbilityType.W, new Defile(this));
             //abilityItem.SetAbility(AbilityType.E, new Defile(this));
@@ -49,13 +49,11 @@ namespace TerraLeague.Items.Weapons
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             position = Main.MouseWorld;
-            speedX = 0;
-            speedY = 0;
-            item.channel = false;
-            return true;
+            velocity = Vector2.Zero;
+            Item.channel = false;
         }
 
         public override Vector2? HoldoutOffset()

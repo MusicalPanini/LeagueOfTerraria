@@ -17,29 +17,29 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 75;
-            projectile.ranged = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 75;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0 && (int)projectile.ai[1] == 1)
-                projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.soundDelay = 100;
+            if (Projectile.soundDelay == 0 && (int)Projectile.ai[1] == 1)
+                Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.soundDelay = 100;
 
             if (Main.rand.Next(0, 1) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default, 2.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemSapphire, 0, 0, 0, default, 2.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity;
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.SapphireBolt, 0, 0, 0, default, 0.75f);
+                dust.velocity += Projectile.velocity;
+                Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemSapphire, 0, 0, 0, default, 0.75f);
             }
         }
 
@@ -52,11 +52,11 @@ namespace TerraLeague.Projectiles
 
             int critAI = crit ? 1 : 0;
 
-            if ((int)projectile.ai[1] == 1)
+            if ((int)Projectile.ai[1] == 1)
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedBy(MathHelper.TwoPi / 16 * i) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(projectile.damage * 0.75), projectile.knockBack, projectile.owner, target.whoAmI, critAI);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.TwoPi / 16 * i) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(Projectile.damage * 0.75), Projectile.knockBack, Projectile.owner, target.whoAmI, critAI);
                 }
             }
             else
@@ -68,7 +68,7 @@ namespace TerraLeague.Projectiles
 
                     for (int i = 0; i < 6; i++)
                     {
-                        Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedBy(startRad - (rotation * i)) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(projectile.damage * 0.5), projectile.knockBack, projectile.owner, target.whoAmI, critAI);
+                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(startRad - (rotation * i)) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(Projectile.damage * 0.5), Projectile.knockBack, Projectile.owner, target.whoAmI, critAI);
                     }
                 }
                 else
@@ -78,7 +78,7 @@ namespace TerraLeague.Projectiles
 
                     for (int i = 0; i < 4; i++)
                     {
-                        Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedBy(startRad - (rotation * i)) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(projectile.damage * 0.5), projectile.knockBack, projectile.owner, target.whoAmI);
+                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(startRad - (rotation * i)) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(Projectile.damage * 0.5), Projectile.knockBack, Projectile.owner, target.whoAmI);
                     }
                 }
             }

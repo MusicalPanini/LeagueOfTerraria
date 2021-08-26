@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -19,91 +20,91 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 24;
-            projectile.alpha = 0;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.magic = true;
+            Projectile.width = 16;
+            Projectile.height = 24;
+            Projectile.alpha = 0;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
 
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
 
-            projectile.scale = 1;
-            projectile.timeLeft = 3600;
+            Projectile.scale = 1;
+            Projectile.timeLeft = 3600;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 0, default, 2);
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, 0, 0, 0, default, 2);
                     dust.noGravity = true;
                 }
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
             if (Main.rand.Next(3) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 8, DustID.Electric, 0, 0, 0, default, 0.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, 8, DustID.Electric, 0, 0, 0, default, 0.5f);
             }
 
-            if (!Main.player[projectile.owner].channel && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
+            if (!Main.player[Projectile.owner].channel && Projectile.timeLeft < 3600 && Projectile.owner == Main.LocalPlayer.whoAmI || Projectile.alpha != 0 || Main.player[Projectile.owner].dead || !Main.player[Projectile.owner].active)
             {
-                projectile.alpha += 20;
-                if (projectile.alpha > 250)
+                Projectile.alpha += 20;
+                if (Projectile.alpha > 250)
                 {
                     DeadMode();
                 }
             }
 
 
-            Player player = Main.player[projectile.owner];
-            projectile.netUpdate = true;
+            Player player = Main.player[Projectile.owner];
+            Projectile.netUpdate = true;
             //player.itemTime = 5;
-            if (projectile.Distance(player.MountedCenter) > 1000)
-                projectile.Kill();
+            if (Projectile.Distance(player.MountedCenter) > 1000)
+                Projectile.Kill();
 
-            Lighting.AddLight(projectile.Center, 0, 1, 1);
+            Lighting.AddLight(Projectile.Center, 0, 1, 1);
 
             if (Main.LocalPlayer.whoAmI == player.whoAmI)
             {
-                projectile.localAI[0]++;
-                if ((int)projectile.localAI[0] == 60)
+                Projectile.localAI[0] ++;
+                if ((int)Projectile.localAI[0]  == 60)
                 {
-                    //Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileType<HexCoreStaff_Storm>(), projectile.damage, projectile.knockBack, projectile.owner);\
-                    TerraLeague.DustBorderRing(224, projectile.Center, 226, default, 0.75f);
-                    List<int> npcs = Targeting.GetAllNPCsInRange(projectile.Center, 224, true);
+                    //Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, ProjectileType<HexCoreStaff_Storm>(), Projectile.damage, Projectile.knockBack, Projectile.owner);\
+                    TerraLeague.DustBorderRing(224, Projectile.Center, 226, default, 0.75f);
+                    List<int> npcs = Targeting.GetAllNPCsInRange(Projectile.Center, 224, true);
                     for (int i = 0; i < npcs.Count; i++)
                     {
                         NPC npc = Main.npc[npcs[i]];
                         if (!npc.dontTakeDamage)
                         {
-                            Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ProjectileType<HexCoreStaff_ChaosStormZap>(), projectile.damage, projectile.knockBack, projectile.owner, npc.whoAmI);
-                            TerraLeague.DustLine(projectile.Center, npc.Center, 160, 1, 1);
+                            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), npc.Center, Vector2.Zero, ProjectileType<HexCoreStaff_ChaosStormZap>(), Projectile.damage, Projectile.knockBack, Projectile.owner, npc.whoAmI);
+                            TerraLeague.DustLine(Projectile.Center, npc.Center, 160, 1, 1);
                         }
                     }
 
                     if (npcs.Count > 0)
-                        TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 53, 0);
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 53, 0);
 
-                    projectile.localAI[0] = 0;
+                    Projectile.localAI[0]  = 0;
                 }
             }
 
             
 
-            if (projectile.ai[0] == 0 && projectile.owner == Main.LocalPlayer.whoAmI)
+            if (Projectile.ai[0] == 0 && Projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 float num114 = 6;
 
-                Vector2 vector10 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
+                Vector2 vector10 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
                 float num115 = (float)Main.mouseX + Main.screenPosition.X - vector10.X;
                 float num116 = (float)Main.mouseY + Main.screenPosition.Y - vector10.Y;
-                if (Main.player[projectile.owner].gravDir == -1f)
+                if (Main.player[Projectile.owner].gravDir == -1f)
                 {
                     num116 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - vector10.Y;
                 }
@@ -114,35 +115,35 @@ namespace TerraLeague.Projectiles
                     num115 *= num117;
                     num116 *= num117;
                     int num118 = (int)(num115 * 1000f);
-                    int num119 = (int)(projectile.velocity.X * 1000f);
+                    int num119 = (int)(Projectile.velocity.X * 1000f);
                     int num120 = (int)(num116 * 1000f);
-                    int num121 = (int)(projectile.velocity.Y * 1000f);
+                    int num121 = (int)(Projectile.velocity.Y * 1000f);
                     if (num118 != num119 || num120 != num121)
                     {
-                        projectile.netUpdate = true;
+                        Projectile.netUpdate = true;
                     }
 
                     // movement
-                    projectile.velocity.X = num115 * Vector2.Distance(projectile.position, Main.MouseWorld) / 1000;
-                    projectile.velocity.Y = num116 * Vector2.Distance(projectile.position, Main.MouseWorld) / 1000;
+                    Projectile.velocity.X = num115 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 1000;
+                    Projectile.velocity.Y = num116 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 1000;
 
                 }
                 else
                 {
                     int num122 = (int)(num115 * 1000f);
-                    int num123 = (int)(projectile.velocity.X * 1000f);
+                    int num123 = (int)(Projectile.velocity.X * 1000f);
                     int num124 = (int)(num116 * 1000f);
-                    int num125 = (int)(projectile.velocity.Y * 1000f);
+                    int num125 = (int)(Projectile.velocity.Y * 1000f);
                     if (num122 != num123 || num124 != num125)
                     {
-                        projectile.netUpdate = true;
+                        Projectile.netUpdate = true;
                     }
 
-                    projectile.velocity.X = num115 * Vector2.Distance(projectile.position, Main.MouseWorld) / 1000;
-                    projectile.velocity.Y = num116 * Vector2.Distance(projectile.position, Main.MouseWorld) / 1000;
+                    Projectile.velocity.X = num115 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 1000;
+                    Projectile.velocity.Y = num116 * Vector2.Distance(Projectile.position, Main.MouseWorld) / 1000;
                 }
             }
-            projectile.timeLeft = 3000;
+            Projectile.timeLeft = 3000;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -172,17 +173,17 @@ namespace TerraLeague.Projectiles
 
         public void DeadMode()
         {
-            projectile.Kill();
+            Projectile.Kill();
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int k = 0; k < projectile.oldPos.Length; k++)
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, 1, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, 1, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
             return true;
         }

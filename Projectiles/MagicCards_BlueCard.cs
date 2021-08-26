@@ -17,19 +17,19 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.timeLeft = 300;
-            projectile.penetrate = 1;
-            projectile.aiStyle = 2;
-            projectile.friendly = true;
-            projectile.magic = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 1;
+            Projectile.aiStyle = 2;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
             
         }
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 0, 255));
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight, 0, 0, 0, new Color(0, 0, 255));
             dust.noGravity = true;
             dust.scale = 1f;
             dust.velocity *= 0.1f;
@@ -39,19 +39,19 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Main.player[projectile.owner].ManaEffect(25);
-            Main.player[projectile.owner].statMana += 25;
+            Main.player[Projectile.owner].ManaEffect(25);
+            Main.player[Projectile.owner].statMana += 25;
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)
         {
-            Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 4), projectile.Center);
+            Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 4), Projectile.Center);
             
 
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.AncientLight, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, new Color(0, 0, 255));
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.AncientLight, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0, new Color(0, 0, 255));
             }
             base.Kill(timeLeft);
         }
@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             
-            Main.PlaySound(SoundID.Item1, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
             return true;
         }
     }

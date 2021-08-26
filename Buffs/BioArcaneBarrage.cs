@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class BioArcaneBarrage : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bio-Arcane Barrage");
             Description.SetDefault("You ranged attacks are coated in acid");

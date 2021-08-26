@@ -16,37 +16,37 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.alpha = 255;
-            projectile.timeLeft = 90;
-            projectile.penetrate = 2;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.aiStyle = 0;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 90;
+            Projectile.penetrate = 2;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.aiStyle = 0;
         }
 
         public override void AI()
         {
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.GoldFlame, 0, 0, 0, default, 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, 0, 0, 0, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
-            if (projectile.timeLeft < 30)
+            if (Projectile.timeLeft < 30)
             {
-                projectile.alpha += 9;
+                Projectile.alpha += 9;
             }
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().illuminated)
-                Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().magicOnHit += 40 + (int)(Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().MAG * 0.2);
+                Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().magicOnHit += 40 + (int)(Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().MAG * 0.2);
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 17; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0, default, 1f);
                 dust.noGravity = true;
             }
         }

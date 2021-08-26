@@ -11,7 +11,7 @@ namespace TerraLeague.Tiles
     {
         bool pulse = false;
         float bLast = 0.3f;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true; 
@@ -21,12 +21,12 @@ namespace TerraLeague.Tiles
             Main.tileLighted[Type] = true; 
             Main.tileBlockLight[Type] = true; 
             
-            dustType = DustID.Cobalt;
-            drop = ItemType<Items.Placeable.ManaStone>();
+            DustType = DustID.BlueCrystalShard;
+            ItemDrop = ItemType<Items.Placeable.ManaStone>();
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Mana Infused Earth");
             AddMapEntry(new Color(0, 78, 181), name);
-            minPick = 65; 
+            MinPick = 65; 
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -16,39 +16,39 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 15;
-            projectile.height = 15;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 3;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 60;
-            projectile.extraUpdates = 4;
-            //projectile.usesLocalNPCImmunity = true;
-            //projectile.localNPCHitCooldown = -1;
-            projectile.tileCollide = false;
+            Projectile.width = 15;
+            Projectile.height = 15;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 3;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 60;
+            Projectile.extraUpdates = 4;
+            //Projectile.usesLocalNPCImmunity = true;
+            //Projectile.localNPCHitCooldown = -1;
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
             Dust dust;
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.Center);
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default, 1f);
+                Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), Projectile.Center);
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0, 0, 0, default, 1f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default, 2f);
+            dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0, 0, 0, default, 2f);
             dust.noGravity = true;
             dust.noLight = true;
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 1f);
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, 0, 3, 0, default, 1f);
                 //dust.noLight = true;
             }
         }
@@ -71,7 +71,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)projectile.ai[0] == target.whoAmI)
+            if ((int)Projectile.ai[0] == target.whoAmI)
                 return false;
             return base.CanHitNPC(target);
         }

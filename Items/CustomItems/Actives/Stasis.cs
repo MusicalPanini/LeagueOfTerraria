@@ -52,7 +52,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
+                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type);
             }
         }
 
@@ -66,7 +66,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             Player player = Main.player[user];
 
             TerraLeague.DustRing(261, player, new Color(255, 255, 0, 0));
-            Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29), player.Center);
         }
     }
 }

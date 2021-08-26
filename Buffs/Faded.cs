@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Faded : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Faded");
             Description.SetDefault("You can't use the Faded Mirror");

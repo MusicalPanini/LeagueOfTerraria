@@ -13,27 +13,35 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Sunsteel Broadsword");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 10;
-            item.width = 32;
-            item.height = 32;
-            item.melee = true;
-            item.useTime = 32;
-            item.useAnimation = 32;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 4;
-            item.value = 1000;
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
+            Item.damage = 10;
+            Item.width = 32;
+            Item.height = 32;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 32;
+            Item.useAnimation = 32;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 4;
+            Item.value = 1000;
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new DecisiveStrike(this));
             abilityItem.SetAbility(AbilityType.W, new Courage(this));
             abilityItem.ChampQuote = "DEMACIA!";
             abilityItem.IsAbilityItem = true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<StartingItems.WeaponKit>(), 1)
+            .Register();
         }
     }
 }

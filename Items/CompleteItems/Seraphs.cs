@@ -18,10 +18,11 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Seraph's Embrase");
-            Tooltip.SetDefault("5% increased magic and minion damage" +
+            Tooltip.SetDefault("5% increased magic and summon damage" +
                 "\nIncreases maximum mana by 100" +
                 "\nIncreases ability haste by 15" +
                 "\nCan only have one AWE item equiped at a time");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
@@ -48,11 +49,11 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 60, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 60, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
 
             Active = new ManaShield(4, 15, 200, 50, 90);
             Passives = new Passive[]
@@ -66,7 +67,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.magicDamage += 0.05f;
+            player.GetDamage(DamageClass.Magic) += 0.05f;
             modPlayer.TrueMinionDamage += 0.05;
             modPlayer.abilityHaste += 15;
             player.statManaMax2 += 100;

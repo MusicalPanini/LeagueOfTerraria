@@ -17,23 +17,23 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 32;
-            projectile.timeLeft = 18000;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.minion = true;
-            projectile.scale = 1.2f;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 22;
+            Projectile.height = 32;
+            Projectile.timeLeft = 18000;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.minion = true;
+            Projectile.scale = 1.2f;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            projectile.rotation = 0;
+            Projectile.rotation = 0;
 
-            if (projectile.alpha >= 60)
+            if (Projectile.alpha >= 60)
             {
-                if (Targeting.IsThereAnNPCInRange(projectile.Center, 90))
+                if (Targeting.IsThereAnNPCInRange(Projectile.Center, 90))
                 {
                     Prime();
                 }
@@ -41,29 +41,29 @@ namespace TerraLeague.Projectiles
 
             if (!grounded)
             {
-                projectile.velocity.Y += 0.3f;
-                if (projectile.velocity.Y > 0)
+                Projectile.velocity.Y += 0.3f;
+                if (Projectile.velocity.Y > 0)
                     for (int i = 0; i < Main.projectile.Length; i++)
                     {
                         if (Main.projectile[i].active)
-                            if (Main.projectile[i].type == projectile.type)
+                            if (Main.projectile[i].type == Projectile.type)
                                 if (Main.projectile[i].velocity.Length() < 0.0001f)
-                                    if (Main.projectile[i].Hitbox.Intersects(projectile.Hitbox))
+                                    if (Main.projectile[i].Hitbox.Intersects(Projectile.Hitbox))
                                     {
-                                        projectile.velocity.Y = -6;
-                                        if (projectile.velocity.X < 3 && projectile.velocity.X >= 0)
-                                            projectile.velocity.X = 3;
-                                        if (projectile.velocity.X > -3 && projectile.velocity.X < 0)
-                                            projectile.velocity.X = -3;
+                                        Projectile.velocity.Y = -6;
+                                        if (Projectile.velocity.X < 3 && Projectile.velocity.X >= 0)
+                                            Projectile.velocity.X = 3;
+                                        if (Projectile.velocity.X > -3 && Projectile.velocity.X < 0)
+                                            Projectile.velocity.X = -3;
                                     }
                     }
             }
             else
             {
-                if (projectile.alpha < 100)
-                    projectile.alpha++;
+                if (Projectile.alpha < 100)
+                    Projectile.alpha++;
 
-                projectile.velocity = Vector2.Zero;
+                Projectile.velocity = Vector2.Zero;
             }
 
             base.AI();
@@ -77,23 +77,23 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 102, -1f);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 102, -1f);
 
             Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
                 dust.velocity *= 1.4f;
             }
             for (int i = 0; i < 80; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.RedsWingsRun, 0f, 0f, 100, default, 2f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 186, 0f, 0f, 100, default, 2f);
                 dust.noGravity = true;
 
-                Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.RedsWingsRun, 0f, 0f, 100, default, 1f);
+                Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 186, 0f, 0f, 100, default, 1f);
             }
 
-            if (projectile.owner == Main.myPlayer)
+            if (Projectile.owner == Main.myPlayer)
             {
                 int spawnAmount = Main.rand.Next(20, 31);
                 for (int i = 0; i < spawnAmount; i++)
@@ -101,16 +101,16 @@ namespace TerraLeague.Projectiles
                     Vector2 vector14 = new Vector2((float)Main.rand.Next(-100, 101), (float)Main.rand.Next(-100, 101));
                     vector14.Normalize();
                     vector14 *= (float)Main.rand.Next(10, 201) * 0.01f;
-                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector14.X, vector14.Y, ProjectileType<ToxicBlowgun_NoxiousCloud>(), projectile.damage, 0, projectile.owner, 0f, (float)Main.rand.Next(-45, 1));
+                    Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, vector14.X, vector14.Y, ProjectileType<ToxicBlowgun_NoxiousCloud>(), Projectile.damage, 0, Projectile.owner, 0f, (float)Main.rand.Next(-45, 1));
                 }
             }
 
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
             base.Kill(timeLeft);
             base.Kill(timeLeft);
         }
@@ -125,16 +125,16 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.velocity.X == 0)
+            if (Projectile.velocity.X == 0)
             {
-                projectile.velocity.X = oldVelocity.X * -0.5f;
+                Projectile.velocity.X = oldVelocity.X * -0.5f;
 
-                if (projectile.velocity.X < 3 && projectile.velocity.X >= 0)
-                    projectile.velocity.X = 3;
-                if (projectile.velocity.X > -3 && projectile.velocity.X < 0)
-                    projectile.velocity.X = -3;
+                if (Projectile.velocity.X < 3 && Projectile.velocity.X >= 0)
+                    Projectile.velocity.X = 3;
+                if (Projectile.velocity.X > -3 && Projectile.velocity.X < 0)
+                    Projectile.velocity.X = -3;
             }
-            else if (projectile.velocity.Y == 0)
+            else if (Projectile.velocity.Y == 0)
                 grounded = true;
 
             return false;
@@ -142,15 +142,15 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 150;
-            projectile.height = 150;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 150;
+            Projectile.height = 150;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
 
-            projectile.Kill();
+            Projectile.Kill();
         }
 
         public override bool? CanCutTiles()

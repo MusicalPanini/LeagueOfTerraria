@@ -14,20 +14,21 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lich Bane");
-            Tooltip.SetDefault("15% increased minion damage" +
+            Tooltip.SetDefault("15% increased summon damage" +
                 "\n7% increased movement speed" +
                 "\nIncreases maximum mana by 30" +
                 "\nIncreases ability haste by 10" +
                 "\nIncreases your max number of minions");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 80, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 80, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -38,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.15;
+            player.GetDamage(DamageClass.Summon) += 0.15f;
             player.moveSpeed += 0.07f;
             player.statManaMax2 += 30;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
@@ -49,15 +50,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Sheen>(), 1);
-            recipe.AddIngredient(ItemType<AetherWisp>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemID.BrokenHeroSword, 1);
-            recipe.AddIngredient(ItemID.FragmentStardust, 10);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Sheen>(), 1)
+            .AddIngredient(ItemType<AetherWisp>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemID.BrokenHeroSword, 1)
+            .AddIngredient(ItemID.FragmentStardust, 10)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
+            
         }
     }
 }

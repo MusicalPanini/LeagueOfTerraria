@@ -5,6 +5,7 @@ using System.Linq;
 using TerraLeague.Items.CustomItems;
 using TerraLeague.NPCs;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,6 +19,7 @@ namespace TerraLeague.Items.Accessories
             DisplayName.SetDefault("Sun Amulet");
             Tooltip.SetDefault("Gain damage based on the light level your in");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -34,11 +36,11 @@ namespace TerraLeague.Items.Accessories
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 32;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 6400 * 5;
-            item.accessory = true;
+            Item.width = 26;
+            Item.height = 32;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = 6400 * 5;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -50,12 +52,12 @@ namespace TerraLeague.Items.Accessories
 
         public override void AddRecipes()
         {
-            //ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(ItemID.CrossNecklace, 1);
-            //recipe.AddIngredient(ItemType<Nightbloom>(), 1);
-            //recipe.AddTile(TileID.TinkerersWorkbench);
-            //recipe.SetResult(this);
-            //recipe.AddRecipe();
+            //CreateRecipe()
+            //.AddIngredient(ItemID.CrossNecklace, 1);
+            //.AddIngredient(ItemType<Nightbloom>(), 1);
+            //.AddTile(TileID.TinkerersWorkbench);
+            //.Register();
+            //
         }
 
         public override string GetStatText()
@@ -71,17 +73,18 @@ namespace TerraLeague.Items.Accessories
         }
     }
 
-    public class GraymarkNPC : GlobalNPC
+    public class SunAmuletNPC : GlobalNPC
     {
-        public override void NPCLoot(NPC npc)
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            float rnd = Main.rand.NextFloat();
-            if ((npc.netID == NPCID.Antlion || npc.netID == NPCID.FlyingAntlion || npc.netID == NPCID.WalkingAntlion || npc.netID == NPCType<ShadowArtilery>()) && (rnd <= 0.0133 || (Main.expertMode && rnd <= 0.0266f)) && !npc.SpawnedFromStatue)
+            if (npc.netID == NPCID.Antlion ||
+                npc.netID == NPCID.FlyingAntlion ||
+                npc.netID == NPCID.WalkingAntlion ||
+                npc.netID == NPCType<ShadowArtilery>())
             {
-                Item.NewItem(npc.getRect(), ItemType<SunAmulet>(), 1);
+                npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<SunAmulet>(), 250, 125));
             }
-
-            base.NPCLoot(npc);
+            base.ModifyNPCLoot(npc, npcLoot);
         }
     }
 }

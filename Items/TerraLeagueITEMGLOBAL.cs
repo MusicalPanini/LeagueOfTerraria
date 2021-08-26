@@ -70,58 +70,58 @@ namespace TerraLeague.Items
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.summon)
-            {
-                TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
-                if (tt2 != null)
-                {
-                    string[] splitText = tt2.text.Split(' ');
-                    int damageValue = Convert.ToInt32(splitText.First());
-                    string damageWord = splitText.Last();
-                    tt2.text = Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().minionDamageLastStep) + " minion damage";
-                }
-            }
+            //if (item.summon)
+            //{
+            //    TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
+            //    if (tt2 != null)
+            //    {
+            //        string[] splitText = tt2.text.Split(' ');
+            //        int damageValue = Convert.ToInt32(splitText.First());
+            //        string damageWord = splitText.Last();
+            //        tt2.text = Math.Round(Item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().minionDamageLastStep) + " summon damage";
+            //    }
+            //}
 
             if (item.type == ItemID.PirateHat)
             {
                 if (tooltips.FirstOrDefault(x => x.Name == "SocialDesc" && x.mod == "Terraria") == null)
-                    tooltips.Insert(3,new TooltipLine(mod, "Tooltip0", "5% increased ranged damage"));
+                    tooltips.Insert(3,new TooltipLine(Mod, "Tooltip0", "5% increased ranged damage"));
             }
             if (item.type == ItemID.PirateShirt)
             {
                 if (tooltips.FirstOrDefault(x => x.Name == "SocialDesc" && x.mod == "Terraria") == null)
-                    tooltips.Insert(3,new TooltipLine(mod, "Tooltip0", "3% increased ranged crit chance"));
+                    tooltips.Insert(3,new TooltipLine(Mod, "Tooltip0", "3% increased ranged crit chance"));
             }
             if (item.type == ItemID.PiratePants)
             {
                 if (tooltips.FirstOrDefault(x => x.Name == "SocialDesc" && x.mod == "Terraria") == null)
-                    tooltips.Insert(3,new TooltipLine(mod, "Tooltip0", "10% chance to not consume ammo"));
+                    tooltips.Insert(3,new TooltipLine(Mod, "Tooltip0", "10% chance to not consume ammo"));
             }
 
             if (item.type == ItemID.BuccaneerBandana)
             {
                 if (tooltips.FirstOrDefault(x => x.Name == "SocialDesc" && x.mod == "Terraria") == null)
-                    tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "15% increased ranged damage"));
+                    tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "15% increased ranged damage"));
             }
             if (item.type == ItemID.BuccaneerShirt)
             {
                 if (tooltips.FirstOrDefault(x => x.Name == "SocialDesc" && x.mod == "Terraria") == null)
-                    tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "7% increased ranged crit chance"));
+                    tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "7% increased ranged crit chance"));
             }
             if (item.type == ItemID.BuccaneerPants)
             {
                 if (tooltips.FirstOrDefault(x => x.Name == "SocialDesc" && x.mod == "Terraria") == null)
-                    tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "15% chance to not consume ammo"));
+                    tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "15% chance to not consume ammo"));
             }
 
             base.ModifyTooltips(item, tooltips);
         }
 
-        public override float UseTimeMultiplier(Item item, Player player)
+        public override float UseSpeedMultiplier(Item item, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            float num = base.UseTimeMultiplier(item, player);
+            float num = 1;
 
             if (modPlayer.forDemacia)
                 num += 0.1f;
@@ -134,7 +134,7 @@ namespace TerraLeague.Items
                     num += 0.1f;
             }
 
-            if (item.ranged)
+            if (item.DamageType == DamageClass.Ranged)
             {
                 num *= 0.8f * (float)modPlayer.rangedAttackSpeed;
             }
@@ -142,17 +142,42 @@ namespace TerraLeague.Items
             return num;
         }
 
-        public override void UseStyle(Item item, Player player)
+        public override float UseTimeMultiplier(Item item, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modPlayer.cannonTimer <= 0 && modPlayer.cannonSet && Main.rand.Next(0, 1) == 0 && item.ranged && player.whoAmI == Main.LocalPlayer.whoAmI)
+            float num = base.UseTimeMultiplier(item, player);
+
+            //if (modPlayer.forDemacia)
+            //    num += 0.1f;
+            //if (modPlayer.windPower)
+            //    num += 0.1f;
+            //if (modPlayer.chargerBlessing)
+            //{
+            //    num += 0.1f;
+            //    if (modPlayer.bottleOfStardust)
+            //        num += 0.1f;
+            //}
+
+            //if (item.DamageType == DamageClass.Ranged)
+            //{
+            //    num *= 0.8f * (float)modPlayer.rangedAttackSpeed;
+            //}
+
+            return num;
+        }
+
+        public override void UseStyle(Item item, Player player, Rectangle heldItemFrame)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (modPlayer.cannonTimer <= 0 && modPlayer.cannonSet && Main.rand.Next(0, 1) == 0 && item.DamageType == DamageClass.Ranged && player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 modPlayer.cannonTimer = 90;
-                Projectile.NewProjectileDirect(player.Center, new Vector2(-15, 0).RotatedBy(player.AngleFrom(Main.MouseWorld)), ProjectileID.CannonballFriendly, (int)(modPlayer.RNG * 1.5), 7, player.whoAmI);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(item), player.Center, new Vector2(-15, 0).RotatedBy(player.AngleFrom(Main.MouseWorld)), ProjectileID.CannonballFriendly, (int)(modPlayer.RNG * 1.5), 7, player.whoAmI);
             }
 
-            base.UseStyle(item, player);
+            base.UseStyle(item, player, heldItemFrame);
         }
 
         
@@ -176,11 +201,6 @@ namespace TerraLeague.Items
             return base.CanUseItem(item, player);
         }
 
-        public override bool UseItem(Item item, Player player)
-        {
-            return base.UseItem(item, player);
-        }
-
         public override bool ConsumeAmmo(Item item, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
@@ -198,11 +218,11 @@ namespace TerraLeague.Items
             // Pirate set
             if (item.type == ItemID.PirateHat)
             {
-                player.rangedDamage += 0.05f;
+                player.GetDamage(DamageClass.Ranged) += 0.05f;
             }
             if (item.type == ItemID.PirateShirt)
             {
-                player.rangedCrit += 3;
+                player.GetCritChance(DamageClass.Ranged) += 3;
             }
             if (item.type == ItemID.PiratePants)
             {
@@ -212,11 +232,11 @@ namespace TerraLeague.Items
             // Cannoneer set
             if (item.type == ItemID.BuccaneerBandana)
             {
-                player.rangedDamage += 0.15f;
+                player.GetDamage(DamageClass.Ranged) += 0.15f;
             }
             if (item.type == ItemID.BuccaneerShirt)
             {
-                player.rangedCrit += 7;
+                player.GetCritChance(DamageClass.Ranged) += 7;
             }
             if (item.type == ItemID.BuccaneerPants)
             {
@@ -276,20 +296,6 @@ namespace TerraLeague.Items
             base.UpdateArmorSet(player, set);
         }
 
-        public override bool Shoot(Item item, Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            //if (player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
-            //{
-            //    return false;
-            //}
-            //else if (meleeProjCooldown && !player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
-            //{
-            //    player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown = true;
-            //}
-
-            return base.Shoot(item, player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-        }
-
         public override bool PreOpenVanillaBag(string context, Player player, int arg)
         {
             if (context == "crate" && arg == ItemID.WoodenCrate && Main.rand.Next(8) == 0)
@@ -314,6 +320,13 @@ namespace TerraLeague.Items
                     resultType = ItemType<Sunstone>();
                 }
             }
+        }
+
+        public override void AddRecipes()
+        {
+            
+
+            base.AddRecipes();
         }
     }
 }

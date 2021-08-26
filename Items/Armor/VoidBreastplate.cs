@@ -12,23 +12,24 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Void Warped Breastplate");
-            Tooltip.SetDefault("5% increased minion damage" +
+            Tooltip.SetDefault("5% increased summon damage" +
                 "\n5% increased melee damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = 40000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 2;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = 40000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 2;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
-            player.meleeDamage += 0.05f;
+            player.GetDamage(DamageClass.Summon) += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
         }
 
         public override void AddRecipes()

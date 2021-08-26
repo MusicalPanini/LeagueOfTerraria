@@ -13,39 +13,39 @@ namespace TerraLeague.Projectiles
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = 10f;
-            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 450f;
-            ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 13f;
+            ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 10f;
+            ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 450f;
+            ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 13f;
             DisplayName.SetDefault("Heart of the Tempest");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.aiStyle = 99;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.melee = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.aiStyle = 99;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Melee;
         }
 
         public override void AI()
         {
-            ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = 10f;
+            ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 10f;
 
             if (Main.rand.NextBool())
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 0, new Color(0, 255, 255), 0.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, 0, 0, 0, new Color(0, 255, 255), 0.5f);
                 dust.noGravity = true;
             }
 
 
-            Lighting.AddLight(projectile.Center, 0f, 0.3f, 0.75f);
+            Lighting.AddLight(Projectile.Center, 0f, 0.3f, 0.75f);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (projectile.owner == Main.LocalPlayer.whoAmI)
+            if (Projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 if (hits < 3)
                 {
@@ -53,10 +53,10 @@ namespace TerraLeague.Projectiles
 
                     if (hits >= 3)
                     {
-                        Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>(), damage, 0, projectile.owner, projectile.whoAmI);
+                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>(), damage, 0, Projectile.owner, Projectile.whoAmI);
                     }
                 }
-                else if (Main.player[projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>()] == 0 && hits >= 3)
+                else if (Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>()] == 0 && hits >= 3)
                 {
                     hits = 1;
                 }

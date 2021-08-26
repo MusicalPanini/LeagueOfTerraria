@@ -10,35 +10,36 @@ namespace TerraLeague.Items.Tools
         {
             DisplayName.SetDefault("Darksteel Pick-Axe");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.melee = true;
-            item.width = 32;
-            item.height = 32;
-            item.useTime = 10;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 3f;
-            item.value = 22500;
-            item.rare = ItemRarityID.Orange;
-            item.pick = 90;
-            item.axe = 25;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.useTurn = true;
-            item.scale = 1.2f;
-            item.tileBoost -= 1;
+            Item.damage = 15;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 32;
+            Item.height = 32;
+            Item.useTime = 10;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 3f;
+            Item.value = 22500;
+            Item.rare = ItemRarityID.Orange;
+            Item.pick = 90;
+            Item.axe = 25;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.scale = 1.2f;
+            Item.tileBoost -= 1;
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 18);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<DarksteelBar>(), 18)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
             base.AddRecipes();
         }
     }

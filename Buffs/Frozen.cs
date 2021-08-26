@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Frozen : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frozen");
             Main.debuff[Type] = true;
@@ -21,7 +21,7 @@ namespace TerraLeague.Buffs
         public override void Update(NPC npc, ref int buffIndex)
         {
                 npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().frozen = true;
-            if (!npc.boss)
+            if (!Terraria.ID.NPCID.Sets.ShouldBeCountedAsBoss[npc.type])
             {
                 npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().stunned = true;
             }

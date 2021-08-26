@@ -7,14 +7,14 @@ namespace TerraLeague.Buffs
     public class GrievousWounds : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Grievous Wounds");
             Description.SetDefault("You cannot life steal");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = true;
+            LongerExpertDebuff = true;
 
         }
 

@@ -18,61 +18,61 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 40;
-            projectile.height = 40;
-            projectile.alpha = 255;
-            projectile.timeLeft = 100;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = false;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 40;
+            Projectile.height = 40;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 100;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = false;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if ((int)projectile.ai[1] != 1)
+            if ((int)Projectile.ai[1] != 1)
             {
-                projectile.rotation = -MathHelper.PiOver4 * (int)projectile.ai[0];
-                if ((int)projectile.ai[0] == 1)
+                Projectile.rotation = -MathHelper.PiOver4 * (int)Projectile.ai[0];
+                if ((int)Projectile.ai[0] == 1)
                 {
-                    projectile.spriteDirection = -1;
+                    Projectile.spriteDirection = -1;
                 }
 
-                if (projectile.alpha < 0)
+                if (Projectile.alpha < 0)
                 {
-                    projectile.alpha = 0;
-                    projectile.friendly = true;
-                    projectile.timeLeft = 54;
-                    projectile.velocity = new Vector2(-10 * (int)projectile.ai[0], -10);
-                    projectile.extraUpdates = 7;
-                    projectile.ai[1] = 1;
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 71, -0.5f);
+                    Projectile.alpha = 0;
+                    Projectile.friendly = true;
+                    Projectile.timeLeft = 54;
+                    Projectile.velocity = new Vector2(-10 * (int)Projectile.ai[0], -10);
+                    Projectile.extraUpdates = 7;
+                    Projectile.ai[1] = 1;
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 71, -0.5f);
                 }
 
-                projectile.alpha -= 15;
+                Projectile.alpha -= 15;
             }
 
-            if (projectile.timeLeft <= 30 && (int)projectile.ai[1] == 1)
+            if (Projectile.timeLeft <= 30 && (int)Projectile.ai[1] == 1)
             {
-                projectile.velocity *= 0;
-                projectile.extraUpdates = 0;
-                projectile.friendly = false;
-                projectile.alpha += 255 / 30;
+                Projectile.velocity *= 0;
+                Projectile.extraUpdates = 0;
+                Projectile.friendly = false;
+                Projectile.alpha += 255 / 30;
             }
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default, 1f);
+                Dust dustIndex = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 202, 0f, 0f, 200, default, 2f);
                 dustIndex.noGravity = true;
             }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), Projectile.position);
 
             return true;
         }
@@ -85,7 +85,7 @@ namespace TerraLeague.Projectiles
         {
             if (target.life <= 0)
             {
-                Main.player[projectile.owner].AddBuff(BuffType<DeathFromBelowRefresh>(), 600);
+                Main.player[Projectile.owner].AddBuff(BuffType<DeathFromBelowRefresh>(), 600);
             }
 
             base.OnHitNPC(target, damage, knockback, crit);

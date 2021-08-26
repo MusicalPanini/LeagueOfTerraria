@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.NPCs;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -15,15 +16,16 @@ namespace TerraLeague.Items.Accessories
             DisplayName.SetDefault("Petricite Graymark");
             Tooltip.SetDefault("Gain 10 resist after taking damage from a projectile for 4 seconds");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 26;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 6400 * 5;
-            item.accessory = true;
+            Item.width = 26;
+            Item.height = 26;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = 6400 * 5;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -37,24 +39,23 @@ namespace TerraLeague.Items.Accessories
 
         public override void AddRecipes()
         {
-            //ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(ItemType<SilversteelBar>(), 12);
-            //recipe.AddTile(TileID.MythrilAnvil);
-            //recipe.SetResult(this);
-            //recipe.AddRecipe();
+            //CreateRecipe()
+            //.AddIngredient(ItemType<SilversteelBar>(), 12);
+            //.AddTile(TileID.MythrilAnvil);
+            //.Register();
+            //
         }
 
         public class GraymarkNPC : GlobalNPC
         {
-            public override void NPCLoot(NPC npc)
+            public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
             {
-                float rnd = Main.rand.NextFloat();
-                if ((npc.netID == NPCID.GreekSkeleton || npc.netID == NPCID.Medusa) && (rnd <= 0.0133 || (Main.expertMode && rnd <= 0.0266f)) && !npc.SpawnedFromStatue)
+                if (npc.netID == NPCID.GreekSkeleton || npc.netID == NPCID.Medusa)
                 {
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<PetriciteGraymark>(), 250, 125));
                     Item.NewItem(npc.getRect(), ItemType<PetriciteGraymark>(), 1);
                 }
-
-                base.NPCLoot(npc);
+                base.ModifyNPCLoot(npc, npcLoot);
             }
         }
     }

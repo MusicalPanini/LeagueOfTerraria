@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class MaleficVisions : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Malefic Visions");
             Main.debuff[Type] = true;

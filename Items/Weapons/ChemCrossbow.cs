@@ -4,6 +4,7 @@ using TerraLeague.Buffs;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,6 +18,7 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Chem Crossbow");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -27,23 +29,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 5;
-            item.ranged = true;
-            item.noMelee = true;
-            item.width = 58;
-            item.height = 34;
-            item.useTime = 26;
-            item.useAnimation = 26;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 0f;
-            item.value = 1000;
-            item.rare = ItemRarityID.Blue;
-            item.shootSpeed = 10f;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-            item.UseSound = SoundID.Item5;
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 5;
+            Item.DamageType = DamageClass.Ranged;
+            Item.noMelee = true;
+            Item.width = 58;
+            Item.height = 34;
+            Item.useTime = 26;
+            Item.useAnimation = 26;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 0f;
+            Item.value = 1000;
+            Item.rare = ItemRarityID.Blue;
+            Item.shootSpeed = 10f;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.UseSound = SoundID.Item5;
+            Item.useAmmo = AmmoID.Arrow;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new ToxicCask(this));
             abilityItem.SetAbility(AbilityType.E, new Contaminate(this));
             abilityItem.ChampQuote = "I dealt it! It was meeee!";
@@ -61,11 +63,10 @@ namespace TerraLeague.Items.Weapons
             return new Vector2(-5, 0);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.WoodenArrowFriendly)
                 type = ProjectileType<ChemCrossbow_ToxicArrow>();
-            return true;
         }
 
         public override void OnCraft(Recipe recipe)
@@ -73,6 +74,13 @@ namespace TerraLeague.Items.Weapons
             Main.LocalPlayer.QuickSpawnItem(ItemID.WoodenArrow, 150);
 
             base.OnCraft(recipe);
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<StartingItems.WeaponKit>(), 1)
+            .Register();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Starcall";
+            return "TerraLeague/AbilityImages/Starcall";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 4);
+            return (int)(abilityItem.Item.damage * 4);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -84,7 +84,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int projType = ProjectileType<CelestialStaff_Starcall>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
 
-                Projectile.NewProjectile(position, velocity, projType, damage, 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, 0, player.whoAmI);
                 SetAnimation(player, position + velocity);
                 SetCooldowns(player, type);
             }

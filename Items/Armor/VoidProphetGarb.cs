@@ -12,32 +12,33 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Void Prophet's Garb");
-            Tooltip.SetDefault("12% increased minion damage" +
+            Tooltip.SetDefault("12% increased summon damage" +
                 "\nIncreases your max number of minions");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = 250000;
-            item.rare = ItemRarityID.Lime;
-            item.defense = 14;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = 250000;
+            Item.rare = ItemRarityID.Lime;
+            Item.defense = 14;
         }
 
         public override void UpdateEquip(Player player)
         {
             player.maxMinions++;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.12;
+            player.GetDamage(DamageClass.Summon) += 0.12f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<VoidBar>(), 24);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<VoidBar>(), 24)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override void UpdateArmorSet(Player player)

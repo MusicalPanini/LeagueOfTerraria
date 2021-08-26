@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class MessengerBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Messenger");
             Description.SetDefault("You have access to a bunch of information");

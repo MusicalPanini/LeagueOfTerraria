@@ -15,19 +15,19 @@ namespace TerraLeague.Projectiles
 {
     public class TargonBoss_LargeSolarBeam : BeamProjectile
     {
-        int RotationDir => projectile.ai[0] > 0 ? 1 : -1;
+        int RotationDir => Projectile.ai[0] > 0 ? 1 : -1;
 
         public override void SetDefaults()
         {
-            projectile.width = 42;
-            projectile.height = 42;
-            projectile.friendly = false;
-            projectile.hostile = true;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.magic = true;
-            projectile.hide = false;
-            projectile.timeLeft = 240;
+            Projectile.width = 42;
+            Projectile.height = 42;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.hide = false;
+            Projectile.timeLeft = 240;
 
             dust1 = DustID.AmberBolt;
             dust2 = DustID.AmberBolt;
@@ -48,14 +48,14 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            projectile.velocity.Normalize();
+            Projectile.velocity.Normalize();
 
-            if (projectile.timeLeft < 150 && projectile.timeLeft >= 30 )
+            if (Projectile.timeLeft < 150 && Projectile.timeLeft >= 30 )
             {
-                projectile.velocity = projectile.velocity.RotatedBy(MathHelper.PiOver2 / 120f * RotationDir);
+                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver2 / 120f * RotationDir);
             }
 
-            BeamAI(projectile.Center);
+            BeamAI(Projectile.Center);
         }
     }
 }

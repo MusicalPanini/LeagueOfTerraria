@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Armor
             Tooltip.SetDefault("Increases your max life by 10" +
                 "\nIncreases life regeneration by 2");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 26;
-            item.value = 145000 * 5;
-            item.rare = ItemRarityID.Yellow;
-            item.defense = 10;
+            Item.width = 24;
+            Item.height = 26;
+            Item.value = 145000 * 5;
+            Item.rare = ItemRarityID.Yellow;
+            Item.defense = 10;
         }
 
         public override void UpdateEquip(Player player)
@@ -33,13 +34,13 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 8);
-            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
-            recipe.AddIngredient(ItemID.LunarTabletFragment, 8);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 8)
+            .AddIngredient(ItemType<FragmentOfTheAspect>(), 1)
+            .AddIngredient(ItemID.LunarTabletFragment, 8)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

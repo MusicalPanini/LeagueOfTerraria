@@ -14,42 +14,41 @@ namespace TerraLeague.Items.Armor
             DisplayName.SetDefault("Solari Breastplate");
             Tooltip.SetDefault("10 armor" +
                 "\nIncreases your max life by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = 145000 * 5;
-            item.rare = ItemRarityID.Yellow;
-            item.defense = 30;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = 145000 * 5;
+            Item.rare = ItemRarityID.Yellow;
+            Item.defense = 30;
         }
 
 
         
         public override void UpdateEquip(Player player)
         {
-            player.back = (sbyte)mod.GetEquipSlot("SolariBreastplate", EquipType.Back);
+            player.back = (sbyte)Mod.GetEquipSlot("SolariBreastplate", EquipType.Back);
             player.GetModPlayer<PLAYERGLOBAL>().armor += 10;
             player.statLifeMax2 += 20;
         }
 
-        public override void UpdateVanity(Player player, EquipType type)
+        public override void UpdateVanity(Player player)
         {
             if (player.wings <= 0)
-                player.back = (sbyte)mod.GetEquipSlot("SolariBreastplate", EquipType.Back); ;
-            base.UpdateVanity(player, type);
+                player.back = (sbyte)Mod.GetEquipSlot("SolariBreastplate", EquipType.Back); ;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 14);
-            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
-            recipe.AddIngredient(ItemID.LunarTabletFragment, 8);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 14)
+            .AddIngredient(ItemType<FragmentOfTheAspect>(), 1)
+            .AddIngredient(ItemID.LunarTabletFragment, 8)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

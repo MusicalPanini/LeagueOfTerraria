@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/EssenceFlux";
+            return "TerraLeague/AbilityImages/EssenceFlux";
         }
 
         public override string GetAbilityTooltip()
@@ -88,7 +88,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int knockback = 0;
 
                 SetAnimation(player, position + velocity);
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }

@@ -3,6 +3,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,48 +18,49 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Serpent's Embrace");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
         {
             return "Fire a serpent that applies 'Venom'." +
                 "\nIf a nearby enemy has 'Venom' launch Twin Fangs instead at nearby 'Venom' affected enemies instead." +
-                "\nTwin Fangs deal " + LeagueTooltip.TooltipValue(item.damage, false, "",
+                "\nTwin Fangs deal " + LeagueTooltip.TooltipValue(Item.damage, false, "",
               new System.Tuple<int, ScaleType>(MAGScaling, ScaleType.Magic)
               ) + " magic damage";
         }
 
         public override void SetDefaults()
         {
-            item.damage = 31;
-            item.ranged = true;
-            item.width = 28;
-            item.height = 58;
-            item.useAnimation = 30;
-            item.useTime = 30;
-            item.shootSpeed = 10f;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 160000;
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.PurificationPowder;
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 31;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 28;
+            Item.height = 58;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
+            Item.shootSpeed = 10f;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 160000;
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.useAmmo = AmmoID.Arrow;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new NoxiousBlast(this));
             abilityItem.ChampQuote = "There is no antidote for me";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Targeting.IsThereAnNPCInRange(player.MountedCenter, 500, BuffID.Venom))
             {
-                int tfDamage = item.damage + (MAGScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100);
+                int tfDamage = Item.damage + (MAGScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100);
                 Vector2 center = player.MountedCenter;
 
                 var targets = Targeting.GetAllNPCsInRange(center, 500, true);
@@ -66,7 +68,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     if (Main.npc[targets[i]].HasBuff(BuffID.Venom))
                     {
-                        Projectile.NewProjectileDirect(center, TerraLeague.CalcVelocityToPoint(center, Main.npc[targets[i]].Center, 16), ProjectileType<SerpentsEmbrace_TwinFangs>(), tfDamage, 1, player.whoAmI, targets[i]);
+                        Projectile.NewProjectileDirect(source, center, TerraLeague.CalcVelocityToPoint(center, Main.npc[targets[i]].Center, 16), ProjectileType<SerpentsEmbrace_TwinFangs>(), tfDamage, 1, player.whoAmI, targets[i]);
                     }
                 }
                 return false;
@@ -75,20 +77,21 @@ namespace TerraLeague.Items.Weapons
             {
                 if (type == ProjectileID.WoodenArrowFriendly)
                     type = ProjectileType<SerpentsEmbrace_Serpent>();
-                return true;
+
+                Projectile.NewProjectileDirect(source, position, velocity, type, damage, 1, player.whoAmI);
+                return false;
             }
 
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
-            recipe.AddIngredient(ItemID.HellwingBow, 1);
-            recipe.AddIngredient(ItemID.FrostCore, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<TrueIceChunk>(), 4)
+            .AddIngredient(ItemID.HellwingBow, 1)
+            .AddIngredient(ItemID.FrostCore, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

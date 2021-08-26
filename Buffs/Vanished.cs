@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Vanished : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Vanished");
             Description.SetDefault("Can't hit what you can't see!");

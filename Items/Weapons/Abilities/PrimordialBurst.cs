@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/PrimordialBurst";
+            return "TerraLeague/AbilityImages/PrimordialBurst";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2);
+            return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -89,7 +89,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int knockback = 3;
 
                     SetAnimation(player, Main.npc[npc].Center);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, npc, -1);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, npc, -1);
                     SetCooldowns(player, type);
                 }
             }

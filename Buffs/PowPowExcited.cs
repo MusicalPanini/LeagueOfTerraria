@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class PowPowExcited : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("EXCITED");
             Description.SetDefault("This party just got crazy!");

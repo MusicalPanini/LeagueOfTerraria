@@ -12,10 +12,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Ghost Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Ghost";
+            return "TerraLeague/Items/SummonerSpells/Ghost";
         }
 
         public override string GetSpellName()
@@ -57,7 +58,7 @@ namespace TerraLeague.Items.SummonerSpells
             TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(32, -spacing), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, -spacing), type, 0.5f, 2, default, true, -5, 0);
             TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(-16, -spacing), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, -spacing), type, 0.5f, 2, default, true, 5, 0);
 
-            Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
         }
     }
 }

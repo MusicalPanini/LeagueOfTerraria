@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Weapons
 		{
 			DisplayName.SetDefault("Stoneweaver's Staff");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -24,23 +25,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 17;
-            item.mana = 4;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.magic = true;
-            item.useTime = 35;
-            item.useAnimation = 35;
-            item.noMelee = true;
-            item.knockBack = 2;
-            item.value = 10000;
-            item.rare = ItemRarityID.Green;
-            item.UseSound = SoundID.Item8;
-            item.shoot = ProjectileType<StoneweaversStaff_WeaversStone>();
-            item.shootSpeed = 12f;
-            item.autoReuse = true;
-            item.useAmmo = ItemType<BlackIceChunk>();
+            Item.damage = 17;
+            Item.mana = 4;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 35;
+            Item.useAnimation = 35;
+            Item.noMelee = true;
+            Item.knockBack = 2;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = SoundID.Item8;
+            Item.shoot = ProjectileType<StoneweaversStaff_WeaversStone>();
+            Item.shootSpeed = 12f;
+            Item.autoReuse = true;
+            Item.useAmmo = ItemType<BlackIceChunk>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new ThreadedVolley(this));
             abilityItem.ChampQuote = "Throw another rock!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -49,7 +50,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            return player.HasAmmo(item, false);
+            return player.HasAmmo(Item, false);
         }
 
         public override Vector2? HoldoutOffset()
@@ -59,13 +60,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 10);
-            recipe.AddIngredient(ItemID.Sandstone, 50);
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddRecipeGroup("TerraLeague:GoldGroup", 10)
+            .AddIngredient(ItemID.Sandstone, 50)
+            .AddIngredient(ItemType<Sunstone>(), 10)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

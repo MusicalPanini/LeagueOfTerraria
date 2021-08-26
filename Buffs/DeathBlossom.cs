@@ -13,7 +13,7 @@ namespace TerraLeague.Buffs
         public bool initial = true;
         int damage = 0;
 
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Death Lotus");
             Description.SetDefault("Spin");
@@ -45,8 +45,8 @@ namespace TerraLeague.Buffs
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(-MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDagger_Dagger>(), damage, 2, player.whoAmI, 1, 0);
-                    proj = Projectile.NewProjectileDirect(player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDagger_Dagger>(), damage, 2, player.whoAmI, 1);
+                    Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(new DarksteelDagger().Item), player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(-MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDagger_Dagger>(), damage, 2, player.whoAmI, 1, 0);
+                    proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(new DarksteelDagger().Item), player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDagger_Dagger>(), damage, 2, player.whoAmI, 1);
                 }
             }
 

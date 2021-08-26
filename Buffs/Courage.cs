@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
 {
     public class Courage : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Courage");
             Description.SetDefault("Your armor and resist have been increased!");

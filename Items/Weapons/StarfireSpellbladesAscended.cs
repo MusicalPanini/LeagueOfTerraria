@@ -3,6 +3,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -21,7 +22,7 @@ namespace TerraLeague.Items.Weapons
         {
             return "You have ascended!" +
                 "\nFire a wave of starfire that deals " +
-                LeagueTooltip.TooltipValue((int)(item.damage * 0.75), false, "",
+                LeagueTooltip.TooltipValue((int)(Item.damage * 0.75), false, "",
                 new System.Tuple<int, ScaleType>(30, ScaleType.Melee),
                 new System.Tuple<int, ScaleType>(50, ScaleType.Summon)
                 ) + " melee damage";
@@ -29,39 +30,39 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 110;
-            item.width = 56;
-            item.height = 56;       
-            item.melee = true;
-            item.useTime = 36;
-            item.useAnimation = 18;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 6;
-            item.value = 200000;
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.shoot = ProjectileType<StarfireSpellblades_Firewave>();
-            item.shootSpeed = 8;
+            Item.damage = 110;
+            Item.width = 56;
+            Item.height = 56;       
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 36;
+            Item.useAnimation = 18;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 6;
+            Item.value = 200000;
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileType<StarfireSpellblades_Firewave>();
+            Item.shootSpeed = 8;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new DivineJudgement(this));
             abilityItem.ChampQuote = "Behold, the righteous flame!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
-            damage = (int)(item.damage * 0.75) + (int)(player.GetModPlayer<PLAYERGLOBAL>().MEL * 0.3) + (int)(player.GetModPlayer<PLAYERGLOBAL>().SUM * 0.5);
+            //Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
+            damage = (int)(Item.damage * 0.75) + (int)(player.GetModPlayer<PLAYERGLOBAL>().MEL * 0.3) + (int)(player.GetModPlayer<PLAYERGLOBAL>().SUM * 0.5);
             int numberProjectiles = 24;
             float startingAngle = 24;
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(startingAngle));
+                Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
                 startingAngle -= 2f;
-                Projectile proj = Projectile.NewProjectileDirect(position, perturbedSpeed, type, damage, knockBack, player.whoAmI, i);
+                Projectile proj = Projectile.NewProjectileDirect(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI, i);
             }
 
             return false;
@@ -72,14 +73,9 @@ namespace TerraLeague.Items.Weapons
             target.AddBuff(BuffID.Daybreak, 60);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
-        {
-            base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
-        }
-
         public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.TopazBolt, 0, 0, 100, default, 0.7f);
+            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GemTopaz, 0, 0, 100, default, 0.7f);
             dust.noGravity = true;
             base.MeleeEffects(player, hitbox);
         }
@@ -88,9 +84,9 @@ namespace TerraLeague.Items.Weapons
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks != 6)
             {
-                byte prefix = item.prefix;
-                item.SetDefaults(ModContent.ItemType<StarfireSpellblades>());
-                item.prefix = prefix;
+                int prefix = Item.prefix;
+                Item.SetDefaults(ModContent.ItemType<StarfireSpellblades>());
+                Item.prefix = prefix;
             }
 
             base.UpdateInventory(player);
@@ -98,9 +94,9 @@ namespace TerraLeague.Items.Weapons
 
         public override void Update(ref float gravity, ref float maxFallSpeed)
         {
-            byte prefix = item.prefix;
-            item.SetDefaults(ModContent.ItemType<StarfireSpellblades>());
-            item.prefix = prefix;
+            int prefix = Item.prefix;
+            Item.SetDefaults(ModContent.ItemType<StarfireSpellblades>());
+            Item.prefix = prefix;
 
             base.Update(ref gravity, ref maxFallSpeed);
         }

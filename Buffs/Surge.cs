@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Surge : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Surge");
             Description.SetDefault("The magic gives you strength!" +

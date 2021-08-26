@@ -3,6 +3,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -16,6 +17,7 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Echoing Flame Cannon");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -27,37 +29,38 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 52;
-            item.ranged = true;
-            item.noMelee = true;
-            item.width = 40;
-            item.height = 32; 
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 5f;
-            item.value = 100000;
-            item.rare = ItemRarityID.Pink;
-            item.shootSpeed = 12f;
-            item.UseSound = new LegacySoundStyle(2, 36);
-            item.useAmmo = AmmoID.Bullet;
-            item.shoot = ProjectileID.Bullet;
-            item.autoReuse = true;
+            Item.damage = 52;
+            Item.DamageType = DamageClass.Ranged;
+            Item.noMelee = true;
+            Item.width = 40;
+            Item.height = 32; 
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 5f;
+            Item.value = 100000;
+            Item.rare = ItemRarityID.Pink;
+            Item.shootSpeed = 12f;
+            Item.UseSound = new LegacySoundStyle(2, 36);
+            Item.useAmmo = AmmoID.Bullet;
+            Item.shoot = ProjectileID.Bullet;
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new CorrosiveCharge(this));
             abilityItem.ChampQuote = "You cannot know strength... Until you are broken";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            EchoingFlamesEffect(player, damage, new Vector2(speedX, speedY));
+            EchoingFlamesEffect(player, damage, velocity, source);
             return true;
         }
 
-        public void EchoingFlamesEffect(Player player, int damage, Vector2 velocity)
+        public void EchoingFlamesEffect(Player player, int damage, Vector2 velocity, ProjectileSource_Item_WithAmmo source)
         {
             float angle = velocity.ToRotation();
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
@@ -116,19 +119,19 @@ namespace TerraLeague.Items.Weapons
             {
                 for (int i = 0; i < projectileAngles.Length; i++)
                 {
-                    Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(projectileAngles[i])), ProjectileType<EchoingFlameCannon_EchoingFlames>(), damage/2, 5, player.whoAmI);
+                    Projectile.NewProjectileDirect(source, player.MountedCenter, new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(projectileAngles[i])), ProjectileType<EchoingFlameCannon_EchoingFlames>(), damage/2, 5, player.whoAmI);
                 }
             }
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PerfectHexCore>());
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 14);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<PerfectHexCore>())
+            .AddRecipeGroup("TerraLeague:Tier3Bar", 14)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             if (TerraLeague.FindAccessorySlotOnPlayer(player, GetInstance<Maw>()) != -1)
             {
-                if (modItem.item.type == ItemType<Maw>())
+                if (modItem.Item.type == ItemType<Maw>())
                 {
                     player.AddBuff(BuffType<Buffs.LifeGrip>(), 720);
                 }

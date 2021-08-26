@@ -14,15 +14,16 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Mortal Reminder");
             Tooltip.SetDefault("5% increased ranged damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -32,20 +33,20 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Executioners>(), 1);
-            recipe.AddIngredient(ItemType<AdvItems.LastWhisper>(), 1);
-            recipe.AddIngredient(ItemID.BlackLens, 1);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 8);
-            recipe.AddIngredient(ItemID.SoulofSight, 5);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Executioners>(), 1)
+            .AddIngredient(ItemType<AdvItems.LastWhisper>(), 1)
+            .AddIngredient(ItemID.BlackLens, 1)
+            .AddIngredient(ItemType<DarksteelBar>(), 8)
+            .AddIngredient(ItemID.SoulofSight, 5)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

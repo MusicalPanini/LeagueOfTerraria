@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class SpellBlade : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spellblade");
             Description.SetDefault("Your next melee attack has increased damage!");

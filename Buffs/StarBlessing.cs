@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class StarBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Star Child");
             Description.SetDefault("10% increased heal power");

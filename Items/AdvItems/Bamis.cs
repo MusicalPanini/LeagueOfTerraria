@@ -14,16 +14,17 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Bami's Cinder");
             Tooltip.SetDefault("Increases maximum life by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -40,14 +41,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemID.Hellstone, 10);
-            recipe.AddIngredient(ItemType<Sunstone>(), 5);
-            recipe.AddIngredient(ItemID.Fireblossom, 3);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemID.Hellstone, 10)
+            .AddIngredient(ItemType<Sunstone>(), 5)
+            .AddIngredient(ItemID.Fireblossom, 3)
+            .AddTile(TileID.Furnaces)
+            .Register();
+            
         }
     }
 }

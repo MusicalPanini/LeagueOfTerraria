@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Requiem";
+            return "TerraLeague/AbilityImages/Requiem";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2.5);
+            return (int)(abilityItem.Item.damage * 2.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)

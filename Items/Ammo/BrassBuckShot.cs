@@ -11,34 +11,34 @@ namespace TerraLeague.Items.Ammo
         {
             DisplayName.SetDefault("Brass Buckshot");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
 
         public override void SetDefaults()
         {
-            item.shootSpeed = 3f;
-            item.shoot = ProjectileType<Bullet_BrassShot>();
-            item.damage = 6;
-            item.width = 8;
-            item.height = 8;
-            item.maxStack = 999;
-            item.consumable = true;
-            item.ammo = AmmoID.Bullet;
-            item.value = 5;
-            item.knockBack = 4f;
-            item.value = 5;
-            item.ranged = true;
-            item.rare = ItemRarityID.Blue;
+            Item.shootSpeed = 3f;
+            Item.shoot = ProjectileType<Bullet_BrassShot>();
+            Item.damage = 6;
+            Item.width = 8;
+            Item.height = 8;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.ammo = AmmoID.Bullet;
+            Item.value = 5;
+            Item.knockBack = 4f;
+            Item.value = 5;
+            Item.DamageType = DamageClass.Ranged;
+            Item.rare = ItemRarityID.Blue;
 
             base.SetDefaults();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BrassBar>(), 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 70);
-            recipe.AddRecipe();
+            CreateRecipe(70)
+            .AddIngredient(ItemType<BrassBar>(), 1)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

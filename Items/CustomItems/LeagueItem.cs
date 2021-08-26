@@ -393,9 +393,9 @@ namespace TerraLeague.Items.CustomItems
 
         static public void RunEnabled_PostPlayerUpdate(Player player)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -416,9 +416,9 @@ namespace TerraLeague.Items.CustomItems
 
         static public void RunEnabled_NPCHit(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int onhitdamage)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -439,9 +439,9 @@ namespace TerraLeague.Items.CustomItems
 
         static public void RunEnabled_NPCHitWithProjectile(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int onhitdamage)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -462,9 +462,9 @@ namespace TerraLeague.Items.CustomItems
 
         static public void RunEnabled_OnHitByNPC(Player player, NPC npc, ref int damage, ref bool crit)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -485,9 +485,9 @@ namespace TerraLeague.Items.CustomItems
 
         static public void RunEnabled_OnHitByProjectile(Player player, Projectile proj, ref int damage, ref bool crit)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -508,9 +508,9 @@ namespace TerraLeague.Items.CustomItems
 
         static public void RunEnabled_OnHitByProjectile(Player player, NPC npc, ref int damage, ref bool crit)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -531,9 +531,9 @@ namespace TerraLeague.Items.CustomItems
 
         static public void RunEnabled_OnKilledNPC(Player player, NPC npc, ref int damage, ref bool crit)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {
@@ -566,9 +566,9 @@ namespace TerraLeague.Items.CustomItems
         {
             int doesKill = -1;
 
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 10; i++)
             {
-                if (player.armor[i].modItem is LeagueItem legItem)
+                if (player.armor[i].ModItem is LeagueItem legItem)
                 {
                     if (legItem.Passives != null)
                     {

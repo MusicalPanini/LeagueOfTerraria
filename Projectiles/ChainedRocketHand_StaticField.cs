@@ -19,21 +19,21 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
-            projectile.timeLeft = 300;
-            projectile.penetrate = 100;
-            projectile.friendly = true;
-            projectile.alpha = 255;
-            projectile.magic = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 100;
+            Projectile.friendly = true;
+            Projectile.alpha = 255;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
                 Prime();
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
             base.AI();
         }
 
@@ -52,10 +52,10 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(3, 53), Projectile.position);
             for (int i = 0; i < 100; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 175, projectile.Center.Y - 175), 350, 350, DustID.AncientLight, 0, 0, 50, new Color(0, 255, 255), 1.5f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 175, Projectile.Center.Y - 175), 350, 350, DustID.AncientLight, 0, 0, 50, new Color(0, 255, 255), 1.5f);
                 dust.velocity *= 15f;
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 100; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 175, projectile.Center.Y - 175), 350, 350, DustID.AncientLight, 0, 0, 50, new Color(0, 255, 255), 1);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 175, Projectile.Center.Y - 175), 350, 350, DustID.AncientLight, 0, 0, 50, new Color(0, 255, 255), 1);
                 dust.velocity *= 10f;
             }
 
@@ -71,7 +71,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 18; i++)
                 {
-                    Vector2 pos = new Vector2(350, 0).RotatedBy(MathHelper.ToRadians((20 * i) + (j * 6))) + projectile.Center;
+                    Vector2 pos = new Vector2(350, 0).RotatedBy(MathHelper.ToRadians((20 * i) + (j * 6))) + Projectile.Center;
 
                     Dust dustR = Dust.NewDustPerfect(pos, 261, Vector2.Zero, 0, new Color(0, 255, 255), 1);
                     dustR.noGravity = true;
@@ -91,23 +91,23 @@ namespace TerraLeague.Projectiles
         {
             int size = 700;
 
-            projectile.tileCollide = false;
-            projectile.velocity = Vector2.Zero;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = size;
-            projectile.height = size;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = size;
+            Projectile.height = size;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 2;
         }
 
         public override bool? CanHitNPC(NPC target)
         {
             if (target.townNPC)
                 return false;
-            return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+            return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width / 2);
         }
 
         public override bool? CanCutTiles()

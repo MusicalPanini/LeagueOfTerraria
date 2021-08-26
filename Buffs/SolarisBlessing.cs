@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class SolarisBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Solari's Protection");
             Description.SetDefault("You have a sun fueled shield!");

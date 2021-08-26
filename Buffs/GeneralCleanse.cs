@@ -9,7 +9,7 @@ namespace TerraLeague.Buffs
 {
     public class GeneralCleanse : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cleansed");
             Description.SetDefault("You feel pure!");

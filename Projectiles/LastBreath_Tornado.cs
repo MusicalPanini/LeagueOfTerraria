@@ -16,22 +16,22 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tornado");
-            Main.projFrames[projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 6;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
-            projectile.timeLeft = 90;
-            projectile.penetrate = 100;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1.5f;
-            aiType = 0;
+            Projectile.width = 30;
+            Projectile.height = 30;
+            Projectile.timeLeft = 90;
+            Projectile.penetrate = 100;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1.5f;
+            AIType = 0;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (!target.boss)
+            if (!NPCID.Sets.ShouldBeCountedAsBoss[target.type])
             {
                 target.velocity.Y = -12;
             }
@@ -51,29 +51,29 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if(projectile.velocity.Length() > 0)
+            if(Projectile.velocity.Length() > 0)
             {
-                projectile.velocity.X *= .98f;
-                projectile.velocity.Y *= .98f;
+                Projectile.velocity.X *= .98f;
+                Projectile.velocity.Y *= .98f;
             }
             
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Cloud);
-            if (projectile.timeLeft < 30)
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Cloud);
+            if (Projectile.timeLeft < 30)
             {
-                projectile.alpha += 9;
+                Projectile.alpha += 9;
             }
             AnimateProjectile();
         }
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 3)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 3)
             {
-                projectile.frame++;
-                projectile.frame %= 6; 
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 6; 
+                Projectile.frameCounter = 0;
             }
         }
     }

@@ -11,27 +11,27 @@ namespace TerraLeague.Items
     {
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 4));
-            ItemID.Sets.ItemNoGravity[item.type] = true;
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
             DisplayName.SetDefault("Greater Soul");
             base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 32;
-            item.height = 32;
-            item.uniqueStack = false;
-            item.rare = ItemRarityID.Orange;
-            item.value = 100;
+            Item.maxStack = 999;
+            Item.width = 32;
+            Item.height = 32;
+            Item.uniqueStack = false;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = 100;
         }
 
         public override void PostUpdate()
         {
-            ItemID.Sets.ItemIconPulse[item.type] = false;
+            ItemID.Sets.ItemIconPulse[Item.type] = false;
 
-            Lighting.AddLight(item.Center, Color.DarkSeaGreen.ToVector3() * 0.55f * Main.essScale);
+            Lighting.AddLight(Item.Center, Color.DarkSeaGreen.ToVector3() * 0.55f * Main.essScale);
         }
     }
 }

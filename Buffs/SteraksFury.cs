@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class SteraksFury : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sterak's Fury");
             Description.SetDefault("You have a shield made of rage!" +

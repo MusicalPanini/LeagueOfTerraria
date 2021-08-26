@@ -15,15 +15,16 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Hexdrinker");
             Tooltip.SetDefault("3% increased melee and ranged damage" +
                 "\nIncreases resist by 3");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -32,8 +33,8 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.03f;
-            player.rangedDamage += 0.03f;
+            player.GetDamage(DamageClass.Melee) += 0.03f;
+            player.GetDamage(DamageClass.Ranged) += 0.03f;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 3;
             base.UpdateAccessory(player, hideVisual);
 
@@ -41,15 +42,15 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LongSword>(), 1);
-            recipe.AddIngredient(ItemType<NullMagic>(), 1);
-            recipe.AddIngredient(ItemType<Petricite>(), 12);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 5);
-            recipe.AddIngredient(ItemID.Amber, 4);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 1)
+            .AddIngredient(ItemType<NullMagic>(), 1)
+            .AddIngredient(ItemType<Petricite>(), 12)
+            .AddIngredient(ItemID.MeteoriteBar, 5)
+            .AddIngredient(ItemID.Amber, 4)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

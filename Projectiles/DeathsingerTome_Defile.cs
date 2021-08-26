@@ -16,64 +16,64 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Defile");
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 400;
-            projectile.height = 400;
-            projectile.timeLeft = 180;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 1;
-            projectile.alpha = 180;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 20;
+            Projectile.width = 400;
+            Projectile.height = 400;
+            Projectile.timeLeft = 180;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.scale = 1;
+            Projectile.alpha = 180;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 20;
         }
 
         public override void AI()
         {
-            projectile.Center = Main.player[projectile.owner].Center;
-                Lighting.AddLight(projectile.Center, 0f, 0.75f, 0.3f);
+            Projectile.Center = Main.player[Projectile.owner].Center;
+                Lighting.AddLight(Projectile.Center, 0f, 0.75f, 0.3f);
 
             int num = Main.rand.Next(0, 3);
             Dust dust;
             if (num == 0)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.RedsWingsRun, 0, -1, 150);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 186, 0, -1, 150);
                 dust.velocity.X *= 0.3f;
                 dust.color = new Color(0, 255, 150);
                 dust.noGravity = false;
             }
             else if (num == 2)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.RedsWingsRun, 0, -1, 150);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 186, 0, -1, 150);
                 dust.velocity.X *= 0.3f;
                 dust.color = new Color(0, 255, 0);
                 dust.noGravity = false;
             }
 
-            if (projectile.timeLeft < 15)
+            if (Projectile.timeLeft < 15)
             {
-                projectile.alpha += 5;
+                Projectile.alpha += 5;
             }
             AnimateProjectile();
         }
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-                projectile.frame++;
-                projectile.frame %= 4; 
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4; 
+                Projectile.frameCounter = 0;
             }
         }
 
@@ -81,7 +81,7 @@ namespace TerraLeague.Projectiles
         {
             if (target.townNPC)
                 return false;
-            return Targeting.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+            return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width / 2);
         }
 
         public override bool? CanCutTiles()

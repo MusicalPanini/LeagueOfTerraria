@@ -4,6 +4,7 @@ using System.Linq;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,7 +19,8 @@ namespace TerraLeague.Items.Weapons
 		{
 			DisplayName.SetDefault("Tidecaller Staff");
             Tooltip.SetDefault("");
-            Item.staff[item.type] = false;
+            Item.staff[Item.type] = false;
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -42,23 +44,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 26;
-            item.mana = 20;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.magic = true;
-            item.useTime = 36;
-            item.useAnimation = 36;
-            item.noMelee = true;
-            item.knockBack = 3;
-            item.value = 4000;
-            item.rare = ItemRarityID.Green;
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound);
-            item.shoot = ProjectileType<TideCallerStaff_EbbandFlow>();
-            //item.shoot = ProjectileType<TideCallerStaff_WaterShot>();
-            item.shootSpeed = 11f;
+            Item.damage = 26;
+            Item.mana = 20;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 36;
+            Item.useAnimation = 36;
+            Item.noMelee = true;
+            Item.knockBack = 3;
+            Item.value = 4000;
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound);
+            Item.shoot = ProjectileType<TideCallerStaff_EbbandFlow>();
+            //Item.shoot = ProjectileType<TideCallerStaff_WaterShot>();
+            Item.shootSpeed = 11f;
             healing = 8;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new AquaPrison(this));
             abilityItem.SetAbility(AbilityType.E, new TidecallersBlessing(this));
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -68,15 +70,12 @@ namespace TerraLeague.Items.Weapons
             base.SetDefaults();
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            item.mana = 20;
-            Vector2 velocity = new Vector2(speedX, speedY);
+            int scaledHealing = modPlayer.ScaleValueWithHealPower(healing * player.GetDamage(DamageClass.Magic));
 
-            int scaledHealing = modPlayer.ScaleValueWithHealPower(healing * player.magicDamage);
-
-            Projectile.NewProjectileDirect(position, velocity, type, damage, knockBack, player.whoAmI, damage, scaledHealing);
+            Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, damage, scaledHealing);
             return false;
         }
 
@@ -87,14 +86,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 10);
-            recipe.AddIngredient(ItemID.Seashell, 5);
-            recipe.AddIngredient(ItemID.FallenStar, 5);
-            recipe.AddIngredient(ItemID.Sapphire, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddRecipeGroup("TerraLeague:GoldGroup", 10)
+            .AddIngredient(ItemID.Seashell, 5)
+            .AddIngredient(ItemID.FallenStar, 5)
+            .AddIngredient(ItemID.Sapphire, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class GatheringFire : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gathering Fire");
             Description.SetDefault("+10 increased MEL, RNG, MAG, and SUM" +

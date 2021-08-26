@@ -3,6 +3,7 @@ using System;
 using TerraLeague.Buffs;
 using TerraLeague.NPCs;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -14,47 +15,47 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Severum");
-            Main.projFrames[projectile.type] = 28;
+            Main.projFrames[Projectile.type] = 28;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 136;
-            projectile.height = 128;
-            projectile.friendly = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 0;
-            projectile.timeLeft = 60;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.localNPCHitCooldown = 14;
-            projectile.usesLocalNPCImmunity = true;
+            Projectile.width = 136;
+            Projectile.height = 128;
+            Projectile.friendly = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 60;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.localNPCHitCooldown = 14;
+            Projectile.usesLocalNPCImmunity = true;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
-            Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 2;
+            Player player = Main.player[Projectile.owner];
+            Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 2;
 
             if (player.GetModPlayer<PLAYERGLOBAL>().severumAmmo < 2)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
-            projectile.localNPCHitCooldown = (int)(14 * player.meleeSpeed);
+            Projectile.localNPCHitCooldown = (int)(14 * player.meleeSpeed);
             //if (player.channel && !player.noItems && !player.CCed)
             //{
             //    player.itemAnimation = 5;
             //    player.itemTime = 5;
-            //    projectile.rotation = player.itemRotation;
-            //    projectile.Center = player.MountedCenter + new Vector2(100, 0).RotatedBy(projectile.rotation);
-            //    projectile.timeLeft = 60;
+            //    Projectile.rotation = player.itemRotation;
+            //    Projectile.Center = player.MountedCenter + new Vector2(100, 0).RotatedBy(Projectile.rotation);
+            //    Projectile.timeLeft = 60;
 
             //    AnimateProjectile();
             //}
             //else
             //{
-            //    projectile.Kill();
+            //    Projectile.Kill();
             //}
 
             float num;
@@ -63,19 +64,19 @@ namespace TerraLeague.Projectiles
             player.itemAnimation = 5;
             player.itemTime = 5;
             num = 0f;
-            if (projectile.spriteDirection == -1)
+            if (Projectile.spriteDirection == -1)
             {
                 num = 3.14159274f;
             }
             AnimateProjectile();
-            if (Main.myPlayer == projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
             {
                 if (player.channel && !player.noItems && !player.CCed)
                 {
                     float scaleFactor6 = 1f;
-                    if (player.inventory[player.selectedItem].shoot == projectile.type)
+                    if (player.inventory[player.selectedItem].shoot == Projectile.type)
                     {
-                        scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * projectile.scale;
+                        scaleFactor6 = player.inventory[player.selectedItem].shootSpeed * Projectile.scale;
                     }
                     Vector2 vector19 = Main.MouseWorld - vector;
                     vector19.Normalize();
@@ -84,38 +85,38 @@ namespace TerraLeague.Projectiles
                         vector19 = Vector2.UnitX * (float)player.direction;
                     }
                     vector19 *= scaleFactor6;
-                    if (vector19.X != projectile.velocity.X || vector19.Y != projectile.velocity.Y)
+                    if (vector19.X != Projectile.velocity.X || vector19.Y != Projectile.velocity.Y)
                     {
-                        projectile.netUpdate = true;
+                        Projectile.netUpdate = true;
                     }
-                    projectile.velocity = vector19;
+                    Projectile.velocity = vector19;
                 }
                 else
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
             }
-            Vector2 vector20 = projectile.Center + projectile.velocity * 3f;
+            Vector2 vector20 = Projectile.Center + Projectile.velocity * 3f;
 
-            projectile.position = player.RotatedRelativePoint(player.MountedCenter, false) - projectile.Size / 2f;
-            projectile.rotation = projectile.velocity.ToRotation() + num;
-            projectile.spriteDirection = projectile.direction;
-            projectile.timeLeft = 2;
-            player.ChangeDir(projectile.direction);
-            player.heldProj = projectile.whoAmI;
-            player.itemRotation = MathHelper.WrapAngle((float)Math.Atan2((double)(projectile.velocity.Y * (float)projectile.direction), (double)(projectile.velocity.X * (float)projectile.direction)) + num3);
+            Projectile.position = player.RotatedRelativePoint(player.MountedCenter, false) - Projectile.Size / 2f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + num;
+            Projectile.spriteDirection = Projectile.direction;
+            Projectile.timeLeft = 2;
+            player.ChangeDir(Projectile.direction);
+            player.heldProj = Projectile.whoAmI;
+            player.itemRotation = MathHelper.WrapAngle((float)Math.Atan2((double)(Projectile.velocity.Y * (float)Projectile.direction), (double)(Projectile.velocity.X * (float)Projectile.direction)) + num3);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            //Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal++;
+            //Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal++;
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 
@@ -127,27 +128,27 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            int frameCounterMax = Main.player[projectile.owner].meleeSpeed < 0.5f ? 1 : 2;
-            if (projectile.frameCounter >= frameCounterMax)
+            Projectile.frameCounter++;
+            int frameCounterMax = Main.player[Projectile.owner].meleeSpeed < 0.5f ? 1 : 2;
+            if (Projectile.frameCounter >= frameCounterMax)
             {
-                projectile.frame++;
-                projectile.frame %= 28;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 28;
+                Projectile.frameCounter = 0;
             }
 
-            if (projectile.frameCounter == 1 && projectile.frame % 7 == 0)
+            if (Projectile.frameCounter == 1 && Projectile.frame % 7 == 0)
             {
-                Main.PlaySound(SoundID.Item1, projectile.Center);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
             }
 
-            if (projectile.frameCounter == 1 && projectile.frame % 7 == 2)
+            if (Projectile.frameCounter == 1 && Projectile.frame % 7 == 2)
             {
-                projectile.friendly = true;
-                if (Main.LocalPlayer.whoAmI == projectile.owner)
-                    Projectile.NewProjectileDirect(projectile.Center, (Main.player[projectile.owner].MountedCenter - projectile.Center).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) / -6, ProjectileID.DD2SquireSonicBoom, projectile.damage/2, projectile.knockBack, projectile.owner);
-                Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().severumAmmo -= 2;
-                Main.PlaySound(SoundID.Item10, projectile.Center);
+                Projectile.friendly = true;
+                if (Main.LocalPlayer.whoAmI == Projectile.owner)
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, (Main.player[Projectile.owner].MountedCenter - Projectile.Center).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) / -6, ProjectileID.DD2SquireSonicBoom, Projectile.damage/2, Projectile.knockBack, Projectile.owner);
+                Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().severumAmmo -= 2;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
             }
         }
     }

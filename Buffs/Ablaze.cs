@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class Ablaze : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ablaze");
             Main.debuff[Type] = true;

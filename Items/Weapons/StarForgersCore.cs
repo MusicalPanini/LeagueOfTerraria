@@ -3,6 +3,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -16,6 +17,7 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("The Star Forger");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -25,48 +27,48 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 60;
-            item.summon = true;
-            item.mana = 20;
-            item.width = 40;
-            item.height = 42;
-            item.useTime = 36;
-            item.useAnimation = 36;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 200000;
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = new LegacySoundStyle(2, 113);
-            item.shoot = ProjectileType<StarForgersCore_ForgedStar>();
+            Item.damage = 60;
+            Item.DamageType = DamageClass.Summon;
+            Item.mana = 20;
+            Item.width = 40;
+            Item.height = 42;
+            Item.useTime = 36;
+            Item.useAnimation = 36;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 200000;
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = new LegacySoundStyle(2, 113);
+            Item.shoot = ProjectileType<StarForgersCore_ForgedStar>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new CelestialExpansion(this));
             abilityItem.ChampQuote = "Now we're playing with star fire!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             player.AddBuff(BuffType<Buffs.CenterOfTheUniverse>(), 3);
             position = player.MountedCenter;
-            Projectile.NewProjectileDirect(position, Vector2.Zero, type, damage, knockBack, player.whoAmI, player.ownedProjectileCounts[type] + 1);
+            Projectile proj = Projectile.NewProjectileDirect(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, player.ownedProjectileCounts[type] + 1);
+            proj.originalDamage = Item.damage;
 
             return false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 20);
-            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
-            recipe.AddIngredient(ItemID.FallenStar, 20);
-            recipe.AddIngredient(ItemID.SoulofLight, 10);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 20)
+            .AddIngredient(ItemType<FragmentOfTheAspect>(), 1)
+            .AddIngredient(ItemID.FallenStar, 20)
+            .AddIngredient(ItemID.SoulofLight, 10)
+            .AddIngredient(ItemID.SoulofNight, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

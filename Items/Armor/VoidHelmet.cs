@@ -12,23 +12,24 @@ namespace TerraLeague.Items.Armor
         {
             DisplayName.SetDefault("Void Warped Helmet");
             Tooltip.SetDefault("Increases your max number of minions by 2" +
-            "\n5% increased minion damage");
+            "\n5% increased summon damage");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 16;
-            item.value = 45000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 5;
+            Item.width = 22;
+            Item.height = 16;
+            Item.value = 45000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 5;
         }
 
         public override void UpdateEquip(Player player)
         {
             player.maxMinions += 2;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
+            player.GetDamage(DamageClass.Summon) += 0.05f;
         }
 
         public override void AddRecipes()
@@ -54,7 +55,7 @@ namespace TerraLeague.Items.Armor
             player.setBonus = "Increases your max number of minions" +
                 "\n5% increased melee damage";
             player.maxMinions += 1;
-            player.meleeDamage += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
         }
     }
 }

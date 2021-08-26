@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/BindingEclipse";
+            return "TerraLeague/AbilityImages/BindingEclipse";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2);
+            return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -96,7 +96,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     if (npc.HasBuff(BuffType<GravitumMark>()))
                     {
                         SetCooldowns(player, type);
-                        Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ProjectileType<Gravitum_BindingEclipse>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, npcs[i]);
+                        Projectile.NewProjectileDirect(player.GetProjectileSource_Item(player.HeldItem), npc.Center, Vector2.Zero, ProjectileType<Gravitum_BindingEclipse>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, npcs[i]);
                     }
                 }
             }

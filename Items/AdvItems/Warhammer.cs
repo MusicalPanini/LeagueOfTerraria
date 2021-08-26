@@ -13,33 +13,34 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Caulfield's Warhammer");
             Tooltip.SetDefault("4% increased melee and ranged damage" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Green;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.04f;
-            player.rangedDamage += 0.04f;
+            player.GetDamage(DamageClass.Melee) += 0.04f;
+            player.GetDamage(DamageClass.Ranged) += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LongSword>(), 2);
-            recipe.AddIngredient(ItemID.MoltenHamaxe, 1);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 10);
-            recipe.AddRecipeGroup("TerraLeague:IronGroup", 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 2)
+            .AddIngredient(ItemID.MoltenHamaxe, 1)
+            .AddIngredient(ItemType<DarksteelBar>(), 10)
+            .AddRecipeGroup("TerraLeague:IronGroup", 5)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

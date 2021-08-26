@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.magicDamage += (float)magicPerStack * passiveStat * 0.01f;
+            player.GetDamage(DamageClass.Magic) += (float)magicPerStack * passiveStat * 0.01f;
             modPlayer.armor += (int)(armorPerStack * (int)passiveStat);
             base.UpdateAccessory(player, modItem);
         }

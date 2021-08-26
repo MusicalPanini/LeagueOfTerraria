@@ -17,23 +17,24 @@ namespace TerraLeague.Items.CompleteItems
                 "\n8% increased movement speed" +
                 "\nIncreases ability haste by 10" +
                 "\nIncreases melee armor penetration by 15");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 30, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 30, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.accessory = true;
 
             Active = new PoltergeistsAscension(10, 60);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.08f;
-            player.rangedDamage += 0.08f;
+            player.GetDamage(DamageClass.Melee) += 0.08f;
+            player.GetDamage(DamageClass.Ranged) += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
             player.moveSpeed += 0.08f;
@@ -41,15 +42,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SerratedDirk>(), 1);
-            recipe.AddIngredient(ItemType<Warhammer>(), 1);
-            recipe.AddIngredient(ItemID.SoulofLight, 8);
-            recipe.AddIngredient(ItemID.SoulofNight, 8);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<SerratedDirk>(), 1)
+            .AddIngredient(ItemType<Warhammer>(), 1)
+            .AddIngredient(ItemID.SoulofLight, 8)
+            .AddIngredient(ItemID.SoulofNight, 8)
+            .AddRecipeGroup("TerraLeague:DemonGroup", 5)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

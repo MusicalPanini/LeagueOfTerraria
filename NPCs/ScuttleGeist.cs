@@ -6,6 +6,8 @@ using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items.Banners;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader.Utilities;
 
 namespace TerraLeague.NPCs
 {
@@ -14,31 +16,31 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Scuttlegeist");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.AnomuraFungus];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.AnomuraFungus];
         }
         public override void SetDefaults()
         {
-            npc.width = 44;
-            npc.height = 34;
-            npc.damage = 10;
-            npc.defense = 30;
-            npc.lifeMax = 50;
-            npc.aiStyle = 3;
-            npc.HitSound = SoundID.NPCHit33;
-            npc.DeathSound = SoundID.NPCDeath36;
-            npc.knockBackResist = 0.2f;
-            npc.value = 100f;
-            aiType = NPCID.AnomuraFungus;
-            animationType = NPCID.AnomuraFungus;
+            NPC.width = 44;
+            NPC.height = 34;
+            NPC.damage = 10;
+            NPC.defense = 30;
+            NPC.lifeMax = 50;
+            NPC.aiStyle = 3;
+            NPC.HitSound = SoundID.NPCHit33;
+            NPC.DeathSound = SoundID.NPCDeath36;
+            NPC.knockBackResist = 0.2f;
+            NPC.value = 100f;
+            AIType = NPCID.AnomuraFungus;
+            AnimationType = NPCID.AnomuraFungus;
             base.SetDefaults();
-            npc.scale = 1f;
-            banner = npc.type;
-            bannerItem = ItemType<ScuttlegiestBanner>();
+            NPC.scale = 1f;
+            Banner = NPC.type;
+            BannerItem = ItemType<ScuttlegiestBanner>();
         }
 
         public override bool PreAI()
         {
-            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+            Lighting.AddLight(NPC.Center, new Color(5, 245, 150).ToVector3());
 
             return base.PreAI();
         }
@@ -63,12 +65,12 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
             {
                 int count = 0;
-                while ((double)count < damage / (double)npc.lifeMax * 50.0)
+                while ((double)count < damage / (double)NPC.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                     count++;
@@ -78,26 +80,25 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }
 
-                Gore gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+                Gore gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y - 10f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_1>(), NPC.scale);
                 gore.velocity *= 0.3f;
-                gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_2"), npc.scale);
+                gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 15f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_2>(), NPC.scale);
                 gore.velocity *= 0.3f;
-                gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_3"), npc.scale);
+                gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)NPC.height - 20f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_3>(), NPC.scale);
                 gore.velocity *= 0.3f;
             }
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
-
-            base.NPCLoot();
+            npcLoot.Add(ItemDropRule.Common(ItemType<DamnedSoul>(), 1));
+            base.ModifyNPCLoot(npcLoot);
         }
     }
 }

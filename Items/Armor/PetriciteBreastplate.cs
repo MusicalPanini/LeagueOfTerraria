@@ -15,39 +15,38 @@ namespace TerraLeague.Items.Armor
             "\n10% increased melee damage" +
             "\nEnemies are more likely to target you");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 26;
-            item.value = 45000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 6;
+            Item.width = 24;
+            Item.height = 26;
+            Item.value = 45000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 6;
         }
 
         public override void UpdateEquip(Player player)
         {
             player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
-            player.meleeDamage += 0.07f;
+            player.GetDamage(DamageClass.Melee) += 0.07f;
             player.aggro += 150;
-            player.back = (sbyte)mod.GetEquipSlot("PetriciteBreastplate", EquipType.Back);
+            player.back = (sbyte)Mod.GetEquipSlot("PetriciteBreastplate", EquipType.Back);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<SilversteelBar>(), 18);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(GetInstance<SilversteelBar>(), 18)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
-        public override void UpdateVanity(Player player, EquipType type)
+        public override void UpdateVanity(Player player)
         {
             if (player.wings <= 0)
-                player.back = (sbyte)mod.GetEquipSlot("PetriciteBreastplate", EquipType.Back);
-            base.UpdateVanity(player, type);
+                player.back = (sbyte)Mod.GetEquipSlot("PetriciteBreastplate", EquipType.Back);
         }
     }
 }

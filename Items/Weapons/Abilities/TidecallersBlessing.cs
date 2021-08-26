@@ -29,7 +29,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/TidecallersBlessing";
+            return "TerraLeague/AbilityImages/TidecallersBlessing";
         }
 
         public override string GetAbilityTooltip()
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.5f);
+            return (int)(abilityItem.Item.damage * 0.5f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -109,7 +109,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 21).WithPitchVariance(-0.5f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 21).WithPitchVariance(-0.5f), player.Center);
             TerraLeague.DustBorderRing(300, player.MountedCenter, DustType<BubbledBubble>(), default, 2);
             TerraLeague.DustRing(DustType<BubbledBubble>(), player, default);
 

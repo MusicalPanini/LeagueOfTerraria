@@ -17,15 +17,16 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("6% increased melee and ranged damage" +
                 "\nIncreases armor by 4" +
                 "\nNegates fall damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -36,23 +37,23 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.noFallDmg = true;
-            player.meleeDamage += 0.06f;
-            player.rangedDamage += 0.06f;
+            player.GetDamage(DamageClass.Melee) += 0.06f;
+            player.GetDamage(DamageClass.Ranged) += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BFSword>(), 1);
-            recipe.AddIngredient(ItemType<Stopwatch>(), 1);
-            recipe.AddIngredient(ItemType<ChainVest>(), 1);
-            recipe.AddIngredient(ItemID.AngelWings, 1);
-            recipe.AddIngredient(ItemID.Excalibur, 1);
-            recipe.AddIngredient(ItemID.Ectoplasm, 5);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BFSword>(), 1)
+            .AddIngredient(ItemType<Stopwatch>(), 1)
+            .AddIngredient(ItemType<ChainVest>(), 1)
+            .AddIngredient(ItemID.AngelWings, 1)
+            .AddIngredient(ItemID.Excalibur, 1)
+            .AddIngredient(ItemID.Ectoplasm, 5)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

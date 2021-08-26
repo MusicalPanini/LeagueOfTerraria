@@ -14,16 +14,17 @@ namespace TerraLeague.Items.AdvItems
             Tooltip.SetDefault("Increases armor by 3" +
                 "\nIncreases resist by 3" +
                 "\nGrants immunity to fire blocks");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -35,14 +36,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<NullMagic>(), 1);
-            recipe.AddIngredient(ItemType<ClothArmor>(), 1);
-            recipe.AddIngredient(ItemID.ObsidianSkull, 1);
-            recipe.AddIngredient(ItemID.SunplateBlock, 20);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<NullMagic>(), 1)
+            .AddIngredient(ItemType<ClothArmor>(), 1)
+            .AddIngredient(ItemID.ObsidianSkull, 1)
+            .AddIngredient(ItemID.SunplateBlock, 20)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using TerraLeague.Tiles;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -8,21 +9,27 @@ namespace TerraLeague.Items.Banners
 {
     public class BansheeHiveBanner : ModItem
     {
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+			Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			base.SetStaticDefaults();
+        }
+
+        public override void SetDefaults()
 		{
-			item.width = 10;
-			item.height = 24;
-			item.maxStack = 99;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.consumable = true;
-			item.rare = ItemRarityID.Blue;
-			item.value = Item.buyPrice(0, 0, 10, 0);
-			item.createTile = TileType<MonsterBanner>();
-			item.placeStyle = (int)BannerType.BansheeHive;        //Place style means which frame(Horizontally, starting from 0) of the tile should be placed
+			Item.width = 10;
+			Item.height = 24;
+			Item.maxStack = 99;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.consumable = true;
+			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.buyPrice(0, 0, 10, 0);
+			Item.createTile = TileType<MonsterBanner>();
+			Item.placeStyle = (int)BannerType.BansheeHive;        //Place style means which frame(Horizontally, starting from 0) of the tile should be placed
 		}
 	}
 }

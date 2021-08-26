@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Rally : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rally");
             Description.SetDefault("Minions are stonger");

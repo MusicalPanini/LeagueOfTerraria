@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class SerpentBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Serpent");
             Description.SetDefault("10% decreased mana costs");

@@ -14,19 +14,20 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rod of Ages");
-            Tooltip.SetDefault("3% increased magic and minion damage" +
+            Tooltip.SetDefault("3% increased magic and summon damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases maximum mana by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 34;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 34;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -39,25 +40,25 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.statLifeMax2 += 20;
             player.statManaMax2 += 20;
-            player.magicDamage += 0.03f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.03;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
 
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Catalyst>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 100);
-            recipe.AddRecipeGroup("TerraLeague:EvilPartGroup", 10);
-            recipe.AddIngredient(ItemID.SoulofLight, 6);
-            recipe.AddIngredient(ItemID.SoulofNight, 6);
-            recipe.AddIngredient(ItemID.SoulofMight, 4);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Catalyst>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemType<VoidFragment>(), 100)
+            .AddRecipeGroup("TerraLeague:EvilPartGroup", 10)
+            .AddIngredient(ItemID.SoulofLight, 6)
+            .AddIngredient(ItemID.SoulofNight, 6)
+            .AddIngredient(ItemID.SoulofMight, 4)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

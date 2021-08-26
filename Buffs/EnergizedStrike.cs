@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class EnergizedStrike : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Energized Strike");
             Description.SetDefault("Your next melee or ranged attack will have bonus effects!");

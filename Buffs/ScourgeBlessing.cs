@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class ScourgeBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Scourge");
             Description.SetDefault("Your attacks will apply 'Cursed Inferno'");

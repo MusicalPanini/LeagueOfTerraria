@@ -13,19 +13,20 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Athene's Unholy Grail");
-            Tooltip.SetDefault("4% increased magic and minion damage" +
+            Tooltip.SetDefault("4% increased magic and summon damage" +
                 "\nIncreases resist by 4" +
                 "\nIncreases mana regeneration by 30%" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -37,24 +38,24 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.3;
-            player.magicDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
+            player.GetDamage(DamageClass.Magic) += 0.04f;
+            player.GetDamage(DamageClass.Summon) += 0.04f;
 
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Codex>(), 1);
-            recipe.AddIngredient(ItemType<Chalice>(), 1);
-            recipe.AddIngredient(ItemID.SoulofFright, 6);
-            recipe.AddIngredient(ItemID.SoulofMight, 6);
-            recipe.AddIngredient(ItemID.HallowedBar, 12);
-            recipe.AddIngredient(ItemID.Deathweed, 2);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Codex>(), 1)
+            .AddIngredient(ItemType<Chalice>(), 1)
+            .AddIngredient(ItemID.SoulofFright, 6)
+            .AddIngredient(ItemID.SoulofMight, 6)
+            .AddIngredient(ItemID.HallowedBar, 12)
+            .AddIngredient(ItemID.Deathweed, 2)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Magical Plumage");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -24,26 +25,26 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.width = 32;
-            item.height = 32;
-            item.ranged = true;
-            item.useTime = 22;
-            item.useAnimation = 22;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 1;
-            item.value = 54000;
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
-            item.shootSpeed = 20f;
-            item.shoot = ProjectileID.PurificationPowder;
-            item.useAmmo = ItemType<RazorFeather>();
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.noUseGraphic = true;
+            Item.damage = 15;
+            Item.width = 32;
+            Item.height = 32;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useTime = 22;
+            Item.useAnimation = 22;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 1;
+            Item.value = 54000;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
+            Item.shootSpeed = 20f;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.useAmmo = ItemType<RazorFeather>();
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new DeadlyPlumage(this));
             abilityItem.ChampQuote = "Feathers fly!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -52,11 +53,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ManaBar>(), 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ManaBar>(), 16)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

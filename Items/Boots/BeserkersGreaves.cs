@@ -1,5 +1,6 @@
 ﻿using TerraLeague.Items.BasicItems;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -12,14 +13,15 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Beserker's Greaves");
             Tooltip.SetDefault("");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 26;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 28;
+            Item.height = 26;
+            Item.accessory = true;
+            Item.material = true;
             base.SetDefaults();
         }
 
@@ -91,12 +93,12 @@ namespace TerraLeague.Items.Boots
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BootsOfSpeed>());
-            recipe.AddIngredient(ItemType<Dagger>());
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BootsOfSpeed>())
+            .AddIngredient(ItemType<Dagger>())
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
     }
 }

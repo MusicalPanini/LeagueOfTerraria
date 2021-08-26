@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/DecisiveStrike";
+            return "TerraLeague/AbilityImages/DecisiveStrike";
         }
 
         public override string GetAbilityTooltip()

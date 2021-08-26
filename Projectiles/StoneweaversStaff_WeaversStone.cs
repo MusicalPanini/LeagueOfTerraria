@@ -18,88 +18,88 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.timeLeft = 180;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.magic = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.timeLeft = 180;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         public override void AI()
         {
-            if ((int)projectile.ai[0] == 0)
+            if ((int)Projectile.ai[0] == 0)
             {
-                if (projectile.timeLeft < 150)
+                if (Projectile.timeLeft < 150)
                 {
-                    projectile.velocity.Y += 0.4f;
-                    projectile.velocity.X *= 0.97f;
+                    Projectile.velocity.Y += 0.4f;
+                    Projectile.velocity.X *= 0.97f;
                 }
             }
             
-            if ((int)projectile.ai[0] == 1)
+            if ((int)Projectile.ai[0] == 1)
             {
-                if (projectile.timeLeft == 119)
-                    projectile.velocity = new Vector2(projectile.velocity.X * -0.2f, -5);
+                if (Projectile.timeLeft == 119)
+                    Projectile.velocity = new Vector2(Projectile.velocity.X * -0.2f, -5);
 
-                projectile.velocity.Y += 0.4f;
-                projectile.velocity.X *= 0.97f;
+                Projectile.velocity.Y += 0.4f;
+                Projectile.velocity.X *= 0.97f;
 
-                if (projectile.timeLeft == 1)
+                if (Projectile.timeLeft == 1)
                     Prime();
             }
 
-            if (projectile.velocity.Y > 16)
-                projectile.velocity.Y = 16;
+            if (Projectile.velocity.Y > 16)
+                Projectile.velocity.Y = 16;
 
-            projectile.rotation += (Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y)) * 0.03f * (float)projectile.direction;
+            Projectile.rotation += (Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y)) * 0.03f * (float)Projectile.direction;
 
-            if (projectile.velocity.Length() > 2)
-                Dust.NewDustDirect(projectile.position, 16, 16, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+            if (Projectile.velocity.Length() > 2)
+                Dust.NewDustDirect(Projectile.position, 16, 16, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
             
             base.AI();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if ((int)projectile.ai[0] == 0)
+            if ((int)Projectile.ai[0] == 0)
             {
-                projectile.penetrate = 1000;
-                projectile.netUpdate = true;
-                projectile.ai[0] = 1;
-                projectile.friendly = false;
-                projectile.timeLeft = 120;
+                Projectile.penetrate = 1000;
+                Projectile.netUpdate = true;
+                Projectile.ai[0] = 1;
+                Projectile.friendly = false;
+                Projectile.timeLeft = 120;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)
         {
-            if ((int)projectile.ai[0] == 1)
+            if ((int)Projectile.ai[0] == 1)
             {
-                Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
                 for (int g = 0; g < 4; g++)
                 {
-                    Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
+                    Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
                 }
 
                 Dust dust;
                 for (int i = 0; i < 20; i++)
                 {
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1f);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1f);
                     dust.velocity *= 2f;
 
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1.5f);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.t_Slime, 0f, 0f, 100, new Color(255, 125, 0), 1.5f);
                     dust.velocity *= 1.5f;
                 }
             }
-            else if ((int)projectile.ai[0] == 0)
+            else if ((int)Projectile.ai[0] == 0)
             {
-                Main.PlaySound(SoundID.Dig, projectile.Center);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 
                 for (int i = 0; i < 12; i++)
                 {
-                    Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.t_Slime, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
+                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.t_Slime, Projectile.oldVelocity.X * 0.25f, Projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
                 }
             }
             base.Kill(timeLeft);
@@ -107,7 +107,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            if ((int)projectile.ai[0] == 0)
+            if ((int)Projectile.ai[0] == 0)
                 fallThrough = true;
             else
                 fallThrough = false;
@@ -118,25 +118,25 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if ((int)projectile.ai[0] == 0)
+            if ((int)Projectile.ai[0] == 0)
                 return true;
             return false;
         }
 
         public void Prime()
         {
-            projectile.damage = (int)(projectile.damage * 1.5);
-            projectile.knockBack = 6;
-            projectile.friendly = true;
-            projectile.velocity = Vector2.Zero;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 150;
-            projectile.height = 150;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+            Projectile.damage = (int)(Projectile.damage * 1.5);
+            Projectile.knockBack = 6;
+            Projectile.friendly = true;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 150;
+            Projectile.height = 150;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
         }
     }
 }

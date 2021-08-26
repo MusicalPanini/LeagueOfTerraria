@@ -13,18 +13,39 @@ namespace TerraLeague.Items.SummonerSpells
 {
     abstract public class SummonerSpell : ModItem
     {
+        public static Dictionary<string, int> SummonerID = new Dictionary<string, int>()
+        {
+            { new BarrierRune().GetType().Name, ModContent.ItemType<BarrierRune>()},
+            { new ClairvoyanceRune().GetType().Name, ModContent.ItemType<ClairvoyanceRune>()},
+            { new ClarityRune().GetType().Name, ModContent.ItemType<ClarityRune>()},
+            { new CleanseRune().GetType().Name, ModContent.ItemType<CleanseRune>()},
+            { new ExhaustRune().GetType().Name, ModContent.ItemType<ExhaustRune>()},
+            { new FlashRune().GetType().Name, ModContent.ItemType<FlashRune>()},
+            { new GarrisonRune().GetType().Name, ModContent.ItemType<GarrisonRune>()},
+            { new GhostRune().GetType().Name, ModContent.ItemType<GhostRune>()},
+            { new HealRune().GetType().Name, ModContent.ItemType<HealRune>()},
+            { new IgniteRune().GetType().Name, ModContent.ItemType<IgniteRune>()},
+            { new LiftRune().GetType().Name, ModContent.ItemType<LiftRune>()},
+            { new ReviveRune().GetType().Name, ModContent.ItemType<ReviveRune>()},
+            { new SmiteRune().GetType().Name, ModContent.ItemType<SmiteRune>()},
+            { new SurgeRune().GetType().Name, ModContent.ItemType<SurgeRune>()},
+            { new SyphonRune().GetType().Name, ModContent.ItemType<SyphonRune>()},
+            { new VanishRune().GetType().Name, ModContent.ItemType<VanishRune>()},
+            { new TeleportRune().GetType().Name, ModContent.ItemType<TeleportRune>()}
+        };
+
         static internal SummonerSpellsPacketHandler PacketHandler = new SummonerSpellsPacketHandler(6);
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.FallenStar);
-            item.rare = ItemRarityID.Orange;
-            item.width = 20;
-            item.height = 26;
-            item.maxStack = 1;
-            item.notAmmo = true;
-            item.ammo = AmmoID.None;
-            item.shoot = ItemID.None;
+            Item.CloneDefaults(ItemID.FallenStar);
+            Item.rare = ItemRarityID.Orange;
+            Item.width = 20;
+            Item.height = 26;
+            Item.maxStack = 1;
+            Item.notAmmo = true;
+            Item.ammo = AmmoID.None;
+            Item.shoot = ItemID.None;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -35,8 +56,9 @@ namespace TerraLeague.Items.SummonerSpells
                 int pos = tooltips.IndexOf(tt);
 
                 string text = LeagueTooltip.CreateColorString(LeagueTooltip.ManaReductionColor, "Left or Right click to replace your Left or Right Summoner Spell") +
-                    "\nEffect: "+ GetTooltip() +
-                    "\n" + GetCooldown() + " second cooldown";
+                    "\nEffect: " + GetTooltip();
+                if (GetRawCooldown() > 0)
+                    text += "\n" + GetCooldown() + " second cooldown";
                 TooltipLine tip = new TooltipLine(TerraLeague.instance, "Tooltip0", text);
                 tooltips[pos] = tip;
             }
@@ -67,7 +89,7 @@ namespace TerraLeague.Items.SummonerSpells
                     {
                         modPlayer.sumSpells[0] = this;
                     }
-                    item.stack = 0;
+                    Item.stack = 0;
                     return base.CanUseItem(player);
                 }
             }

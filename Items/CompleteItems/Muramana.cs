@@ -21,6 +21,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases maximum mana by 100" +
                 "\nIncreases ability haste by 15" +
                 "\nCan only have one AWE item equiped at a time");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
@@ -38,11 +39,11 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 60, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 60, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -55,8 +56,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
             modPlayer.abilityHaste += 15;
             player.statManaMax2 += 100;
 

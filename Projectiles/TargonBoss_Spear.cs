@@ -18,34 +18,34 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 30;
-            projectile.height = 30;
-            projectile.alpha = 0;
-            projectile.timeLeft = 240;
-            projectile.penetrate = -1;
-            projectile.hostile = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
+            Projectile.arrow = true;
+            Projectile.width = 30;
+            Projectile.height = 30;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 240;
+            Projectile.penetrate = -1;
+            Projectile.hostile = true;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, TargonBossNPC.PanthColor.ToVector3() * (1 - (projectile.alpha / 255f)));
+            Lighting.AddLight(Projectile.Center, TargonBossNPC.PanthColor.ToVector3() * (1 - (Projectile.alpha / 255f)));
 
-            if (projectile.ai[0] == 0)
+            if (Projectile.ai[0] == 0)
             {
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             }
             else
             {
-                //projectile.ai[1]++;
-                //if ((int)projectile.ai[1] == 90)
+                //Projectile.ai[1]++;
+                //if ((int)Projectile.ai[1] == 90)
                 //    Prime();
 
-                if (projectile.timeLeft < 51)
+                if (Projectile.timeLeft < 51)
                 {
-                    projectile.alpha += 5;
+                    Projectile.alpha += 5;
                 }
             }
 
@@ -54,32 +54,32 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.velocity *= 0;
-            projectile.position += oldVelocity;
-            projectile.ai[0] = 1;
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+            Projectile.velocity *= 0;
+            Projectile.position += oldVelocity;
+            Projectile.ai[0] = 1;
             return false;
         }
 
         public override void Kill(int timeLeft)
         {
-            //TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 14, 0);
+            //TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 14, 0);
 
-            //TerraLeague.DustBorderRing(projectile.width / 2, projectile.Center, 6, default, 2);
+            //TerraLeague.DustBorderRing(Projectile.width / 2, Projectile.Center, 6, default, 2);
         }
 
         public void Prime()
         {
-            projectile.tileCollide = false;
-            projectile.velocity = Vector2.Zero;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 1280;
-            projectile.height = 1280;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 1280;
+            Projectile.height = 1280;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 2;
         }
     }
 }

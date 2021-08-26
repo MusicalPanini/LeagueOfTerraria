@@ -42,7 +42,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (cooldownCount <= 0 && (proj.magic || TerraLeague.IsMinionDamage(proj)))
+            if (cooldownCount <= 0 && (proj.DamageType == DamageClass.Magic || TerraLeague.IsMinionDamage(proj)))
             {
                 int bonusDamage = baseDamage + (int)(modPlayer.MAG * magicScaling / 100d);
                 damage += bonusDamage;
@@ -50,7 +50,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 Vector2 pos = new Vector2(target.Center.X + (Main.rand.Next(-Item_Tempest.randSpread, Item_Tempest.randSpread)), target.Center.Y - 700);
                 Vector2 vel = TerraLeague.CalcVelocityToPoint(pos, target.Center, 4);
 
-                Projectile.NewProjectileDirect(pos, vel, ProjectileType<Item_Tempest>(), bonusDamage, 0, player.whoAmI, target.Center.X, target.Center.Y);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(player.HeldItem), pos, vel, ProjectileType<Item_Tempest>(), bonusDamage, 0, player.whoAmI, target.Center.X, target.Center.Y);
 
                 Efx(player, target);
                 SendEfx(player, target, modItem);
@@ -67,7 +67,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void Efx(Player user, NPC effectedNPC)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 12).WithPitchVariance(-0.6f), effectedNPC.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 12).WithPitchVariance(-0.6f), effectedNPC.Center);
         }
     }
 }

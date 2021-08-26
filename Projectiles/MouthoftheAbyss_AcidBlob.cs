@@ -18,37 +18,37 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.timeLeft = 185;
-            projectile.friendly = true;
-            projectile.ranged = true;
-            projectile.scale = 0.75f;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.timeLeft = 185;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.scale = 0.75f;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                Main.PlaySound(new LegacySoundStyle(2, 95), projectile.Center);
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 95), Projectile.Center);
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+            Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
 
-            if (projectile.timeLeft < 185 - 30)
+            if (Projectile.timeLeft < 185 - 30)
             {
-                projectile.velocity.Y += 0.4f;
-                projectile.velocity.X *= 0.97f;
+                Projectile.velocity.Y += 0.4f;
+                Projectile.velocity.X *= 0.97f;
 
             }
 
-            if (projectile.velocity.Y > 16)
-                projectile.velocity.Y = 16;
+            if (Projectile.velocity.Y > 16)
+                Projectile.velocity.Y = 16;
 
             if (Main.rand.Next(0, 3) == 0)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Plantera_Green, 0, 0, 50);
+                Dust dustIndex = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 167, 0, 0, 50);
                 dustIndex.velocity *= 0.3f;
             }
 
@@ -64,10 +64,10 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(new LegacySoundStyle(3, 13), projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(3, 13), Projectile.Center);
             for (int i = 0; i < 6; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Plantera_Green, projectile.velocity.X * 0.35f, projectile.velocity.Y * 0.35f, 50);
+                Dust dustIndex = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 167, Projectile.velocity.X * 0.35f, Projectile.velocity.Y * 0.35f, 50);
             }
             base.Kill(timeLeft);
         }

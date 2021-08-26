@@ -15,18 +15,19 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pox Arcana");
-            Tooltip.SetDefault("4% increased magic and minion damage" +
+            Tooltip.SetDefault("4% increased magic and summon damage" +
                 "\nIncreases mana regeneration by 60%" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Active = new DiseaseHarvest(12, 5, 15, 60);
             Passives = new Passive[]
@@ -37,24 +38,24 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
+            player.GetDamage(DamageClass.Magic) += 0.04f;
+            player.GetDamage(DamageClass.Summon) += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<FaerieCharm>(), 2);
-            recipe.AddIngredient(ItemType<Codex>(), 1);
-            recipe.AddIngredient(ItemType<AmpTome>(), 1);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 20);
-            recipe.AddIngredient(ItemID.Stinger, 5);
-            recipe.AddIngredient(ItemID.Bone, 10);
-            recipe.AddTile(TileID.Bookcases);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<FaerieCharm>(), 2)
+            .AddIngredient(ItemType<Codex>(), 1)
+            .AddIngredient(ItemType<AmpTome>(), 1)
+            .AddIngredient(ItemType<DamnedSoul>(), 20)
+            .AddIngredient(ItemID.Stinger, 5)
+            .AddIngredient(ItemID.Bone, 10)
+            .AddTile(TileID.Bookcases)
+            .Register();
+            
         }
 
         public override string GetStatText()

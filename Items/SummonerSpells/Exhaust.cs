@@ -12,10 +12,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Exhaust Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Exhaust";
+            return "TerraLeague/Items/SummonerSpells/Exhaust";
         }
 
         public override string GetSpellName()
@@ -37,7 +38,7 @@ namespace TerraLeague.Items.SummonerSpells
             int npc = Targeting.NPCMouseIsHovering();
             if (npc != -1)
             {
-                Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Exhaust>(), 1, 0, player.whoAmI, npc);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(Item), player.Center, Vector2.Zero, ProjectileType<Summoner_Exhaust>(), 1, 0, player.whoAmI, npc);
 
                 SetCooldowns(player, spellSlot);
             }

@@ -18,50 +18,50 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 64;
-            projectile.height = 64;
-            projectile.friendly = true;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 0.75f;
-            projectile.timeLeft = 45;
-            projectile.magic = true;
-            projectile.aiStyle = 0;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 64;
+            Projectile.height = 64;
+            Projectile.friendly = true;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 0.75f;
+            Projectile.timeLeft = 45;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.aiStyle = 0;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (projectile.alpha > 0)
+            if (Projectile.alpha > 0)
             {
-                projectile.alpha -= 25;
+                Projectile.alpha -= 25;
             }
-            if (projectile.alpha < 0)
+            if (Projectile.alpha < 0)
             {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
             for (int i = 0; i < 1; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, 0f, 0f, 100, default, 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, 0f, 0f, 100, default, 1.5f);
                 dustIndex.noGravity = true;
                 dustIndex.velocity *= 0.3f;
             }
-            projectile.rotation += 0.4f * (float)projectile.direction;
+            Projectile.rotation += 0.4f * (float)Projectile.direction;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
             target.buffImmune[BuffType<Frozen>()] = false;
             TerraLeague.RemoveBuffFromNPC(BuffType<FrozenCooldown>(), target.whoAmI);
             target.AddBuff(BuffType<Frozen>(), 120);
-            projectile.Center = target.Center;
+            Projectile.Center = target.Center;
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -69,13 +69,13 @@ namespace TerraLeague.Projectiles
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), projectile.position);
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 14, 1f);
+                Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), Projectile.position);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 14, 1f);
             }
-            if (Main.LocalPlayer.whoAmI == projectile.owner)
+            if (Main.LocalPlayer.whoAmI == Projectile.owner)
             {
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileType<TrueIceFlail_GlacialStorm>(), projectile.damage, 0, projectile.owner);
-                //proj.Center = projectile.Center;
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<TrueIceFlail_GlacialStorm>(), Projectile.damage, 0, Projectile.owner);
+                //proj.Center = Projectile.Center;
             }
         }
 

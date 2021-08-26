@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/UnleashedPower";
+            return "TerraLeague/AbilityImages/UnleashedPower";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2.5);
+            return (int)(abilityItem.Item.damage * 2.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -90,7 +90,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     {
                         Vector2 position = player.MountedCenter;
 
-                        Projectile.NewProjectile(position, new Vector2(numberProjectiles, 0), projType, damage, knockback, player.whoAmI, target, i);
+                        Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, new Vector2(numberProjectiles, 0), projType, damage, knockback, player.whoAmI, target, i);
                     }
                     SetCooldowns(player, type);
                     SetAnimation(player, new Vector2(Main.MouseWorld.X, player.MountedCenter.Y));
@@ -100,7 +100,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            //Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
+            //Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 11), player.Center);
         }
     }
 }

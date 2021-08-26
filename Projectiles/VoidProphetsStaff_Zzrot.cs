@@ -12,26 +12,26 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zz'Rot");
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.BabySpider);
-            aiType = ProjectileID.BabySpider;
-            projectile.minion = true;
+            Projectile.CloneDefaults(ProjectileID.BabySpider);
+            AIType = ProjectileID.BabySpider;
+            Projectile.DamageType = DamageClass.Summon;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, 0.60f, 0f, 0.60f);
+            Lighting.AddLight(Projectile.Center, 0.60f, 0f, 0.60f);
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, DustID.Shadowflame);
+                Dust dust = Dust.NewDustDirect(Projectile.Center, Projectile.width, Projectile.height, DustID.Shadowflame);
                 dust.velocity *= 0.2f;
             }
             base.Kill(timeLeft);

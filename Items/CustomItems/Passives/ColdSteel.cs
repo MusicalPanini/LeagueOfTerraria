@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -60,15 +61,15 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         override public void Efx(Player user)
         {
-            Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 30), user.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 30), user.Center);
 
             for (int i = 0; i < 30; i++)
             {
-                Dust dust = Dust.NewDustDirect(user.position, user.width, user.height, DustID.IceRod, 0, 0, 0, default, 2f);
+                Dust dust = Dust.NewDustDirect(user.position, user.width, user.height, DustID.Ice, 0, 0, 0, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
 
-                dust = Dust.NewDustDirect(new Vector2(user.position.X, user.position.Y), user.width, user.height, DustID.IceRod, 0f, 0f, 100, default, 1f);
+                dust = Dust.NewDustDirect(new Vector2(user.position.X, user.position.Y), user.width, user.height, DustID.Ice, 0f, 0f, 100, default, 1f);
                 dust.velocity *= 3f;
             }
 

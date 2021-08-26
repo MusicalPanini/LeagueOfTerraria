@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/MaleficVisions";
+            return "TerraLeague/AbilityImages/MaleficVisions";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2);
+            return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -66,7 +66,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
-              ) + " minion damage";
+              ) + " summon damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -87,7 +87,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.SUM);
                     int knockback = 0;
 
-                    Projectile proj = Projectile.NewProjectileDirect(position, new Vector2(0, -10), projType, damage, knockback, player.whoAmI, npc);
+                    Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, new Vector2(0, -10), projType, damage, knockback, player.whoAmI, npc);
 
                     SetAnimation(player, position + velocity);
                     DoEfx(player, type);

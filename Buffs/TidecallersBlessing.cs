@@ -12,7 +12,7 @@ namespace TerraLeague.Buffs
     {
         int damage = 0;
 
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tidecaller's Blessing");
             Description.SetDefault("Movement speed increased by 10%" +

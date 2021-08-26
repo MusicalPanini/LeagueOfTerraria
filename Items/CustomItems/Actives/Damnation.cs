@@ -49,22 +49,22 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             Efx(player);
             if (Main.netMode == NetmodeID.MultiplayerClient)
-                PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
+                PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type);
 
             player.ApplyDamageToNPC(NPC, damage, 0, 0, false);
 
             SetCooldown(player);
             //modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
 
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2( 2,  5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2(-2,  5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2( 2, -5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2(-2, -5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), NPC.Center, new Vector2( 2,  5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), NPC.Center, new Vector2(-2,  5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), NPC.Center, new Vector2( 2, -5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), NPC.Center, new Vector2(-2, -5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
         }
 
         public override void Efx(Player user)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 20), user.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 20), user.Center);
 
             base.Efx(user);
         }

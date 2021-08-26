@@ -38,10 +38,13 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (modPlayer.summonedBlade)
                 {
                     int totalSwords = player.maxMinions;
+                    int baseDamage = (int)(modPlayer.SUM * minionScaling / 100d);
                     for (int i = 0; i < totalSwords; i++)
                     {
-                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Item_SummonedSwordA>(), (int)(modPlayer.SUM * minionScaling / 100d), 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
-                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Item_SummonedSwordB>(), (int)(modPlayer.SUM * minionScaling / 100d), 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
+                        Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Accessory(item), player.Center, Vector2.Zero, ProjectileType<Item_SummonedSwordA>(), baseDamage, 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
+                        //proj.originalDamage = baseDamage;
+                        proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Accessory(item), player.Center, Vector2.Zero, ProjectileType<Item_SummonedSwordB>(), baseDamage, 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
+                        //proj.originalDamage = baseDamage;
                     }
                     modPlayer.spellBladeBuff = false;
                 }

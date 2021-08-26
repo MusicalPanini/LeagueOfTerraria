@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Volley";
+            return "TerraLeague/AbilityImages/Volley";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().arrowDamageLastStep * 1.25);
+            return (int)(abilityItem.Item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().arrowDamageLastStep * 1.25);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -88,11 +88,11 @@ namespace TerraLeague.Items.Weapons.Abilities
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
-                    Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, perturbedSpeed, projType, damage, knockback, player.whoAmI);
                     startingAngle -= 7.5f;
                 }
 
-                int useAnimation = TerraLeague.ScaleWithUseTimeMulti(abilityItem.item.useAnimation, abilityItem.item, player);
+                int useAnimation = TerraLeague.ScaleWithUseTimeMulti(abilityItem.Item.useAnimation, abilityItem.Item, player);
 
                 SetAnimation(player, useAnimation, useAnimation, position + velocity);
                 DoEfx(player, type);
@@ -102,7 +102,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 5), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 5), player.Center);
         }
     }
 }

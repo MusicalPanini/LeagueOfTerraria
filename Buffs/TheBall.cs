@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class TheBall : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Ball");
             Description.SetDefault("The Ball is angry");

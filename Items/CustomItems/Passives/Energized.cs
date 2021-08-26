@@ -111,9 +111,9 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (projID != -1)
                 {
                     if (projID == ProjectileType<Item_EnergizedBolt>())
-                        Projectile.NewProjectile(target.Center, Vector2.UnitX * 6, projID, bonusDamage, 0, player.whoAmI, -2, modPlayer.EnergizedStorm ? 1 : 0);
+                        Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.UnitX * 6, projID, bonusDamage, 0, player.whoAmI, -2, modPlayer.EnergizedStorm ? 1 : 0);
                     else if (projID == ProjectileType<Item_RapidfireExplosion>())
-                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
+                        Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
                 //else if (modPlayer.EnergizedStorm)
                 //{
@@ -121,7 +121,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 //    Efx(player, target);
                 //    if (Main.netMode == NetmodeID.MultiplayerClient)
-                //        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                //        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type, FindIfPassiveIsSecondary(modItem));
                 //}
 
                 modPlayer.energized = false;
@@ -135,12 +135,12 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (proj.ranged)
+            if (proj.DamageType == DamageClass.Ranged && proj.type != ProjectileType<Item_EnergizedBolt>() && proj.type != ProjectileType<Item_RapidfireExplosion>())
             {
                 AddStat(player, 100, 2);
             }
 
-            if (modPlayer.energized && (proj.melee || proj.ranged))
+            if (passiveStat >= 100 && (proj.DamageType == DamageClass.Melee || proj.DamageType == DamageClass.Ranged))
             {
                 int bonusDamage = baseDamage + (int)(modPlayer.RNG * rangedScaling / 100d);
 
@@ -165,15 +165,15 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (projID != -1)
                 {
                     if (projID == ProjectileType<Item_EnergizedBolt>())
-                        Projectile.NewProjectile(target.Center, Vector2.UnitX * 6, projID, bonusDamage, 0, player.whoAmI, -2, modPlayer.EnergizedStorm ? 1 : 0);
+                        Projectile.NewProjectile(player.GetProjectileSource_Item(modItem.Item), target.Center, Vector2.UnitX * 6, projID, bonusDamage, 0, player.whoAmI, -2, modPlayer.EnergizedStorm ? 1 : 0);
                     else if (projID == ProjectileType<Item_RapidfireExplosion>())
-                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
+                        Projectile.NewProjectile(player.GetProjectileSource_Item(modItem.Item), target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
                 //else if (modPlayer.EnergizedStorm)
                 //{
                 //    Efx(player, target);
                 //    if (Main.netMode == NetmodeID.MultiplayerClient)
-                //        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                //        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type, FindIfPassiveIsSecondary(modItem));
                 //    //damage += bonusDamage;
                 //}
 
@@ -187,7 +187,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (modPlayer.EnergizedDetonate)
                 {
-                    Projectile.NewProjectile(target.Center, Vector2.Zero, ProjectileType<Item_RapidfireExplosion>(), bonusDamage, 0, Main.player[proj.owner].whoAmI, modPlayer.EnergizedStorm ? 0 : 1);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(modItem.Item), target.Center, Vector2.Zero, ProjectileType<Item_RapidfireExplosion>(), bonusDamage, 0, Main.player[proj.owner].whoAmI, modPlayer.EnergizedStorm ? 0 : 1);
                 }
                 if (modPlayer.EnergizedStorm)
                 {
@@ -212,7 +212,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         override public void Efx(Player player, NPC HitNPC)
         {
-            Main.PlaySound(new LegacySoundStyle(3, 53), HitNPC.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(3, 53), HitNPC.position);
             for (int i = 0; i < 10; i++)
             {
                 Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, DustID.AncientLight, 0, 0, 0, new Color(255, 255, 0, 150), 1.5f);

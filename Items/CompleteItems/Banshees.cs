@@ -14,19 +14,20 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Banshee's Veil");
-            Tooltip.SetDefault("6% increased magic and minion damage" +
+            Tooltip.SetDefault("6% increased magic and summon damage" +
                 "\nIncreases resist by 4" +
                 "\nIncreases ability haste by 10" +
                 "\nImmunity to Silence and Curse");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -36,8 +37,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.06f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
+            player.GetDamage(DamageClass.Magic) += 0.06f;
+            player.GetDamage(DamageClass.Summon) += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             
@@ -49,16 +50,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Codex>(), 1);
-            recipe.AddIngredient(ItemType<NullMagic>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemID.CountercurseMantra, 1);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 12);
-            recipe.AddIngredient(ItemID.SoulofSight, 8);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Codex>(), 1)
+            .AddIngredient(ItemType<NullMagic>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemID.CountercurseMantra, 1)
+            .AddIngredient(ItemType<SilversteelBar>(), 12)
+            .AddIngredient(ItemID.SoulofSight, 8)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

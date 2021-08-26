@@ -16,121 +16,122 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 24;
-            projectile.alpha = 0;
-            projectile.timeLeft = 1000;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.minion = true;
-            projectile.tileCollide = true;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 5;
+            Projectile.width = 24;
+            Projectile.height = 24;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            //Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.tileCollide = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 5;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                projectile.soundDelay = 8;
-                Main.PlaySound(SoundID.Item7, projectile.position);
+                Projectile.soundDelay = 8;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item7, Projectile.position);
             }
 
-            if (projectile.ai[0] == 0f)
+            if (Projectile.ai[0] == 0f)
             {
-                projectile.ai[1] += 1f;
-                if (projectile.ai[1] >= 25f)
+                Projectile.ai[1] += 1f;
+                if (Projectile.ai[1] >= 25f)
                 {
-                    projectile.ai[0] = 1f;
-                    projectile.ai[1] = 0f;
-                    projectile.netUpdate = true;
+                    Projectile.ai[0] = 1f;
+                    Projectile.ai[1] = 0f;
+                    Projectile.netUpdate = true;
                 }
             }
             else
             {
-                projectile.tileCollide = false;
+                Projectile.tileCollide = false;
                 float num51 = 12;
                 float num52 = 0.4f;
 
-                Vector2 vector3 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
-                float num53 = Main.player[projectile.owner].position.X + (float)(Main.player[projectile.owner].width / 2) - vector3.X;
-                float num54 = Main.player[projectile.owner].position.Y + (float)(Main.player[projectile.owner].height / 2) - vector3.Y;
+                Vector2 vector3 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
+                float num53 = Main.player[Projectile.owner].position.X + (float)(Main.player[Projectile.owner].width / 2) - vector3.X;
+                float num54 = Main.player[Projectile.owner].position.Y + (float)(Main.player[Projectile.owner].height / 2) - vector3.Y;
                 float num55 = (float)Math.Sqrt((double)(num53 * num53 + num54 * num54));
                 if (num55 > 3000f)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 num55 = num51 / num55;
                 num53 *= num55;
                 num54 *= num55;
 
                 {
-                    if (projectile.velocity.X < num53)
+                    if (Projectile.velocity.X < num53)
                     {
-                        projectile.velocity.X += num52;
-                        if (projectile.velocity.X < 0f && num53 > 0f)
+                        Projectile.velocity.X += num52;
+                        if (Projectile.velocity.X < 0f && num53 > 0f)
                         {
-                            projectile.velocity.X += num52;
+                            Projectile.velocity.X += num52;
                         }
                     }
-                    else if (projectile.velocity.X > num53)
+                    else if (Projectile.velocity.X > num53)
                     {
-                        projectile.velocity.X  -= num52;
-                        if (projectile.velocity.X > 0f && num53 < 0f)
+                        Projectile.velocity.X  -= num52;
+                        if (Projectile.velocity.X > 0f && num53 < 0f)
                         {
-                            projectile.velocity.X -= num52;
+                            Projectile.velocity.X -= num52;
                         }
                     }
-                    if (projectile.velocity.Y < num54)
+                    if (Projectile.velocity.Y < num54)
                     {
-                        projectile.velocity.Y += num52;
-                        if (projectile.velocity.Y < 0f && num54 > 0f)
+                        Projectile.velocity.Y += num52;
+                        if (Projectile.velocity.Y < 0f && num54 > 0f)
                         {
-                            projectile.velocity.Y += num52;
+                            Projectile.velocity.Y += num52;
                         }
                     }
-                    else if (projectile.velocity.Y > num54)
+                    else if (Projectile.velocity.Y > num54)
                     {
-                        projectile.velocity.Y -= num52;
-                        if (projectile.velocity.Y > 0f && num54 < 0f)
+                        Projectile.velocity.Y -= num52;
+                        if (Projectile.velocity.Y > 0f && num54 < 0f)
                         {
-                            projectile.velocity.Y -= num52;
+                            Projectile.velocity.Y -= num52;
                         }
                     }
                 }
-                if (Main.myPlayer == projectile.owner)
+                if (Main.myPlayer == Projectile.owner)
                 {
-                    Rectangle rectangle = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
-                    Rectangle value2 = new Rectangle((int)Main.player[projectile.owner].position.X, (int)Main.player[projectile.owner].position.Y, Main.player[projectile.owner].width, Main.player[projectile.owner].height);
+                    Rectangle rectangle = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
+                    Rectangle value2 = new Rectangle((int)Main.player[Projectile.owner].position.X, (int)Main.player[Projectile.owner].position.Y, Main.player[Projectile.owner].width, Main.player[Projectile.owner].height);
                     if (rectangle.Intersects(value2))
                     {
-                        projectile.Kill();
+                        Projectile.Kill();
                     }
                 }
             }
-            projectile.rotation += -0.6f;//* (float)projectile.direction;
+            Projectile.rotation += -0.6f;//* (float)Projectile.direction;
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.DiamondBolt, 0, 0, 0, default, 0.5f);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemDiamond, 0, 0, 0, default, 0.5f);
             dust.noGravity = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if ((int)projectile.ai[0] == 0)
+            if ((int)Projectile.ai[0] == 0)
             {
-                projectile.velocity = -projectile.velocity;
-                projectile.netUpdate = true;
-                projectile.ai[0] = 1;
+                Projectile.velocity = -Projectile.velocity;
+                Projectile.netUpdate = true;
+                Projectile.ai[0] = 1;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.ai[0] = 1;
-            projectile.velocity = -projectile.velocity;
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+            Projectile.ai[0] = 1;
+            Projectile.velocity = -Projectile.velocity;
             return false;
         }
 

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using TerraLeague.Buffs;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,27 +19,27 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.friendly = true;
-            projectile.alpha = 0;
-            projectile.width = 50;
-            projectile.height = 50;
-            projectile.melee = true;
-            projectile.penetrate = -1;
-			projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.alpha = 0;
+            Projectile.width = 50;
+            Projectile.height = 50;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/ChainWardensScythe_Chain");
+            Texture2D texture = ModContent.Request<Texture2D>("TerraLeague/Projectiles/ChainWardensScythe_Chain").Value;
             Vector2 position;
-            if (projectile.spriteDirection == 1)
-                position = new Vector2(projectile.position.X + 8, projectile.position.Y + 7).RotatedBy(projectile.rotation, projectile.Center);
+            if (Projectile.spriteDirection == 1)
+                position = new Vector2(Projectile.position.X + 8, Projectile.position.Y + 7).RotatedBy(Projectile.rotation, Projectile.Center);
             else
-                position = new Vector2(projectile.position.X + projectile.width - 8, projectile.position.Y + 7).RotatedBy(projectile.rotation, projectile.Center);
+                position = new Vector2(Projectile.position.X + Projectile.width - 8, Projectile.position.Y + 7).RotatedBy(Projectile.rotation, Projectile.Center);
 
             
 
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             float num1 = (float)texture.Height;
@@ -63,7 +64,7 @@ namespace TerraLeague.Projectiles
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
                     Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                    color2 = projectile.GetAlpha(color2);
+                    color2 = Projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }
             }
@@ -73,15 +74,15 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 
-			if (!player.active || player.dead || Vector2.Distance(projectile.Center, player.Center) > 900f)
+			if (!player.active || player.dead || Vector2.Distance(Projectile.Center, player.Center) > 900f)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			else if (Main.myPlayer == projectile.owner && Main.mapFullscreen)
+			else if (Main.myPlayer == Projectile.owner && Main.mapFullscreen)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			else
 			{
@@ -103,104 +104,100 @@ namespace TerraLeague.Projectiles
 				num4 *= speedMultiplier;
 				num5 *= speedMultiplier;
 
-				projectile.localNPCHitCooldown = generalHitCooldown;
-                switch ((int)projectile.ai[0])
+				Projectile.localNPCHitCooldown = generalHitCooldown;
+                switch ((int)Projectile.ai[0])
                 {
                     case 0:
                         flag2 = true;
-                        if (projectile.owner == Main.myPlayer)
+                        if (Projectile.owner == Main.myPlayer)
                         {
                             Vector2 position = Main.MouseWorld - mountedCenter;
                             position = position.SafeNormalize(Vector2.UnitX * (float)player.direction);
                             player.ChangeDir((position.X > 0f) ? 1 : (-1));
                             if (!player.channel)
                             {
-                                projectile.ai[0] = 1f;
-                                projectile.ai[1] = 0f;
-                                projectile.velocity = position * num2 + player.velocity;
-                                projectile.Center = mountedCenter;
-                                projectile.netUpdate = true;
-                                projectile.tileCollide = true;
-                                for (int i = 0; i < projectile.localNPCImmunity.Length; i++)
+                                Projectile.ai[0] = 1f;
+                                Projectile.ai[1] = 0f;
+                                Projectile.velocity = position * num2 + player.velocity;
+                                Projectile.Center = mountedCenter;
+                                Projectile.netUpdate = true;
+                                Projectile.tileCollide = true;
+                                for (int i = 0; i < Projectile.localNPCImmunity.Length; i++)
                                 {
-                                    projectile.localNPCImmunity[i] = 0;
+                                    Projectile.localNPCImmunity[i] = 0;
                                 }
-                                projectile.localNPCHitCooldown = throwHitCooldown;
+                                Projectile.localNPCHitCooldown = throwHitCooldown;
                                 break;
                             }
                         }
-                        projectile.localAI[1] += 1f;
-                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (projectile.localAI[1] / swingSpeed) * (float)player.direction), default);
+                        Projectile.localAI[1] += 1f;
+                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (Projectile.localAI[1] / swingSpeed) * (float)player.direction), default);
                         vector3.Y *= 0.8f;
                         if (vector3.Y * player.gravDir > 0f)
                         {
                             vector3.Y *= 0.5f;
                         }
-                        projectile.Center = mountedCenter + vector3 * swingDistance; ;
-                        projectile.velocity = Vector2.Zero;
-                        projectile.localNPCHitCooldown = swingHitCooldown;
+                        Projectile.Center = mountedCenter + vector3 * swingDistance; ;
+                        Projectile.velocity = Vector2.Zero;
+                        Projectile.localNPCHitCooldown = swingHitCooldown;
 
                         break;
                     case 1:
-                        ref float val = ref projectile.ai[1];
+                        ref float val = ref Projectile.ai[1];
                         float num19 = val;
                         val = num19 + 1f;
                         bool flag3 = num19 >= (float)num;
-                        flag3 |= (projectile.Distance(mountedCenter) >= num3);
+                        flag3 |= (Projectile.Distance(mountedCenter) >= num3);
 
                         if (flag3)
                         {
-                            projectile.ai[0] = 2f;
-                            projectile.ai[1] = 0f;
-                            projectile.netUpdate = true;
-                            projectile.velocity *= 0.3f;
-                            if (Main.myPlayer == projectile.owner && projectile.type == 757)
-                            {
-                                Projectile.NewProjectile(projectile.Center, projectile.velocity, 928, projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
-                            }
+                            Projectile.ai[0] = 2f;
+                            Projectile.ai[1] = 0f;
+                            Projectile.netUpdate = true;
+                            Projectile.velocity *= 0.3f;
                         }
-                        player.ChangeDir((player.Center.X < projectile.Center.X) ? 1 : (-1));
-                        projectile.localNPCHitCooldown = throwHitCooldown;
+                        player.ChangeDir((player.Center.X < Projectile.Center.X) ? 1 : (-1));
+                        Projectile.localNPCHitCooldown = throwHitCooldown;
 
                         break;
                     case 2:
-                        projectile.tileCollide = false;
-                        Vector2 value = projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
-                        if (projectile.Distance(mountedCenter) <= num5)
+                        Projectile.tileCollide = false;
+                        Vector2 value = Projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
+                        if (Projectile.Distance(mountedCenter) <= num5)
                         {
-                            projectile.Kill();
+                            Projectile.Kill();
                             return;
                         }
-                        projectile.velocity *= 0.98f;
-                        projectile.velocity = MoveTowards(projectile.velocity, value * num5, num4);
-                        player.ChangeDir((player.Center.X < projectile.Center.X) ? 1 : (-1));
+                        Projectile.velocity *= 0.98f;
+                        Projectile.velocity = MoveTowards(Projectile.velocity, value * num5, num4);
+                        player.ChangeDir((player.Center.X < Projectile.Center.X) ? 1 : (-1));
 
                         break;
                 }
-				projectile.spriteDirection = player.direction;
-				projectile.ownerHitCheck = flag2;
+				Projectile.spriteDirection = player.direction;
+                Projectile.ownerHitCheck = flag2;
 				player.itemTime = 5;
                 player.itemAnimation = 5;
-                projectile.timeLeft = 2;
-				player.heldProj = projectile.whoAmI;
-				player.itemRotation = projectile.DirectionFrom(mountedCenter).ToRotation();
-				if (projectile.Center.X < mountedCenter.X)
+                Projectile.timeLeft = 2;
+				player.heldProj = Projectile.whoAmI;
+				player.itemRotation = Projectile.DirectionFrom(mountedCenter).ToRotation();
+				if (Projectile.Center.X < mountedCenter.X)
 				{
 					player.itemRotation += 3.14159274f;
 				}
 				player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
 
-				if (projectile.spriteDirection == -1)
-					projectile.rotation = (projectile.Center - mountedCenter).ToRotation() -  (MathHelper.Pi * 0.75f);
+				if (Projectile.spriteDirection == -1)
+					Projectile.rotation = (Projectile.Center - mountedCenter).ToRotation() -  (MathHelper.Pi * 0.75f);
 				else
-					projectile.rotation = (projectile.Center - mountedCenter).ToRotation() - (MathHelper.Pi * 0.25f);
+					Projectile.rotation = (Projectile.Center - mountedCenter).ToRotation() - (MathHelper.Pi * 0.25f);
 				//projectile.AI_015_Flails_Dust(doFastThrowDust);
 			}
 		}
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-			if ((int)projectile.ai[0] == 0)
+			if ((int)Projectile.ai[0] == 0)
 			{
 				damage = (int)(damage * 0.25);
 				knockback = (int)(knockback * 0.25);
@@ -211,13 +208,13 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.ai[0] = 2;
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+            Projectile.ai[0] = 2;
 
-			if (oldVelocity.X != projectile.velocity.X)
-				projectile.velocity.X *= 0.1f;
-			if (oldVelocity.Y != projectile.velocity.Y)
-				projectile.velocity.Y *= 0.1f;
+			if (oldVelocity.X != Projectile.velocity.X)
+				Projectile.velocity.X *= 0.1f;
+			if (oldVelocity.Y != Projectile.velocity.Y)
+				Projectile.velocity.Y *= 0.1f;
 
 			return false;
         }
@@ -231,9 +228,9 @@ namespace TerraLeague.Projectiles
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			if (projectile.ai[0] == 0f)
+			if (Projectile.ai[0] == 0f)
 			{
-				Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+				Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
 				Vector2 vector = ClosestPointInRect(targetHitbox, mountedCenter) - mountedCenter;
 				vector.Y /= 0.8f;
 				float num = 90f;

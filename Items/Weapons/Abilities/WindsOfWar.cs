@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/WindsofWar";
+            return "TerraLeague/AbilityImages/WindsofWar";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.5);
+            return (int)(abilityItem.Item.damage * 0.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -85,14 +85,14 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 SetAnimation(player, 10, 10, position);
                 DoEfx(player, type);
-                Projectile.NewProjectile(position, new Vector2(0, 1000), projType, damage, knockback, player.whoAmI, 6);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, new Vector2(0, 1000), projType, damage, knockback, player.whoAmI, 6);
                 SetCooldowns(player, type);
             }
         }
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
         }
     }
 }

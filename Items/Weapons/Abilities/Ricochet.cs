@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Ricochet";
+            return "TerraLeague/AbilityImages/Ricochet";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.8f);
+            return (int)(abilityItem.Item.damage * 0.8f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -83,7 +83,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 int knockback = 1;
 
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                 SetAnimation(player, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
@@ -92,7 +92,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound), player.Center);
         }
     }
 }

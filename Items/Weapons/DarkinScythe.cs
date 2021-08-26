@@ -16,6 +16,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Darkin Scythe");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -25,21 +26,21 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 32;
-            item.width = 60;
-            item.height = 54;       
-            item.melee = true;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 3;
-            item.value = 100000;
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.useTurn = true;
+            Item.damage = 32;
+            Item.width = 60;
+            Item.height = 54;       
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 3;
+            Item.value = 100000;
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.useTurn = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new ReapingSlash(this));
             abilityItem.SetAbility(AbilityType.R, new UmbralTrespass(this));
             abilityItem.ChampQuote = "From the shadow comes the slaughter";
@@ -54,13 +55,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Sickle, 1);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 20);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Sickle, 1)
+            .AddRecipeGroup("TerraLeague:DemonGroup", 20)
+            .AddIngredient(ItemID.SoulofNight, 10)
+            .AddTile(TileID.DemonAltar)
+            .Register();
+            
         }
     }
 }

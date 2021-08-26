@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class AngelsProtection : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Angel's Blessing");
             Description.SetDefault("Upon taking fatal damage, heal for 50% of your max life." +

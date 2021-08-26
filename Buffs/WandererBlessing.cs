@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class WandererBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Wanderer");
             Description.SetDefault("25% increased mining speed" +

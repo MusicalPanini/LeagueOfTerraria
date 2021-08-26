@@ -17,43 +17,43 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eternal Flame");
-            ProjectileID.Sets.LightPet[projectile.type] = true;
-            Main.projPet[projectile.type] = true;
+            ProjectileID.Sets.LightPet[Projectile.type] = true;
+            Main.projPet[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.timeLeft *= 5;
-            projectile.penetrate = -1;
-            projectile.netImportant = true;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.timeLeft *= 5;
+            Projectile.penetrate = -1;
+            Projectile.netImportant = true;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
-            projectile.Center = player.MountedCenter;
+            Player player = Main.player[Projectile.owner];
+            Projectile.Center = player.MountedCenter;
             if (!player.active)
             {
-                projectile.active = false;
+                Projectile.active = false;
                 return;
             }
             if (player.HasBuff(ModContent.BuffType<CandlePet>()))
             {
-                projectile.timeLeft = 2;
+                Projectile.timeLeft = 2;
             }
 
             if (Main.LocalPlayer.whoAmI == player.whoAmI)
             {
-                if (projectile.soundDelay == 0)
+                if (Projectile.soundDelay == 0)
                 {
-                    Projectile.NewProjectileDirect(projectile.Center, new Vector2(Main.rand.NextFloat(0, 5f), 0).RotatedByRandom(MathHelper.TwoPi), ModContent.ProjectileType<LightPet_Flame>(), 0, 0, player.whoAmI);
-                    projectile.soundDelay = Main.rand.Next(150, 300);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, new Vector2(Main.rand.NextFloat(0, 5f), 0).RotatedByRandom(MathHelper.TwoPi), ModContent.ProjectileType<LightPet_Flame>(), 0, 0, player.whoAmI);
+                    Projectile.soundDelay = Main.rand.Next(150, 300);
                 }
             }
         }

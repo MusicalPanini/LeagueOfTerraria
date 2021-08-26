@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class FeastStack1 : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Small Feast");
             Description.SetDefault("Gain 20 Life");

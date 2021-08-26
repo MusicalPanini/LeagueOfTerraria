@@ -11,19 +11,20 @@ namespace TerraLeague.Items.StartingItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Doran's Ring");
-            Tooltip.SetDefault("+2 magic and minion damage" +
+            Tooltip.SetDefault("+2 magic and summon damage" +
                 "\nIncreases health by 5" +
                 "\nIncreases mana regeneration by 1" +
                 "\nRestore 5 mana on kill");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = 10000;
-            item.rare = ItemRarityID.Blue;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Blue;
+            Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -32,6 +33,13 @@ namespace TerraLeague.Items.StartingItems
             player.statLifeMax2 += 5;
             player.GetModPlayer<PLAYERGLOBAL>().magicFlatDamage += 2;
             player.GetModPlayer<PLAYERGLOBAL>().minionFlatDamage += 2;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<DoransBag>(), 1)
+            .Register();
         }
     }
 }

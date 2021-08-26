@@ -16,15 +16,16 @@ namespace TerraLeague.Items.Accessories
             Tooltip.SetDefault("You can jump 6 extra times really high and sprint" +
                 "\nYou are immune to fall damage");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 30;
-            item.rare = ItemRarityID.Orange;
-            item.value = Item.buyPrice(0, 18, 0, 0);
-            item.accessory = true;
+            Item.width = 28;
+            Item.height = 30;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.buyPrice(0, 18, 0, 0);
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -36,12 +37,12 @@ namespace TerraLeague.Items.Accessories
             player.jumpSpeedBoost += 4;
             player.jumpBoost = true;
 
-            player.doubleJumpCloud = true;
-            player.doubleJumpBlizzard = true;
-            player.doubleJumpSandstorm = true;
-            player.doubleJumpSail = true;
-            player.doubleJumpUnicorn = true;
-            player.doubleJumpFart = true;
+            player.hasJumpOption_Cloud = true;
+            player.hasJumpOption_Blizzard = true;
+            player.hasJumpOption_Sandstorm = true;
+            player.hasJumpOption_Sail = true;
+            player.hasJumpOption_Unicorn = true;
+            player.hasJumpOption_Fart = true;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Highlander";
+            return "TerraLeague/AbilityImages/Highlander";
         }
 
         public override string GetAbilityTooltip()
@@ -65,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
         }
     }
 }

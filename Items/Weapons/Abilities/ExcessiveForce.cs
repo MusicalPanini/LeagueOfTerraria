@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/ExcessiveForce";
+            return "TerraLeague/AbilityImages/ExcessiveForce";
         }
 
         public override string GetAbilityTooltip()
@@ -65,10 +65,10 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 42, 24, -0.5f);
+            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 42, 25, -0.5f);
             for (int j = 0; j < 10; j++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Fire, 0, -10);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 6, 0, -10);
                 dust.velocity.X *= 0;
                 dust.velocity.Y -= 4;
                 dust.noGravity = true;

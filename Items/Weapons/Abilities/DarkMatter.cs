@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/DarkMatter";
+            return "TerraLeague/AbilityImages/DarkMatter";
         }
 
         public override string GetAbilityTooltip()
@@ -36,7 +36,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2.5f);
+            return (int)(abilityItem.Item.damage * 2.5f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -84,14 +84,14 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 DoEfx(player, type);
                 SetAnimation(player, position);
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);
             }
         }
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item20, player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item20, player.Center);
         }
     }
 }

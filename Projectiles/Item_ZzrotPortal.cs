@@ -12,63 +12,63 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zz'Rot Portal");
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
-            projectile.friendly = false;
-            projectile.penetrate = 1;
-            projectile.alpha = 0;
-            projectile.timeLeft = 60 * 5 + 5;
-            projectile.minion = true;
+            Projectile.width = 48;
+            Projectile.height = 48;
+            Projectile.friendly = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 60 * 5 + 5;
+            Projectile.DamageType = DamageClass.Summon;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, 0.60f, 0f, 0.60f);
+            Lighting.AddLight(Projectile.Center, 0.60f, 0f, 0.60f);
 
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 3f);
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y + 16), Projectile.width, Projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 3f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 2;
 
-                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 2f);
+                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y + 16), Projectile.width, Projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 2f);
                     dust.noGravity = true;
                     dust.velocity.Y -= 3;
                 }
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            if (projectile.ai[1] >= 60)
+            if (Projectile.ai[1] >= 60)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 103, -0.25f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 103, -0.25f);
 
-                for (int i = 0; i < (int)projectile.ai[0] + Main.player[projectile.owner].maxMinions; i++)
+                for (int i = 0; i < (int)Projectile.ai[0] + Main.player[Projectile.owner].maxMinions; i++)
                 {
-                    Projectile.NewProjectile(projectile.Center, new Vector2(Main.rand.NextFloat(-4, 4), -6), ModContent.ProjectileType<VoidProphetsStaff_Zzrot>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, new Vector2(Main.rand.NextFloat(-4, 4), -6), ModContent.ProjectileType<VoidProphetsStaff_Zzrot>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0, -3);
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, 0, -3);
                 }
 
-                projectile.ai[1] = 0;
+                Projectile.ai[1] = 0;
             }
             else
             {
-                projectile.ai[1]++;
+                Projectile.ai[1]++;
             }
 
             if (Main.rand.Next(0, 30) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0, 0, 0, default, 1.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame, 0, 0, 0, default, 1.5f);
                 dust.fadeIn = 1;
                 dust.velocity *= 0.1f;
             }
@@ -78,7 +78,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 
@@ -86,11 +86,11 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 20; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 3f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y + 16), Projectile.width, Projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 3f);
                 dust.noGravity = true;
                 dust.velocity.Y -= 2;
 
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y + 16), projectile.width, projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 2f);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y + 16), Projectile.width, Projectile.height, DustID.Shadowflame, 0f, 0, 0, default, 2f);
                 dust.noGravity = true;
                 dust.velocity.Y -= 3;
             }
@@ -99,12 +99,12 @@ namespace TerraLeague.Projectiles
 
         void Animation()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 6)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 6)
             {
-                projectile.frame++;
-                projectile.frame %= 4;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
             }
         }
     }

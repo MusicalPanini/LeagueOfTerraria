@@ -13,7 +13,7 @@ namespace TerraLeague.Tiles
     public class PetTreeSapling : ModTile
     {
 
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -33,11 +33,11 @@ namespace TerraLeague.Tiles
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
             TileObjectData.newTile.RandomStyleRange = 3;
             TileObjectData.addTile(Type);
-            sapling = true;
+            //sapling = true;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Sapling");
             AddMapEntry(new Color(200, 200, 0), name);
-            adjTiles = new int[] { TileID.Saplings };
+            AdjTiles = new int[] { TileID.Saplings };
         }
 
         public override void RandomUpdate(int i, int j)

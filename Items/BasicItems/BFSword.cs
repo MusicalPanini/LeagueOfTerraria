@@ -12,41 +12,41 @@ namespace TerraLeague.Items.BasicItems
         {
             DisplayName.SetDefault("B.F.Sword");
             Tooltip.SetDefault("4% increased melee and ranged damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Green;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.04f;
-            player.rangedDamage += 0.04f;
+            player.GetDamage(DamageClass.Melee) += 0.04f;
+            player.GetDamage(DamageClass.Ranged) += 0.04f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.IronBroadsword, 1);
-            recipe.AddRecipeGroup("TerraLeague:IronGroup", 5);
-            recipe.AddIngredient(ItemID.Leather, 2);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.IronBroadsword, 1)
+            .AddRecipeGroup("TerraLeague:IronGroup", 5)
+            .AddIngredient(ItemID.Leather, 2)
+            .AddTile(TileID.Anvils)
+            .Register();
 
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(ItemID.LeadBroadsword, 1);
-            recipe2.AddRecipeGroup("TerraLeague:IronGroup", 5);
-            recipe2.AddIngredient(ItemID.Leather, 2);
-            recipe2.AddTile(TileID.Anvils);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+
+            CreateRecipe()
+            .AddIngredient(ItemID.LeadBroadsword, 1)
+            .AddRecipeGroup("TerraLeague:IronGroup", 5)
+            .AddIngredient(ItemID.Leather, 2)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

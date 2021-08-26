@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class LastBreath1 : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Steel Wind Rising");
             Description.SetDefault("Winds are building up around you sword!");

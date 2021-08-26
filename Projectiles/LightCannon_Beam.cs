@@ -17,31 +17,31 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.friendly = true;
-            projectile.ranged = true;
-            projectile.alpha = 255;
-            projectile.timeLeft = 80;
-            projectile.extraUpdates = 16;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 80;
+            Projectile.extraUpdates = 16;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
-            Lighting.AddLight(projectile.Center, Color.White.ToVector3());
+            Lighting.AddLight(Projectile.Center, Color.White.ToVector3());
             for (int i = 0; i < 3; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                int dustBoxWidth = projectile.width - 12;
-                int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Rainbow, 0f, 0f, 100, default, 1 * (projectile.timeLeft / 80f) + 1);
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 264, 0f, 0f, 100, default, 1 * (Projectile.timeLeft / 80f) + 1);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.1f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
             base.AI();
@@ -56,7 +56,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Rainbow, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 264, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0);
                 dust.noGravity = true;
                 dust.scale = 1 * (timeLeft / 80f) + 1;
             }

@@ -12,16 +12,17 @@ namespace TerraLeague.Items.BasicItems
         {
             DisplayName.SetDefault("Sapphire Crystal");
             Tooltip.SetDefault("Increases maximum mana by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Green;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -31,12 +32,12 @@ namespace TerraLeague.Items.BasicItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ManaCrystal, 1);
-            recipe.AddIngredient(ItemID.Sapphire, 2);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.ManaCrystal, 1)
+            .AddIngredient(ItemID.Sapphire, 2)
+            .AddTile(TileID.Furnaces)
+            .Register();
+            
         }
     }
 }

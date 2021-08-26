@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using TerraLeague.Buffs;
 using TerraLeague.NPCs;
 using Terraria;
@@ -11,7 +12,7 @@ namespace TerraLeague.Projectiles
 {
     public class DarkinBow_ArrowRain : ModProjectile
     {
-        public int State { get { return (int)projectile.ai[0]; } set { projectile.ai[0] = value; } }
+        public int State { get { return (int)Projectile.ai[0]; } set { Projectile.ai[0] = value; } }
         int State_Grounded = 1;
 
         public override void SetStaticDefaults()
@@ -21,18 +22,18 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.alpha = 0;
-            projectile.scale = 1f;
-            projectile.timeLeft = 300;
-            projectile.ranged = true;
-            //projectile.extraUpdates = 1;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 0;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 300;
+            Projectile.DamageType = DamageClass.Ranged;
+            //Projectile.extraUpdates = 1;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -41,7 +42,7 @@ namespace TerraLeague.Projectiles
             {
                 if (Main.rand.Next(6) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position + new Vector2(0, 10), projectile.width, projectile.height - 10, DustID.Blood, Main.rand.NextFloat(-3, 3), 0, 0, default, 1f);
+                    Dust dust = Dust.NewDustDirect(Projectile.position + new Vector2(0, 10), Projectile.width, Projectile.height - 10, DustID.Blood, Main.rand.NextFloat(-3, 3), 0, 0, default, 1f);
                     dust.fadeIn = 1.5f;
                     dust.noGravity = true;
                     dust.velocity.Y = 0f;
@@ -49,19 +50,19 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
-                if (projectile.velocity.Y > 0)
-                    projectile.velocity.Y += 0.6f;
+                Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
+                if (Projectile.velocity.Y > 0)
+                    Projectile.velocity.Y += 0.6f;
                 else
-                    projectile.velocity.Y += 0.3f;
+                    Projectile.velocity.Y += 0.3f;
 
-                if (projectile.velocity.Y > 16f)
-                    projectile.velocity.Y = 16f;
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 0, default, 1f);
+                if (Projectile.velocity.Y > 16f)
+                    Projectile.velocity.Y = 16f;
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Blood, 0, 0, 0, default, 1f);
                 dust.noGravity = true;
                 dust.velocity *= 0f;
             }
-            Lighting.AddLight(projectile.Center, 0.5f, 0f, 0f);
+            Lighting.AddLight(Projectile.Center, 0.5f, 0f, 0f);
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -80,15 +81,15 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                projectile.extraUpdates = 0;
-                projectile.height = 30;
-                projectile.timeLeft = 360;
-                projectile.knockBack = 0;
-                projectile.damage /= 2;
+                Projectile.extraUpdates = 0;
+                Projectile.height = 30;
+                Projectile.timeLeft = 360;
+                Projectile.knockBack = 0;
+                Projectile.damage /= 2;
                 State = State_Grounded;
-                //projectile.position += new Vector2(2, 0).RotatedBy(projectile.oldVelocity.ToRotation());
-                projectile.velocity *= 0;
-                Main.PlaySound(SoundID.Item10, projectile.position);
+                //Projectile.position += new Vector2(2, 0).RotatedBy(Projectile.oldVelocity.ToRotation());
+                Projectile.velocity *= 0;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             }
 
             return false;
@@ -98,7 +99,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Blood, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, new Color(33, 66, 133), 0.5f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Blood, Projectile.velocity.X / 2, Projectile.velocity.Y / 2, 100, new Color(33, 66, 133), 0.5f);
             }
 
             base.Kill(timeLeft);

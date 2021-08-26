@@ -10,7 +10,7 @@ namespace TerraLeague.Tiles
 {
     public class PetriciteBarTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             Main.tileSolidTop[Type] = true;
@@ -25,7 +25,7 @@ namespace TerraLeague.Tiles
             name.SetDefault("Petricite Slab");
             AddMapEntry(new Color(200, 200, 200), name);
 
-            dustType = DustID.SnowBlock;
+            DustType = DustID.Cloud;
         }
 
         public override bool Drop(int i, int j)

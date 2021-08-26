@@ -18,33 +18,33 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 28;
-            projectile.height = 44;
-            projectile.friendly = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 0;
-            projectile.timeLeft = 360;
-            projectile.tileCollide = false;
+            Projectile.width = 28;
+            Projectile.height = 44;
+            Projectile.friendly = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 360;
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
 
-            Lighting.AddLight(projectile.Center, Color.SeaGreen.ToVector3() * 2f);
+            Lighting.AddLight(Projectile.Center, Color.SeaGreen.ToVector3() * 2f);
 
-            if ((int)projectile.ai[1] == 0)
+            if ((int)Projectile.ai[1] == 0)
             {
-                if (projectile.timeLeft == 360)
+                if (Projectile.timeLeft == 360)
                 {
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-                    int shieldAmount = modPlayer.ScaleValueWithHealPower(projectile.damage);
+                    int shieldAmount = modPlayer.ScaleValueWithHealPower(Projectile.damage);
 
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 8, 0);
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 8, 0);
 
                     for (int i = 0; i < effectRadius / 5; i++)
                     {
-                        Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + projectile.Center;
+                        Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + Projectile.Center;
 
                         Dust dustR = Dust.NewDustPerfect(pos, 188, Vector2.Zero, 0, new Color(0, 255, 0, 0), 2);
                         dustR.noGravity = true;
@@ -52,18 +52,18 @@ namespace TerraLeague.Projectiles
 
                     for (int j = 0; j < 50; j++)
                     {
-                        Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.FartInAJar);
+                        Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 188);
                         dust.noGravity = true;
                         dust.scale = 2;
                     }
 
                     if (Main.LocalPlayer.whoAmI == player.whoAmI)
                     {
-                        var players = Targeting.GetAllPlayersInRange(projectile.Center, effectRadius, -1, player.team);
+                        var players = Targeting.GetAllPlayersInRange(Projectile.Center, effectRadius, -1, player.team);
 
                         for (int i = 0; i < players.Count; i++)
                         {
-                            if (i == projectile.owner)
+                            if (i == Projectile.owner)
                             {
                                 modPlayer.AddShield(shieldAmount, 240, Color.SeaGreen, ShieldType.Basic);
                             }
@@ -75,27 +75,27 @@ namespace TerraLeague.Projectiles
                     }
                 }
 
-                if (projectile.timeLeft <= 350)
+                if (Projectile.timeLeft <= 350)
                 {
                     for (int i = 0; i < Main.player.Length; i++)
                     {
-                        if (projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != projectile.owner && player.team == Main.player[i].team)
+                        if (Projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != Projectile.owner && player.team == Main.player[i].team)
                         {
                             Main.player[i].Teleport(player.position);
-                            projectile.Kill();
+                            Projectile.Kill();
                         }
                     }
                 }
             }
 
-            if (projectile.Distance(player.MountedCenter) > 1000)
+            if (Projectile.Distance(player.MountedCenter) > 1000)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
-            projectile.position.Y += (float)Math.Sin(projectile.timeLeft * 0.05) * 0.4f;
+            Projectile.position.Y += (float)Math.Sin(Projectile.timeLeft * 0.05) * 0.4f;
 
-            Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.FartInAJar, 0, -3);
+            Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 188, 0, -3);
             dust2.scale = 0.75f;
             dust2.alpha = 150;
             dust2.velocity /= 3;
@@ -111,12 +111,12 @@ namespace TerraLeague.Projectiles
             base.Kill(timeLeft);
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = mod.GetTexture("Projectiles/ChainWardensScythe_Chain");
+            Texture2D texture = ModContent.Request<Texture2D>("TerraLeague/Projectiles/ChainWardensScythe_Chain").Value;
 
-            Vector2 position = projectile.Top + new Vector2(0, 6);
-            Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+            Vector2 position = Projectile.Top + new Vector2(0, 6);
+            Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             float num1 = (float)texture.Height;
@@ -140,7 +140,7 @@ namespace TerraLeague.Projectiles
                     position += vector2_1 * num1;
                     vector2_4 = mountedCenter - position;
                     Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                    color2 = projectile.GetAlpha(color2);
+                    color2 = Projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }
             }

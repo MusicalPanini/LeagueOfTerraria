@@ -18,15 +18,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\n+1 ranged life steal"/* +
                 "\n30% decreased maximum life" +
                 "\n30% increased damage taken"*/);
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -35,7 +36,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.06f;
+            player.GetDamage(DamageClass.Ranged) += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;// 0.06;
             //player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.3;
             //player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.3;
@@ -45,16 +46,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BFSword>(), 1);
-            recipe.AddIngredient(ItemType<VampiricScepter>(), 1);
-            recipe.AddIngredient(ItemType<LongSword>(), 1);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddIngredient(ItemID.Ruby, 3);
-            recipe.AddIngredient(ItemID.Bone, 50);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BFSword>(), 1)
+            .AddIngredient(ItemType<VampiricScepter>(), 1)
+            .AddIngredient(ItemType<LongSword>(), 1)
+            .AddIngredient(ItemID.SoulofFright, 10)
+            .AddIngredient(ItemID.Ruby, 3)
+            .AddIngredient(ItemID.Bone, 50)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

@@ -12,33 +12,33 @@ namespace TerraLeague.Items.Ammo
             DisplayName.SetDefault("Void Arrow");
             Tooltip.SetDefault("Gains 25% damage on hit");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
 
         public override void SetDefaults()
         {
-            item.shootSpeed = 3f;
-            item.shoot = ProjectileType<Arrow_VoidArrow>();
-            item.damage = 8;
-            item.width = 10;
-            item.height = 28;
-            item.maxStack = 999;
-            item.consumable = true;
-            item.ammo = AmmoID.Arrow;
-            item.knockBack = 1f;
-            item.value = 40;
-            item.rare = ItemRarityID.Blue;
-            item.ranged = true;
+            Item.shootSpeed = 3f;
+            Item.shoot = ProjectileType<Arrow_VoidArrow>();
+            Item.damage = 8;
+            Item.width = 10;
+            Item.height = 28;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.ammo = AmmoID.Arrow;
+            Item.knockBack = 1f;
+            Item.value = 40;
+            Item.rare = ItemRarityID.Blue;
+            Item.DamageType = DamageClass.Ranged;
             base.SetDefaults();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 10);
-            recipe.AddIngredient(ItemID.WoodenArrow, 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 10);
-            recipe.AddRecipe();
+            CreateRecipe(10)
+            .AddIngredient(ItemType<VoidFragment>(), 10)
+            .AddIngredient(ItemID.WoodenArrow, 10)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

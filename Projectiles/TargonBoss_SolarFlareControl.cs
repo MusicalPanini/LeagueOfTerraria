@@ -16,64 +16,64 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 240;
-            projectile.extraUpdates = 0;
+            Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 240;
+            Projectile.extraUpdates = 0;
         }
 
         public override void AI()
         {
-            //Lighting.AddLight(projectile.Center, 1f, 1f, 0f);
-            if (projectile.timeLeft <= 180)
+            //Lighting.AddLight(Projectile.Center, 1f, 1f, 0f);
+            if (Projectile.timeLeft <= 180)
             {
-                if (projectile.timeLeft % 4 == 0)
+                if (Projectile.timeLeft % 4 == 0)
                 {
-                    if (projectile.timeLeft % 16 == 0)
+                    if (Projectile.timeLeft % 16 == 0)
                     {
-                        TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 9, 0f);
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 9, 0f);
                     }
 
-                    float x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    float y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, 16), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    float x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    float y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y - 8), new Vector2(0, 16), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                    x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, 16).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y - 8), new Vector2(0, 16).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                    x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, -16), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y - 8), new Vector2(0, -16), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                    x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(0, -16).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y - 8), new Vector2(0, -16).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                    x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(16, 0), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y - 8), new Vector2(16, 0), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                    x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(16, 0).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y - 8), new Vector2(16, 0).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                    x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y), new Vector2(-16, 0), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y), new Vector2(-16, 0), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                    x = Main.rand.NextFloat(projectile.position.X + 8, projectile.position.X + 24);
-                    y = Main.rand.NextFloat(projectile.position.Y + 8, projectile.position.Y + 24);
-                    Projectile.NewProjectileDirect(new Vector2(x, y - 8), new Vector2(-16, 0).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    x = Main.rand.NextFloat(Projectile.position.X + 8, Projectile.position.X + 24);
+                    y = Main.rand.NextFloat(Projectile.position.Y + 8, Projectile.position.Y + 24);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(x, y - 8), new Vector2(-16, 0).RotatedBy(MathHelper.PiOver4), ModContent.ProjectileType<TargonBoss_SolarFlare>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
                 }
             }
             else
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default, 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, 0, 0, 150, default, 2f);
                 dust.velocity *= 0;
                 dust.noGravity = true;
                 dust.fadeIn = 0;
@@ -82,7 +82,7 @@ namespace TerraLeague.Projectiles
                 {
                     Vector2 vel = new Vector2(16, 0).RotatedBy(MathHelper.PiOver4 * i);
 
-                    dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AmberBolt, 0, 0, 150, default, 1f);
+                    dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, 0, 0, 150, default, 1f);
                     dust.velocity = vel;
                     dust.noGravity = true;
                 }
@@ -98,7 +98,7 @@ namespace TerraLeague.Projectiles
         {
             //for (int i = 0; i < 10; i++)
             //{
-            //    Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, new Color(255, 192, 0), 0.5f);
+            //    Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 192, Projectile.velocity.X / 2, Projectile.velocity.Y / 2, 100, new Color(255, 192, 0), 0.5f);
             //}
 
             base.Kill(timeLeft);

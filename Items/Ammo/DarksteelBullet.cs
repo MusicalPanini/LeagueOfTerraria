@@ -13,23 +13,24 @@ namespace TerraLeague.Items.Ammo
             Tooltip.SetDefault("Struck enemies will start to 'Hemorrhage'" +
                 "\nHemorrage stacks up to 5 times");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
 
         public override void SetDefaults()
         {
-            item.shootSpeed = 3f;
-            item.shoot = ProjectileType<Bullet_DarksteelShot>();
-            item.damage = 7;
-            item.width = 8;
-            item.height = 8;
-            item.maxStack = 999;
-            item.value = 7;
-            item.consumable = true;
-            item.ammo = AmmoID.Bullet;
-            item.knockBack = 1f;
-            item.value = 10;
-            item.ranged = true;
-            item.rare = ItemRarityID.Blue;
+            Item.shootSpeed = 3f;
+            Item.shoot = ProjectileType<Bullet_DarksteelShot>();
+            Item.damage = 7;
+            Item.width = 8;
+            Item.height = 8;
+            Item.maxStack = 999;
+            Item.value = 7;
+            Item.consumable = true;
+            Item.ammo = AmmoID.Bullet;
+            Item.knockBack = 1f;
+            Item.value = 10;
+            Item.DamageType = DamageClass.Ranged;
+            Item.rare = ItemRarityID.Blue;
 
 
             base.SetDefaults();
@@ -37,12 +38,11 @@ namespace TerraLeague.Items.Ammo
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 1);
-            recipe.AddIngredient(ItemID.MusketBall, 150);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 150);
-            recipe.AddRecipe();
+            CreateRecipe(150)
+            .AddIngredient(ItemType<DarksteelBar>(), 1)
+            .AddIngredient(ItemID.MusketBall, 150)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

@@ -31,16 +31,16 @@ namespace TerraLeague.Projectiles.Minions
 
         public override void Behavior()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             float shortestDistance = viewDist;
 
             
 
-            projectile.velocity.X = 0f;
-            projectile.velocity.Y = projectile.velocity.Y + 0.2f;
-            if (projectile.velocity.Y > 16f)
+            Projectile.velocity.X = 0f;
+            Projectile.velocity.Y = Projectile.velocity.Y + 0.2f;
+            if (Projectile.velocity.Y > 16f)
             {
-                projectile.velocity.Y = 16f;
+                Projectile.velocity.Y = 16f;
             }
 
 
@@ -48,17 +48,17 @@ namespace TerraLeague.Projectiles.Minions
             {
                 NPC checkTarget = Main.npc[player.MinionAttackTargetNPC];
 
-                float checkX = checkTarget.position.X + (float)checkTarget.width * 0.5f - projectile.Center.X;
-                float checkY = checkTarget.position.Y + (float)checkTarget.height * 0.5f - projectile.Center.Y;
+                float checkX = checkTarget.position.X + (float)checkTarget.width * 0.5f - Projectile.Center.X;
+                float checkY = checkTarget.position.Y + (float)checkTarget.height * 0.5f - Projectile.Center.Y;
                 float distance = (float)System.Math.Sqrt((double)(checkX * checkX + checkY * checkY));
 
-                if (distance < shortestDistance && !checkTarget.friendly && checkTarget.life > 5 && Collision.CanHit(projectile.position, projectile.width, projectile.height/2, checkTarget.position, checkTarget.width, checkTarget.height))
+                if (distance < shortestDistance && !checkTarget.friendly && checkTarget.life > 5 && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height/2, checkTarget.position, checkTarget.width, checkTarget.height))
                 {
                     shortestDistance = distance;
                     target = checkTarget;
 
-                    double xDis = target.Center.X - projectile.Center.X;
-                    double yDis = target.Center.Y - projectile.Center.Y;
+                    double xDis = target.Center.X - Projectile.Center.X;
+                    double yDis = target.Center.Y - Projectile.Center.Y;
                     angle = Math.Atan(yDis / xDis);
                 }
             }
@@ -69,12 +69,12 @@ namespace TerraLeague.Projectiles.Minions
                 {
 
                 }
-                else if (target != null && target.active && Collision.CanHit(projectile.position, projectile.width, projectile.height / 2, target.position, target.width, target.height))
+                else if (target != null && target.active && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height / 2, target.position, target.width, target.height))
                 {
-                    if (Vector2.Distance(target.Center, projectile.position) < viewDist)
+                    if (Vector2.Distance(target.Center, Projectile.position) < viewDist)
                     {
-                        double xDis = target.Center.X - projectile.Center.X;
-                        double yDis = target.Center.Y - projectile.Center.Y;
+                        double xDis = target.Center.X - Projectile.Center.X;
+                        double yDis = target.Center.Y - Projectile.Center.Y;
                         angle = Math.Atan(yDis / xDis);
                     }
                     else
@@ -94,11 +94,11 @@ namespace TerraLeague.Projectiles.Minions
                 {
                     NPC checkTarget = Main.npc[i];
 
-                    float checkX = checkTarget.position.X + (float)checkTarget.width * 0.5f - projectile.Center.X;
-                    float checkY = checkTarget.position.Y + (float)checkTarget.height * 0.5f - projectile.Center.Y;
+                    float checkX = checkTarget.position.X + (float)checkTarget.width * 0.5f - Projectile.Center.X;
+                    float checkY = checkTarget.position.Y + (float)checkTarget.height * 0.5f - Projectile.Center.Y;
                     float distance = (float)System.Math.Sqrt((double)(checkX * checkX + checkY * checkY));
 
-                    if (distance < shortestDistance && !checkTarget.friendly && checkTarget.lifeMax > 5 && !checkTarget.immortal && checkTarget.active && Collision.CanHit(projectile.position, projectile.width, projectile.height / 2, checkTarget.position, checkTarget.width, checkTarget.height))
+                    if (distance < shortestDistance && !checkTarget.friendly && checkTarget.lifeMax > 5 && !checkTarget.immortal && checkTarget.active && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height / 2, checkTarget.position, checkTarget.width, checkTarget.height))
                     {
                         shortestDistance = distance;
                         target = checkTarget;
@@ -106,23 +106,23 @@ namespace TerraLeague.Projectiles.Minions
                 }
                 if (target != null)
                 {
-                    double xDis = target.Center.X - projectile.Center.X;
-                    double yDis = target.Center.Y - projectile.Center.Y;
+                    double xDis = target.Center.X - Projectile.Center.X;
+                    double yDis = target.Center.Y - Projectile.Center.Y;
                     angle = Math.Atan(yDis / xDis);
                 }
             }
 
             if (target != null)
             {
-                if (shootCountdown == 0 && Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
+                if (shootCountdown == 0 && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height))
                 {
                     Vector2 velocity;
-                    if (target.Center.X < projectile.position.X)
+                    if (target.Center.X < Projectile.position.X)
                         velocity = new Vector2(-shootSpeed, 0).RotatedBy(angle);
                     else
                         velocity = new Vector2(shootSpeed, 0).RotatedBy(angle);
 
-                    if (target.Center.Y - projectile.Center.Y < 0)
+                    if (target.Center.Y - Projectile.Center.Y < 0)
                     {
                         velocity.Y = (float)-Math.Sqrt(Math.Pow(velocity.Y, 2));
                     }
@@ -131,8 +131,8 @@ namespace TerraLeague.Projectiles.Minions
                         velocity.Y = (float)Math.Sqrt(Math.Pow(velocity.Y, 2));
                     }
 
-                    Projectile.NewProjectileDirect(projectile.Center, velocity, shoot, (int)(projectile.damage), projectile.knockBack, projectile.owner);
-                    Main.PlaySound(shootSound, projectile.position);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, velocity, shoot, (int)(Projectile.damage), Projectile.knockBack, Projectile.owner);
+                    Terraria.Audio.SoundEngine.PlaySound(shootSound, Projectile.position);
 
                     shootCountdown = shootCool;
                 }

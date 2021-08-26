@@ -20,18 +20,18 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.alpha = 255;
-            projectile.timeLeft = 90;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.magic = true;
-            projectile.ignoreWater = true;
-            projectile.extraUpdates = 1;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 90;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.ignoreWater = true;
+            Projectile.extraUpdates = 1;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
 
             CanOnlyHitTarget = true;
             CanRetarget = true;
@@ -45,12 +45,12 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Firework_Yellow, projectile.velocity.X, projectile.velocity.Y, 50, default, 0.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FireworksRGB, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 0.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
 
-            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
+            Lighting.AddLight(Projectile.position, 0f, 0f, 0.5f);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -62,22 +62,22 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Firework_Yellow, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FireworksRGB, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1.2f);
                 dust.noGravity = true;
             }
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (target.HasBuff(BuffType<Buffs.EssenceFluxDebuff>()))
             {
                 modPlayer.magicFlatDamage += EssenceFlux.GetFluxDamage(modPlayer);
 
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 12, 0.5f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 12, 0.5f);
 
-                projectile.magic = true;
+                Projectile.DamageType = DamageClass.Magic;
                 player.ManaEffect(100);
                 player.statMana += 100;
             }

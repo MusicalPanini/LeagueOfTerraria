@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/LightningRush";
+            return "TerraLeague/AbilityImages/LightningRush";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2);
+            return (int)(abilityItem.Item.damage * 2);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -79,7 +79,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetBaseManaCost(), true))
             {
                 player.AddBuff(BuffType<Buffs.LightningRush>(), 180);
-                Projectile.NewProjectile(player.MountedCenter, Vector2.Zero, ProjectileType<HeartoftheTempest_LightningRush>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), player.MountedCenter, Vector2.Zero, ProjectileType<HeartoftheTempest_LightningRush>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI);
                 player.GetModPlayer<PLAYERGLOBAL>().lightningRush = true;
                 DoEfx(player, type);
                 SetCooldowns(player, type);

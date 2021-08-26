@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Armor
             DisplayName.SetDefault("Celestial Boots");
             Tooltip.SetDefault("Increases mana regeneration by 50%" +
                 "\n7% increased movement speed");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 18;
-            item.value = 9000 * 5;
-            item.rare = ItemRarityID.Green;
-            item.defense = 3;
+            Item.width = 22;
+            Item.height = 18;
+            Item.value = 9000 * 5;
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 3;
         }
 
         public override void UpdateEquip(Player player)
@@ -33,12 +34,12 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 16);
-            recipe.AddIngredient(ItemID.Leather, 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 16)
+            .AddIngredient(ItemID.Leather, 10)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override void UpdateArmorSet(Player player)

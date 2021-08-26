@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class SheenFlux : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sheen Flux");
             Description.SetDefault("Sheen is on cooldown");

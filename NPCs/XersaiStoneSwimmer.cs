@@ -7,6 +7,7 @@ using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items.Banners;
+using Terraria.ModLoader.Utilities;
 
 namespace TerraLeague.NPCs
 {
@@ -15,27 +16,27 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xer'Sai Stone Swimmer");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.SandShark];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.SandShark];
         }
         public override void SetDefaults()
         {
-			npc.width = 100;
-			npc.height = 24;
-            npc.damage = 20;
-            npc.defense = 10;
-            npc.lifeMax = 50;
-            npc.behindTiles = true;
-            npc.noGravity = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCHit52;
-            animationType = NPCID.SandShark;
-            aiType = NPCID.SandShark;
-			npc.gfxOffY = 20;
-            npc.value = 75;
-            npc.knockBackResist = 0.9f;
-            npc.scale = 1f;
+			NPC.width = 100;
+			NPC.height = 24;
+            NPC.damage = 20;
+            NPC.defense = 10;
+            NPC.lifeMax = 50;
+            NPC.behindTiles = true;
+            NPC.noGravity = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCHit52;
+            AnimationType = NPCID.SandShark;
+            AIType = NPCID.SandShark;
+			NPC.gfxOffY = 20;
+            NPC.value = 75;
+            NPC.knockBackResist = 0.9f;
+            NPC.scale = 1f;
             base.SetDefaults();
-            //banner = npc.type;
+            //Banner = NPC.type;
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -53,188 +54,188 @@ namespace TerraLeague.NPCs
 
         public override void AI()
         {
-			if (npc.direction == 0)
-			{
-				npc.TargetClosest(true);
-			}
-			bool CanSwim = true;
-			Point npcCenterTilePoint = npc.Center.ToTileCoordinates();
-			Tile SafeTile = Framing.GetTileSafely(npcCenterTilePoint);
-			CanSwim = (SafeTile.nactive() && (SafeTile.type == TileID.Dirt || TileID.Sets.Conversion.Stone[SafeTile.type] || TileID.Sets.Conversion.Sand[SafeTile.type] || TileID.Sets.Conversion.Sandstone[SafeTile.type] || TileID.Sets.Conversion.HardenedSand[SafeTile.type]));
-			CanSwim |= npc.wet;
-			bool TargetAbove = false;
-			npc.TargetClosest(false);
-			Vector2 TargetCenter = npc.targetRect.Center.ToVector2();
-			if (Main.player[npc.target].velocity.Y > -0.1f && !Main.player[npc.target].dead && npc.Distance(TargetCenter) > 150f)
-			{
-				TargetAbove = true;
-			}
-			if (npc.localAI[0] == -1f && !CanSwim)
-			{
-				npc.localAI[0] = 20f;
-			}
-			if (npc.localAI[0] > 0f)
-			{
-				npc.localAI[0]--;
-			}
-			if (CanSwim)
-			{
-				if (npc.soundDelay == 0)
-				{
-					float soundDelay = npc.Distance(TargetCenter) / 40f;
-					if (soundDelay < 10f)
-					{
-						soundDelay = 10f;
-					}
-					if (soundDelay > 20f)
-					{
-						soundDelay = 20f;
-					}
-					npc.soundDelay = (int)soundDelay;
-					Main.PlaySound(SoundID.Roar, npc.Center, 4);
-				}
-				float num1408 = npc.ai[1];
-				bool TileBelowIsSwimable = false;
-				Point TilePointBelowNPC = (npc.Center + new Vector2(0f, 24f)).ToTileCoordinates();
-				SafeTile = Framing.GetTileSafely(TilePointBelowNPC.X, TilePointBelowNPC.Y - 2);
-				if (SafeTile.nactive() && (SafeTile.type == TileID.Dirt || TileID.Sets.Conversion.Stone[SafeTile.type] || TileID.Sets.Conversion.Sand[SafeTile.type] || TileID.Sets.Conversion.Sandstone[SafeTile.type] || TileID.Sets.Conversion.HardenedSand[SafeTile.type]))
-				{
-					TileBelowIsSwimable = true;
-				}
-				npc.ai[1] = (float)TileBelowIsSwimable.ToInt();
-				if (npc.ai[2] < 30f)
-				{
-					npc.ai[2]++;
-				}
-				if (TargetAbove)
-				{
-					npc.TargetClosest(true);
-					npc.velocity.X += (float)npc.direction * 0.15f;
-					npc.velocity.Y += (float)npc.directionY * 0.15f;
-					if (npc.velocity.X > 5f)
-					{
-						npc.velocity.X = 5f;
-					}
-					if (npc.velocity.X < -5f)
-					{
-						npc.velocity.X = -5f;
-					}
-					if (npc.velocity.Y > 3f)
-					{
-						npc.velocity.Y = 3f;
-					}
-					if (npc.velocity.Y < -3f)
-					{
-						npc.velocity.Y = -3f;
-					}
-					Vector2 npcCenter = npc.Center;
-					Vector2 npcVelocityNorm = npc.velocity.SafeNormalize(Vector2.Zero);
-					Vector2 npcSize = npc.Size;
-					Vector2 pointInMovementPath = npcCenter + npcVelocityNorm * npcSize.Length() / 2f + npc.velocity;
-					Point tilePointInMovementPath = pointInMovementPath.ToTileCoordinates();
-					SafeTile = Framing.GetTileSafely(tilePointInMovementPath);
-					bool TileIsSwimable = SafeTile.nactive() && (SafeTile.type == TileID.Dirt || TileID.Sets.Conversion.Stone[SafeTile.type]  || TileID.Sets.Conversion.Sand[SafeTile.type] || TileID.Sets.Conversion.Sandstone[SafeTile.type] || TileID.Sets.Conversion.HardenedSand[SafeTile.type]);
-                    if (!TileIsSwimable && npc.wet)
-					{
-						TileIsSwimable = (SafeTile.liquid > 0);
-					}
-					if (!TileIsSwimable && Math.Sign(npc.velocity.X) == npc.direction && npc.Distance(TargetCenter) < 400f && (npc.ai[2] >= 30f || npc.ai[2] < 0f))
-					{
-						if (npc.localAI[0] == 0f)
-						{
-							Main.PlaySound(SoundID.ZombieMoan, npc.Center, 542);
-							npc.localAI[0] = -1f;
-						}
-						npc.ai[2] = -30f;
-						Vector2 vector242 = npc.DirectionTo(TargetCenter + new Vector2(0f, -80f));
-						npc.velocity = vector242 * 12f;
-					}
-				}
-				else
-				{
-					if (npc.collideX)
-					{
-						npc.velocity.X *= -1f;
-						npc.direction *= -1;
-						npc.netUpdate = true;
-					}
-					if (npc.collideY)
-					{
-						npc.netUpdate = true;
-						npc.velocity.Y *= -1f;
-						npc.directionY = Math.Sign(npc.velocity.Y);
-						npc.ai[0] = (float)npc.directionY;
-					}
-					float num1409 = 6f;
-					npc.velocity.X += (float)npc.direction * 0.1f;
-					if (npc.velocity.X < 0f - num1409 || npc.velocity.X > num1409)
-					{
-						npc.velocity.X *= 0.95f;
-					}
-					if (TileBelowIsSwimable)
-					{
-						npc.ai[0] = -1f;
-					}
-					else
-					{
-						npc.ai[0] = 1f;
-					}
-					float num1410 = 0.06f;
-					float num1411 = 0.01f;
-					if (npc.ai[0] == -1f)
-					{
-						npc.velocity.Y -= num1411;
-						if (npc.velocity.Y < 0f - num1410)
-						{
-							npc.ai[0] = 1f;
-						}
-					}
-					else
-					{
-						npc.velocity.Y += num1411;
-						if (npc.velocity.Y > num1410)
-						{
-							npc.ai[0] = -1f;
-						}
-					}
-					if (npc.velocity.Y > 0.4f || npc.velocity.Y < -0.4f)
-					{
-						npc.velocity.Y *= 0.95f;
-					}
-				}
-			}
-			else
-			{
-				if (npc.velocity.Y == 0f)
-				{
-					if (TargetAbove)
-					{
-						npc.TargetClosest(true);
-					}
-					float num1412 = 1f;
-					npc.velocity.X += (float)npc.direction * 0.1f;
-					if (npc.velocity.X < 0f - num1412 || npc.velocity.X > num1412)
-					{
-						npc.velocity.X *= 0.95f;
-					}
-				}
-				npc.velocity.Y += 0.3f;
-				if (npc.velocity.Y > 10f)
-				{
-					npc.velocity.Y = 10f;
-				}
-				npc.ai[0] = 1f;
-			}
-			npc.rotation = npc.velocity.Y * (float)npc.direction * 0.1f;
-			if (npc.rotation < -0.2f)
-			{
-				npc.rotation = -0.2f;
-			}
-			if (npc.rotation > 0.2f)
-			{
-				npc.rotation = 0.2f;
-			}
-			npc.velocity = Collision.AdvancedTileCollision(TileID.Sets.ForAdvancedCollision.ForSandshark, npc.position, npc.velocity, npc.width, npc.height, false, false, 1);
+			//if (NPC.direction == 0)
+			//{
+			//	NPC.TargetClosest(true);
+			//}
+			//bool CanSwim = true;
+			//Point npcCenterTilePoint = NPC.Center.ToTileCoordinates();
+			//Tile SafeTile = Framing.GetTileSafely(npcCenterTilePoint);
+			//CanSwim = (SafeTile.nactive() && (SafeTile.type == TileID.Dirt || TileID.Sets.Conversion.Stone[SafeTile.type] || TileID.Sets.Conversion.Sand[SafeTile.type] || TileID.Sets.Conversion.Sandstone[SafeTile.type] || TileID.Sets.Conversion.HardenedSand[SafeTile.type]));
+			//CanSwim |= npc.wet;
+			//bool TargetAbove = false;
+			//NPC.TargetClosest(false);
+			//Vector2 TargetCenter = npc.targetRect.Center.ToVector2();
+			//if (Main.player[NPC.target].velocity.Y > -0.1f && !Main.player[NPC.target].dead && npc.Distance(TargetCenter) > 150f)
+			//{
+			//	TargetAbove = true;
+			//}
+			//if (NPC.localAI[0] == -1f && !CanSwim)
+			//{
+			//	NPC.localAI[0] = 20f;
+			//}
+			//if (NPC.localAI[0] > 0f)
+			//{
+			//	NPC.localAI[0]--;
+			//}
+			//if (CanSwim)
+			//{
+			//	if (npc.soundDelay == 0)
+			//	{
+			//		float soundDelay = npc.Distance(TargetCenter) / 40f;
+			//		if (soundDelay < 10f)
+			//		{
+			//			soundDelay = 10f;
+			//		}
+			//		if (soundDelay > 20f)
+			//		{
+			//			soundDelay = 20f;
+			//		}
+			//		npc.soundDelay = (int)soundDelay;
+			//		Terraria.Audio.SoundEngine.PlaySound(SoundID.Roar, NPC.Center, 4);
+			//	}
+			//	float num1408 = NPC.ai[1];
+			//	bool TileBelowIsSwimable = false;
+			//	Point TilePointBelowNPC = (NPC.Center + new Vector2(0f, 24f)).ToTileCoordinates();
+			//	SafeTile = Framing.GetTileSafely(TilePointBelowNPC.X, TilePointBelowNPC.Y - 2);
+			//	if (SafeTile.nactive() && (SafeTile.type == TileID.Dirt || TileID.Sets.Conversion.Stone[SafeTile.type] || TileID.Sets.Conversion.Sand[SafeTile.type] || TileID.Sets.Conversion.Sandstone[SafeTile.type] || TileID.Sets.Conversion.HardenedSand[SafeTile.type]))
+			//	{
+			//		TileBelowIsSwimable = true;
+			//	}
+			//	NPC.ai[1] = (float)TileBelowIsSwimable.ToInt();
+			//	if (NPC.ai[2] < 30f)
+			//	{
+			//		NPC.ai[2]++;
+			//	}
+			//	if (TargetAbove)
+			//	{
+			//		NPC.TargetClosest(true);
+			//		NPC.velocity.X += (float)NPC.direction * 0.15f;
+			//		NPC.velocity.Y += (float)NPC.directionY * 0.15f;
+			//		if (NPC.velocity.X > 5f)
+			//		{
+			//			NPC.velocity.X = 5f;
+			//		}
+			//		if (NPC.velocity.X < -5f)
+			//		{
+			//			NPC.velocity.X = -5f;
+			//		}
+			//		if (NPC.velocity.Y > 3f)
+			//		{
+			//			NPC.velocity.Y = 3f;
+			//		}
+			//		if (NPC.velocity.Y < -3f)
+			//		{
+			//			NPC.velocity.Y = -3f;
+			//		}
+			//		Vector2 npcCenter = NPC.Center;
+			//		Vector2 npcVelocityNorm = NPC.velocity.SafeNormalize(Vector2.Zero);
+			//		Vector2 npcSize = npc.Size;
+			//		Vector2 pointInMovementPath = npcCenter + npcVelocityNorm * npcSize.Length() / 2f + NPC.velocity;
+			//		Point tilePointInMovementPath = pointInMovementPath.ToTileCoordinates();
+			//		SafeTile = Framing.GetTileSafely(tilePointInMovementPath);
+			//		bool TileIsSwimable = SafeTile.nactive() && (SafeTile.type == TileID.Dirt || TileID.Sets.Conversion.Stone[SafeTile.type]  || TileID.Sets.Conversion.Sand[SafeTile.type] || TileID.Sets.Conversion.Sandstone[SafeTile.type] || TileID.Sets.Conversion.HardenedSand[SafeTile.type]);
+   //                 if (!TileIsSwimable && npc.wet)
+			//		{
+			//			TileIsSwimable = (SafeTile.liquid > 0);
+			//		}
+			//		if (!TileIsSwimable && Math.Sign(NPC.velocity.X) == NPC.direction && npc.Distance(TargetCenter) < 400f && (NPC.ai[2] >= 30f || NPC.ai[2] < 0f))
+			//		{
+			//			if (NPC.localAI[0] == 0f)
+			//			{
+			//				Terraria.Audio.SoundEngine.PlaySound(SoundID.ZombieMoan, NPC.Center, 542);
+			//				NPC.localAI[0] = -1f;
+			//			}
+			//			NPC.ai[2] = -30f;
+			//			Vector2 vector242 = npc.DirectionTo(TargetCenter + new Vector2(0f, -80f));
+			//			NPC.velocity = vector242 * 12f;
+			//		}
+			//	}
+			//	else
+			//	{
+			//		if (NPC.collideX)
+			//		{
+			//			NPC.velocity.X *= -1f;
+			//			NPC.direction *= -1;
+			//			NPC.netUpdate = true;
+			//		}
+			//		if (NPC.collideY)
+			//		{
+			//			NPC.netUpdate = true;
+			//			NPC.velocity.Y *= -1f;
+			//			NPC.directionY = Math.Sign(NPC.velocity.Y);
+			//			NPC.ai[0] = (float)NPC.directionY;
+			//		}
+			//		float num1409 = 6f;
+			//		NPC.velocity.X += (float)NPC.direction * 0.1f;
+			//		if (NPC.velocity.X < 0f - num1409 || NPC.velocity.X > num1409)
+			//		{
+			//			NPC.velocity.X *= 0.95f;
+			//		}
+			//		if (TileBelowIsSwimable)
+			//		{
+			//			NPC.ai[0] = -1f;
+			//		}
+			//		else
+			//		{
+			//			NPC.ai[0] = 1f;
+			//		}
+			//		float num1410 = 0.06f;
+			//		float num1411 = 0.01f;
+			//		if (NPC.ai[0] == -1f)
+			//		{
+			//			NPC.velocity.Y -= num1411;
+			//			if (NPC.velocity.Y < 0f - num1410)
+			//			{
+			//				NPC.ai[0] = 1f;
+			//			}
+			//		}
+			//		else
+			//		{
+			//			NPC.velocity.Y += num1411;
+			//			if (NPC.velocity.Y > num1410)
+			//			{
+			//				NPC.ai[0] = -1f;
+			//			}
+			//		}
+			//		if (NPC.velocity.Y > 0.4f || NPC.velocity.Y < -0.4f)
+			//		{
+			//			NPC.velocity.Y *= 0.95f;
+			//		}
+			//	}
+			//}
+			//else
+			//{
+			//	if (NPC.velocity.Y == 0f)
+			//	{
+			//		if (TargetAbove)
+			//		{
+			//			NPC.TargetClosest(true);
+			//		}
+			//		float num1412 = 1f;
+			//		NPC.velocity.X += (float)NPC.direction * 0.1f;
+			//		if (NPC.velocity.X < 0f - num1412 || NPC.velocity.X > num1412)
+			//		{
+			//			NPC.velocity.X *= 0.95f;
+			//		}
+			//	}
+			//	NPC.velocity.Y += 0.3f;
+			//	if (NPC.velocity.Y > 10f)
+			//	{
+			//		NPC.velocity.Y = 10f;
+			//	}
+			//	NPC.ai[0] = 1f;
+			//}
+			//NPC.rotation = NPC.velocity.Y * (float)NPC.direction * 0.1f;
+			//if (NPC.rotation < -0.2f)
+			//{
+			//	NPC.rotation = -0.2f;
+			//}
+			//if (NPC.rotation > 0.2f)
+			//{
+			//	NPC.rotation = 0.2f;
+			//}
+			//NPC.velocity = Collision.AdvancedTileCollision(TileID.Sets.ForAdvancedCollision.ForSandshark, NPC.position, NPC.velocity, NPC.width, NPC.height, false, false, 1);
 			base.AI();
         }
 
@@ -245,12 +246,12 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            //if (npc.life > 0)
+            //if (NPC.life > 0)
             //{
             //    int count = 0;
-            //    while ((double)count < damage / (double)npc.lifeMax * 50.0)
+            //    while ((double)count < damage / (double)NPC.lifeMax * 50.0)
             //    {
-            //        Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+            //        Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
             //        dust.velocity *= 2f;
             //        dust.noGravity = true;
             //        count++;
@@ -260,24 +261,19 @@ namespace TerraLeague.NPCs
             //{
             //    for (int i = 0; i < 20; i++)
             //    {
-            //        Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+            //        Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
             //        dust.velocity *= 2f;
             //        dust.noGravity = true;
             //    }
 
-            //    Gore gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+            //    Gore gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y - 10f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_1>(), NPC.scale);
             //    gore.velocity *= 0.3f;
-            //    gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_2"), npc.scale);
+            //    gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 15f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_2>(), NPC.scale);
             //    gore.velocity *= 0.3f;
-            //    gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_3"), npc.scale);
+            //    gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)NPC.height - 20f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_3>(), NPC.scale);
             //    gore.velocity *= 0.3f;
             //}
             //base.HitEffect(hitDirection, damage);
-        }
-
-        public override void NPCLoot()
-        {
-            base.NPCLoot();
         }
     }
 }

@@ -13,18 +13,17 @@ namespace TerraLeague.Items.Armor
             base.SetStaticDefaults();
             DisplayName.SetDefault("Celestial Garb");
             Tooltip.SetDefault("MEL, RNG, MAG, and SUM increased by 25");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 26;
-            item.value = 9000 * 5;
-            item.rare = ItemRarityID.Green;
-            item.defense = 4;
+            Item.width = 30;
+            Item.height = 26;
+            Item.value = 9000 * 5;
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 4;
         }
-
-
         
         public override void UpdateEquip(Player player)
         {
@@ -34,20 +33,14 @@ namespace TerraLeague.Items.Armor
             player.GetModPlayer<PLAYERGLOBAL>().BonusSUM += 25;
         }
 
-        public override void UpdateVanity(Player player, EquipType type)
-        {
-            base.UpdateVanity(player, type);
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 20);
-            recipe.AddIngredient(ItemID.Silk, 5);
-            recipe.AddIngredient(ItemID.Leather, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+                .AddIngredient(ItemType<CelestialBar>(), 20)
+                .AddIngredient(ItemID.Silk, 5)
+                .AddIngredient(ItemID.Leather, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

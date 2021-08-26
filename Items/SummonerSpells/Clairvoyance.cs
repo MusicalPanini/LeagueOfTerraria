@@ -13,10 +13,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Clairvoyance Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Clairvoyance";
+            return "TerraLeague/Items/SummonerSpells/Clairvoyance";
         }
 
         public override string GetSpellName()
@@ -59,7 +60,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29), Main.LocalPlayer.MountedCenter);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29), Main.LocalPlayer.MountedCenter);
 
             TerraLeague.DustElipce(1.5f, 0.66f, 0, player.MountedCenter, 113, new Color(0, 0, 255), 1.5f, 180, true, 10);
             TerraLeague.DustElipce(0.76f, 0.66f, 0, player.MountedCenter, 113, new Color(0, 0, 255), 1.5f, 180, true, 10);

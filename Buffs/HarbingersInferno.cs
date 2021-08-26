@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class HarbingersInferno : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Harbinger's Inferno");
             Main.debuff[Type] = true;

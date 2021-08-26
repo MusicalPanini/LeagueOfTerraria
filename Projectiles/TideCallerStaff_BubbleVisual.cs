@@ -16,38 +16,38 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
-            projectile.alpha = 0;
-            projectile.timeLeft = 120;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 30;
+            Projectile.height = 30;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 120;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft == 120)
+            if (Projectile.timeLeft == 120)
             {
-                 Main.PlaySound(new LegacySoundStyle(2, 86), projectile.Center);
+                 Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 86), Projectile.Center);
             }
 
-            projectile.scale = ((Main.npc[(int)projectile.ai[0]].width / 30) + (Main.npc[(int)projectile.ai[0]].height / 30) + 5) / 2;
-            projectile.Center = Main.npc[(int)projectile.ai[0]].Center;
-            if (Main.npc[(int)projectile.ai[0]].life <= 0)
+            Projectile.scale = ((Main.npc[(int)Projectile.ai[0]].width / 30) + (Main.npc[(int)Projectile.ai[0]].height / 30) + 5) / 2;
+            Projectile.Center = Main.npc[(int)Projectile.ai[0]].Center;
+            if (Main.npc[(int)Projectile.ai[0]].life <= 0)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
-            int trueWidth = (int)(projectile.width * projectile.scale);
-            int trueHeight = (int)(projectile.height * projectile.scale);
-            Vector2 truePosition = new Vector2(projectile.Center.X - (trueWidth/2), projectile.Center.Y - (trueHeight/2));
+            int trueWidth = (int)(Projectile.width * Projectile.scale);
+            int trueHeight = (int)(Projectile.height * Projectile.scale);
+            Vector2 truePosition = new Vector2(Projectile.Center.X - (trueWidth/2), Projectile.Center.Y - (trueHeight/2));
 
-            Lighting.AddLight(projectile.Center, 0f, 0f, 0.5f);
-            Dust dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustID.Wet, 0, 2, 150, default, 1.5f);
+            Lighting.AddLight(Projectile.Center, 0f, 0f, 0.5f);
+            Dust dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, 211, 0, 2, 150, default, 1.5f);
             dust.noGravity = true;
 
             base.AI();
@@ -55,18 +55,18 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 54), projectile.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 54), Projectile.Center);
 
-            int trueWidth = (int)(projectile.width * projectile.scale);
-            int trueHeight = (int)(projectile.height * projectile.scale);
-            Vector2 truePosition = new Vector2(projectile.Center.X - (trueWidth / 2), projectile.Center.Y - (trueHeight / 2));
+            int trueWidth = (int)(Projectile.width * Projectile.scale);
+            int trueHeight = (int)(Projectile.height * Projectile.scale);
+            Vector2 truePosition = new Vector2(Projectile.Center.X - (trueWidth / 2), Projectile.Center.Y - (trueHeight / 2));
 
             for (int i = 0; i < 10; i++)
             {
                 Dust dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustType<Dusts.BubbledBubble>(), -5 + i, 0, 100, default, 4f);
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, DustID.Wet, 0, 0, 150, default, 2.5f);
+                dust = Dust.NewDustDirect(truePosition, trueWidth, trueHeight, 211, 0, 0, 150, default, 2.5f);
                 dust.noGravity = true;
                 dust.velocity *= 2;
             }

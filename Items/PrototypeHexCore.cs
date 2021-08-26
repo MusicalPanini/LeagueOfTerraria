@@ -13,27 +13,28 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Prototype Hex Core");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
         {
-            item.maxStack = 99;
-            item.width = 26;
-            item.height = 16;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.buyPrice(0, 0, 90, 0);
-            item.uniqueStack = false;
+            Item.maxStack = 99;
+            Item.width = 26;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(0, 0, 90, 0);
+            Item.uniqueStack = false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Amethyst, 10);
-            recipe.AddIngredient(ItemID.Bottle, 1);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 2);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Amethyst, 10)
+            .AddIngredient(ItemID.Bottle, 1)
+            .AddIngredient(ItemID.MeteoriteBar, 2)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class CandlePet : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eternal Flame");
             Description.SetDefault("Emit etherial flames");
@@ -19,7 +19,7 @@ namespace TerraLeague.Buffs
             bool petProjectileNotSpawned = player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.LightPet_FlameControl>()] <= 0;
             if (petProjectileNotSpawned && player.whoAmI == Main.myPlayer)
             {
-                Projectile.NewProjectile(player.MountedCenter, Microsoft.Xna.Framework.Vector2.Zero, ModContent.ProjectileType<Projectiles.LightPet_FlameControl>(), 0, 0f, player.whoAmI, 0f, 0f);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(new Items.Accessories.EternalFlame().Item), player.MountedCenter, Microsoft.Xna.Framework.Vector2.Zero, ModContent.ProjectileType<Projectiles.LightPet_FlameControl>(), 0, 0f, player.whoAmI, 0f, 0f);
             }
             player.buffTime[buffIndex] = 10;
         }

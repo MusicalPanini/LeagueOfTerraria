@@ -18,28 +18,28 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 28;
-            projectile.height = 28;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = -1;
-            projectile.hostile = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.netImportant = true;
+            Projectile.width = 28;
+            Projectile.height = 28;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = -1;
+            Projectile.hostile = true;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.netImportant = true;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.position, TargonBossNPC.ZoeColor.ToVector3());
+            Lighting.AddLight(Projectile.position, TargonBossNPC.ZoeColor.ToVector3());
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position + new Vector2(6, 6), 16, 16, DustID.PortalBolt, 0, 0, 1, TargonBossNPC.ZoeColor, 2f);
-                dust.velocity = projectile.velocity/2f;
+                Dust dust = Dust.NewDustDirect(Projectile.position + new Vector2(6, 6), 16, 16, DustID.PortalBolt, 0, 0, 1, TargonBossNPC.ZoeColor, 2f);
+                dust.velocity = Projectile.velocity/2f;
                 dust.noGravity = true;
             }
 
-            projectile.rotation += 0.02f * projectile.velocity.Length();
+            Projectile.rotation += 0.02f * Projectile.velocity.Length();
 
             base.AI();
         }
@@ -55,24 +55,24 @@ namespace TerraLeague.Projectiles
         {
             Rebound();
 
-            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 10);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 10);
             return false;
         }
 
         public void Rebound()
         {
-            if (projectile.velocity.X != projectile.oldVelocity.X)
+            if (Projectile.velocity.X != Projectile.oldVelocity.X)
             {
-                projectile.velocity.X = -projectile.oldVelocity.X;
+                Projectile.velocity.X = -Projectile.oldVelocity.X;
             }
-            else if (projectile.velocity.Y != projectile.oldVelocity.Y)
+            else if (Projectile.velocity.Y != Projectile.oldVelocity.Y)
             {
-                projectile.velocity.Y = -projectile.oldVelocity.Y;
+                Projectile.velocity.Y = -Projectile.oldVelocity.Y;
             }
 
             //for (int i = 0; i < 3; i++)
             //{
-            //    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustType<Smoke>(), 0f, 0f, 150, new Color(255, 50, 255));
+            //    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustType<Smoke>(), 0f, 0f, 150, new Color(255, 50, 255));
             //    dust.velocity *= 1f;
             //}
         }
@@ -81,7 +81,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, projectile.velocity.X, projectile.velocity.Y, 1, TargonBossNPC.ZoeColor);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBolt, Projectile.velocity.X, Projectile.velocity.Y, 1, TargonBossNPC.ZoeColor);
                 dust.noGravity = true;
                 base.Kill(timeLeft);
             }

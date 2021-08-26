@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class GreatBeyondBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Great Beyond");
             Description.SetDefault("+20 Ability Haste");

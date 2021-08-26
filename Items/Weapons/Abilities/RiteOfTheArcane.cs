@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/RiteoftheArcane";
+            return "TerraLeague/AbilityImages/RiteoftheArcane";
         }
 
         public override string GetAbilityTooltip()
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage);
+            return (int)(abilityItem.Item.damage);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)

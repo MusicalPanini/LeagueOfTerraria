@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class LastBreath2 : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gathering Storm");
             Description.SetDefault("Unleash a tornado!");

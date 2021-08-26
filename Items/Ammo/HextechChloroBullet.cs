@@ -13,35 +13,35 @@ namespace TerraLeague.Items.Ammo
             Tooltip.SetDefault("A experimental round that splits into 3 Chlorophite Bolts" +
                 "\n...But not always");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
 
         public override void SetDefaults()
         {
-            item.shootSpeed = 3f;
-            item.shoot = ProjectileType<Bullet_HextechChloroShot>();
-            item.damage = 14;
-            item.width = 8;
-            item.height = 16;
-            item.maxStack = 999;
-            item.consumable = true;
-            item.ammo = AmmoID.Bullet;
-            item.knockBack = 2.5f;
-            item.value = 50;
-            item.ranged = true;
-            item.rare = ItemRarityID.Orange;
+            Item.shootSpeed = 3f;
+            Item.shoot = ProjectileType<Bullet_HextechChloroShot>();
+            Item.damage = 14;
+            Item.width = 8;
+            Item.height = 16;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.ammo = AmmoID.Bullet;
+            Item.knockBack = 2.5f;
+            Item.value = 50;
+            Item.DamageType = DamageClass.Ranged;
+            Item.rare = ItemRarityID.Orange;
 
             base.SetDefaults();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<HextechCore>(), 1);
-            recipe.AddIngredient(ItemID.EmptyBullet, 100);
-            recipe.AddIngredient(ItemID.ChlorophyteBullet, 300);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this, 100);
-            recipe.AddRecipe();
+            CreateRecipe(100)
+            .AddIngredient(GetInstance<HextechCore>(), 1)
+            .AddIngredient(ItemID.EmptyBullet, 100)
+            .AddIngredient(ItemID.ChlorophyteBullet, 300)
+            .AddTile(TileID.WorkBenches)
+            .Register();
         }
     }
 }

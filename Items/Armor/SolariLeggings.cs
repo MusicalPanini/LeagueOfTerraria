@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Armor
             DisplayName.SetDefault("Solari Greaves");
             Tooltip.SetDefault("Increases your max life by 20" +
                 "\nEnemies are more likely to target you");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 18;
-            item.value = 145000 * 5;
-            item.rare = ItemRarityID.Yellow;
-            item.defense = 25;
+            Item.width = 22;
+            Item.height = 18;
+            Item.value = 145000 * 5;
+            Item.rare = ItemRarityID.Yellow;
+            Item.defense = 25;
         }
 
         public override void UpdateEquip(Player player)
@@ -33,13 +34,13 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 12);
-            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
-            recipe.AddIngredient(ItemID.LunarTabletFragment, 8);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 12)
+            .AddIngredient(ItemType<FragmentOfTheAspect>(), 1)
+            .AddIngredient(ItemID.LunarTabletFragment, 8)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override void UpdateArmorSet(Player player)

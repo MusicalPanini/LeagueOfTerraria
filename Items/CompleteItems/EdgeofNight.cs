@@ -17,39 +17,40 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("5% increased melee damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases melee armor penetration by 7");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Active = new NightsVeil(7, 120, 75);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Pickaxe>(), 1);
-            recipe.AddIngredient(ItemType<SerratedDirk>(), 1);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddRecipeGroup("TerraLeague:DemonPartGroup", 1);
-            recipe.AddIngredient(ItemID.JungleSpores, 1);
-            recipe.AddIngredient(ItemID.Bone, 1);
-            recipe.AddIngredient(ItemID.Hellstone, 1);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Pickaxe>(), 1)
+            .AddIngredient(ItemType<SerratedDirk>(), 1)
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddRecipeGroup("TerraLeague:DemonPartGroup", 1)
+            .AddIngredient(ItemID.JungleSpores, 1)
+            .AddIngredient(ItemID.Bone, 1)
+            .AddIngredient(ItemID.Hellstone, 1)
+            .AddTile(TileID.DemonAltar)
+            .Register();
+            
         }
 
         public override string GetStatText()

@@ -14,16 +14,17 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hextech Gunblade");
-            Tooltip.SetDefault("6% increased melee, magic and minion damage");
+            Tooltip.SetDefault("6% increased melee, magic and summon damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 50, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 50, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
 
             Active = new LightningBolt(250, 50, 30);
             Passives = new Passive[]
@@ -34,23 +35,23 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.06f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
-            player.meleeDamage += 0.06f;
+            player.GetDamage(DamageClass.Magic) += 0.06f;
+            player.GetDamage(DamageClass.Summon) += 0.06f;
+            player.GetDamage(DamageClass.Melee) += 0.06f;
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Cutlass>(), 1);
-            recipe.AddIngredient(ItemType<HextechAlternator>(), 1);
-            recipe.AddIngredient(ItemType<HextechCore>(), 1);
-            recipe.AddIngredient(ItemID.VenusMagnum);
-            recipe.AddIngredient(ItemType<BrassBar>(), 8);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Cutlass>(), 1)
+            .AddIngredient(ItemType<HextechAlternator>(), 1)
+            .AddIngredient(ItemType<HextechCore>(), 1)
+            .AddIngredient(ItemID.VenusMagnum)
+            .AddIngredient(ItemType<BrassBar>(), 8)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

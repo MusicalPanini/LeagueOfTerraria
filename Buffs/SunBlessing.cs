@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class SunBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Golden Sister");
             Description.SetDefault("Take 5% reduced damage");

@@ -21,35 +21,35 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.timeLeft = 600;
-            projectile.penetrate = -1;
-            projectile.netImportant = true;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.tileCollide = true;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = -1;
+            Projectile.netImportant = true;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.tileCollide = true;
         }
 
         public override void AI()
         {
             if (Main.rand.Next(3) == 0)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(0, 255, 180), 2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(0, 255, 180), 2f);
                 dust.velocity *= 0.1f;
-                dust.velocity.X = projectile.velocity.X;
+                dust.velocity.X = Projectile.velocity.X;
                 dust.fadeIn = 0.1f;
                 dust.noGravity = true;
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(0, 255, 180), 1.5f);
-                dust.velocity.X = projectile.velocity.X;
+                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBolt, 0, 0, 0, new Color(0, 255, 180), 1.5f);
+                dust.velocity.X = Projectile.velocity.X;
                 dust.velocity.Y = Main.rand.NextFloat(-2, 0);
                 dust.fadeIn = 0.5f;
                 dust.noGravity = true;
             }
-            Lighting.AddLight(projectile.Center, 0, 1, 0.6f);
-            projectile.velocity *= 0.99f;
+            Lighting.AddLight(Projectile.Center, 0, 1, 0.6f);
+            Projectile.velocity *= 0.99f;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -5,7 +5,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Armor
 {
-    [AutoloadEquip(EquipType.Body)]
+    [AutoloadEquip(EquipType.Body, EquipType.Legs)]
     public class NecromancersRobe : ModItem
     {
         public override void SetStaticDefaults()
@@ -13,30 +13,32 @@ namespace TerraLeague.Items.Armor
             base.SetStaticDefaults();
             DisplayName.SetDefault("Necromancer's Robe");
             Tooltip.SetDefault("Increases your max number of sentries by 1");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 34;
-            item.height = 30;
-            item.value = 4000 * 5;
-            item.rare = ItemRarityID.Blue;
-            item.defense = 4;
+            Item.width = 34;
+            Item.height = 30;
+            Item.value = 4000 * 5;
+            Item.rare = ItemRarityID.Blue;
+            Item.defense = 4;
         }
         
         public override void UpdateEquip(Player player)
         {
             player.maxTurrets += 1;
+            player.legs = (sbyte)Mod.GetEquipSlot("NecromancersRobe", EquipType.Legs);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 32);
-            recipe.AddIngredient(ItemID.Silk, 12);
-            recipe.AddTile(TileID.Loom);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<DamnedSoul>(), 32)
+            .AddIngredient(ItemID.Silk, 12)
+            .AddTile(TileID.Loom)
+            .Register();
+            
         }
 
         public override void DrawHands(ref bool drawHands, ref bool drawArms)

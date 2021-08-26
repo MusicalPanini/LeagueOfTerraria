@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,38 +18,38 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.friendly = true;
-            projectile.penetrate = 1;
-            projectile.alpha = 255;
-            projectile.scale = 1.2f;
-            projectile.timeLeft = 50;
-            projectile.ranged = true;
-            projectile.extraUpdates = 1;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.friendly = true;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1.2f;
+            Projectile.timeLeft = 50;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Left, Color.Blue.ToVector3());
+            Lighting.AddLight(Projectile.Left, Color.Blue.ToVector3());
 
-            if (projectile.alpha > 0)
+            if (Projectile.alpha > 0)
             {
-                projectile.alpha -= 15;
+                Projectile.alpha -= 15;
             }
-            if (projectile.alpha < 0)
+            if (Projectile.alpha < 0)
             {
-                projectile.alpha = 0;
-            }
-
-            projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
-
-            if (projectile.velocity.Y > 16f)
-            {
-                projectile.velocity.Y = 16f;
+                Projectile.alpha = 0;
             }
 
-            if (projectile.timeLeft == 1)
+            Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
+
+            if (Projectile.velocity.Y > 16f)
+            {
+                Projectile.velocity.Y = 16f;
+            }
+
+            if (Projectile.timeLeft == 1)
             {
                 Split(-1);
             }
@@ -64,10 +65,10 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Ghost, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, new Color(0, 192, 255), 0.5f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Cloud, Projectile.velocity.X / 2, Projectile.velocity.Y / 2, 100, new Color(0, 192, 255), 0.5f);
             }
 
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 
@@ -79,10 +80,10 @@ namespace TerraLeague.Projectiles
 
         public void Split(int num = -1)
         {
-            Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.position);
-            for (int i = 0; i < 10; i++)
+            Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), Projectile.position);
+            for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
                 dust.velocity *= 0.5f;
             }
 
@@ -92,14 +93,14 @@ namespace TerraLeague.Projectiles
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedByRandom(MathHelper.TwoPi)/12, ProjectileType<Bullet_HextechShotSplit>(), projectile.damage / 4, 0, projectile.owner, num == -1 ? 255 : num);
+                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.position, Projectile.velocity.RotatedByRandom(MathHelper.TwoPi)/2, ProjectileType<Bullet_HextechShotSplit>(), Projectile.damage / 4, 0, Projectile.owner, num == -1 ? 255 : num);
                     }
                 }
                 else
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedBy(MathHelper.ToRadians(-15 + (15 * i)))/ 12, ProjectileType<Bullet_HextechShotSplit>(), projectile.damage / 4, 0, projectile.owner, num == -1 ? 255 : num);
+                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.position, Projectile.velocity.RotatedBy(MathHelper.ToRadians(-15 + (15 * i)))/ 2, ProjectileType<Bullet_HextechShotSplit>(), Projectile.damage / 4, 0, Projectile.owner, num == -1 ? 255 : num);
                     }
                 }
 

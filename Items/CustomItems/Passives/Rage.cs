@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
         {
-            if (proj.melee)
+            if (proj.DamageType == DamageClass.Melee)
                 player.AddBuff(BuffType<Buffs.Rage>(), duration * 60);
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);

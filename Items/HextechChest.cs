@@ -17,15 +17,16 @@ namespace TerraLeague.Items
             DisplayName.SetDefault("Hextech Chest");
             Tooltip.SetDefault("Right click to open with a Hextech Key");
             base.SetStaticDefaults();
-        }
+			Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+		}
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.width = 34;
-            item.height = 34;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 50000;
+            Item.maxStack = 999;
+            Item.width = 34;
+            Item.height = 34;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = 50000;
         }
 
         public override bool CanRightClick()

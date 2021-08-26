@@ -14,18 +14,19 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Liandry's Torment");
-            Tooltip.SetDefault("8% increased minion damage" +
+            Tooltip.SetDefault("8% increased summon damage" +
                 "\nIncreases health by 40" +
                 "\nIncreases your max number of minions by 2");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 80, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 80, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -35,7 +36,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;
+            player.GetDamage(DamageClass.Summon) += 0.08f;
             player.statLifeMax2 += 40;
             player.maxMinions += 2;
 
@@ -44,14 +45,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HauntingGuise>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemID.PapyrusScarab, 1);
-            recipe.AddIngredient(ItemID.FragmentStardust, 10);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<HauntingGuise>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemID.PapyrusScarab, 1)
+            .AddIngredient(ItemID.FragmentStardust, 10)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
+            
         }
 
         public override string GetStatText()

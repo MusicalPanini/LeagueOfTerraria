@@ -16,42 +16,42 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 78;
-            projectile.height = 78;
-            projectile.timeLeft = 300;
-            projectile.penetrate = 1;
-            projectile.aiStyle = 0;
-            projectile.friendly = true;
-            projectile.ranged = true;
+            Projectile.width = 78;
+            Projectile.height = 78;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 1;
+            Projectile.aiStyle = 0;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                projectile.soundDelay = 12;
-                Main.PlaySound(SoundID.Item7, projectile.position);
+                Projectile.soundDelay = 12;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item7, Projectile.position);
             }
 
-            if (projectile.velocity.X < 0)
-                projectile.spriteDirection = -1;
+            if (Projectile.velocity.X < 0)
+                Projectile.spriteDirection = -1;
 
-            projectile.rotation += 0.5f * projectile.spriteDirection;
+            Projectile.rotation += 0.5f * Projectile.spriteDirection;
 
-            Lighting.AddLight(projectile.position, 0.75f, 0, 0);
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Wet, 0, 0, 0, new Color(255, 0, 0), 1.4f);
+            Lighting.AddLight(Projectile.position, 0.75f, 0, 0);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 211, 0, 0, 0, new Color(255, 0, 0), 1.4f);
             dust.noGravity = true;
 
-            if (projectile.timeLeft < 270 && projectile.velocity.Y < 15)
-                projectile.velocity.Y += 0.8f;
+            if (Projectile.timeLeft < 270 && Projectile.velocity.Y < 15)
+                Projectile.velocity.Y += 0.8f;
 
             base.AI();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            float distance = Main.player[projectile.owner].position.X - projectile.position.X;
-            Projectile.NewProjectileDirect(projectile.oldPosition, new Vector2((distance * 0.013f) + (Main.player[projectile.owner].velocity.X * 0.6f), -12), ProjectileType<DarksteelThrowingAxe_CatchingAxe>(), 0, 0, projectile.owner, projectile.spriteDirection);
+            float distance = Main.player[Projectile.owner].position.X - Projectile.position.X;
+            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.oldPosition, new Vector2((distance * 0.013f) + (Main.player[Projectile.owner].velocity.X * 0.6f), -12), ProjectileType<DarksteelThrowingAxe_CatchingAxe>(), 0, 0, Projectile.owner, Projectile.spriteDirection);
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
@@ -60,7 +60,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 6; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Iron, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
             }
 
             base.Kill(timeLeft);
@@ -76,9 +76,9 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Iron, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
             }
-            TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 4, -0.5f);
+            TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 4, -0.5f);
             return true;
         }
     }

@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class CommandProtect : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Command: Protect");
             Description.SetDefault("You are shielded and have increased armor and resist");

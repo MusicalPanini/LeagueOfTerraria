@@ -2,6 +2,7 @@
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -14,48 +15,47 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Toxic Blowgun");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.CloneDefaults(ItemID.Blowgun);
-            item.damage = 24;
-            item.ranged = true;
-            item.width = 24;
-            item.height = 54;
-            item.useAnimation = 35;
-            item.useTime = 35;
-            item.shootSpeed = 10f;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 200000;
-            item.rare = ItemRarityID.Lime;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.PurificationPowder;
+            Item.CloneDefaults(ItemID.Blowgun);
+            Item.damage = 24;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 24;
+            Item.height = 54;
+            Item.useAnimation = 35;
+            Item.useTime = 35;
+            Item.shootSpeed = 10f;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 200000;
+            Item.rare = ItemRarityID.Lime;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new ToxicShot(this));
             abilityItem.SetAbility(AbilityType.R, new NoxiousTrap(this));
             abilityItem.ChampQuote = "Never underestimate the power of the Scout's code";
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             position = new Vector2(position.X, position.Y - 6);
-
-            return true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Blowgun, 1);
-            recipe.AddIngredient(ItemID.VialofVenom, 10);
-            recipe.AddIngredient(ItemID.Mushroom, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.Blowgun, 1)
+            .AddIngredient(ItemID.VialofVenom, 10)
+            .AddIngredient(ItemID.Mushroom, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override Vector2? HoldoutOffset()

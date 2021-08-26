@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class ProtectorBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Protector");
             Description.SetDefault("10% increased max life");

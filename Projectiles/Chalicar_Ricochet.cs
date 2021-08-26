@@ -21,21 +21,21 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 36;
-            projectile.height = 36;
-            projectile.timeLeft = 60;
-            projectile.penetrate = 6;
-            projectile.friendly = true;
-            projectile.ranged = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.alpha = 0;
-            projectile.netImportant = true;
-            //projectile.usesIDStaticNPCImmunity = true;
-            //projectile.idStaticNPCHitCooldown = 30;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = -2;
+            Projectile.width = 36;
+            Projectile.height = 36;
+            Projectile.timeLeft = 60;
+            Projectile.penetrate = 6;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.alpha = 0;
+            Projectile.netImportant = true;
+            //Projectile.usesIDStaticNPCImmunity = true;
+            //Projectile.idStaticNPCHitCooldown = 30;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -2;
 
 
             SetHomingDefaults(true, 480, 301);
@@ -44,13 +44,13 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
-                projectile.soundDelay = 8;
-                Main.PlaySound(SoundID.Item7, projectile.position);
+                Projectile.soundDelay = 8;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item7, Projectile.position);
             }
 
-            projectile.rotation += 0.3f * (float)projectile.direction;
+            Projectile.rotation += 0.3f * (float)Projectile.direction;
 
             if (hitCounter != 0)
             {
@@ -62,8 +62,8 @@ namespace TerraLeague.Projectiles
         {
             if (hitCounter == 0)
             {
-                projectile.tileCollide = false;
-                projectile.velocity *= 0.75f;
+                Projectile.tileCollide = false;
+                Projectile.velocity *= 0.75f;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
@@ -72,7 +72,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Silver, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 157, new Color(234, 255, 0));
+                Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver, Projectile.oldVelocity.X * 0.25f, Projectile.oldVelocity.Y * 0.25f, 157, new Color(234, 255, 0));
             }
 
             base.Kill(timeLeft);

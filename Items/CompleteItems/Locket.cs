@@ -18,15 +18,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases resist by 6" +
                 "\nGrants immunity to knockback and fire blocks" +
                 "\nIncreases length of invincibility after taking damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 36;
-            item.value = Item.buyPrice(0, 30, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.accessory = true;
+            Item.width = 28;
+            Item.height = 36;
+            Item.value = Item.buyPrice(0, 30, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.accessory = true;
 
             Active = new SolarisProtection(20, 500, 10, 120);
         }
@@ -41,16 +42,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Aegis>(), 1);
-            recipe.AddIngredient(ItemType<NullMagic>(), 1);
-            recipe.AddIngredient(ItemID.CrossNecklace, 1);
-            recipe.AddIngredient(ItemID.CobaltShield, 1);
-            recipe.AddIngredient(ItemID.SunplateBlock, 20);
-            recipe.AddIngredient(ItemID.LifeCrystal, 2);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Aegis>(), 1)
+            .AddIngredient(ItemType<NullMagic>(), 1)
+            .AddIngredient(ItemID.CrossNecklace, 1)
+            .AddIngredient(ItemID.CobaltShield, 1)
+            .AddIngredient(ItemID.SunplateBlock, 20)
+            .AddIngredient(ItemID.LifeCrystal, 2)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

@@ -13,32 +13,32 @@ namespace TerraLeague.Items.Armor
             DisplayName.SetDefault("Hextech Evolution Mask");
             Tooltip.SetDefault("15% increased magic damage" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 24;
-            item.value = 250000;
-            item.rare = ItemRarityID.Pink;
-            item.defense = 4;
+            Item.width = 28;
+            Item.height = 24;
+            Item.value = 250000;
+            Item.rare = ItemRarityID.Pink;
+            Item.defense = 4;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.magicDamage += 0.15f;
+            player.GetDamage(DamageClass.Magic) += 0.15f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 10);
-            recipe.AddIngredient(ItemType<PerfectHexCore>());
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+                .AddRecipeGroup("TerraLeague:Tier3Bar", 10)
+                .AddIngredient(ItemType<PerfectHexCore>())
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

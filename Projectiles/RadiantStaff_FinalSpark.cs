@@ -18,17 +18,17 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
-            projectile.timeLeft = 1000;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.hide = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 48;
+            Projectile.height = 48;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.hide = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -46,39 +46,39 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if ((int)projectile.ai[1] == 0)
+            if ((int)Projectile.ai[1] == 0)
             {
-                if (projectile.alpha > 0)
+                if (Projectile.alpha > 0)
                 {
-                    projectile.alpha -= 4;
+                    Projectile.alpha -= 4;
                 }
-                if (projectile.alpha < 0)
+                if (Projectile.alpha < 0)
                 {
-                    projectile.alpha = 0;
-                }
-
-                if (projectile.timeLeft == 1000)
-                {
-                    projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 13, -1f);
+                    Projectile.alpha = 0;
                 }
 
-                projectile.velocity = Vector2.Zero;
-                projectile.Center = Main.player[projectile.owner].Center;
-
-                if (projectile.timeLeft == 940)
+                if (Projectile.timeLeft == 1000)
                 {
-                    projectile.ai[1] = 1;
-                    projectile.velocity = new Vector2(0, -10).RotatedBy(projectile.rotation);
-                    projectile.friendly = true;
-                    projectile.extraUpdates = 40;
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 72, -1f);
+                    Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 13, -1f);
+                }
+
+                Projectile.velocity = Vector2.Zero;
+                Projectile.Center = Main.player[Projectile.owner].Center;
+
+                if (Projectile.timeLeft == 940)
+                {
+                    Projectile.ai[1] = 1;
+                    Projectile.velocity = new Vector2(0, -10).RotatedBy(Projectile.rotation);
+                    Projectile.friendly = true;
+                    Projectile.extraUpdates = 40;
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 72, -1f);
                 }
             }
 
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One * 8), 16, 16, DustID.GoldFlame, 0, 0, 0, default, 3f - (3f* (projectile.alpha/255f)));
+                Dust dust = Dust.NewDustDirect(Projectile.Center - (Vector2.One * 8), 16, 16, DustID.GoldFlame, 0, 0, 0, default, 3f - (3f* (Projectile.alpha/255f)));
                 dust.noGravity = true;
                 dust.fadeIn = 1.2f;
             }

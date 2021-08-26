@@ -4,6 +4,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,6 +18,7 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Xan Crest Blades");
 
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -30,27 +32,27 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 34;
-            item.width = 62;
-            item.height = 26;
-            item.summon = true;
-            item.useTime = 25;
-            item.mana = 20;
-            item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 0;
-            item.value = 350000;
-            item.rare = ItemRarityID.Lime;
-            item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
-            item.shootSpeed = 15f;
-            item.shoot = ProjectileType<XanCrestBlades_DancingBlade>();
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = false;
-            item.noUseGraphic = true;
-            item.channel = true;
+            Item.damage = 34;
+            Item.width = 62;
+            Item.height = 26;
+            Item.DamageType = DamageClass.Summon;
+            Item.useTime = 25;
+            Item.mana = 20;
+            Item.useAnimation = 25;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 0;
+            Item.value = 350000;
+            Item.rare = ItemRarityID.Lime;
+            Item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
+            Item.shootSpeed = 15f;
+            Item.shoot = ProjectileType<XanCrestBlades_DancingBlade>();
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = false;
+            Item.noUseGraphic = true;
+            Item.channel = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new BladeSurge(this));
             abilityItem.ChampQuote = "Cut them down!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -62,11 +64,12 @@ namespace TerraLeague.Items.Weapons
             return player.ownedProjectileCounts[ProjectileType<XanCrestBlades_DancingBlade>()] < 1;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             for (int i = (int)(player.maxMinions * 1.5) - 1; i >= 0; i--)
             {
-                Projectile.NewProjectileDirect(position, Vector2.Zero, ProjectileType<XanCrestBlades_DancingBlade>(), damage, knockBack, player.whoAmI, i).Center = player.Center;
+                Projectile proj = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ProjectileType<XanCrestBlades_DancingBlade>(), damage, knockback, player.whoAmI, i);
+                proj.originalDamage = Item.damage;
             }
 
             return false;
@@ -74,12 +77,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.HallowedBar, 16);
-            recipe.AddIngredient(ItemID.SoulofMight, 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.HallowedBar, 16)
+            .AddIngredient(ItemID.SoulofMight, 10)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

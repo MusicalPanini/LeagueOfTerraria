@@ -15,7 +15,7 @@ namespace TerraLeague.Tiles
 {
     public class TargonMonolith : ModTile
     {
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -24,10 +24,10 @@ namespace TerraLeague.Tiles
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 18 };
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(75, 139, 166));
-			dustType = DustID.Stone;
-			animationFrameHeight = 56;
-			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.LunarMonolith };
+			DustType = DustID.Stone;
+			AnimationFrameHeight = 56;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles = new int[] { TileID.LunarMonolith };
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -54,35 +54,35 @@ namespace TerraLeague.Tiles
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			Tile tile = Main.tile[i, j];
-			Texture2D texture;
-			if (Main.canDrawColorTile(i, j))
-			{
-				texture = Main.tileAltTexture[Type, (int)tile.color()];
-			}
-			else
-			{
-				texture = Main.tileTexture[Type];
-			}
-			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
-			if (Main.drawToScreen)
-			{
-				zero = Vector2.Zero;
-			}
-			int height = tile.frameY % animationFrameHeight == 36 ? 18 : 16;
-			int animate = 0;
-			if (tile.frameY >= 56)
-			{
-				animate = Main.tileFrame[Type] * animationFrameHeight;
-			}
-			Main.spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY + animate, 16, height), Lighting.GetColor(i, j), 0f, default, 1f, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(mod.GetTexture("Tiles/TargonMonolith_Glow"), new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY + animate, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			//Tile tile = Main.tile[i, j];
+			//Texture2D texture;
+			//if (Main.canDrawColorTile(i, j))
+			//{
+			//	texture = Main.tileAltTexture[Type, (int)tile.color()];
+			//}
+			//else
+			//{
+			//	texture = Main.tileTexture[Type];
+			//}
+			//Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			//if (Main.drawToScreen)
+			//{
+			//	zero = Vector2.Zero;
+			//}
+			//int height = tile.frameY % animationFrameHeight == 36 ? 18 : 16;
+			//int animate = 0;
+			//if (tile.frameY >= 56)
+			//{
+			//	animate = Main.tileFrame[Type] * animationFrameHeight;
+			//}
+			//Main.spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY + animate, 16, height), Lighting.GetColor(i, j), 0f, default, 1f, SpriteEffects.None, 0f);
+			//Main.spriteBatch.Draw(ModContent.Request<Texture2D>("TerraLeague/Tiles/TargonMonolith_Glow"), new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY + animate, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 
-		public override bool NewRightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
-			Main.PlaySound(SoundID.Mech, i * 16, j * 16, 0);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Mech, i * 16, j * 16, 0);
 			HitWire(i, j);
 			return true;
 		}
@@ -91,8 +91,8 @@ namespace TerraLeague.Tiles
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
-			player.showItemIcon = true;
-			player.showItemIcon2 = ModContent.ItemType<Items.Placeable.TargonMonolith>();
+			player.cursorItemIconEnabled = true;
+			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.TargonMonolith>();
 		}
 
 		public override void HitWire(int i, int j)
@@ -107,7 +107,7 @@ namespace TerraLeague.Tiles
 					{
 						Main.tile[l, m] = new Tile();
 					}
-					if (Main.tile[l, m].active() && Main.tile[l, m].type == Type)
+					if (Main.tile[l, m].IsActive && Main.tile[l, m].type == Type)
 					{
 						if (Main.tile[l, m].frameY < 56)
 						{

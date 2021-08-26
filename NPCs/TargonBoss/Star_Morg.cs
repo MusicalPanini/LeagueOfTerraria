@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Dusts;
 using Terraria.Audio;
 using System.Linq;
+using Terraria.GameContent;
 
 namespace TerraLeague.NPCs.TargonBoss
 {
@@ -24,51 +25,51 @@ namespace TerraLeague.NPCs.TargonBoss
         {
             get
             {
-                return (int)npc.ai[0];
+                return (int)NPC.ai[0];
             }
 
             set
             {
-                npc.ai[0] = value;
+                NPC.ai[0] = value;
             }
         }
         int Charge
         {
             get
             {
-                return (int)npc.ai[1];
+                return (int)NPC.ai[1];
             }
 
             set
             {
-                npc.ai[1] = value;
+                NPC.ai[1] = value;
             }
         }
         float AltScale
         {
             get
             {
-                return npc.localAI[0];
+                return NPC.localAI[0];
             }
             set
             {
-                npc.localAI[0] = value;
+                NPC.localAI[0] = value;
             }
         }
         int AltAlpha
         {
             get
             {
-                if (npc.localAI[1] <= 255 || npc.localAI[1] >= 0)
-                    return (int)npc.localAI[1];
-                else if (npc.localAI[1] < 0)
+                if (NPC.localAI[1] <= 255 || NPC.localAI[1] >= 0)
+                    return (int)NPC.localAI[1];
+                else if (NPC.localAI[1] < 0)
                     return 0;
                 else
                     return 255;
             }
             set
             {
-                npc.localAI[1] = value;
+                NPC.localAI[1] = value;
             }
         }
 
@@ -78,19 +79,19 @@ namespace TerraLeague.NPCs.TargonBoss
         }
         public override void SetDefaults()
         {
-            npc.width = 32;
-            npc.height = 32;
-            npc.defense = 0;
-            npc.lifeMax = 10;
-            npc.HitSound = new LegacySoundStyle(3, 5);
-            npc.DeathSound = new LegacySoundStyle(4, 7);
-            npc.value = 0;
-            npc.buffImmune[BuffType<TideCallerBubbled>()] = true;
-            npc.buffImmune[BuffType<Stunned>()] = true;
-            npc.knockBackResist = 0f;
-            npc.SpawnedFromStatue = true;
-            npc.noGravity = true;
-            npc.alpha = 255;
+            NPC.width = 32;
+            NPC.height = 32;
+            NPC.defense = 0;
+            NPC.lifeMax = 10;
+            NPC.HitSound = new LegacySoundStyle(3, 5);
+            NPC.DeathSound = new LegacySoundStyle(4, 7);
+            NPC.value = 0;
+            NPC.buffImmune[BuffType<TideCallerBubbled>()] = true;
+            NPC.buffImmune[BuffType<Stunned>()] = true;
+            NPC.knockBackResist = 0f;
+            NPC.SpawnedFromStatue = true;
+            NPC.noGravity = true;
+            NPC.alpha = 255;
             base.SetDefaults();
         }
 
@@ -103,10 +104,10 @@ namespace TerraLeague.NPCs.TargonBoss
         {
             if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
             {
-                npc.active = false;
+                NPC.active = false;
             }
 
-            Lighting.AddLight(npc.Center, TargonBossNPC.MorgColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
+            Lighting.AddLight(NPC.Center, TargonBossNPC.MorgColor.ToVector3() * (AltAlpha / 255f) * (AltScale / 2f));
 
             return base.PreAI();
         }
@@ -124,8 +125,8 @@ namespace TerraLeague.NPCs.TargonBoss
                 }
                 if (Charge == 60 * 4)
                 {
-                    npc.TargetClosest();
-                    npc.netUpdate = true;
+                    NPC.TargetClosest();
+                    NPC.netUpdate = true;
                 }
                 if (Charge == 60 * 5)
                 {
@@ -136,19 +137,19 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 pos = new Vector2(TerraLeagueWORLDGLOBAL.TargonCenterX * 16 + 8, (float)(Main.worldSurface + 50) * 16);
+                    Vector2 pos = new Vector2(Common.ModSystems.WorldSystem.TargonCenterX * 16 + 8, (float)(Main.worldSurface + 50) * 16);
 
-                    Projectile proj = Projectile.NewProjectileDirect(pos, TerraLeague.CalcVelocityToPoint(pos, npc.position, 24), ProjectileType<TargonBoss_SoulShackles>(), TargonBossNPC.MorgDamage, 0, 255, Main.npc.First(x => x.type == NPCType<TargonBossNPC>()).whoAmI, -1);
+                    Projectile proj = Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), pos, TerraLeague.CalcVelocityToPoint(pos, NPC.position, 24), ProjectileType<TargonBoss_SoulShackles>(), TargonBossNPC.MorgDamage, 0, 255, Main.npc.First(x => x.type == NPCType<TargonBossNPC>()).whoAmI, -1);
                     proj.ai[0] = Main.npc.First(x => x.type == NPCType<TargonBossNPC>()).whoAmI;
                     proj.ai[1] = -1;
                     proj.netUpdate = true;
                 }
-                    npc.active = false;
-                TerraLeague.PlaySoundWithPitch(npc.Center, 2, 27, 0);
+                    NPC.active = false;
+                TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 27, 0);
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0, 0, 150, TargonBossNPC.MorgColor);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PortalBolt, 0, 0, 150, TargonBossNPC.MorgColor);
                     dust.noGravity = true;
                     dust.velocity *= 2;
                 }
@@ -164,12 +165,12 @@ namespace TerraLeague.NPCs.TargonBoss
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
             {
                 int count = 0;
-                while ((double)count < damage / (double)npc.lifeMax * 50.0)
+                while ((double)count < damage / (double)NPC.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.MorgColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.MorgColor, 1.5f);
                     dust.noGravity = true;
                     count++;
                     break;
@@ -179,7 +180,7 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.MorgColor, 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PortalBolt, 0f, 0f, 0, TargonBossNPC.MorgColor, 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }
@@ -188,21 +189,16 @@ namespace TerraLeague.NPCs.TargonBoss
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            base.NPCLoot();
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-        {
-            Texture2D texture = Main.npcTexture[npc.type];
-            spriteBatch.Draw
+            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Main.spriteBatch.Draw
             (
                 texture,
-                npc.Center - Main.screenPosition,
+                NPC.Center - Main.screenPosition,
                 new Rectangle(0, 0, texture.Width, texture.Height),
                 new Color(255, 255, 255, 255/*AltAlpha*/),
-                npc.rotation,
+                NPC.rotation,
                 texture.Size() * 0.5f,
                 AltScale,
                 SpriteEffects.None,

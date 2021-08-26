@@ -16,37 +16,37 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
-            projectile.alpha = 0;
-            projectile.timeLeft = 1000;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
+            Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
-            projectile.velocity.Y += 0.3f;
+            Projectile.velocity.Y += 0.3f;
 
-            Lighting.AddLight(projectile.position, 0.5f, 0.45f, 0.30f);
-            projectile.rotation += projectile.velocity.X * 0.01f;
+            Lighting.AddLight(Projectile.position, 0.5f, 0.45f, 0.30f);
+            Projectile.rotation += Projectile.velocity.X * 0.01f;
         }
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
             for (int i = 0; i < 20; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
                 dust.velocity *= 0.5f;
             }
 
             for (int i = 0; i < 7; i++)
             {
-                Projectile.NewProjectileDirect(new Vector2(projectile.Center.X, projectile.Bottom.Y - 10), new Vector2(6 - (i * 2), -5), ProjectileType<Hexplosives_HexplosiveMine>(), projectile.damage, projectile.knockBack, projectile.owner);
+                Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Bottom.Y - 10), new Vector2(6 - (i * 2), -5), ProjectileType<Hexplosives_HexplosiveMine>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }
 
@@ -58,8 +58,8 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.velocity.X != projectile.oldVelocity.X)
-                projectile.velocity.X = -projectile.oldVelocity.X * 0.3f;
+            if (Projectile.velocity.X != Projectile.oldVelocity.X)
+                Projectile.velocity.X = -Projectile.oldVelocity.X * 0.3f;
             else
                 Prime();
 
@@ -68,16 +68,16 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.tileCollide = false;
-            projectile.velocity = Vector2.Zero;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 64;
-            projectile.height = 64;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
+            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
+            Projectile.width = 64;
+            Projectile.height = 64;
+            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
+            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            Projectile.timeLeft = 2;
         }
 
         public override bool? CanCutTiles()

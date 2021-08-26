@@ -15,18 +15,19 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Haunted Relic");
-            Tooltip.SetDefault("6% increased minion damage" +
+            Tooltip.SetDefault("6% increased summon damage" +
                 "\nIncreases health by 20" +
                 "\nIncreases your max number of minions");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 60, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 60, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -37,23 +38,23 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.maxMinions += 1;
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
+            player.GetDamage(DamageClass.Summon) += 0.06f;
 
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemType<CloakofAgility>(), 1);
-            recipe.AddIngredient(ItemType<PossessedSkull>(), 1);
-            recipe.AddIngredient(ItemID.EyeoftheGolem, 1);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemType<CloakofAgility>(), 1)
+            .AddIngredient(ItemType<PossessedSkull>(), 1)
+            .AddIngredient(ItemID.EyeoftheGolem, 1)
+            .AddIngredient(ItemType<DamnedSoul>(), 50)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

@@ -19,37 +19,37 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 100;
-            projectile.extraUpdates = 100;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.magic = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 100;
+            Projectile.extraUpdates = 100;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0 && (int)projectile.ai[0] == 0)
+            if (Projectile.soundDelay == 0 && (int)Projectile.ai[0] == 0)
             {
-                Main.PlaySound(new LegacySoundStyle(2, 15));
+                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 15));
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
             for (int i = 0; i < 4; i++)
             {
-                Vector2 pos = projectile.position;
-                pos -= projectile.velocity * ((float)i * 0.25f);
+                Vector2 pos = Projectile.position;
+                pos -= Projectile.velocity * ((float)i * 0.25f);
 
-                Dust dust = Dust.NewDustDirect(pos, 1, 1, DustID.HeatRay, 0f, 0f, 0, default, 1f);
+                Dust dust = Dust.NewDustDirect(pos, 1, 1, 162, 0f, 0f, 0, default, 1f);
                 dust.position = pos;
-                dust.position.X += (float)(projectile.width / 2);
-                dust.position.Y += (float)(projectile.height / 2);
+                dust.position.X += (float)(Projectile.width / 2);
+                dust.position.Y += (float)(Projectile.height / 2);
                 dust.scale = (float)Main.rand.Next(70, 110) * 0.013f;
                 dust.velocity *= 0.2f;
             }
@@ -64,7 +64,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 1, 1, DustID.OrangeTorch, 0f, 0f, 0, default,2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, 1, 1, 162, 0f, 0f, 0, default,2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

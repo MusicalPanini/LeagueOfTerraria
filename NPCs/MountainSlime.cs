@@ -1,9 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Biomes;
 using TerraLeague.Items;
 using TerraLeague.Items.Banners;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.NPCs
@@ -13,24 +17,24 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mountain Slime");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Harpy];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Slimer];
         }
         public override void SetDefaults()
         {
-            npc.width = 40;
-            npc.height = 30;
-            npc.aiStyle = 14;
-            npc.damage = 12;
-            npc.defense = 4;
-            npc.lifeMax = 45;
-            npc.value = 20;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
-            aiType = NPCID.GiantBat;
-            animationType = NPCID.Harpy;
-            npc.scale = 1f;
-            banner = npc.type;
-            bannerItem = ItemType<MountainSlimeBanner>();
+            NPC.width = 40;
+            NPC.height = 30;
+            NPC.aiStyle = 14;
+            NPC.damage = 12;
+            NPC.defense = 4;
+            NPC.lifeMax = 45;
+            NPC.value = 20;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
+            AIType = NPCID.GiantBat;
+            AnimationType = NPCID.Slimer;
+            NPC.scale = 1f;
+            Banner = NPC.type;
+            BannerItem = ItemType<MountainSlimeBanner>();
             base.SetDefaults();
         }
 
@@ -43,12 +47,12 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI()
         {
-            //Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+            //Lighting.AddLight(NPC.Center, new Color(5, 245, 150).ToVector3());
             //if (npc.localAI[3] == 0)
             //{
             //    for (int j = 0; j < 50; j++)
             //    {
-            //        Dust dust = Dust.NewDustDirect(npc.position, 18, 40, 188);
+            //        Dust dust = Dust.NewDustDirect(NPC.position, 18, 40, 188);
             //        dust.noGravity = true;
             //        dust.scale = 2;
             //    }
@@ -70,12 +74,12 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
             {
                 int num262 = 0;
-                while ((double)num262 < damage / (double)npc.lifeMax * 100.0)
+                while ((double)num262 < damage / (double)NPC.lifeMax * 100.0)
                 {
-                    Dust.NewDust(npc.position, npc.width, npc.height, DustID.t_Slime, (float)hitDirection, -1f, npc.alpha, Color.RosyBrown, 1f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.t_Slime, (float)hitDirection, -1f, NPC.alpha, Color.RosyBrown, 1f);
                     int num5 = num262;
                     num262 = num5 + 1;
                 }
@@ -84,18 +88,28 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust.NewDust(npc.position, npc.width, npc.height, DustID.t_Slime, (float)hitDirection, -1f, npc.alpha, Color.RosyBrown, 1f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.t_Slime, (float)hitDirection, -1f, NPC.alpha, Color.RosyBrown, 1f);
                 }
             }
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(npc.Hitbox, ItemID.Gel, Main.rand.Next(1, 3));
-            if (Main.rand.NextFloat() < 0.0001)
-                Item.NewItem(npc.Hitbox, ItemID.SlimeStaff);
-            base.NPCLoot();
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ItemID.SlimeStaff, 10000, 7000));
+            base.ModifyNPCLoot(npcLoot);
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				// Sets the spawning conditions of this NPC that is listed in the bestiary.
+                ModContent.GetInstance<MountTargonBiome>().ModBiomeBestiaryInfoElement,
+
+				// Sets the description of this NPC that is listed in the bestiary.
+				new FlavorTextBestiaryInfoElement("The harsh slopes of Targon are a dangerous and hellish place to live, let alone traverse. But life, uhh.. finds a way.")
+            });
         }
     }
 }

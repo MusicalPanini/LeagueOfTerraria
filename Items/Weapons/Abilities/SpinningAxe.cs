@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/SpinningAxe";
+            return "TerraLeague/AbilityImages/SpinningAxe";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage);
+            return (int)(abilityItem.Item.damage);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -91,7 +91,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item7, player.MountedCenter);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item7, player.MountedCenter);
         }
     }
 }

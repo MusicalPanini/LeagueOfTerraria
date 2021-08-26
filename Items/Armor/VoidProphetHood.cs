@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Armor
             Tooltip.SetDefault("Increases your max number of minions" +
             "\nIncreases your max life by 50");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 26;
-            item.value = 300000;
-            item.rare = ItemRarityID.Lime;
-            item.defense = 15;
+            Item.width = 24;
+            Item.height = 26;
+            Item.value = 300000;
+            Item.rare = ItemRarityID.Lime;
+            Item.defense = 15;
         }
 
         public override void UpdateEquip(Player player)
@@ -33,11 +34,11 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<VoidBar>(), 12);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(GetInstance<VoidBar>(), 12)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class Seeded : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Seeded");
             Main.debuff[Type] = true;

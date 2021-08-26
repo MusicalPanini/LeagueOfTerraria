@@ -3,6 +3,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -15,43 +16,44 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Assassin's Kunai");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 36;
-            item.width = 18;
-            item.height = 36;
-            item.magic = true;
-            item.useTime = 23;
-            item.useAnimation = 23;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 2;
-            item.mana = 8;
-            item.value = 350000;
-            item.rare = ItemRarityID.Lime;
-            item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
-            item.shoot = ProjectileType<AssassinsKunai_Kunai>();
-            item.shootSpeed = 16f;
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.noUseGraphic = true;
+            Item.damage = 36;
+            Item.width = 18;
+            Item.height = 36;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 23;
+            Item.useAnimation = 23;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 2;
+            Item.mana = 8;
+            Item.value = 350000;
+            Item.rare = ItemRarityID.Lime;
+            Item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
+            Item.shoot = ProjectileType<AssassinsKunai_Kunai>();
+            Item.shootSpeed = 16f;
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new TwilightShroud(this));
             abilityItem.ChampQuote = "Fear the assassin with no master";
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int numberProjectiles = 5;
             float startingAngle = 20;
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(startingAngle));
-                Projectile.NewProjectile(position, perturbedSpeed, type, damage, knockBack, player.whoAmI);
+                Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
+                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
                 startingAngle -= 10f;
             }
 
@@ -60,11 +62,10 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+                .AddIngredient(ItemType<HarmonicBar>(), 16)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

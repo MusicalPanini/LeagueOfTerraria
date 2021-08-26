@@ -29,7 +29,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/EbbandFlow";
+            return "TerraLeague/AbilityImages/EbbandFlow";
         }
 
         public override string GetAbilityTooltip()
@@ -40,9 +40,9 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override int GetAbilityBaseDamage(Player player)
         {
             if (checkingForHealing)
-                return (int)(abilityItem.item.damage * 0.75);
+                return (int)(abilityItem.Item.damage * 0.75);
             else
-                return (int)(abilityItem.item.damage * 1.5);
+                return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -105,9 +105,9 @@ namespace TerraLeague.Items.Weapons.Abilities
                 checkingForHealing = true;
                 int healing = modPlayer.ScaleValueWithHealPower(GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG));
                 
-                SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
+                SetAnimation(player, abilityItem.Item.useTime, abilityItem.Item.useAnimation, position + velocity);
 
-                Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI, healing);
+                Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, healing);
 
                 SetAnimation(player, position + velocity);
                 DoEfx(player, type);
@@ -117,7 +117,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item20, player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item20, player.Center);
         }
     }
 }

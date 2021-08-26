@@ -11,9 +11,9 @@ namespace TerraLeague.Tiles.PetFurniture
 {
     public class PetChair : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            dustType = DustID.Ghost;
+            DustType = DustID.Cloud;
 
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -32,8 +32,8 @@ namespace TerraLeague.Tiles.PetFurniture
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Petrified Wood Chair");
             AddMapEntry(new Color(200, 200, 200), name);
-            disableSmartCursor = true;
-            adjTiles = new int[] { TileID.Chairs };
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            AdjTiles = new int[] { TileID.Chairs };
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

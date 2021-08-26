@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/WorldEnder";
+            return "TerraLeague/AbilityImages/WorldEnder";
         }
 
         public override string GetAbilityTooltip()

@@ -19,15 +19,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases mana regeneration by 50%" +
                 "\n10% increased healing power" +
                 "\nIncreases ability haste by 15");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.accessory = true;
 
             Active = new FleetFoot(500, 4, 90);
         }
@@ -44,14 +45,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CrystallineBracer>(), 1);
-            recipe.AddIngredient(ItemType<ForbiddenIdol>(), 1);
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
-            recipe.AddIngredient(ItemID.SunplateBlock, 20);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CrystallineBracer>(), 1)
+            .AddIngredient(ItemType<ForbiddenIdol>(), 1)
+            .AddIngredient(ItemType<Sunstone>(), 10)
+            .AddIngredient(ItemID.SunplateBlock, 20)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

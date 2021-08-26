@@ -11,43 +11,37 @@ namespace TerraLeague.Items.BasicItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blasting Wand");
-            Tooltip.SetDefault("3% increased magic and minion damage");
+            Tooltip.SetDefault("3% increased magic and summon damage");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 3, 75, 0);
-            item.rare = ItemRarityID.Green;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 3, 75, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.accessory = true;
+            Item.material = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.03f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.03;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.WandofSparking, 1);
-            recipe.AddIngredient(ItemID.Bomb, 1);
-            recipe.AddIngredient(ItemID.FallenStar, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.WandofSparking, 1)
+            .AddIngredient(ItemID.Bomb, 1)
+            .AddIngredient(ItemID.FallenStar, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
 
-            ModRecipe WandofSpark = new ModRecipe(mod);
-            WandofSpark.AddIngredient(ItemID.Wood, 10);
-            WandofSpark.AddIngredient(ItemID.FallenStar, 1);
-            WandofSpark.AddIngredient(ItemID.Fireblossom, 1);
-            WandofSpark.AddTile(TileID.Anvils);
-            recipe.anyWood = true;
-            WandofSpark.SetResult(ItemID.WandofSparking);
-            WandofSpark.AddRecipe();
+            
         }
     }
 }

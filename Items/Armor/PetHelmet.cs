@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Armor
             base.SetStaticDefaults();
             DisplayName.SetDefault("Petrified Breastplate");
             Tooltip.SetDefault("Decreases maximum mana by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 16;
-            item.value = 0;
-            item.rare = ItemRarityID.Blue;
-            item.defense = 1;
+            Item.width = 22;
+            Item.height = 16;
+            Item.value = 0;
+            Item.rare = ItemRarityID.Blue;
+            Item.defense = 1;
         }
 
         public override void UpdateEquip(Player player)
@@ -32,11 +33,11 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<PetWood>(), 20);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(GetInstance<PetWood>(), 20)
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

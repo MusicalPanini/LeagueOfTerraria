@@ -15,17 +15,18 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bloodletter's Veil");
-            Tooltip.SetDefault("5% increased magic and minion damage" +
+            Tooltip.SetDefault("5% increased magic and summon damage" +
                 "\nIncreases maximum life by 20");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Active = new NightsVeil(7, 120, 75);
             Passives = new Passive[]
@@ -36,22 +37,22 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.05f;
+            player.GetDamage(DamageClass.Magic) += 0.05f;
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05f;
+            player.GetDamage(DamageClass.Summon) += 0.05f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Orb>(), 1);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemType<BrassBar>(), 12);
-            recipe.AddIngredient(ItemID.Bone, 10);
-            recipe.AddIngredient(ItemType<DamnedSoul>(), 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Orb>(), 1)
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemType<BrassBar>(), 12)
+            .AddIngredient(ItemID.Bone, 10)
+            .AddIngredient(ItemType<DamnedSoul>(), 10)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

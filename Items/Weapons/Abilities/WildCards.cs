@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/WildCards";
+            return "TerraLeague/AbilityImages/WildCards";
         }
 
         public override string GetAbilityTooltip()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -94,7 +94,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
-                    Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
                     startingAngle -= baseAngle * 2 / (numberProjectiles - 1);
                 }
                 SetAnimation(player, position + velocity);
@@ -105,7 +105,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 19, SoundType.Sound));
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 19, SoundType.Sound));
         }
     }
 }

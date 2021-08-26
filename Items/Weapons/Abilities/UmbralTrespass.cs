@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/UmbralTrespass";
+            return "TerraLeague/AbilityImages/UmbralTrespass";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 4);
+            return (int)(abilityItem.Item.damage * 4);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -116,15 +116,15 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.NPCDeath1, player.MountedCenter);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCDeath1, player.MountedCenter);
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 71, -0.5f);
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedsWingsRun, player.velocity.X / 5, player.velocity.Y / 5, 150);
+                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 186, player.velocity.X / 5, player.velocity.Y / 5, 150);
                 dust.scale = 1.5f;
                 dust.color = new Color(255, 0, 0);
-                dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedsWingsRun, player.velocity.X / 5, player.velocity.Y / 5, 150);
+                dust = Dust.NewDustDirect(player.position, player.width, player.height, 186, player.velocity.X / 5, player.velocity.Y / 5, 150);
 
                 dust.scale = 1.5f;
             }

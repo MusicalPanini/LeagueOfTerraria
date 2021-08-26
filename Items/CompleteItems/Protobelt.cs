@@ -13,20 +13,21 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hextech Protobelt-01");
-            Tooltip.SetDefault("7% increased magic and minion damage" +
+            Tooltip.SetDefault("7% increased magic and summon damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases ability haste by 10" +
                 "\nAllows flight and slow fall" +
                 "\nPress UP to rocket faster");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Active = new FireBolt(45, 10, 30);
         }
@@ -34,8 +35,8 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 20;
-            player.magicDamage += 0.07f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.07;
+            player.GetDamage(DamageClass.Magic) += 0.07f;
+            player.GetDamage(DamageClass.Summon) += 0.07f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
 
             player.wingTimeMax = 120;
@@ -61,14 +62,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HextechAlternator>(), 1);
-            recipe.AddIngredient(ItemType<Kindlegem>(), 1);
-            recipe.AddIngredient(ItemID.Jetpack, 1);
-            recipe.AddIngredient(ItemType<HextechCore>(), 1);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<HextechAlternator>(), 1)
+            .AddIngredient(ItemType<Kindlegem>(), 1)
+            .AddIngredient(ItemID.Jetpack, 1)
+            .AddIngredient(ItemType<HextechCore>(), 1)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

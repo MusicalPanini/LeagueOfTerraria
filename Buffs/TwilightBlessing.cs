@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class TwilightBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Trickster");
             Description.SetDefault("50 increased max mana" +

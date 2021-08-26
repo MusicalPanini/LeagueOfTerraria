@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Ghost : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ghost");
             Description.SetDefault("Increased movement speed and Immunity to knockback");

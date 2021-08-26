@@ -12,7 +12,7 @@ namespace TerraLeague.Walls
 {
     public class TargonStoneWall_Arena : ModWall
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
             AddMapEntry(new Color(120, 119, 110));
@@ -21,7 +21,7 @@ namespace TerraLeague.Walls
 
         public override void KillWall(int i, int j, ref bool fail)
         {
-            fail = TerraLeagueWORLDGLOBAL.TargonArenaDefeated;
+            fail = Common.ModSystems.DownedBossSystem.downedTargonBoss;
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

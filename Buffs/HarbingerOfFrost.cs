@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class HarbingerOfFrost : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Harbinger of Frost");
             Description.SetDefault("A chill grasps your heart!" +

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,17 +22,17 @@ namespace TerraLeague.Projectiles.Beam
 		// The AI of the projectile
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 
-			Vector2 target = trackMouse ? Main.MouseWorld : player.MountedCenter + projectile.velocity;
+			Vector2 target = trackMouse ? Main.MouseWorld : player.MountedCenter + Projectile.velocity;
 
 			BeamAI(player.MountedCenter, target);
 		}
 
 		public override void BeamAI(Vector2 Center, Vector2 TargetPosition)
         {
-			Player player = Main.player[projectile.owner];
-			projectile.position = Center + projectile.velocity;
+			Player player = Main.player[Projectile.owner];
+			Projectile.position = Center + Projectile.velocity;
 
 			BeamPositioning(Center, TargetPosition);
 			ChargeLaser(Center);
@@ -53,30 +54,30 @@ namespace TerraLeague.Projectiles.Beam
                 // Kill the projectile if the player stops channeling
                 if (!player.channel)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
 				else if (Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
 				else
                 {
-					projectile.timeLeft = 2;
+					Projectile.timeLeft = 2;
 				}
 			}
 
 			// Multiplayer support here, only run this code if the client running it is the owner of the projectile
-			if (projectile.owner == Main.myPlayer)
+			if (Projectile.owner == Main.myPlayer)
 			{
-				projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
-				projectile.netUpdate = true;
+				Projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
+				Projectile.netUpdate = true;
 			}
-			int dir = projectile.velocity.X > 0 ? 1 : -1;
+			int dir = Projectile.velocity.X > 0 ? 1 : -1;
 			player.ChangeDir(dir); // Set player direction to where we are shooting
-			player.heldProj = projectile.whoAmI; // Update player's held projectile
+			player.heldProj = Projectile.whoAmI; // Update player's held projectile
 			player.itemTime = 2; // Set item time to 2 frames while we are used
 			player.itemAnimation = 2; // Set item animation time to 2 frames while we are used
-			player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir, projectile.velocity.X * dir); // Set the item rotation to where we are shooting
+			player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * dir, Projectile.velocity.X * dir); // Set the item rotation to where we are shooting
 		}
 
         protected override void BeamPositioning(Vector2 Center, Vector2 TargetPosition)
@@ -94,21 +95,21 @@ namespace TerraLeague.Projectiles.Beam
 			{
 				normalizedMouse = -Vector2.UnitY;
 			}
-			normalizedMouse = Vector2.Normalize(Vector2.Lerp(normalizedMouse, Vector2.Normalize(projectile.velocity), 1 - (1f / turningFactor)));
-			if (normalizedMouse.X != projectile.velocity.X || normalizedMouse.Y != projectile.velocity.Y)
+			normalizedMouse = Vector2.Normalize(Vector2.Lerp(normalizedMouse, Vector2.Normalize(Projectile.velocity), 1 - (1f / turningFactor)));
+			if (normalizedMouse.X != Projectile.velocity.X || normalizedMouse.Y != Projectile.velocity.Y)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
-			projectile.velocity = normalizedMouse;
+			Projectile.velocity = normalizedMouse;
         }
 
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
+        public override bool PreDraw(ref Color lightColor)
+        {
 			// We start drawing the laser if we have charged up
 			if (IsAtMaxCharge)
 			{
-				DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], Main.player[projectile.owner].Center,
-					projectile.velocity, SpriteMid.Height-2, projectile.damage, -1.57f, 1f, MaxDistance, Color.White, (int)moveDistance);
+				DrawLaser(Main.spriteBatch, TextureAssets.Projectile[Projectile.type].Value, Main.player[Projectile.owner].Center,
+					Projectile.velocity, SpriteMid.Height-2, Projectile.damage, -1.57f, 1f, MaxDistance, Color.White, (int)moveDistance);
 			}
 			return false;
 		}

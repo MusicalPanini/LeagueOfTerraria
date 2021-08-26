@@ -12,14 +12,28 @@ namespace TerraLeague.Tiles.PetFurniture
 {
     public class PetDoor : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            dustType = DustID.Ghost;
-
             Main.tileFrameImportant[Type] = true;
             Main.tileSolid[Type] = false;
             Main.tileLavaDeath[Type] = true;
             Main.tileNoSunLight[Type] = true;
+            TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+
+            DustType = DustID.Cloud;
+            AdjTiles = new int[] { TileID.OpenDoor };
+            CloseDoorID = TileType<PetDoorClosed>();
+
+            // Names
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Petrified Wood Door");
+            AddMapEntry(new Color(200, 200, 200), name);
+
+            // Placement
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.Origin = new Point16(0, 0);
@@ -59,15 +73,6 @@ namespace TerraLeague.Tiles.PetFurniture
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            TileID.Sets.HousingWalls[Type] = true;
-            TileID.Sets.HasOutlines[Type] = true;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Petrified Wood Door");
-            AddMapEntry(new Color(200, 200, 200), name);
-            disableSmartCursor = true;
-            adjTiles = new int[] { TileID.OpenDoor };
-            closeDoorID = TileType<PetDoorClosed>();
         }
 
         public override bool HasSmartInteract()
@@ -84,8 +89,8 @@ namespace TerraLeague.Tiles.PetFurniture
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
-            player.showItemIcon = true;
-            player.showItemIcon2 = ItemType<PetDoorItem>();
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ItemType<PetDoorItem>();
         }
     }
 }

@@ -16,15 +16,16 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("10% increased melee damage" +
                 "\nIncreases ability haste by 10" +
                 "\nIncreases melee armor penetration by 7");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 30;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
+            Item.width = 24;
+            Item.height = 30;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -33,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.1f;
+            player.GetDamage(DamageClass.Melee) += 0.1f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
 
@@ -42,16 +43,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SerratedDirk>(), 1);
-            recipe.AddIngredient(ItemType<Warhammer>(), 1);
-            recipe.AddIngredient(ItemID.WarriorEmblem, 1);
-            recipe.AddIngredient(ItemType<HarmonicBar>(), 8);
-            recipe.AddIngredient(ItemID.SoulofSight, 6);
-            recipe.AddIngredient(ItemID.SoulofFright, 6);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<SerratedDirk>(), 1)
+            .AddIngredient(ItemType<Warhammer>(), 1)
+            .AddIngredient(ItemID.WarriorEmblem, 1)
+            .AddIngredient(ItemType<HarmonicBar>(), 8)
+            .AddIngredient(ItemID.SoulofSight, 6)
+            .AddIngredient(ItemID.SoulofFright, 6)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

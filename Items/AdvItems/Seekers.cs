@@ -14,18 +14,19 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Seeker's Armguard");
-            Tooltip.SetDefault("2% increased magic and minion damage" +
+            Tooltip.SetDefault("2% increased magic and summon damage" +
                 "\nIncreases armor by 1");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
-            item.material = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+            Item.material = true;
 
             Passives = new Passive[]
             {
@@ -39,8 +40,8 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.02f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.02f;
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 1;
 
             base.UpdateAccessory(player, hideVisual);
@@ -48,14 +49,14 @@ namespace TerraLeague.Items.AdvItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ClothArmor>(), 2);
-            recipe.AddIngredient(ItemType<AmpTome>(), 1);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 2);
-            recipe.AddIngredient(ItemID.Obsidian, 20);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<ClothArmor>(), 2)
+            .AddIngredient(ItemType<AmpTome>(), 1)
+            .AddIngredient(ItemType<TrueIceChunk>(), 2)
+            .AddIngredient(ItemID.Obsidian, 20)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

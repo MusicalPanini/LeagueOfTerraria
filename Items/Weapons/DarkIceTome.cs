@@ -14,6 +14,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Dark Ice Tome");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -25,23 +26,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 50;
-            item.noMelee = true;
-            item.magic = true;
-            item.mana = 14;
-            item.value = 160000;
-            item.rare = ItemRarityID.Pink;
-            item.width = 28;
-            item.height = 32;
-            item.useTime = 45;
-            item.useAnimation = 45;
-            item.knockBack = 2;
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2,8);
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shootSpeed = 16;
-            item.shoot = ProjectileType<DarkIceTome_IceShard>();
+            Item.damage = 50;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 14;
+            Item.value = 160000;
+            Item.rare = ItemRarityID.Pink;
+            Item.width = 28;
+            Item.height = 32;
+            Item.useTime = 45;
+            Item.useAnimation = 45;
+            Item.knockBack = 2;
+            Item.UseSound = new Terraria.Audio.LegacySoundStyle(2,8);
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.shootSpeed = 16;
+            Item.shoot = ProjectileType<DarkIceTome_IceShard>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new RingOfFrost(this));
             abilityItem.ChampQuote = "I will bury the world in ice";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -50,13 +51,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
-            recipe.AddIngredient(ItemID.DemonScythe, 1);
-            recipe.AddIngredient(ItemID.FrostCore, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<TrueIceChunk>(), 4)
+            .AddIngredient(ItemID.DemonScythe, 1)
+            .AddIngredient(ItemID.FrostCore, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

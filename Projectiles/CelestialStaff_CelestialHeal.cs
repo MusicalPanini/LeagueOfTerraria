@@ -17,15 +17,15 @@ namespace TerraLeague.Projectiles
         public override void SetDefaults()
         {
             
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.alpha = 255;
-            projectile.timeLeft = 90;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 90;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
 
         }
 
@@ -33,26 +33,26 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.GreenFairy, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemEmerald, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1.2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
 
             for (int i = 0; i < Main.player.Length; i++)
             {
-                if (projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != projectile.owner && Main.myPlayer == projectile.owner)
+                if (Projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != Projectile.owner && Main.myPlayer == Projectile.owner)
                 {
-                    if (Main.LocalPlayer.whoAmI == projectile.owner)
-                        Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(projectile.damage, i, -1, projectile.owner);
+                    if (Main.LocalPlayer.whoAmI == Projectile.owner)
+                        Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(Projectile.damage, i, -1, Projectile.owner);
 
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
             }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 

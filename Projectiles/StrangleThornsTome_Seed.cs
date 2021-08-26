@@ -14,28 +14,28 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.minion = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.minion = true;
         }
 
         public override void AI()
         {
-            projectile.velocity.Y += 0.4f;
+            Projectile.velocity.Y += 0.4f;
 
-            if (projectile.velocity.Y > 16)
+            if (Projectile.velocity.Y > 16)
             {
-                projectile.velocity.Y = 16;
+                Projectile.velocity.Y = 16;
             }
 
-            Dust dust = Dust.NewDustPerfect(projectile.Center, 18);
+            Dust dust = Dust.NewDustPerfect(Projectile.Center, 18);
             dust.noGravity = true;
             dust.velocity *= 0;
 
@@ -44,11 +44,11 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.velocity.X != projectile.oldVelocity.X)
+            if (Projectile.velocity.X != Projectile.oldVelocity.X)
             {
-                projectile.velocity.X = -projectile.oldVelocity.X * 0.3f;
+                Projectile.velocity.X = -Projectile.oldVelocity.X * 0.3f;
             }
-            else if (projectile.velocity.Y != projectile.oldVelocity.Y && projectile.oldVelocity.Y > 0)
+            else if (Projectile.velocity.Y != Projectile.oldVelocity.Y && Projectile.oldVelocity.Y > 0)
             {
                 return true;
             }
@@ -57,10 +57,10 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Vector2 pos = projectile.Center.ToTileCoordinates16().ToWorldCoordinates();
+            Vector2 pos = Projectile.Center.ToTileCoordinates16().ToWorldCoordinates();
             pos.Y += 12;
             pos.X -= 16;
-            Projectile.NewProjectileDirect(pos, Vector2.Zero, ProjectileType<StrangleThornsTome_NightBloomingZychidsBulb>(), projectile.damage, projectile.knockBack, projectile.owner);
+            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), pos, Vector2.Zero, ProjectileType<StrangleThornsTome_NightBloomingZychidsBulb>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

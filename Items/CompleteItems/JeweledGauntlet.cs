@@ -18,15 +18,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\n8% increased crit chance" +
                 "\nIncreases maximum mana by 40" +
                 "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -36,10 +37,8 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.08f;
-            player.rangedDamage += 0.08f;
-            player.magicDamage += 0.08f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;
+            player.GetDamage(DamageClass.Generic) += 0.08f;
+            player.GetCritChance(DamageClass.Generic) += 8;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.statManaMax2 += 40;
 
@@ -48,16 +47,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BFSword>(), 1);
-            recipe.AddIngredient(ItemType<BrawlersGlove>(), 1);
-            recipe.AddIngredient(ItemType<LostChapter>(), 1);
-            recipe.AddIngredient(ItemID.DestroyerEmblem, 1);
-            recipe.AddIngredient(ItemID.SoulofMight, 6);
-            recipe.AddIngredient(ItemID.HallowedBar, 12);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BFSword>(), 1)
+            .AddIngredient(ItemType<BrawlersGlove>(), 1)
+            .AddIngredient(ItemType<LostChapter>(), 1)
+            .AddIngredient(ItemID.DestroyerEmblem, 1)
+            .AddIngredient(ItemID.SoulofMight, 6)
+            .AddIngredient(ItemID.HallowedBar, 12)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

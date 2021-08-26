@@ -16,6 +16,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Calibrum");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -27,24 +28,24 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 200;
-            item.ranged = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 100;
-            item.height = 26;
-            item.useAnimation = 35;
-            item.useTime = 35;
-            item.shootSpeed = 2f;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.value = 310000 * 5;
-            item.rare = ItemRarityID.Purple;
-            //item.scale = 0.8f;
-            item.shoot = ProjectileType<Calibrum_Shot>();
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 75);
-            item.autoReuse = true;
+            Item.damage = 200;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.width = 100;
+            Item.height = 26;
+            Item.useAnimation = 35;
+            Item.useTime = 35;
+            Item.shootSpeed = 2f;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.value = 310000 * 5;
+            Item.rare = ItemRarityID.Purple;
+            //Item.scale = 0.8f;
+            Item.shoot = ProjectileType<Calibrum_Shot>();
+            Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 75);
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new Moonshot(this));
             abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Cal));
             abilityItem.ChampQuote = "Moonlight will guide your aim";
@@ -66,25 +67,24 @@ namespace TerraLeague.Items.Weapons
             return base.CanUseItem(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             player.GetModPlayer<PLAYERGLOBAL>().calibrumAmmo -= 5;
 
-            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 46f;
+            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 46f;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
                 position += muzzleOffset;
             }
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.LunarBar, 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.LunarBar, 16)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override Vector2? HoldoutOffset()

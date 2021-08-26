@@ -7,6 +7,8 @@ using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items.Banners;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader.Utilities;
 
 namespace TerraLeague.NPCs
 {
@@ -15,30 +17,30 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spectral Shark");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.SandShark];
+            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.SandShark];
         }
         public override void SetDefaults()
         {
-            npc.width = 100;
-            npc.height = 40;
-            npc.alpha = 110;
-            npc.aiStyle = 0;
-            npc.damage = 40;
-            npc.defense = 0;
-            npc.lifeMax = 75;
-            npc.behindTiles = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit54;
-            npc.DeathSound = SoundID.NPCHit52;
-            aiType = NPCID.Shark;
-            animationType = NPCID.SandShark;
-            npc.value = 400;
-            npc.knockBackResist = 0f;
-            npc.scale = 1f;
+            NPC.width = 100;
+            NPC.height = 40;
+            NPC.alpha = 110;
+            NPC.aiStyle = 0;
+            NPC.damage = 40;
+            NPC.defense = 0;
+            NPC.lifeMax = 75;
+            NPC.behindTiles = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCHit52;
+            AIType = NPCID.Shark;
+            AnimationType = NPCID.SandShark;
+            NPC.value = 400;
+            NPC.knockBackResist = 0f;
+            NPC.scale = 1f;
             base.SetDefaults();
-            banner = npc.type;
-            bannerItem = ItemType<SpectralSharkBanner>();
+            Banner = NPC.type;
+            BannerItem = ItemType<SpectralSharkBanner>();
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -52,15 +54,15 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI()
         {
-            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+            Lighting.AddLight(NPC.Center, new Color(5, 245, 150).ToVector3());
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 100, new Color(5, 245, 150), 1.5f);
+                Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 100, new Color(5, 245, 150), 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += npc.velocity * 0.1f;
-                dust.position.X -= npc.velocity.X / 3f * (float)i;
-                dust.position.Y -= npc.velocity.Y / 3f * (float)i;
+                dust.velocity += NPC.velocity * 0.1f;
+                dust.position.X -= NPC.velocity.X / 3f * (float)i;
+                dust.position.Y -= NPC.velocity.Y / 3f * (float)i;
             }
 
 
@@ -69,93 +71,93 @@ namespace TerraLeague.NPCs
 
         public override void AI()
         {
-            if (npc.direction == 0)
+            if (NPC.direction == 0)
             {
-                npc.TargetClosest(true);
+                NPC.TargetClosest(true);
             }
 
             bool attackTarget = false;
-            if (npc.type != NPCID.Goldfish)
+            if (NPC.type != NPCID.Goldfish)
             {
-                npc.TargetClosest(false);
-                if (!Main.player[npc.target].dead)
+                NPC.TargetClosest(false);
+                if (!Main.player[NPC.target].dead)
                 {
                     attackTarget = true;
                 }
             }
             if (!attackTarget)
             {
-                if (npc.collideX)
+                if (NPC.collideX)
                 {
-                    npc.velocity.X *= -1f;
-                    npc.direction *= -1;
-                    npc.netUpdate = true;
+                    NPC.velocity.X *= -1f;
+                    NPC.direction *= -1;
+                    NPC.netUpdate = true;
                 }
-                if (npc.collideY)
+                if (NPC.collideY)
                 {
-                    npc.netUpdate = true;
-                    if (npc.velocity.Y > 0f)
+                    NPC.netUpdate = true;
+                    if (NPC.velocity.Y > 0f)
                     {
-                        npc.velocity.Y = Math.Abs(npc.velocity.Y) * -1f;
-                        npc.directionY = -1;
-                        npc.ai[0] = -1f;
+                        NPC.velocity.Y = Math.Abs(NPC.velocity.Y) * -1f;
+                        NPC.directionY = -1;
+                        NPC.ai[0] = -1f;
                     }
-                    else if (npc.velocity.Y < 0f)
+                    else if (NPC.velocity.Y < 0f)
                     {
-                        npc.velocity.Y = Math.Abs(npc.velocity.Y);
-                        npc.directionY = 1;
-                        npc.ai[0] = 1f;
+                        NPC.velocity.Y = Math.Abs(NPC.velocity.Y);
+                        NPC.directionY = 1;
+                        NPC.ai[0] = 1f;
                     }
                 }
             }
             if (attackTarget)
             {
-                npc.TargetClosest(true);
-                npc.velocity.X += (float)npc.direction * 0.3f;
-                npc.velocity.Y += (float)npc.directionY * 0.15f;
-                if (npc.velocity.X > 10f)
+                NPC.TargetClosest(true);
+                NPC.velocity.X += (float)NPC.direction * 0.3f;
+                NPC.velocity.Y += (float)NPC.directionY * 0.15f;
+                if (NPC.velocity.X > 10f)
                 {
-                    npc.velocity.X = 10f;
+                    NPC.velocity.X = 10f;
                 }
-                if (npc.velocity.X < -10f)
+                if (NPC.velocity.X < -10f)
                 {
-                    npc.velocity.X = -10f;
+                    NPC.velocity.X = -10f;
                 }
-                if (npc.velocity.Y > 3f)
+                if (NPC.velocity.Y > 3f)
                 {
-                    npc.velocity.Y = 3f;
+                    NPC.velocity.Y = 3f;
                 }
-                if (npc.velocity.Y < -3f)
+                if (NPC.velocity.Y < -3f)
                 {
-                    npc.velocity.Y = -3f;
+                    NPC.velocity.Y = -3f;
                 }
             }
             else
             {
-                npc.velocity.X += (float)npc.direction * 0.1f;
-                if (npc.velocity.X < -1f || npc.velocity.X > 1f)
+                NPC.velocity.X += (float)NPC.direction * 0.1f;
+                if (NPC.velocity.X < -1f || NPC.velocity.X > 1f)
                 {
-                    npc.velocity.X *= 0.95f;
+                    NPC.velocity.X *= 0.95f;
                 }
-                if (npc.ai[0] == -1f)
+                if (NPC.ai[0] == -1f)
                 {
-                    npc.velocity.Y -= 0.01f;
-                    if ((double)npc.velocity.Y < -0.3)
+                    NPC.velocity.Y -= 0.01f;
+                    if ((double)NPC.velocity.Y < -0.3)
                     {
-                        npc.ai[0] = 1f;
+                        NPC.ai[0] = 1f;
                     }
                 }
                 else
                 {
-                    npc.velocity.Y += 0.01f;
-                    if ((double)npc.velocity.Y > 0.3)
+                    NPC.velocity.Y += 0.01f;
+                    if ((double)NPC.velocity.Y > 0.3)
                     {
-                        npc.ai[0] = -1f;
+                        NPC.ai[0] = -1f;
                     }
                 }
 
-                int num250 = (int)(npc.position.X + (float)(npc.width / 2)) / 16;
-                int num251 = (int)(npc.position.Y + (float)(npc.height / 2)) / 16;
+                int num250 = (int)(NPC.position.X + (float)(NPC.width / 2)) / 16;
+                int num251 = (int)(NPC.position.Y + (float)(NPC.height / 2)) / 16;
                 if (Main.tile[num250, num251 - 1] == null)
                 {
                     Tile[,] tile3 = Main.tile;
@@ -180,24 +182,13 @@ namespace TerraLeague.NPCs
                     Tile tile8 = new Tile();
                     tile7[num256, num257] = tile8;
                 }
-                if (Main.tile[num250, num251 - 1].liquid > 128)
+                if (NPC.type != NPCID.Arapaima && ((double)NPC.velocity.Y > 0.4 || (double)NPC.velocity.Y < -0.4))
                 {
-                    if (Main.tile[num250, num251 + 1].active())
-                    {
-                        npc.ai[0] = -1f;
-                    }
-                    else if (Main.tile[num250, num251 + 2].active())
-                    {
-                        npc.ai[0] = -1f;
-                    }
-                }
-                if (npc.type != NPCID.Arapaima && ((double)npc.velocity.Y > 0.4 || (double)npc.velocity.Y < -0.4))
-                {
-                    npc.velocity.Y *= 0.95f;
+                    NPC.velocity.Y *= 0.95f;
                 }
 
             }
-            npc.rotation = npc.direction * npc.velocity.Y * 0.1f;
+            NPC.rotation = NPC.direction * NPC.velocity.Y * 0.1f;
 
             base.AI();
         }
@@ -209,12 +200,12 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
             {
                 int count = 0;
-                while ((double)count < damage / (double)npc.lifeMax * 50.0)
+                while ((double)count < damage / (double)NPC.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                     count++;
@@ -224,34 +215,27 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }
 
-                Gore gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+                Gore gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y - 10f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_1>(), NPC.scale);
                 gore.velocity *= 0.3f;
-                gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_2"), npc.scale);
+                gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 15f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_2>(), NPC.scale);
                 gore.velocity *= 0.3f;
-                gore = Gore.NewGoreDirect(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_3"), npc.scale);
+                gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)NPC.height - 20f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_3>(), NPC.scale);
                 gore.velocity *= 0.3f;
             }
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
-
-            if (Main.rand.Next(0,100) > 1)
-            {
-                int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.SharkFin);
-                Main.item[item].color = new Color(100, 200, 150);
-            }
-            else
-                Item.NewItem(npc.position, npc.width, npc.height, ItemID.DivingHelmet, 1);
-
-            base.NPCLoot();
+            npcLoot.Add(ItemDropRule.Common(ItemType<DamnedSoul>(), 1));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SharkFin, 2));
+            npcLoot.Add(ItemDropRule.Common(ItemID.DivingHelmet, 50));
+            base.ModifyNPCLoot(npcLoot);
         }
     }
 }

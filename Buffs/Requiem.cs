@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Requiem : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Requiem");
             Description.SetDefault("This might hurt");

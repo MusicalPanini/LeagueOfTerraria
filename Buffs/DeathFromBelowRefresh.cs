@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class DeathFromBelowRefresh : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Death From Below");
             Description.SetDefault("Can cast Death From Below again for free");

@@ -19,15 +19,16 @@ namespace TerraLeague.Items.CompleteItems
                 "\n10% increased healing power" +
                 "\nIncreases ability haste by 10" +
                 "\nImmunity to Curse");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
 
             Active = new Purify(60);
             Passives = new Passive[]
@@ -45,15 +46,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Chalice>(), 1);
-            recipe.AddIngredient(ItemType<ForbiddenIdol>(), 1);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 10);
-            recipe.AddIngredient(ItemID.HellstoneBar, 4);
-            recipe.AddIngredient(ItemID.Nazar, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Chalice>(), 1)
+            .AddIngredient(ItemType<ForbiddenIdol>(), 1)
+            .AddRecipeGroup("TerraLeague:GoldGroup", 10)
+            .AddIngredient(ItemID.HellstoneBar, 4)
+            .AddIngredient(ItemID.Nazar, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override string GetStatText()

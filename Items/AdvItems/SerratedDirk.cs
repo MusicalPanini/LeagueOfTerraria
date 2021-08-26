@@ -13,40 +13,39 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Serrated Dirk");
             Tooltip.SetDefault("3% increased melee and ranged damage" +
                 "\nIncreases armor penetration by 5");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.03f;
-            player.rangedDamage += 0.03f;
+            player.GetDamage(DamageClass.Melee) += 0.03f;
+            player.GetDamage(DamageClass.Ranged) += 0.03f;
             player.armorPenetration += 5;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<LongSword>(), 2);
-            recipe.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe.AddIngredient(ItemID.GoldShortsword, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 2)
+            .AddIngredient(ItemID.SharkToothNecklace, 1)
+            .AddIngredient(ItemID.GoldShortsword, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
 
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(ItemType<LongSword>(), 2);
-            recipe2.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe2.AddIngredient(ItemID.PlatinumShortsword, 1);
-            recipe2.AddTile(TileID.Anvils);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<LongSword>(), 2)
+            .AddIngredient(ItemID.SharkToothNecklace, 1)
+            .AddIngredient(ItemID.PlatinumShortsword, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

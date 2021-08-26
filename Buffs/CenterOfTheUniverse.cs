@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class CenterOfTheUniverse : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Center of the Universe");
             Description.SetDefault("Stars are orbiting you!");

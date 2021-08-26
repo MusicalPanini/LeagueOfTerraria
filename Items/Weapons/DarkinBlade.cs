@@ -14,25 +14,26 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Darkin Blade");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 60;
-            item.width = 58;
-            item.height = 58;
-            item.melee = true;
-            item.useTime = 32;
-            item.useAnimation = 32;
-            item.scale = 1.3f;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 6;
-            item.value = 100000;
-            item.rare = ItemRarityID.LightRed;
-            item.autoReuse = true;
-            item.UseSound = SoundID.Item1;
+            Item.damage = 60;
+            Item.width = 58;
+            Item.height = 58;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 32;
+            Item.useAnimation = 32;
+            Item.scale = 1.3f;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 6;
+            Item.value = 100000;
+            Item.rare = ItemRarityID.LightRed;
+            Item.autoReuse = true;
+            Item.UseSound = SoundID.Item1;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new WorldEnder(this));
             abilityItem.ChampQuote = "I am oblivion, I am destruction... I am doom";
             abilityItem.IsAbilityItem = true;
@@ -40,13 +41,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.BreakerBlade, 1);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 20);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.BreakerBlade, 1)
+            .AddRecipeGroup("TerraLeague:DemonGroup", 20)
+            .AddIngredient(ItemID.SoulofNight, 10)
+            .AddTile(TileID.DemonAltar)
+            .Register();
+            
         }
     }
 }

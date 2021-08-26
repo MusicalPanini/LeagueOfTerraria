@@ -15,15 +15,16 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Maw of Malmortius");
             Tooltip.SetDefault("6% increased ranged damage" +
                 "\nIncreases resist by 5");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.LightPurple;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -32,22 +33,22 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.06f;
+            player.GetDamage(DamageClass.Ranged) += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Hexdrinker>(), 1);
-            recipe.AddIngredient(ItemType<Warhammer>(), 1);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 10);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddIngredient(ItemID.CrystalShard, 20);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Hexdrinker>(), 1)
+            .AddIngredient(ItemType<Warhammer>(), 1)
+            .AddIngredient(ItemType<SilversteelBar>(), 10)
+            .AddIngredient(ItemID.SoulofFright, 10)
+            .AddIngredient(ItemID.CrystalShard, 20)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
 
         public override string GetStatText()

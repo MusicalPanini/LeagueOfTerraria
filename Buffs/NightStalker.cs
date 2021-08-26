@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class NightStalker : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Night Stalker");
             Description.SetDefault("Your next melee attack will deal 3x damage!");

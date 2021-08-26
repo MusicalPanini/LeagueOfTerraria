@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class TideCallerBubbled : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bubbled");
             Description.SetDefault("Trapped in a giant bubble!");
@@ -17,7 +17,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            if(!npc.boss)
+            if(!Terraria.ID.NPCID.Sets.ShouldBeCountedAsBoss[npc.type])
             {
                 npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled = true;
             }

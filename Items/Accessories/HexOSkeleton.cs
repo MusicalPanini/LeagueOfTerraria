@@ -18,15 +18,16 @@ namespace TerraLeague.Items.Accessories
                 "\nYou are immune to fall damage" +
                 "\nPeriodically when you deal damage, cast 1 - 3 random magic spells that deal 50 magic damage.");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 26;
-            item.rare = ItemRarityID.Orange;
-            item.value = Item.buyPrice(0, 36, 0, 0);
-            item.accessory = true;
+            Item.width = 26;
+            Item.height = 26;
+            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.buyPrice(0, 36, 0, 0);
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -45,24 +46,23 @@ namespace TerraLeague.Items.Accessories
             player.jumpSpeedBoost += 4;
             player.jumpBoost = true;
 
-            player.doubleJumpCloud = true;
-            player.doubleJumpBlizzard = true;
-            player.doubleJumpSandstorm = true;
-            player.doubleJumpSail = true;
-            player.doubleJumpUnicorn = true;
-            player.doubleJumpFart = true;
+            player.hasJumpOption_Cloud = true;
+            player.hasJumpOption_Blizzard = true;
+            player.hasJumpOption_Sandstorm = true;
+            player.hasJumpOption_Sail = true;
+            player.hasJumpOption_Unicorn = true;
+            player.hasJumpOption_Fart = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<XrayGoggles>());
-            recipe.AddIngredient(ModContent.ItemType<PulseBoots>());
-            recipe.AddIngredient(ModContent.ItemType<FlashofBrilliance>());
-            recipe.AddIngredient(ModContent.ItemType<ExtendoGloves>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<XrayGoggles>())
+            .AddIngredient(ModContent.ItemType<PulseBoots>())
+            .AddIngredient(ModContent.ItemType<FlashofBrilliance>())
+            .AddIngredient(ModContent.ItemType<ExtendoGloves>())
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

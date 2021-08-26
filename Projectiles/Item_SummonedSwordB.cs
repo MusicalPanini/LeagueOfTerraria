@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using TerraLeague.NPCs;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,82 +16,82 @@ namespace TerraLeague.Projectiles
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             DisplayName.SetDefault("Summoned Sword");
-            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
-            projectile.alpha = 0;
-            projectile.timeLeft = 1200;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.minion = true;
-            projectile.scale = 1.5f;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 48;
+            Projectile.height = 48;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1200;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.scale = 1.5f;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
             
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
 
-            if (projectile.owner == Main.LocalPlayer.whoAmI)
+            if (Projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                Player player = Main.player[projectile.owner];
-                if ((int)projectile.ai[1] != -1)
+                Player player = Main.player[Projectile.owner];
+                if ((int)Projectile.ai[1] != -1)
                 {
-                    NPC targetNPC = Main.npc[(int)projectile.ai[1]];
+                    NPC targetNPC = Main.npc[(int)Projectile.ai[1]];
                     lastCenter = targetNPC.Center;
-                    projectile.ai[1] = -1;
+                    Projectile.ai[1] = -1;
                 }
 
-                double angle = projectile.ai[0];
+                double angle = Projectile.ai[0];
 
-                projectile.rotation = (float)angle + MathHelper.ToRadians(135);
+                Projectile.rotation = (float)angle + MathHelper.ToRadians(135);
 
-                if (projectile.timeLeft < 1170)
-                    projectile.localAI[0] += (1200 - projectile.timeLeft) / 25f;
+                if (Projectile.timeLeft < 1170)
+                    Projectile.localAI[0]  += (1200 - Projectile.timeLeft) / 25f;
 
-                Vector2 offset = new Vector2(200 + projectile.localAI[0], 0);
+                Vector2 offset = new Vector2(200 + Projectile.localAI[0] , 0);
 
-                projectile.ai[0] -= .06f;
-                projectile.Center = lastCenter + offset.RotatedBy(projectile.ai[0]);
+                Projectile.ai[0] -= .06f;
+                Projectile.Center = lastCenter + offset.RotatedBy(Projectile.ai[0]);
 
-                if (projectile.localAI[0] > 700)
+                if (Projectile.localAI[0]  > 700)
                 {
-                    if (projectile.alpha > 250)
-                        projectile.Kill();
-                    projectile.alpha += 12;
+                    if (Projectile.alpha > 250)
+                        Projectile.Kill();
+                    Projectile.alpha += 12;
                 }
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.ViciousPowder, 0f, 0f, 100, default, 1);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.CorruptPlants, 0f, 0f, 100, default, 1);
             dust.noGravity = true;
-            Lighting.AddLight(projectile.position, 1f, 0.5f, 0.05f);
+            Lighting.AddLight(Projectile.position, 1f, 0.5f, 0.05f);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 10;
+            target.immune[Projectile.owner] = 10;
             base.OnHitNPC(target, damage, knockback, false);
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int k = 0; k < projectile.oldPos.Length; k++)
+            Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
             return true;
         }

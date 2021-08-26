@@ -9,9 +9,9 @@ namespace TerraLeague.Tiles
 {
     public class SunstoneOre : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            soundType = SoundID.Tink;
+            SoundType = SoundID.Tink;
 
             Main.tileSolid[Type] = true;
             Main.tileMerge[TileID.Sandstone][Type] = true;
@@ -20,17 +20,17 @@ namespace TerraLeague.Tiles
             Main.tileLighted[Type] = true; 
             Main.tileBlockLight[Type] = true; 
             
-            dustType = DustID.YellowTorch;
-            drop = ItemType<Sunstone>(); 
+            DustType = DustID.YellowTorch;
+            ItemDrop = ItemType<Sunstone>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Sunstone");
             AddMapEntry(new Color(251, 127, 0), name);
-            minPick = 45;
+            MinPick = 45;
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            dustType = DustID.YellowTorch;
+            DustType = DustID.YellowTorch;
             r = 251/255f/5f;
             g = 127/255f/5f;
             b = 0;

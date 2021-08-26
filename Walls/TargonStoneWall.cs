@@ -11,7 +11,7 @@ namespace TerraLeague.Walls
 {
     public class TargonStoneWall : ModWall
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
             AddMapEntry(new Color(120, 119, 110));

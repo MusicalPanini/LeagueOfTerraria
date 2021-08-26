@@ -110,7 +110,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void Efx(Player user, NPC effectedNPC)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 38).WithVolume(1.2f), effectedNPC.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 38).WithVolume(1.2f), effectedNPC.position);
             for (int i = 0; i < 10; i++)
             {
                 Dust.NewDustDirect(effectedNPC.position, effectedNPC.width, effectedNPC.height, DustID.Blood, 0, 0, 0, new Color(255, 0, 0, 150), 1.5f);

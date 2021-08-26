@@ -20,10 +20,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Revive Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Revive";
+            return "TerraLeague/Items/SummonerSpells/Revive";
         }
 
         public override string GetSpellName()
@@ -54,7 +55,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29), player.Center);
 
             Color color = new Color(68, 253, 180, 0);
 

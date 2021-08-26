@@ -10,9 +10,9 @@ namespace TerraLeague.Tiles
     {
         bool pulse = false;
         float bLast = 0.3f;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            soundType = SoundID.Tink;
+            SoundType = SoundID.Tink;
 
             Main.tileSolid[Type] = true; 
             Main.tileMergeDirt[Type] = true;
@@ -20,17 +20,17 @@ namespace TerraLeague.Tiles
             Main.tileLighted[Type] = true;
             Main.tileBlockLight[Type] = true; 
             
-            dustType = DustID.DemonTorch;
-            drop = ItemType<Items.VoidFragment>(); 
+            DustType = DustID.DemonTorch;
+            ItemDrop = ItemType<Items.VoidFragment>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Void Matter");
             AddMapEntry(new Color(255, 0, 255), name); 
-            minPick = 65;
+            MinPick = 65;
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            dustType = DustID.DemonTorch;
+            DustType = DustID.DemonTorch;
             r = bLast;
             g = 0.0f;
             b = bLast;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using TerraLeague.Gores;
 using TerraLeague.Items.PetrifiedWood;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -22,7 +23,7 @@ namespace TerraLeague.Tiles
 
         public override int GrowthFXGore()
         {
-            return mod.GetGoreSlot("Gores/PetLeaf");
+            return GoreType<PetLeaf>();
         }
 
         public override int DropWood()
@@ -32,17 +33,17 @@ namespace TerraLeague.Tiles
 
         public override Texture2D GetTexture()
         {
-            return mod.GetTexture("Tiles/PetTree");
+            return ModContent.Request<Texture2D>("TerraLeague/Tiles/PetTree").Value;
         }
 
         public override Texture2D GetTopTextures(int i, int j, ref int frame, ref int frameWidth, ref int frameHeight, ref int xOffsetLeft, ref int yOffset)
         {
-            return mod.GetTexture("Tiles/PetTree_Tops");
+            return ModContent.Request<Texture2D>("TerraLeague/Tiles/PetTree_Tops").Value;
         }
 
         public override Texture2D GetBranchTextures(int i, int j, int trunkOffset, ref int frame)
         {
-            return mod.GetTexture("Tiles/PetTree_Branches");
+            return ModContent.Request<Texture2D>("TerraLeague/Tiles/PetTree_Branches").Value;
         }
     }
 }

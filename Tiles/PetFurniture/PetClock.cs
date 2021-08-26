@@ -10,30 +10,27 @@ namespace TerraLeague.Tiles.PetFurniture
 {
     public class PetClock : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            dustType = DustID.Ghost;
-
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;
+            TileID.Sets.Clock[Type] = true;
+
+            DustType = DustID.Cloud;
+            AdjTiles = new int[] { TileID.GrandfatherClocks };
+
+            // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = 5;
-            TileObjectData.newTile.CoordinateHeights = new[]
-            {
-                16,
-                16,
-                16,
-                16,
-                18
-            };
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            AddMapEntry(new Color(200, 200, 200), name);
-            adjTiles = new int[] { TileID.GrandfatherClocks };
+
+            
+            AddMapEntry(new Color(200, 200, 200), CreateMapEntryName());
         }
 
-        public override bool NewRightClick(int i, int j)
+        public override bool RightClick(int i, int j)
         {
             string text = "AM";
             double time = Main.time;
@@ -57,14 +54,14 @@ namespace TerraLeague.Tiles.PetFurniture
                 intTime = 12;
             var newText = string.Concat("Time: ", intTime, ":", text2, " ", text);
             Main.NewText(newText, 255, 240, 20);
-            return base.NewRightClick(i, j);
+            return base.RightClick(i, j);
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
             if (closer)
             {
-                Main.clock = true;
+                //Main.clock = true;
             }
         }
 

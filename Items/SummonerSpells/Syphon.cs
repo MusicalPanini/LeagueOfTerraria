@@ -14,11 +14,12 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Syphon Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Syphon";
+            return "TerraLeague/Items/SummonerSpells/Syphon";
         }
 
         public override string GetSpellName()
@@ -59,10 +60,10 @@ namespace TerraLeague.Items.SummonerSpells
 
             if (npcs.Count != 0)
             {
-                Projectile.NewProjectileDirect(player.MountedCenter, Vector2.Zero, ProjectileType<Summoner_SyphonVisuals>(), 0, 0, player.whoAmI);
+                Projectile.NewProjectileDirect(player.GetProjectileSource_Item(Item), player.MountedCenter, Vector2.Zero, ProjectileType<Summoner_SyphonVisuals>(), 0, 0, player.whoAmI);
                 for (int i = 0; i < npcs.Count; i++)
                 {
-                    Projectile.NewProjectile(Main.npc[npcs[i]].Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, npcs[i]);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(Item), Main.npc[npcs[i]].Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, npcs[i]);
                     SetCooldowns(player, spellSlot);
                 }
             }

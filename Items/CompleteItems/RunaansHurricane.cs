@@ -17,15 +17,16 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("15% increased ranged attack speed" +
                 "\n8% increased ranged critical strike chance" +
                 "\n7% increased movement speed");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 36;
-            item.value = Item.buyPrice(0, 45, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
+            Item.width = 28;
+            Item.height = 36;
+            Item.value = Item.buyPrice(0, 45, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -34,7 +35,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedCrit += 8;
+            player.GetCritChance(DamageClass.Ranged) += 8;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.15;
             player.moveSpeed += 0.07f;
 
@@ -43,16 +44,15 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Dagger>(), 2);
-            recipe.AddIngredient(ItemType<Zeal>(), 1);
-            recipe.AddIngredient(ItemID.MoltenFury, 1);
-            recipe.AddRecipeGroup("TerraLeague:Tier1Bar", 10);
-            recipe.AddIngredient(ItemID.SoulofSight, 5);
-            recipe.AddIngredient(ItemID.SoulofLight, 6);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<Dagger>(), 2)
+            .AddIngredient(ItemType<Zeal>(), 1)
+            .AddIngredient(ItemID.MoltenFury, 1)
+            .AddRecipeGroup("TerraLeague:Tier1Bar", 10)
+            .AddIngredient(ItemID.SoulofSight, 5)
+            .AddIngredient(ItemID.SoulofLight, 6)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

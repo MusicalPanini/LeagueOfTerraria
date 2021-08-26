@@ -12,86 +12,64 @@ using Terraria.Graphics;
 using System.Collections.Generic;
 using TerraLeague.Items.Weapons;
 using TerraLeague.Items.Weapons.Abilities;
+using TerraLeague.Common.ModSystems;
 
 namespace TerraLeague.UI
 {
     internal class AbilityUI : UIState
     {
-        PLAYERGLOBAL modPlayer;
-        public UIElement MainPanel;
-        Texture2D _backgroundTexture;
+        public AbilityPanel AbilityPanel;
         public static bool visible = true;
-        AbilitySlotUI abilityPanel1;
-        AbilitySlotUI abilityPanel2;
-        AbilitySlotUI abilityPanel3;
-        AbilitySlotUI abilityPanel4;
-        readonly UIText toolTip = new UIText("", 1);
 
         public override void OnInitialize()
         {
-            if (_backgroundTexture == null)
-                _backgroundTexture = TerraLeague.instance.GetTexture("UI/AbilityBackground");
-            MainPanel = new UIElement();
-            MainPanel.SetPadding(0);
-            MainPanel.Width.Set(195, 0f);
-            MainPanel.Height.Set(54, 0f);
-            MainPanel.Left.Set(Main.screenWidth / 2 - MainPanel.Width.Pixels / 2, 0f);
-            MainPanel.Top.Set(Main.screenHeight - (MainPanel.Height.Pixels + 44), 0f);
+            AbilityPanel = new AbilityPanel();
+            Append(AbilityPanel);
 
-            int abilityboxsize = 44;
-
-            abilityPanel1 = new AbilitySlotUI(5, 5, abilityboxsize, AbilityType.Q);
-            abilityPanel2 = new AbilitySlotUI(52, 5, abilityboxsize, AbilityType.W);
-            abilityPanel3 = new AbilitySlotUI(99, 5, abilityboxsize, AbilityType.E);
-            abilityPanel4 = new AbilitySlotUI(146, 5, abilityboxsize, AbilityType.R);
-
-            toolTip.Left.Set(0, 0);
-            toolTip.Top.Set(0, 0);
-            toolTip.Width.Set(500, 0);
-            toolTip.Top.Set(0, 0);
-
-            MainPanel.Append(abilityPanel1);
-            MainPanel.Append(abilityPanel2);
-            MainPanel.Append(abilityPanel3);
-            MainPanel.Append(abilityPanel4);
-            MainPanel.Append(toolTip);
-
-            base.Append(MainPanel);
             Recalculate();
+        }
+    }
+
+    public class AbilityPanel : UIMoveable
+    {
+        public override UIAnchor Anchor => Config.abilityUIAnchor;
+        public override ref int GetXOffset => ref Config.abilityUIXOffset;
+        public override ref int GetYOffset => ref Config.abilityUIYOffset;
+
+        int abilityMargin { get { return 3; } }
+        int panelPaddingLeft { get { return 2; } }
+        int panelPaddingTop { get { return 5; } }
+        int abilityDimention { get { return 44; } }
+        int abilityWidth { get { return (abilityMargin * 2) + abilityDimention; } }
+
+        AbilitySlotUI[] abilitySlots = new AbilitySlotUI[4];
+
+        public override void OnInitialize()
+        {
+            for (int i = 0; i < abilitySlots.Length; i++)
+            {
+                abilitySlots[i] = new AbilitySlotUI(abilityWidth * i, 0, abilityDimention, (AbilityType)i);
+                Append(abilitySlots[i]);
+            }
+
+            Width.Set((abilityWidth + abilitySlots.Length), 0);
+            Height.Set(abilityWidth, 0);
+
+            base.OnInitialize();
         }
 
         public override void Update(GameTime gameTime)
         {
-            MainPanel.Top.Set(Main.screenHeight - (MainPanel.Height.Pixels + 44), 0f);
-            MainPanel.Left.Set((Main.screenWidth / 2) - (MainPanel.Width.Pixels / 2), 0f);
+            Width.Set((abilityWidth * abilitySlots.Length), 0);
+            Height.Set(abilityWidth, 0);
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            for (int i = 0; i < abilitySlots.Length; i++)
+            {
+                if (abilitySlots[i].IsMouseHovering)
+                    SetToolTip(modPlayer.Abilities[i], abilitySlots[i].abilityType);
+            }
 
-            modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-
-            if (abilityPanel1.IsMouseHovering)
-                SetToolTip(modPlayer.Abilities[0], AbilityType.Q);
-            else if (abilityPanel2.IsMouseHovering)
-                SetToolTip(modPlayer.Abilities[1], AbilityType.W);
-            else if (abilityPanel3.IsMouseHovering)
-                SetToolTip(modPlayer.Abilities[2], AbilityType.E);
-            else if (abilityPanel4.IsMouseHovering)
-                SetToolTip(modPlayer.Abilities[3], AbilityType.R);
-            else
-                toolTip.SetText("");
-
-            Recalculate();
-            RecalculateChildren();
             base.Update(gameTime);
-        }
-
-        protected override void DrawSelf(SpriteBatch spriteBatch)
-        {
-            CalculatedStyle dimensions = MainPanel.GetDimensions();
-            Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
-            int width = (int)Math.Ceiling(dimensions.Width);
-            int height = (int)Math.Ceiling(dimensions.Height);
-            spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
-
-            base.DrawSelf(spriteBatch);
         }
 
         void SetToolTip(Ability ability, AbilityType type)
@@ -107,17 +85,20 @@ namespace TerraLeague.UI
                 tooltip.AddRange(ability.GetAbilityTooltip().Split('\n'));
                 tooltip.Add(ability.GetCooldown() + " second cooldown");
 
-                TerraLeague.instance.tooltipUI.DrawText(tooltip.ToArray());
+                ToolTipUI.SetText(tooltip.ToArray());
             }
         }
     }
 
     public class AbilitySlotUI : UIElement
     {
-        readonly Texture2D nullImage;
-        readonly Texture2D clear;
-        readonly Texture2D _backgroundTexture;
-        readonly AbilityType abilityType;
+        Texture2D nullImage;
+        Texture2D texture_clear;
+        Texture2D texture_specialCast;
+        Texture2D texture_oom;
+        Texture2D texture_cantCast;
+        Texture2D texture_background;
+        readonly public AbilityType abilityType;
         readonly UIText slotNum;
         readonly UIText slotMana;
         readonly UIText slotCD;
@@ -127,12 +108,9 @@ namespace TerraLeague.UI
 
         public AbilitySlotUI(int left, int top, int length, AbilityType type)
         {
-            if (_backgroundTexture == null)
-                _backgroundTexture = TerraLeague.instance.GetTexture("UI/AbilityBorder");
-
             abilityType = type;
-            nullImage = TerraLeague.instance.GetTexture("AbilityImages/Template");
-            clear = TerraLeague.instance.GetTexture("AbilityImages/Clear");
+            nullImage = ModContent.Request<Texture2D>("TerraLeague/AbilityImages/Template").Value;
+            texture_clear = ModContent.Request<Texture2D>("TerraLeague/AbilityImages/Clear").Value;
 
             Left.Set(left, 0);
             Top.Set(top, 0);
@@ -140,17 +118,17 @@ namespace TerraLeague.UI
             Height.Set(length, 0);
 
             slotIcon = new UIImage(nullImage);
-            slotIcon.Left.Pixels = 5.5f;
+            slotIcon.Left.Pixels = 6f;
             slotIcon.Top.Pixels = 6;
             Append(slotIcon);
 
-            slotOOM = new UIImage(clear);
-            slotOOM.Left.Pixels = 5.5f;
+            slotOOM = new UIImage(texture_clear);
+            slotOOM.Left.Pixels = 6f;
             slotOOM.Top.Pixels = 6;
             Append(slotOOM);
 
-            slotSpecialCast = new UIImage(clear);
-            slotSpecialCast.Left.Pixels = 5.5f;
+            slotSpecialCast = new UIImage(texture_clear);
+            slotSpecialCast.Left.Pixels = 6f;
             slotSpecialCast.Top.Pixels = 6;
             Append(slotSpecialCast);
 
@@ -183,8 +161,8 @@ namespace TerraLeague.UI
             else
             {
                 slotIcon.SetImage(nullImage);
-                slotOOM.SetImage(clear);
-                slotSpecialCast.SetImage(clear);
+                slotOOM.SetImage(texture_clear);
+                slotSpecialCast.SetImage(texture_clear);
                 slotIcon.ImageScale = 0;
                 slotMana.SetText("");
             }
@@ -194,11 +172,20 @@ namespace TerraLeague.UI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            TerraLeague.GetTextureIfNull(ref texture_background, "TerraLeague/UI/AbilityBorder");
+            TerraLeague.GetTextureIfNull(ref nullImage, "TerraLeague/AbilityImages/Template");
+            TerraLeague.GetTextureIfNull(ref texture_specialCast, "TerraLeague/AbilityImages/SpecialCast");
+            TerraLeague.GetTextureIfNull(ref texture_oom, "TerraLeague/AbilityImages/OOM");
+            TerraLeague.GetTextureIfNull(ref texture_cantCast, "TerraLeague/AbilityImages/CantCast");
+            TerraLeague.GetTextureIfNull(ref texture_clear, "TerraLeague/AbilityImages/Clear");
+
             CalculatedStyle dimensions = GetDimensions();
             Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
             int width = (int)Math.Ceiling(dimensions.Width);
             int height = (int)Math.Ceiling(dimensions.Height);
-            spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+            Main.spriteBatch.Draw(texture_background, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+
+            
 
             string slotNumText = "N/A";
             switch (abilityType)
@@ -233,16 +220,16 @@ namespace TerraLeague.UI
                 slotIcon.SetImage(GetImage(abilityType));
 
                 if (modPlayer.Abilities[(int)abilityType].GetScaledManaCost() > Main.LocalPlayer.statMana)
-                    slotOOM.SetImage(TerraLeague.instance.GetTexture("AbilityImages/OOM"));
+                    slotOOM.SetImage(texture_oom);
                 else if(!Ability.CheckIfNotOnCooldown(Main.LocalPlayer, abilityType) || !modPlayer.Abilities[(int)abilityType].CanCurrentlyBeCast(Main.LocalPlayer))
-                    slotOOM.SetImage(TerraLeague.instance.GetTexture("AbilityImages/CantCast"));
+                    slotOOM.SetImage(texture_cantCast);
                 else
-                    slotOOM.SetImage(TerraLeague.instance.GetTexture("AbilityImages/Clear"));
+                    slotOOM.SetImage(texture_clear);
 
                 if (modPlayer.Abilities[(int)abilityType].CurrentlyHasSpecialCast(Main.LocalPlayer))
-                    slotSpecialCast.SetImage(TerraLeague.instance.GetTexture("AbilityImages/SpecialCast"));
+                    slotSpecialCast.SetImage(texture_specialCast);
                 else
-                    slotSpecialCast.SetImage(clear);
+                    slotSpecialCast.SetImage(texture_clear);
 
 
                 slotMana.SetText(GetCost(abilityType));
@@ -251,8 +238,8 @@ namespace TerraLeague.UI
             else
             {
                 slotIcon.SetImage(nullImage);
-                slotOOM.SetImage(clear);
-                slotSpecialCast.SetImage(clear);
+                slotOOM.SetImage(texture_clear);
+                slotSpecialCast.SetImage(texture_clear);
                 slotIcon.ImageScale = 0;
                 slotMana.SetText("");
             }
@@ -283,11 +270,11 @@ namespace TerraLeague.UI
 
             try
             {
-                return TerraLeague.instance.GetTexture(modPlayer.Abilities[(int)type].GetIconTexturePath());
+                return ModContent.Request<Texture2D>(modPlayer.Abilities[(int)type].GetIconTexturePath()).Value;
             }
             catch (Exception)
             {
-                return TerraLeague.instance.GetTexture("AbilityImages/Template");
+                return ModContent.Request<Texture2D>("TerraLeague/AbilityImages/Template").Value;
             }
         }
 

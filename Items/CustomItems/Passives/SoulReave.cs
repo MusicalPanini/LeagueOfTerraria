@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
         {
-            if (proj.ranged && crit && player.statMana != player.statManaMax2)
+            if (proj.DamageType == DamageClass.Ranged && crit && player.statMana != player.statManaMax2)
             {
                 int mana = (int)((player.statManaMax2 - player.statMana) * (manaRestore * 0.01));
 

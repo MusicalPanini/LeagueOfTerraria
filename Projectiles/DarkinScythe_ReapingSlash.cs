@@ -16,65 +16,65 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 54;
-            projectile.height = 60;
-            projectile.alpha = 0;
-            projectile.timeLeft = 27;
-            projectile.penetrate = 1000;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().playerInvincible = true;
+            Projectile.width = 54;
+            Projectile.height = 60;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 27;
+            Projectile.penetrate = 1000;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().playerInvincible = true;
             base.SetDefaults();
         }
         
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             player.GetModPlayer<PLAYERGLOBAL>().invincible = true;
 
-            if (projectile.soundDelay == 0)
+            if (Projectile.soundDelay == 0)
             {
                 player.ChangeDir(player.velocity.X > 0 ? 1 : -1);
-                projectile.spriteDirection = player.direction;
+                Projectile.spriteDirection = player.direction;
 
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 71, -1f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 71, -1f);
             }
-            projectile.soundDelay = 100;
+            Projectile.soundDelay = 100;
 
-            player.direction = projectile.spriteDirection;
+            player.direction = Projectile.spriteDirection;
 
-            if (projectile.timeLeft <= 26)
+            if (Projectile.timeLeft <= 26)
             {
-                projectile.friendly = true;
-                if (projectile.ai[0] == 1)
+                Projectile.friendly = true;
+                if (Projectile.ai[0] == 1)
                 {
-                    projectile.rotation += (2 * MathHelper.Pi) / 15;
-                    projectile.Center = Main.player[projectile.owner].Center + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
+                    Projectile.rotation += (2 * MathHelper.Pi) / 15;
+                    Projectile.Center = Main.player[Projectile.owner].Center + new Vector2(33f, 40.5f).RotatedBy(Projectile.rotation);
                 }
                 else
                 {
-                    projectile.spriteDirection = -1;
-                    projectile.rotation -= (2 * MathHelper.Pi) / 15;
-                    projectile.Center = Main.player[projectile.owner].Center - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
+                    Projectile.spriteDirection = -1;
+                    Projectile.rotation -= (2 * MathHelper.Pi) / 15;
+                    Projectile.Center = Main.player[Projectile.owner].Center - new Vector2(33f, -40.5f).RotatedBy(Projectile.rotation);
                 }
             }
             else
             {
-                if (projectile.ai[0] == 1)
+                if (Projectile.ai[0] == 1)
                 {
-                    projectile.rotation -= (2 * MathHelper.Pi) / 90;
-                    projectile.Center = Main.player[projectile.owner].Center + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
+                    Projectile.rotation -= (2 * MathHelper.Pi) / 90;
+                    Projectile.Center = Main.player[Projectile.owner].Center + new Vector2(33f, 40.5f).RotatedBy(Projectile.rotation);
                 }
                 else
                 {
-                    projectile.spriteDirection = -1;
-                    projectile.rotation += (2 * MathHelper.Pi) / 90;
-                    projectile.Center = Main.player[projectile.owner].Center - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
+                    Projectile.spriteDirection = -1;
+                    Projectile.rotation += (2 * MathHelper.Pi) / 90;
+                    Projectile.Center = Main.player[Projectile.owner].Center - new Vector2(33f, -40.5f).RotatedBy(Projectile.rotation);
                 }
             }
 
@@ -83,7 +83,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            PLAYERGLOBAL player = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
+            PLAYERGLOBAL player = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>();
 
             target.AddBuff(BuffType<UmbralTrespass>(), 300);
 

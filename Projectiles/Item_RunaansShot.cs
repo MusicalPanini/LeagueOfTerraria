@@ -16,31 +16,31 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.alpha = 255;
-            projectile.timeLeft = 900;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.extraUpdates = 12;
-            projectile.alpha = 255;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 900;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.extraUpdates = 12;
+            Projectile.alpha = 255;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.position, 0.5f, 0.45f, 0.30f);
+            Lighting.AddLight(Projectile.position, 0.5f, 0.45f, 0.30f);
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 204, Vector2.Zero, 0, default, 0.75f);
+            Dust dust = Dust.NewDustPerfect(Projectile.position, 204, Vector2.Zero, 0, default, 0.75f);
             dust.noGravity = true;
             dust.alpha = 100;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 
@@ -50,7 +50,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)projectile.ai[0] != target.whoAmI)
+            if ((int)Projectile.ai[0] != target.whoAmI)
                 return base.CanHitNPC(target);
             else
                 return false;

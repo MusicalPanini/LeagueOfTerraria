@@ -12,10 +12,9 @@ namespace TerraLeague.Tiles.PetFurniture
 {
     public class PetDoorClosed : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            dustType = DustID.Ghost;
-
+            // Properties
             Main.tileFrameImportant[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileSolid[Type] = true;
@@ -24,6 +23,20 @@ namespace TerraLeague.Tiles.PetFurniture
             TileID.Sets.NotReallySolid[Type] = true;
             TileID.Sets.DrawsWalls[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+
+            DustType = DustID.Cloud;
+            AdjTiles = new int[] { TileID.ClosedDoor };
+            OpenDoorID = TileType<PetDoor>();
+
+            // Names
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Petrified Wood Door");
+            AddMapEntry(new Color(200, 200, 200), name);
+
+            // Placement
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.Origin = new Point16(0, 0);
@@ -41,13 +54,6 @@ namespace TerraLeague.Tiles.PetFurniture
             TileObjectData.newAlternate.Origin = new Point16(0, 2);
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Petrified Wood Door");
-            AddMapEntry(new Color(200, 200, 200), name);
-            disableSmartCursor = true;
-            adjTiles = new int[] { TileID.ClosedDoor };
-            openDoorID = TileType<PetDoor>();
         }
 
         public override bool HasSmartInteract()
@@ -64,8 +70,8 @@ namespace TerraLeague.Tiles.PetFurniture
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
-            player.showItemIcon = true;
-            player.showItemIcon2 = ItemType<PetDoorItem>();
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ItemType<PetDoorItem>();
         }
     }
 }

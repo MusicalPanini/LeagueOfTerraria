@@ -8,11 +8,11 @@ namespace TerraLeague.Buffs
     public class CelestialExpansion : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Celestial Expansion");
             Description.SetDefault("Expanding your horizon!" +
-                "\nMinion damage has been increased!");
+                "\nsummon damage has been increased!");
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
 

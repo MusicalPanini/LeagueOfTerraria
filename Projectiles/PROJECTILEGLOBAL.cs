@@ -29,8 +29,8 @@ namespace TerraLeague.Projectiles
         public override void SetDefaults(Projectile projectile)
         {
             int type = projectile.type;
-            if (type == 195 || type == 433 || type == 374 || type == 376 || type == 389 || type == 408 || type == 379 || type == 309 || type == 642 || type == 644 || type == 680 || type == 664 || type == 666 || type == 668 || type == 694 || type == 695 || type == 696)
-                projectile.minion = true;
+            //if (type == 195 || type == 433 || type == 374 || type == 376 || type == 389 || type == 408 || type == 379 || type == 309 || type == 642 || type == 644 || type == 680 || type == 664 || type == 666 || type == 668 || type == 694 || type == 695 || type == 696)
+            //    projectile.minion = true;
 
             base.SetDefaults(projectile);
         }
@@ -39,7 +39,7 @@ namespace TerraLeague.Projectiles
         {
             PLAYERGLOBAL modPlayer = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
 
-            if (modPlayer.pirateSet  && !target.immortal && !target.SpawnedFromStatue && target.lifeMax > 5 && projectile.ranged)
+            if (modPlayer.pirateSet  && !target.immortal && !target.SpawnedFromStatue && target.lifeMax > 5 && projectile.DamageType == DamageClass.Ranged)
             {
                 if(Main.rand.Next(0, 5) == 0)
                     Item.NewItem(target.getRect(), ItemID.CopperCoin);
@@ -98,13 +98,19 @@ namespace TerraLeague.Projectiles
                 return base.CanHitPlayer(projectile, target);
         }
 
+        public override bool TileCollideStyle(Projectile projectile, ref int width, ref int height, ref bool fallThrough)
+        {
+
+            return base.TileCollideStyle(projectile, ref width, ref height, ref fallThrough);
+        }
+
         public void SyncProjectileKill(Projectile projectile)
         {
             if (Main.LocalPlayer.whoAmI != projectile.whoAmI)
             {
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
-                    if (Main.npc[i].active && ((projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().CanHitNPC(projectile, Main.npc[i]) != null && projectile.CanHit(Main.npc[i])) || projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().CanHitNPC(projectile, Main.npc[i]) == true))
+                    if (Main.npc[i].active && ((projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().CanHitNPC(projectile, Main.npc[i]) != null && projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().CanHitNPC(projectile, Main.npc[i]) == true)))
                     {
                         if (projectile.Hitbox.Intersects(Main.npc[i].Hitbox))
                             projectile.Kill();

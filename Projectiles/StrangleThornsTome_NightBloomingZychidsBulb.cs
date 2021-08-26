@@ -15,38 +15,38 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Night Blooming Zychids Bulb");
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 36;
-            projectile.height = 34;
-            projectile.timeLeft = 3600;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.minion = true;
-            projectile.scale = 0;
+            Projectile.width = 36;
+            Projectile.height = 34;
+            Projectile.timeLeft = 3600;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.minion = true;
+            Projectile.scale = 0;
         }
 
         public override void AI()
         {
-            projectile.rotation = 0;
+            Projectile.rotation = 0;
             AnimateProjectile();
             if (!grounded)
             {
                 grounded = true;
-                projectile.velocity.Y = 0f;
+                Projectile.velocity.Y = 0f;
             }
             else
             {
-                if (projectile.scale < 1)
+                if (Projectile.scale < 1)
                 {
-                    projectile.scale += 0.05f;
-                    projectile.position.Y -= 34 * 0.05f;
+                    Projectile.scale += 0.05f;
+                    Projectile.position.Y -= 34 * 0.05f;
                 }
 
-                projectile.velocity = Vector2.Zero;
+                Projectile.velocity = Vector2.Zero;
             }
 
             base.AI();
@@ -72,7 +72,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.velocity.Y <= 0)
+            if (Projectile.velocity.Y <= 0)
             {
                 grounded = true;
             }
@@ -83,12 +83,12 @@ namespace TerraLeague.Projectiles
         
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 20)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 20)
             {
-                projectile.frame++;
-                projectile.frame %= 4;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
             }
         }
     }

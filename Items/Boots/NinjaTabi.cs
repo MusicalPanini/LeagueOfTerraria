@@ -12,13 +12,14 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Plated Steelcaps");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 22;
-            item.accessory = true;
+            Item.width = 26;
+            Item.height = 22;
+            Item.accessory = true;
             base.SetDefaults();
         }
 
@@ -85,12 +86,12 @@ namespace TerraLeague.Items.Boots
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BootsOfSpeed>());
-            recipe.AddIngredient(ItemType<ClothArmor>());
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BootsOfSpeed>())
+            .AddIngredient(ItemType<ClothArmor>())
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
     }
 }

@@ -12,13 +12,14 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Boots of Swiftness");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 26;
-            item.accessory = true;
+            Item.width = 30;
+            Item.height = 26;
+            Item.accessory = true;
             base.SetDefaults();
         }
 
@@ -85,12 +86,12 @@ namespace TerraLeague.Items.Boots
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BootsOfSpeed>());
-            recipe.AddIngredient(ItemID.SwiftnessPotion, 3);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BootsOfSpeed>())
+            .AddIngredient(ItemID.SwiftnessPotion, 3)
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
     }
 }

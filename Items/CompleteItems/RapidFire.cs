@@ -17,15 +17,16 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("20% increased ranged attack speed" +
                 "\n10% increased ranged critical strike chance" +
                 "\n10% increased movement speed");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 80, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 80, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -36,7 +37,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedCrit += 10;
+            player.GetCritChance(DamageClass.Ranged) += 10;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.2;
             player.moveSpeed += 0.10f;
 
@@ -45,15 +46,14 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<KircheisShard>(), 1);
-            recipe.AddIngredient(ItemType<Zeal>(), 1);
-            recipe.AddIngredient(ItemID.Cannon, 1);
-            recipe.AddIngredient(ItemID.RocketLauncher, 1);
-            recipe.AddIngredient(ItemID.FragmentVortex, 10);
-            recipe.AddTile(TileID.LunarCraftingStation);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<KircheisShard>(), 1)
+            .AddIngredient(ItemType<Zeal>(), 1)
+            .AddIngredient(ItemID.Cannon, 1)
+            .AddIngredient(ItemID.RocketLauncher, 1)
+            .AddIngredient(ItemID.FragmentVortex, 10)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
         }
 
         public override string GetStatText()

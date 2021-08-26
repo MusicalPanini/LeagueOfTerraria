@@ -15,47 +15,46 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = false;
-            projectile.minion = true;
-            projectile.scale = 2f;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = false;
+            Projectile.scale = 2f;
             base.SetDefaults();
         }
 
         public override void AI()
         {
-            projectile.tileCollide = false;
-            projectile.ai[1] += 1f;
-            if (projectile.ai[1] > 7*60f)
+            Projectile.tileCollide = false;
+            Projectile.ai[1] += 1f;
+            if (Projectile.ai[1] > 7*60f)
             {
-                projectile.alpha += 10;
+                Projectile.alpha += 10;
             }
-            if (projectile.alpha >= 255)
+            if (Projectile.alpha >= 255)
             {
-                projectile.Kill();
-                projectile.alpha = 255;
+                Projectile.Kill();
+                Projectile.alpha = 255;
             }
 
-            projectile.rotation += projectile.velocity.X * 0.1f;
-            projectile.rotation += (float)projectile.direction * 0.003f;
-            projectile.velocity *= 0.96f;
-            Rectangle projectileHitBox = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
+            Projectile.rotation += Projectile.velocity.X * 0.1f;
+            Projectile.rotation += (float)Projectile.direction * 0.003f;
+            Projectile.velocity *= 0.96f;
+            Rectangle projectileHitBox = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
             for (int i = 0; i < 1000; i++)
             {
-                if (i != projectile.whoAmI && Main.projectile[i].active && Main.projectile[i].type == projectile.type)
+                if (i != Projectile.whoAmI && Main.projectile[i].active && Main.projectile[i].type == Projectile.type)
                 {
                     Rectangle targetHitBox = new Rectangle((int)Main.projectile[i].position.X, (int)Main.projectile[i].position.Y, Main.projectile[i].width, Main.projectile[i].height);
                     if (projectileHitBox.Intersects(targetHitBox))
                     {
-                        Vector2 vector77 = Main.projectile[i].Center - projectile.Center;
+                        Vector2 vector77 = Main.projectile[i].Center - Projectile.Center;
                         if (vector77.X == 0f && vector77.Y == 0f)
                         {
-                            if (i < projectile.whoAmI)
+                            if (i < Projectile.whoAmI)
                             {
                                 vector77.X = -1f;
                                 vector77.Y = 1f;
@@ -68,15 +67,15 @@ namespace TerraLeague.Projectiles
                         }
                         vector77.Normalize();
                         vector77 *= 0.005f;
-                        projectile.velocity -= vector77;
+                        Projectile.velocity -= vector77;
                         Projectile projectile2 = Main.projectile[i];
                         projectile2.velocity += vector77;
                     }
                 }
             }
 
-            Player player = Main.player[projectile.owner];
-            if (projectile.Hitbox.Intersects(player.Hitbox))
+            Player player = Main.player[Projectile.owner];
+            if (Projectile.Hitbox.Intersects(player.Hitbox))
             {
                 player.AddBuff(BuffType<Shrouded>(), 2);
             }

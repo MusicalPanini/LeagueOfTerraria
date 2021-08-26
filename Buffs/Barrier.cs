@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class Barrier : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Barrier");
             Description.SetDefault("You have a cool shield!");
@@ -40,7 +40,6 @@ namespace TerraLeague.Buffs
                 }
             }
         }
-
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

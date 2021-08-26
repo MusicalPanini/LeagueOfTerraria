@@ -13,33 +13,33 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
             DisplayName.SetDefault("Serpent");
         }
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.alpha = 0;
-            projectile.timeLeft = 1200;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.aiStyle = 1;
-            aiType = ProjectileID.WoodenArrowFriendly;
+            Projectile.arrow = true;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1200;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.aiStyle = 1;
+            AIType = ProjectileID.WoodenArrowFriendly;
         }
 
         public override void AI()
         {
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Venom, 0f, 0f, 50, default);
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CorruptPlants, 0f, 0f, 50, default);
             dust.noGravity = true;
             dust.velocity *= 0;
-            Lighting.AddLight(projectile.position, 0.5f, 0, 0.5f);
+            Lighting.AddLight(Projectile.position, 0.5f, 0, 0.5f);
             AnimateProjectile();
         }
 
@@ -53,16 +53,16 @@ namespace TerraLeague.Projectiles
         {
             //if (target.HasBuff(BuffID.Venom))
             //{
-            //    int tfDamage = projectile.damage + (Items.Weapons.SerpentsEmbrace.MAGScaling * Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().MAG / 100);
+            //    int tfDamage = Projectile.damage + (Items.Weapons.SerpentsEmbrace.MAGScaling * Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().MAG / 100);
 
-            //    Vector2 center = Main.player[projectile.owner].MountedCenter;
+            //    Vector2 center = Main.player[Projectile.owner].MountedCenter;
 
             //    var targets = Targeting.GetAllNPCsInRange(center, 500, true);
             //    for (int i = 0; i < targets.Count; i++)
             //    {
             //        if (Main.npc[targets[i]].HasBuff(BuffID.Venom))
             //        {
-            //            Projectile.NewProjectileDirect(center, TerraLeague.CalcVelocityToPoint(center, Main.npc[targets[i]].Center, 16), ProjectileType<SerpentsEmbrace_TwinFangs>(), tfDamage, 1, projectile.owner, targets[i]);
+            //            Projectile.NewProjectileDirect(center, TerraLeague.CalcVelocityToPoint(center, Main.npc[targets[i]].Center, 16), ProjectileType<SerpentsEmbrace_TwinFangs>(), tfDamage, 1, Projectile.owner, targets[i]);
             //        }
             //    }
             //}
@@ -73,8 +73,8 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.Kill();
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+            Projectile.Kill();
             return false;
         }
 
@@ -82,18 +82,18 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.t_Cactus, 0f, 0f, 100, default, 0.7f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.t_Cactus, 0f, 0f, 100, default, 0.7f);
             }
         }
 
         public void AnimateProjectile()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 5)
             {
-                projectile.frame++;
-                projectile.frame %= 4;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
             }
         }
 

@@ -53,7 +53,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modPlayer.nightStalker && proj.melee)
+            if (modPlayer.nightStalker && proj.DamageType == DamageClass.Melee)
             {
                 passiveStat = 0;
                 Efx(player, target);
@@ -83,7 +83,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (Main.rand.Next(0, 5) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Crimstone, 0, 0, 0, new Color(50, 0, 0, 200), 1.3f);
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Stone, 0, 0, 0, new Color(75, 0, 0, 200), 1.3f);
                     dust.velocity *= 0.5f;
                     dust.alpha = 40;
                     dust.noGravity = true;
@@ -104,7 +104,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (passiveStat >= maxStat)
                 {
-                    Main.PlaySound(new LegacySoundStyle(3, 54).WithPitchVariance(0.2f));
+                    Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(3, 54).WithPitchVariance(0.2f));
                 }
             }
 
@@ -121,7 +121,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 Dust.NewDustDirect(effectedNPC.position, effectedNPC.width, effectedNPC.height, DustID.Cloud, 0, 0, 0, new Color(50, 0, 0, 150), 1.5f);
                 Dust.NewDustDirect(effectedNPC.position, effectedNPC.width, effectedNPC.height, DustID.Cloud, 0, 0, 0, new Color(50, 50, 50, 150), 1.5f);
             }
-            Main.PlaySound(new LegacySoundStyle(4, 51).WithPitchVariance(0.3f), effectedNPC.position);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(4, 51).WithPitchVariance(0.3f), effectedNPC.position);
         }
     }
 }

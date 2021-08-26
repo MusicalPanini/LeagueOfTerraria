@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
 {
     public class CausticWounds : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Caustic Wounds");
             Main.debuff[Type] = true;

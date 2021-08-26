@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,51 +18,52 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.alpha = 0;
-            projectile.timeLeft = 360;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.extraUpdates = 24;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 360;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.extraUpdates = 24;
         }
 
         public override void AI()
         {
-            if (projectile.soundDelay == 0)
-                Main.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/WhisperShot"), projectile.position);
-            projectile.soundDelay = 100;
+            if (Projectile.soundDelay == 0)
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 36, 0);
+                //Terraria.Audio.SoundEngine.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/WhisperShot"), Projectile.position);
+            Projectile.soundDelay = 100;
 
-            Lighting.AddLight(projectile.Left, 1f, 0.5f, 0.01f);
+            Lighting.AddLight(Projectile.Left, 1f, 0.5f, 0.01f);
 
-            if (projectile.timeLeft < 354)
+            if (Projectile.timeLeft < 354)
             {
-                Dust dust = Dust.NewDustPerfect(projectile.Center, 75, Vector2.Zero, 0, new Color(255, 0, 0));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, 75, Vector2.Zero, 0, new Color(255, 0, 0));
                 dust.noGravity = true;
                 dust.velocity *= 0;
-                dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 75, Vector2.Zero, 0, new Color(255, 0, 0));
+                dust = Dust.NewDustPerfect(Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.Zero), 75, Vector2.Zero, 0, new Color(255, 0, 0));
                 dust.noGravity = true;
                 dust.velocity *= 0;
             }
 
-            //if (projectile.alpha > 0)
-            //    projectile.alpha -= 15;
-            //if (projectile.alpha < 0)
-            //    projectile.alpha = 0;
+            //if (Projectile.alpha > 0)
+            //    Projectile.alpha -= 15;
+            //if (Projectile.alpha < 0)
+            //    Projectile.alpha = 0;
 
-            projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+            Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
 
-            if (projectile.velocity.Y > 16f)
-                projectile.velocity.Y = 16f;
+            if (Projectile.velocity.Y > 16f)
+                Projectile.velocity.Y = 16f;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 
@@ -68,29 +71,8 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.GoldCritter, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, default, 0.7f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Gold, Projectile.velocity.X / 5, Projectile.velocity.Y / 5, 100, default, 0.7f);
             }
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw
-            (
-                texture,
-                new Vector2
-                (
-                    projectile.position.X - Main.screenPosition.X + projectile.width * 0.5f,
-                    projectile.position.Y - Main.screenPosition.Y + projectile.height * 0.5f
-                ),
-                new Rectangle(0, 0, texture.Width, texture.Height),
-                Color.White,
-                projectile.rotation,
-                texture.Size() * 0.5f,
-                projectile.scale,
-                SpriteEffects.None,
-                0f
-            );
         }
     }
 }

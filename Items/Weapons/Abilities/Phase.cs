@@ -30,7 +30,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Phase";
+            return "TerraLeague/AbilityImages/Phase";
         }
 
         public override string GetAbilityTooltip()

@@ -15,30 +15,31 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Hexplosives");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 55;
-            item.width = 32;
-            item.height = 32;
-            item.magic = true;
-            item.useAnimation = 32;
-            item.useTime = 32;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 5;
-            item.value = 40000;
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
-            item.shootSpeed = 12f;
-            item.shoot = ProjectileType<Hexplosives_Bomb>();
-            item.mana = 8;
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.noUseGraphic = true;
+            Item.damage = 55;
+            Item.width = 32;
+            Item.height = 32;
+            Item.DamageType = DamageClass.Magic;
+            Item.useAnimation = 32;
+            Item.useTime = 32;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 5;
+            Item.value = 40000;
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
+            Item.shootSpeed = 12f;
+            Item.shoot = ProjectileType<Hexplosives_Bomb>();
+            Item.mana = 8;
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new BouncingBomb(this));
             abilityItem.SetAbility(AbilityType.E, new HexsplosiveMineField(this));
             abilityItem.ChampQuote = "This'll be a blast!";
@@ -55,20 +56,14 @@ namespace TerraLeague.Items.Weapons
             return 1;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return true;
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HextechCore>(), 2);
-            recipe.AddIngredient(ItemID.Bomb, 20);
-            recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 6);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<HextechCore>(), 2)
+            .AddIngredient(ItemID.Bomb, 20)
+            .AddRecipeGroup("TerraLeague:Tier3Bar", 6)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

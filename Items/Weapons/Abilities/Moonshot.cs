@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Moonshot";
+            return "TerraLeague/AbilityImages/Moonshot";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage);
+            return (int)(abilityItem.Item.damage);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -90,12 +90,12 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int knockback = 0;
 
 
-                Vector2 position = player.MountedCenter;
+                Vector2 position = player.MountedCenter + new Vector2(0, 8);
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 2f);
 
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                 DoEfx(player, type);
-                SetAnimation(player, position + velocity);
+                SetAnimation(player, position + (velocity * 100));
                 SetCooldowns(player, type);
             }
         }

@@ -28,7 +28,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/AquaPrison";
+            return "TerraLeague/AbilityImages/AquaPrison";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -86,15 +86,15 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 SetAnimation(player, position + velocity);
                 DoEfx(player, type);
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);
             }
         }
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item20, player.Center);
-            Main.PlaySound(new LegacySoundStyle(2, 21), player.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item20, player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 21), player.position);
         }
     }
 }

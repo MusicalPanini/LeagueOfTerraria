@@ -8,7 +8,7 @@ namespace TerraLeague.Buffs
     public class Lift : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lift");
             Description.SetDefault("You've got wings of magic!");

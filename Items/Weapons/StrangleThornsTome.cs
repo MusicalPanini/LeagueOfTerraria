@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Strangle Thorn Tome");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,23 +27,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 30;
-            item.width = 56;
-            item.height = 56;       
-            item.summon = true;
-            item.noMelee = true;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 1;
-            item.value = 140000;
-            item.rare = ItemRarityID.Lime;
-            item.UseSound = SoundID.Item8;
-            item.mana = 16;
-            item.shootSpeed = 32;
-            item.shoot = ProjectileType<StrangleThornsTome_StrangleThorns>();
+            Item.damage = 30;
+            Item.width = 56;
+            Item.height = 56;       
+            Item.DamageType = DamageClass.Summon;
+            Item.noMelee = true;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 1;
+            Item.value = 140000;
+            Item.rare = ItemRarityID.Lime;
+            Item.UseSound = SoundID.Item8;
+            Item.mana = 16;
+            Item.shootSpeed = 32;
+            Item.shoot = ProjectileType<StrangleThornsTome_StrangleThorns>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new RampantGrowth(this));
             abilityItem.ChampQuote = "Feel the thorns embrace";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -51,15 +52,15 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.NettleBurst, 1);
-            recipe.AddIngredient(ItemID.Stinger, 12);
-            recipe.AddIngredient(ItemID.JungleSpores, 20);
-            recipe.AddIngredient(ItemID.JungleRose, 1);
-            recipe.AddIngredient(ItemID.SoulofNight, 12);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.NettleBurst, 1)
+            .AddIngredient(ItemID.Stinger, 12)
+            .AddIngredient(ItemID.JungleSpores, 20)
+            .AddIngredient(ItemID.JungleRose, 1)
+            .AddIngredient(ItemID.SoulofNight, 12)
+            .AddTile(TileID.DemonAltar)
+            .Register();
+            
         }
     }
 }

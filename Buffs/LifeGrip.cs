@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class LifeGrip : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Life Grip");
             Description.SetDefault("Your resist, life steal, melee, and ranged damage have been increased");
@@ -38,8 +38,8 @@ namespace TerraLeague.Buffs
                     player.ClearBuff(Type);
                 }
             }
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMagic += 1;

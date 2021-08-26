@@ -4,6 +4,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -16,6 +17,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Fish Bones");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,24 +28,24 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.damage = 35;
-            item.ranged = true;
-            item.useAnimation = 30;
-            item.useTime = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 3;
-            item.value = 120000;
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.RocketI;
-            item.shootSpeed = 6;
-            item.useAmmo = AmmoID.Rocket;
+            Item.width = 32;
+            Item.height = 32;
+            Item.damage = 35;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 3;
+            Item.value = 120000;
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.RocketI;
+            Item.shootSpeed = 6;
+            Item.useAmmo = AmmoID.Rocket;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new SuperMegaDeathRocket(this));
             abilityItem.ChampQuote = "BYE BYE";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -52,19 +54,46 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            item.damage = 35;
-            item.useAnimation = 30;
-            item.useTime = 30;
+            Item.damage = 35;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
             return true;
         }
-        
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            type = item.shoot + player.inventory.Where(x => x.ammo == AmmoID.Rocket).First().shoot;
+            int ammoItem = -1;
+            for (int i = 0; i < 4; i++)
+            {
+                if (player.inventory[54 + i].ammo == AmmoID.Rocket)
+                {
+                    ammoItem = player.inventory[54 + i].type;
+                    break;
+                }
+            }
+            try
+            {
+                if (ammoItem == -1)
+                {
+                    ammoItem = player.inventory.Where(x => x.ammo == AmmoID.Rocket).First().type;
+                    type = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher][ammoItem];
+                }
+                else
+                {
+                    type = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher][ammoItem];
+                }
+            }
+            catch (System.Exception)
+            {
+                type = 10;
+            }
+
+            if (ammoItem == -1)
+            {
+                type = 10;
+            }
 
             position.Y -= 8;
-
-            return true;
         }
 
         public override Vector2? HoldoutOffset()
@@ -72,37 +101,35 @@ namespace TerraLeague.Items.Weapons
             return new Vector2(-65, -15);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().excited)
-                mult = 1.5f;
+                damage *= 1.5f;
 
-            base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
         }
 
-        public override float UseTimeMultiplier(Player player)
+        public override float UseSpeedMultiplier(Player player)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().excited)
             {
-                return base.UseTimeMultiplier(player) * 1.5f;
+                return base.UseSpeedMultiplier(player) * 1.5f;
             }
             else
             {
-                return base.UseTimeMultiplier(player);
+                return base.UseSpeedMultiplier(player);
             }
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.IllegalGunParts, 1);
-            recipe.AddIngredient(ItemID.Megashark, 1);
-            recipe.AddIngredient(ItemID.RocketLauncher, 1);
-            recipe.AddIngredient(ItemID.SharkFin, 5);
-            recipe.AddIngredient(ItemID.SoulofMight, 20);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.IllegalGunParts, 1)
+            .AddIngredient(ItemID.Megashark, 1)
+            .AddIngredient(ItemID.RocketLauncher, 1)
+            .AddIngredient(ItemID.SharkFin, 5)
+            .AddIngredient(ItemID.SoulofMight, 20)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
     }
 }

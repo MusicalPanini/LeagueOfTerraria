@@ -90,7 +90,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     if (chosen != -1)
                     {
                         PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-                        Projectile.NewProjectileDirect(player.MountedCenter, Vector2.Zero, ProjectileType<Item_Heal>(), modPlayer.ScaleValueWithHealPower(heal + (int)(heal * 0.01f * (scaling * ((int)passiveStat / 60)))), 0, player.whoAmI, chosen);
+                        Projectile.NewProjectileDirect(player.GetProjectileSource_Item(player.HeldItem), player.MountedCenter, Vector2.Zero, ProjectileType<Item_Heal>(), modPlayer.ScaleValueWithHealPower(heal + (int)(heal * 0.01f * (scaling * ((int)passiveStat / 60)))), 0, player.whoAmI, chosen);
                         SetCooldown(player);
                     }
                 }

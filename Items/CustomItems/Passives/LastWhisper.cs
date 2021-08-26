@@ -43,9 +43,9 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (includeMeleeDamage && proj.melee)
+            if (includeMeleeDamage && proj.DamageType == DamageClass.Melee)
                 modPlayer.meleeArmorPen += (int)(target.defense * percentArmorReduction * 0.01);
-            if (proj.ranged)
+            if (proj.DamageType == DamageClass.Ranged)
                 modPlayer.rangedArmorPen += (int)(target.defense * percentArmorReduction * 0.01);
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);

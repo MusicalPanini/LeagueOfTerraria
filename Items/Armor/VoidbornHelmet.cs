@@ -14,15 +14,16 @@ namespace TerraLeague.Items.Armor
             Tooltip.SetDefault("Increases your max number of minions" +
             "\nIncreases your max mana by 40");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 26;
-            item.value = 40000;
-            item.rare = ItemRarityID.Orange;
-            item.defense = 4;
+            Item.width = 24;
+            Item.height = 26;
+            Item.value = 40000;
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 4;
         }
 
         public override void UpdateEquip(Player player)
@@ -33,12 +34,12 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.FossilHelm, 1);
-            recipe.AddIngredient(GetInstance<VoidFragment>(), 60);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.FossilHelm, 1)
+            .AddIngredient(GetInstance<VoidFragment>(), 60)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -56,7 +57,7 @@ namespace TerraLeague.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "When you deal minion damage, restore 2 mana";
+            player.setBonus = "When you deal summon damage, restore 2 mana";
             player.armorEffectDrawShadowBasilisk = true;
             player.GetModPlayer<PLAYERGLOBAL>().voidbornSet = true;
         }

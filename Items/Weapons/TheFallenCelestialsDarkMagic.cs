@@ -11,6 +11,7 @@ using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
 using TerraLeague.Items.Weapons.Abilities;
+using Terraria.DataStructures;
 
 namespace TerraLeague.Items.Weapons
 {
@@ -20,6 +21,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("The Fallen Celestials Dark Magic");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -29,45 +31,45 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 24;
-            item.noMelee = true;
-            item.magic = true;
-            item.useTime = 80;
-            item.useAnimation = 80;
-            item.mana = 40;
-            item.rare = ItemRarityID.Yellow;
-            item.value = 300000;
-            item.width = 28;
-            item.height = 32;
-            item.knockBack = 0;
-            item.UseSound = SoundID.Item20;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = ProjectileType<TheFallenCelestialsDarkMagic_TormentedShadow>();
+            Item.damage = 24;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 80;
+            Item.useAnimation = 80;
+            Item.mana = 40;
+            Item.rare = ItemRarityID.Yellow;
+            Item.value = 300000;
+            Item.width = 28;
+            Item.height = 32;
+            Item.knockBack = 0;
+            Item.UseSound = SoundID.Item20;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.shoot = ProjectileType<TheFallenCelestialsDarkMagic_TormentedShadow>();
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new SoulShackles(this));
             abilityItem.ChampQuote = "I am bound, but I will not break";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectileDirect(Main.MouseWorld, Vector2.Zero, type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectileDirect(source, Main.MouseWorld, Vector2.Zero, type, damage, knockback, player.whoAmI);
             return false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.SpellTome, 1);
-            recipe.AddIngredient(ItemID.SoulofNight, 20);
-            recipe.AddIngredient(ItemID.Chain, 10);
-            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 20);
-            recipe.AddTile(TileID.Bookcases);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.SpellTome, 1)
+            .AddIngredient(ItemID.SoulofNight, 20)
+            .AddIngredient(ItemID.Chain, 10)
+            .AddIngredient(ItemType<FragmentOfTheAspect>(), 1)
+            .AddIngredient(ItemType<CelestialBar>(), 20)
+            .AddTile(TileID.Bookcases)
+            .Register();
+            
         }
     }
 }

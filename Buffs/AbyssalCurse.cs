@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class AbyssalCurse : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abyssal Curse");
             Description.SetDefault("You take 8% more magic damage");

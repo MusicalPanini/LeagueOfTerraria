@@ -17,69 +17,69 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 48*3;
-            projectile.height = 48*3;
-            projectile.friendly = false;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 90;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.rotation = MathHelper.PiOver4;
+            Projectile.width = 48*3;
+            Projectile.height = 48*3;
+            Projectile.friendly = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 90;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.rotation = MathHelper.PiOver4;
         }
 
         public override void AI()
         {
 
-            if (projectile.timeLeft > 31)
+            if (Projectile.timeLeft > 31)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 16, DustID.t_Slime, 0, -1, 100, new Color(255, 125, 0));
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, 16, DustID.t_Slime, 0, -1, 100, new Color(255, 125, 0));
 
-                if (projectile.soundDelay == 0 && projectile.type != 383)
+                if (Projectile.soundDelay == 0 && Projectile.type != 383)
                 {
-                    projectile.soundDelay = 20;
-                    Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.position);
+                    Projectile.soundDelay = 20;
+                    Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), Projectile.position);
                 }
-                projectile.velocity = Vector2.Zero;
+                Projectile.velocity = Vector2.Zero;
 
             }
-            else if (projectile.timeLeft == 31)
+            else if (Projectile.timeLeft == 31)
             {
-                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 14, -0.5f);
+                TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 14, -0.5f);
             }
-            else if (projectile.timeLeft <= 31 && projectile.timeLeft >= 29)
+            else if (Projectile.timeLeft <= 31 && Projectile.timeLeft >= 29)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.t_Slime, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.t_Slime, Projectile.oldVelocity.X * 0.25f, Projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
                 }
 
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
 
-                projectile.friendly = true;
+                Projectile.friendly = true;
 
-                projectile.velocity = new Vector2(Main.player[projectile.owner].position.X < projectile.position.X ? 20 : -20, -20);
+                Projectile.velocity = new Vector2(Main.player[Projectile.owner].position.X < Projectile.position.X ? 20 : -20, -20);
             }
-            else if (projectile.timeLeft <= 29)
+            else if (Projectile.timeLeft <= 29)
             {
 
 
-                projectile.friendly = false;
+                Projectile.friendly = false;
 
-                projectile.velocity = Vector2.Zero;
+                Projectile.velocity = Vector2.Zero;
             }
             else
             {
-                projectile.velocity = Vector2.Zero;
+                Projectile.velocity = Vector2.Zero;
 
             }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.velocity = projectile.velocity/2;
+            target.velocity = Projectile.velocity/2;
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
@@ -98,10 +98,10 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), Projectile.position);
             for (int i = 0; i < 10; i++)
             {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.IceRod, projectile.velocity.X / 1.5f, projectile.velocity.Y / 1.5f, 100, default, 1.5f);
+                Dust dustIndex = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, Projectile.velocity.X / 1.5f, Projectile.velocity.Y / 1.5f, 100, default, 1.5f);
                 dustIndex.noGravity = true;
             }
             base.Kill(timeLeft);

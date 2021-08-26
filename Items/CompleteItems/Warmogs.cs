@@ -15,16 +15,17 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Warmog's Armor");
             Tooltip.SetDefault("Increases maximum life by 50" +
                 "\nIncreases life regeneration by 50%" +
-                "\nIncreases ability haste by 10"); 
+                "\nIncreases ability haste by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 60, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 60, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
 
             Passives = new Passive[] 
             {
@@ -39,17 +40,17 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<GiantsBelt>(), 1);
-            recipe.AddIngredient(ItemType<Kindlegem>(), 1);
-            recipe.AddIngredient(ItemType<CrystallineBracer>(), 1);
-            recipe.AddIngredient(ItemID.BeetleScaleMail, 1);
-            recipe.AddIngredient(ItemID.LifeFruit, 3);
-            recipe.AddIngredient(ItemID.Vine, 2);
-            recipe.AddIngredient(ItemID.JungleSpores, 5);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<GiantsBelt>(), 1)
+            .AddIngredient(ItemType<Kindlegem>(), 1)
+            .AddIngredient(ItemType<CrystallineBracer>(), 1)
+            .AddIngredient(ItemID.BeetleScaleMail, 1)
+            .AddIngredient(ItemID.LifeFruit, 3)
+            .AddIngredient(ItemID.Vine, 2)
+            .AddIngredient(ItemID.JungleSpores, 5)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+            
         }
     }
 }

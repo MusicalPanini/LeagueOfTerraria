@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class LightningRush : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lightning Rush");
             Description.SetDefault("Energy flows through you");

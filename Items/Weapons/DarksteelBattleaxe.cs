@@ -16,6 +16,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Darksteel Battleaxe");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,22 +27,22 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 28;
-            item.width = 54;
-            item.height = 44;
-            item.melee = true;
-            item.useTime = 34;
-            item.useAnimation = 34;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 5;
-            item.value = 6000;
-            item.rare = ItemRarityID.Orange;
-            item.axe = 30;
-            item.UseSound = SoundID.Item1;
-            item.scale = 1.2f;
-            item.autoReuse = true;
+            Item.damage = 28;
+            Item.width = 54;
+            Item.height = 44;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 34;
+            Item.useAnimation = 34;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 5;
+            Item.value = 6000;
+            Item.rare = ItemRarityID.Orange;
+            Item.axe = 30;
+            Item.UseSound = SoundID.Item1;
+            Item.scale = 1.2f;
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new Decimate(this));
             abilityItem.ChampQuote = "Death by my hand";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
@@ -66,11 +67,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<DarksteelBar>(), 16)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

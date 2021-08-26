@@ -13,15 +13,16 @@ namespace TerraLeague.Items.StartingItems
             DisplayName.SetDefault("Doran's Blade");
             Tooltip.SetDefault("+4 melee and ranged damage" +
                 "\nIncreases health by 10");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = 10000;
-            item.rare = ItemRarityID.Blue;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Blue;
+            Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -29,6 +30,13 @@ namespace TerraLeague.Items.StartingItems
             player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeFlatDamage += 4;
             player.GetModPlayer<PLAYERGLOBAL>().rangedFlatDamage += 4;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<DoransBag>(), 1)
+            .Register();
         }
     }
 }

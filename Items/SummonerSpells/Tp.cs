@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +15,158 @@ namespace TerraLeague.Items.SummonerSpells
 {
     public class TeleportRune : SummonerSpell
     {
-        public override void SetStaticDefaults()
+        public override void Load()
+        {
+			IL.Terraria.Player.HasUnityPotion += HookHasUnityPotion;
+			IL.Terraria.Player.InInteractionRange += HookInteractionRange;
+			IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookIsNearPylon;
+			IL.Terraria.GameContent.TeleportPylonsSystem.HowManyNPCsDoesPylonNeed += HookEnoughtNPCS;
+			//IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookInteractionRange;
+		}
+
+		private static void HookHasUnityPotion(ILContext il)
+        {
+			ILCursor c = new ILCursor(il);
+
+            if (!c.TryGotoNext(i => i.MatchLdcI4(58)))
+            {
+                return; // Patch unable to be applied
+            }
+			if (!c.TryGotoNext(i => i.MatchLdcI4(0)))
+			{
+				return; // Patch unable to be applied
+			}
+
+			c.Index++;
+
+			// Push the Player instance onto the stack
+			c.Emit(OpCodes.Ldarg_0);
+			// Call a delegate using the int and Player from the stack.
+			c.EmitDelegate<Func<bool, Player, bool>>((returnValue, player) => {
+				// Regular c# code
+
+				return TeleportRune.CheckForTeleportSum(player);
+				//bool hasTP = false;
+				//PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+				//for (int i = 0; i < modPlayer.sumSpells.Length; i++)
+				//{
+				//	hasTP = modPlayer.sumSpells[i].Name == "TeleportRune";
+
+				//	if (hasTP)
+				//	{
+				//		if (modPlayer.sumCooldowns[i] <= 0)
+				//			break;
+				//		else
+				//			return false;
+				//	}
+				//}
+
+				//return hasTP;
+			});
+
+		}
+
+		private static void HookIsNearPylon(ILContext il)
+		{
+			ILCursor c = new ILCursor(il);
+
+			if (!c.TryGotoNext(i => i.MatchRet()))
+			{
+				return; // Patch unable to be applied
+			}
+
+			// Push the Player instance onto the stack
+			c.Emit(OpCodes.Ldarg_0);
+			// Call a delegate using the int and Player from the stack.
+			c.EmitDelegate<Func<bool, Player, bool>>((returnValue, player) => {
+				if (TeleportRune.CheckForTeleportSum(Main.LocalPlayer))
+				{
+					return true;
+				}
+				return player.IsTileTypeInInteractionRange(597);
+			});
+
+		}
+
+		private static void HookInteractionRange(ILContext il)
+		{
+            ILCursor c = new ILCursor(il);
+
+            if (!c.TryGotoNext(i => i.MatchRet()))
+            {
+                return; // Patch unable to be applied
+            }
+
+            // returnvalue already pushed
+            // Push the Player instance onto the stack
+            c.Emit(OpCodes.Ldloc_2);
+            // Call a delegate using the int and Player from the stack.
+            c.EmitDelegate<Func<bool, Tile, bool>>((returnValue, tile) =>
+            {
+                if (tile.type == 597 && TeleportRune.CheckForTeleportSum(Main.LocalPlayer))
+                {
+                    return true;
+                }
+                return false;
+                //return num >= interactX - Player.tileRangeX && num <= interactX + Player.tileRangeX + 1 && num2 >= interactY - Player.tileRangeY && num2 <= interactY + Player.tileRangeY + 1;
+            });
+
+        }
+
+		private static void HookEnoughtNPCS(ILContext il)
+		{
+			ILCursor c = new ILCursor(il);
+
+			if (!c.TryGotoNext(i => i.MatchRet()))
+			{
+				return; // Patch unable to be applied
+			}
+
+			// returnvalue already pushed
+			// Call a delegate using the int and Player from the stack.
+			c.Emit(OpCodes.Ldloc_1);
+			c.EmitDelegate<Func<int, Player, int>>((returnValue, player) => {
+				if (TeleportRune.CheckForTeleportSum(player))
+				{
+					return 0;
+				}
+				return returnValue;
+			});
+
+		}
+
+		public static bool CheckForTeleportSum(Player player)
+		{
+			bool hasTP = false;
+			PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+
+			for (int i = 0; i < modPlayer.sumSpells.Length; i++)
+			{
+				hasTP = modPlayer.sumSpells[i].Name == "TeleportRune";
+
+				if (hasTP)
+				{
+					if (modPlayer.sumCooldowns[i] <= 0)
+						break;
+					else
+						return false;
+				}
+			}
+
+			return hasTP;
+		}
+
+		public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Teleport Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
-        }
+			Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Tp";
+            return "TerraLeague/Items/SummonerSpells/Tp";
         }
 
         public override string GetSpellName()
@@ -31,30 +176,39 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override int GetRawCooldown()
         {
-            return 180;
+            return 0;
         }
 
         public override string GetTooltip()
         {
-            return "Open a menu of teleport targets";
+            return "Allows free teleportation to Pylons and Allies";
         }
 
         public override void DoEffect(Player player, int spellSlot)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            //player.TeleportationPotion();
 
-            TeleportUI.visible = !TeleportUI.visible;
+			if (Main.mapFullscreen)
+			{
+                Terraria.Audio.SoundEngine.PlaySound(11, -1, -1, 1, 1f, 0f);
+				Main.mapFullscreen = false;
+			}
+			else
+			{
+				player.TryOpeningFullscreenMap();
+			}
 
-            //SetCooldowns(player, spellSlot);
-        }
+			//player.TeleportationPotion();
+			//TeleportUI.visible = !TeleportUI.visible;
+			//SetCooldowns(player, spellSlot);
+		}
 
         public static void Efx(Vector2 teleportPoint)
         {
             TerraLeague.PlaySoundWithPitch(teleportPoint, 2, 6, 0);
             for (int i = 0; i < 20; i++)
             {
-                Dust dust = Dust.NewDustDirect(teleportPoint - (Vector2.One * 16), 32, 42, DustID.ShadowbeamStaff, 0, 0, 0, default, 4);
+                Dust dust = Dust.NewDustDirect(teleportPoint - (Vector2.One * 16), 32, 42, DustID.Shadowflame, 0, 0, 0, default, 4);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 2;
@@ -87,12 +241,12 @@ namespace TerraLeague.Items.SummonerSpells
                     case TeleportType.Dungeon:
 						DoTP(player, Dungeon());
 						break;
-                    case TeleportType.Hell:
-						DoTP(player, Hell(player));
-						break;
-                    case TeleportType.Random:
-						DoTP(player, RandomTP());
-						break;
+      //              case TeleportType.Hell:
+						//DoTP(player, Hell(player));
+						//break;
+      //              case TeleportType.Random:
+						//DoTP(player, RandomTP());
+						//break;
                     default:
                         break;
                 }
@@ -144,41 +298,43 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public static Vector2 Hell(Player player)
         {
-			bool flag = false;
-			int num = Main.maxTilesX / 2;
-			int num2 = 100;
-			int num3 = num2 / 2;
-			int teleportStartY = Main.maxTilesY - 200 + 20;
-			int teleportRangeY = 80;
-			RandomTeleportationAttemptSettings settings = new RandomTeleportationAttemptSettings
-			{
-				mostlySolidFloor = true,
-				avoidAnyLiquid = true,
-				avoidLava = true,
-				avoidHurtTiles = true,
-				avoidWalls = true,
-				attemptsBeforeGivingUp = 1000,
-				maximumFallDistanceFromOrignalPoint = 30
-			};
-			Vector2 vector = CheckForGoodTeleportationSpot(player, ref flag, num - num3, num2, teleportStartY, teleportRangeY, settings);
-			if (!flag)
-			{
-				vector = CheckForGoodTeleportationSpot(player, ref flag, num - num2, num3, teleportStartY, teleportRangeY, settings);
-			}
-			if (!flag)
-			{
-				vector = CheckForGoodTeleportationSpot(player, ref flag, num + num3, num3, teleportStartY, teleportRangeY, settings);
-			}
-			if (flag)
-			{
-				Vector2 vector2 = vector;
-				return vector2;
-			}
-			else
-			{
-				Vector2 position = player.position;
-				return position;
-			}
+			
+			return Vector2.Zero;
+			//bool flag = false;
+			//int num = Main.maxTilesX / 2;
+			//int num2 = 100;
+			//int num3 = num2 / 2;
+			//int teleportStartY = Main.maxTilesY - 200 + 20;
+			//int teleportRangeY = 80;
+			//RandomTeleportationAttemptSettings settings = new RandomTeleportationAttemptSettings
+			//{
+			//	mostlySolidFloor = true,
+			//	avoidAnyLiquid = true,
+			//	avoidLava = true,
+			//	avoidHurtTiles = true,
+			//	avoidWalls = true,
+			//	attemptsBeforeGivingUp = 1000,
+			//	maximumFallDistanceFromOrignalPoint = 30
+			//};
+			//Vector2 vector = CheckForGoodTeleportationSpot(player, ref flag, num - num3, num2, teleportStartY, teleportRangeY, settings);
+			//if (!flag)
+			//{
+			//	vector = CheckForGoodTeleportationSpot(player, ref flag, num - num2, num3, teleportStartY, teleportRangeY, settings);
+			//}
+			//if (!flag)
+			//{
+			//	vector = CheckForGoodTeleportationSpot(player, ref flag, num + num3, num3, teleportStartY, teleportRangeY, settings);
+			//}
+			//if (flag)
+			//{
+			//	Vector2 vector2 = vector;
+			//	return vector2;
+			//}
+			//else
+			//{
+			//	Vector2 position = player.position;
+			//	return position;
+			//}
         }
         public static Vector2 Dungeon()
         {
@@ -271,7 +427,7 @@ namespace TerraLeague.Items.SummonerSpells
 						}
 						else
 						{
-							if (tile5.active() && !tile5.inActive() && Main.tileSolid[tile5.type])
+							if (tile5.IsActive && !tile5.IsActuated && Main.tileSolid[tile5.type])
 							{
 								break;
 							}
@@ -285,7 +441,7 @@ namespace TerraLeague.Items.SummonerSpells
 					int j2 = (int)(vector.Y + (float)player.height) / 16;
 					tileSafely = Framing.GetTileSafely(i, j);
 					Tile tileSafely2 = Framing.GetTileSafely(num10, j2);
-					if (settings.avoidAnyLiquid && tileSafely2.liquid > 0)
+					if (settings.avoidAnyLiquid && tileSafely2.LiquidAmount > 0)
 					{
 						continue;
 					}
@@ -293,7 +449,7 @@ namespace TerraLeague.Items.SummonerSpells
 					{
 						Tile tileSafely3 = Framing.GetTileSafely(num10 - 1, j2);
 						Tile tileSafely4 = Framing.GetTileSafely(num10 + 1, j2);
-						if (tileSafely3.active() && !tileSafely3.inActive() && Main.tileSolid[tileSafely3.type] && !Main.tileSolidTop[tileSafely3.type] && tileSafely4.active() && !tileSafely4.inActive() && Main.tileSolid[tileSafely4.type] && !Main.tileSolidTop[tileSafely4.type])
+						if (tileSafely3.IsActive && !tileSafely3.IsActuated && Main.tileSolid[tileSafely3.type] && !Main.tileSolidTop[tileSafely3.type] && tileSafely4.IsActive && !tileSafely4.IsActuated && Main.tileSolid[tileSafely4.type] && !Main.tileSolidTop[tileSafely4.type])
 						{
 							//goto IL_034e;
 						}

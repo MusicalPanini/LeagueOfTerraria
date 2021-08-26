@@ -20,10 +20,11 @@ namespace TerraLeague.Items.SummonerSpells
             DisplayName.SetDefault("Clarity Rune");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override string GetIconTexturePath()
         {
-            return "Items/SummonerSpells/Clarity";
+            return "TerraLeague/Items/SummonerSpells/Clarity";
         }
 
         public override string GetSpellName()
@@ -68,7 +69,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player, bool drawRing)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 29), player.Center);
 
             float starRad = 96 * 1.5f;
 

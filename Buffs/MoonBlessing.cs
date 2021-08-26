@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class MoonBlessing : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blessing of The Silver Sister");
             Description.SetDefault("10% increased critical strike chance");
@@ -16,17 +16,13 @@ namespace TerraLeague.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.meleeCrit += 10;
-            player.rangedCrit += 10;
-            player.magicCrit += 10;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.1f;
+            player.GetCritChance(DamageClass.Generic) += 10;
+            player.GetDamage(DamageClass.Summon) += 0.1f;
 
             if (player.GetModPlayer<PLAYERGLOBAL>().bottleOfStardust)
             {
-                player.meleeCrit += 5;
-                player.rangedCrit += 5;
-                player.magicCrit += 5;
-                player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05f;
+                player.GetCritChance(DamageClass.Generic) += 5;
+                player.GetDamage(DamageClass.Summon) += 0.05f;
             }
         }
         public override void ModifyBuffTip(ref string tip, ref int rare)

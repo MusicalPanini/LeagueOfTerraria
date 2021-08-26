@@ -22,16 +22,16 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.alpha = 255;
-            projectile.timeLeft = 240;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 240;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
 
             CanRetarget = true;
             TurningFactor = 0.93f;
@@ -40,44 +40,44 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft < 240 - 15)
+            if (Projectile.timeLeft < 240 - 15)
             {
                 HomingAI();
 
-                projectile.friendly = true;
+                Projectile.friendly = true;
             }
-            if (projectile.timeLeft < 15)
+            if (Projectile.timeLeft < 15)
             {
-                projectile.alpha += 10;
+                Projectile.alpha += 10;
             }
 
             for (int i = 0; i < 3; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                int dustBoxWidth = projectile.width - 12;
-                int dustBoxHeight = projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Clentaminator_Blue, 0f, 0f, 100, default, 1.5f);
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 113, 0f, 0f, 100, default, 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-                dust.velocity += projectile.velocity * 0.1f;
-                dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
-            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
+            Lighting.AddLight(Projectile.position, 0f, 0f, 0.5f);
         }
 
         public override void GetNewTarget()
         {
-            projectile.netUpdate = true;
-            TargetWhoAmI = Targeting.GetClosestNPC(projectile.Center, targetingRange, (int)projectile.ai[1], -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
+            Projectile.netUpdate = true;
+            TargetWhoAmI = Targeting.GetClosestNPC(Projectile.Center, targetingRange, (int)Projectile.ai[1], -1, NPC_CanTargetCritters, NPC_CanTargetDummy);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Clentaminator_Blue, projectile.velocity.X, projectile.velocity.Y, 50, default, 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 113, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1.2f);
                 dust.noGravity = true;
             }
         }

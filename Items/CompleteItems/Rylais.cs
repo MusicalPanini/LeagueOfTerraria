@@ -15,15 +15,16 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Rylai's Crystal Scepter");
             Tooltip.SetDefault("5% increased magic damage" +
                 "\nIncreases health by 30");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 30, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.accessory = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 30, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.accessory = true;
 
             Passives = new Passive[]
             {
@@ -32,21 +33,21 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.05f;
+            player.GetDamage(DamageClass.Magic) += 0.05f;
             player.statLifeMax2 += 30;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddIngredient(ItemType<AmpTome>(), 1);
-            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 10);
-            recipe.AddIngredient(ItemID.FrostStaff, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BlastingWand>(), 1)
+            .AddIngredient(ItemType<AmpTome>(), 1)
+            .AddIngredient(ItemType<RubyCrystal>(), 1)
+            .AddIngredient(ItemType<TrueIceChunk>(), 10)
+            .AddIngredient(ItemID.FrostStaff, 1)
+            .AddTile(TileID.Anvils)
+            .Register();
+            
         }
     }
 }

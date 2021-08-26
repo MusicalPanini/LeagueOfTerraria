@@ -17,52 +17,52 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 28;
-            projectile.height = 28;
-            projectile.alpha = 255;
-            projectile.timeLeft = 300;
-            projectile.penetrate = 1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.extraUpdates = 1;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 28;
+            Projectile.height = 28;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 300;
+            Projectile.penetrate = 1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 1;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation();
-            Lighting.AddLight(projectile.position, 0.75f, 0f, 0.75f);
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Lighting.AddLight(Projectile.position, 0.75f, 0f, 0.75f);
 
-            double rad = MathHelper.ToRadians((projectile.frameCounter / 24f) * 180f);
+            double rad = MathHelper.ToRadians((Projectile.frameCounter / 24f) * 180f);
 
             float float1 = (float)(System.Math.Sin(rad) * 12);
             float float2 = (float)(System.Math.Sin(rad + System.Math.PI) * 12);
             int offsetX = 22;
             int offsetY = 14;
 
-            if (projectile.timeLeft == 300)
+            if (Projectile.timeLeft == 300)
             {
-                if ((int)projectile.ai[0] == 1)
+                if ((int)Projectile.ai[0] == 1)
                 {
-                    projectile.magic = true;
+                    Projectile.DamageType = DamageClass.Magic;
                 }
                 else
                 {
-                    projectile.ranged = true;
+                    Projectile.DamageType = DamageClass.Ranged;
                 }
             }
 
-            if (projectile.ranged)
+            if (Projectile.DamageType == DamageClass.Ranged)
             {
                 Color color = new Color(250, 114, 247);
-                Vector2 pos1 = new Vector2(projectile.position.X + offsetX, (projectile.position.Y + offsetY) + float1).RotatedBy(projectile.rotation, projectile.Center);
+                Vector2 pos1 = new Vector2(Projectile.position.X + offsetX, (Projectile.position.Y + offsetY) + float1).RotatedBy(Projectile.rotation, Projectile.Center);
                 Dust dust = Dust.NewDustPerfect(pos1, 112, null, 0, color, 2);
                 dust.noGravity = true;
                 dust.velocity *= 0;
                 dust.noLight = true;
 
-                Vector2 pos2 = new Vector2(projectile.position.X + offsetX, (projectile.position.Y + offsetY) + float2).RotatedBy(projectile.rotation, projectile.Center);
+                Vector2 pos2 = new Vector2(Projectile.position.X + offsetX, (Projectile.position.Y + offsetY) + float2).RotatedBy(Projectile.rotation, Projectile.Center);
                 dust = Dust.NewDustPerfect(pos2, 112, null, 0, color, 2);
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -71,59 +71,59 @@ namespace TerraLeague.Projectiles
             else
             {
                 Color color = new Color(59, 0, 255);
-                Vector2 pos1 = new Vector2(projectile.position.X + offsetX, (projectile.position.Y + offsetY) + float1).RotatedBy(projectile.rotation, projectile.Center);
+                Vector2 pos1 = new Vector2(Projectile.position.X + offsetX, (Projectile.position.Y + offsetY) + float1).RotatedBy(Projectile.rotation, Projectile.Center);
                 Dust dust = Dust.NewDustPerfect(pos1, 112, null, 0, color, 2);
                 dust.noGravity = true;
                 dust.velocity *= 0;
                 dust.noLight = true;
 
-                Vector2 pos2 = new Vector2(projectile.position.X + offsetX, (projectile.position.Y + offsetY) + float2).RotatedBy(projectile.rotation, projectile.Center);
+                Vector2 pos2 = new Vector2(Projectile.position.X + offsetX, (Projectile.position.Y + offsetY) + float2).RotatedBy(Projectile.rotation, Projectile.Center);
                 dust = Dust.NewDustPerfect(pos2, 112, null, 0, color, 2);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0;
 
-                Vector2 pos3 = new Vector2(projectile.position.X + offsetX, (projectile.position.Y + offsetY)).RotatedBy(projectile.rotation, projectile.Center);
+                Vector2 pos3 = new Vector2(Projectile.position.X + offsetX, (Projectile.position.Y + offsetY)).RotatedBy(Projectile.rotation, Projectile.Center);
                 dust = Dust.NewDustPerfect(pos3, 112, null, 0, color, 1.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0;
             }
 
-            if (projectile.frameCounter < 48)
-                projectile.frameCounter++;
+            if (Projectile.frameCounter < 48)
+                Projectile.frameCounter++;
             else
-                projectile.frameCounter = 0;
+                Projectile.frameCounter = 0;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             TerraLeagueNPCsGLOBAL modNPC = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>();
-            PLAYERGLOBAL modPlayer = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
+            PLAYERGLOBAL modPlayer = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>();
 
             target.AddBuff(BuffType<CausticWounds>(), 240);
             modNPC.CausticWounds = true;
-            modNPC.CausticStacks += projectile.ranged ? 2 : 3;
+            modNPC.CausticStacks += Projectile.DamageType == DamageClass.Ranged ? 2 : 3;
 
             int stacks = modNPC.CausticStacks;
-            if (stacks - (projectile.ranged ? 2 : 3) < 5 && stacks >= 5)
+            if (stacks - (Projectile.DamageType == DamageClass.Ranged ? 2 : 3) < 5 && stacks >= 5)
             {
-                projectile.magic = true;
+                Projectile.DamageType = DamageClass.Magic;
 
                 int damCap = (int)(modPlayer.MAG + 50);
 
                 damage += (target.lifeMax - target.life) / 4 > damCap ? damCap : (target.lifeMax - target.life) / 4;
 
-                projectile.netUpdate = true;
-                projectile.ai[0] = 1;
+                Projectile.netUpdate = true;
+                Projectile.ai[0] = 1;
 
                 modPlayer.CausticWoundsEffect(target);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    modPlayer.PacketHandler.SendCausticEFX(-1, projectile.owner, target.whoAmI);
+                    modPlayer.PacketHandler.SendCausticEFX(-1, Projectile.owner, target.whoAmI);
             }
             else if (stacks > 5)
             {
-                modNPC.CausticStacks = projectile.ranged ? 2 : 3;
+                modNPC.CausticStacks = Projectile.DamageType == DamageClass.Ranged ? 2 : 3;
             }
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -134,10 +134,10 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Color color = projectile.ranged ? new Color(250, 114, 247) : new Color(59, 0, 255);
+            Color color = Projectile.DamageType == DamageClass.Ranged ? new Color(250, 114, 247) : new Color(59, 0, 255);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, DustID.Clentaminator_Purple, 0f, 0f, 255, color, 3.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, 8, 8, 112, 0f, 0f, 255, color, 3.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

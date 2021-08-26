@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/HeightenedSenses";
+            return "TerraLeague/AbilityImages/HeightenedSenses";
         }
 
         public override string GetAbilityTooltip()

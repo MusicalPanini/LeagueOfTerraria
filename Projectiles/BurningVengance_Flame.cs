@@ -16,36 +16,36 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 15;
-            projectile.height = 15;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.penetrate = 250;
-            projectile.alpha = 255;
-            projectile.scale = 1f;
-            projectile.timeLeft = 30;
-            projectile.magic = true;
-            projectile.extraUpdates = 2;
+            Projectile.width = 15;
+            Projectile.height = 15;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 250;
+            Projectile.alpha = 255;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 30;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.extraUpdates = 2;
         }
 
         public override void AI()
         {
-            if (projectile.wet)
+            if (Projectile.wet)
             {
-                projectile.Kill();
+                Projectile.Kill();
                 return;
             }
 
-            if (projectile.timeLeft <= 27)
+            if (Projectile.timeLeft <= 27)
             {
                    
 
                 if (Main.rand.Next(0,1) == 0)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 0, 0, default, 4f);
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 0, default, 4f);
                     dust.noGravity = true;
 
-                    Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, 0, 3, 0, default, 1f);
+                    Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 6, 0, 3, 0, default, 1f);
                 }
             }
         }

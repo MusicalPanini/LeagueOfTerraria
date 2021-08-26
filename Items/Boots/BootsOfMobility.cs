@@ -12,13 +12,14 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Boots of Mobility");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.width = 28;
-            item.height = 28;
-            item.accessory = true;
+            Item.width = 28;
+            Item.height = 28;
+            Item.accessory = true;
             base.SetDefaults();
         }
 
@@ -125,12 +126,12 @@ namespace TerraLeague.Items.Boots
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BootsOfSpeed>());
-            recipe.AddIngredient(ItemID.Cloud, 10);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<BootsOfSpeed>())
+            .AddIngredient(ItemID.Cloud, 10)
+            .AddTile(TileID.WorkBenches)
+            .Register();
+            
         }
     }
 }

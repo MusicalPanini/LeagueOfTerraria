@@ -14,22 +14,22 @@ namespace TerraLeague.Projectiles
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[projectile.type] = 6;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
+            Main.projFrames[Projectile.type] = 6;
+            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
-            projectile.netImportant = true;
-            projectile.width = 48;
-            projectile.height = 47;
-            projectile.friendly = false;
-            projectile.minion = true;
-            projectile.sentry = true;
-            projectile.penetrate = 1;
-            projectile.timeLeft = Projectile.SentryLifeTime;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
+            Projectile.netImportant = true;
+            Projectile.width = 48;
+            Projectile.height = 47;
+            Projectile.friendly = false;
+            Projectile.sentry = true;
+            Projectile.DamageType = Terraria.ModLoader.DamageClass.Summon;
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = Projectile.SentryLifeTime;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
             shoot = ProjectileType<HextechWrench_EvoTurretShot>();
             shootSpeed = 20f;
             shootCool = 75;
@@ -46,10 +46,10 @@ namespace TerraLeague.Projectiles
 
         public override void Behavior()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             //if (player.HasBuff(BuffType<EvolutionTurrets>()))
             //{
-            //    projectile.timeLeft = 2;
+            //    Projectile.timeLeft = 2;
             //}
             base.Behavior();
         }
@@ -61,8 +61,8 @@ namespace TerraLeague.Projectiles
 
         public void CheckIfNearOwner()
         {
-            Player checkTarget = Main.player[projectile.owner];
-            float distance = Vector2.Distance(checkTarget.Center, projectile.Center);
+            Player checkTarget = Main.player[Projectile.owner];
+            float distance = Vector2.Distance(checkTarget.Center, Projectile.Center);
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -87,47 +87,47 @@ namespace TerraLeague.Projectiles
 
             if (target != null)
             {
-                double xdif = projectile.Center.X - (target.position.X + (target.width / 2.0));
-                double ydif = projectile.Center.Y - (target.position.Y + (target.height / 2.0));
+                double xdif = Projectile.Center.X - (target.position.X + (target.width / 2.0));
+                double ydif = Projectile.Center.Y - (target.position.Y + (target.height / 2.0));
 
                 if (xdif > 0)
                 {
-                    projectile.spriteDirection = -1;
+                    Projectile.spriteDirection = -1;
                 }
                 else
                 {
-                    projectile.spriteDirection = 1;
+                    Projectile.spriteDirection = 1;
                 }
 
                 if (ydif > 0)
                 {
                     if (Math.Abs(ydif) * Math.Sqrt(3) < Math.Abs(xdif) * (1 / Math.Sqrt(3)))
                     {
-                        projectile.frame = 0;
+                        Projectile.frame = 0;
                     }
                     else
                     {
-                        projectile.frame = 4;
+                        Projectile.frame = 4;
                     }
                 }
                 else
                 {
                     if (Math.Abs(ydif) * Math.Sqrt(3) < Math.Abs(xdif)* (1/Math.Sqrt(3)))
                     {
-                        projectile.frame = 0;
+                        Projectile.frame = 0;
                     }
                     else
                     {
-                        projectile.frame = 2;
+                        Projectile.frame = 2;
                     }
                 }
             }
             else
             {
-                projectile.frame = 0;
+                Projectile.frame = 0;
             }
 
-            projectile.frame += currentAnim;
+            Projectile.frame += currentAnim;
         }
     }
 }

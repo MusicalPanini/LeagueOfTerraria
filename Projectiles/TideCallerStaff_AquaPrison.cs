@@ -2,6 +2,7 @@
 using TerraLeague.Buffs;
 using TerraLeague.NPCs;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,49 +18,49 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 64;
-            projectile.height = 64;
-            projectile.alpha = 0;
-            projectile.timeLeft = 600;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.magic = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.width = 64;
+            Projectile.height = 64;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (projectile.velocity.X > 12)
-                projectile.velocity.X = 12;
-            else if (projectile.velocity.X < -12)
-                projectile.velocity.X = -12;
+            if (Projectile.velocity.X > 12)
+                Projectile.velocity.X = 12;
+            else if (Projectile.velocity.X < -12)
+                Projectile.velocity.X = -12;
 
-            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Wet);
+            Lighting.AddLight(Projectile.position, 0f, 0f, 0.5f);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 211);
             dust.alpha = 0;
             dust.noLight = false;
             dust.noGravity = true;
             dust.scale = 1.4f;
 
-            dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Dusts.BubbledBubble>(), 0f, 0, 100, default, 2.5f);
+            dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustType<Dusts.BubbledBubble>(), 0f, 0, 100, default, 2.5f);
             dust.noGravity = true;
 
-            projectile.velocity.Y += 0.4f;
+            Projectile.velocity.Y += 0.4f;
 
             base.AI();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.netUpdate = true;
+            Projectile.netUpdate = true;
 
-            if (!target.boss)
+            if (!NPCID.Sets.ShouldBeCountedAsBoss[target.type])
             {
                 target.AddBuff(BuffType<TideCallerBubbled>(), 120);
-                Projectile.NewProjectile(target.Center, Vector2.Zero, ProjectileType<TideCallerStaff_BubbleVisual>(), 0, 0, projectile.owner, target.whoAmI);
+                Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), target.Center, Vector2.Zero, ProjectileType<TideCallerStaff_BubbleVisual>(), 0, 0, Projectile.owner, target.whoAmI);
             }
             
             base.OnHitNPC(target, damage, knockback, crit);
@@ -68,15 +69,15 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             if (Main.netMode != NetmodeID.Server)
-                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/Sploosh").WithVolume(.7f), projectile.position);
+                //Terraria.Audio.SoundEngine.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/Sploosh").WithVolume(.7f), Projectile.position);
 
             for (int i = 0; i < 30; i++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Wet, 0f, -3f, 0, default, 2f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 211, 0f, -3f, 0, default, 2f);
             }
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Dusts.BubbledBubble>(), -5 + i, 0, 100, default, 4f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustType<Dusts.BubbledBubble>(), -5 + i, 0, 100, default, 4f);
                 dust.noGravity = true;
             }
         }

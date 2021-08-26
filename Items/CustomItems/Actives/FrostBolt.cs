@@ -49,13 +49,13 @@ namespace TerraLeague.Items.CustomItems.Actives
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
-                    Projectile proj = Projectile.NewProjectileDirect(position, perturbedSpeed, projType, damage, knockback, player.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), position, perturbedSpeed, projType, damage, knockback, player.whoAmI);
                     startingAngle -= 4f;
                 }
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
+                    PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.Item.type);
 
                 SetCooldown(player);
             }
@@ -68,7 +68,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void Efx(Player user)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 11), user.Center);
+            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 11), user.Center);
             TerraLeague.PlaySoundWithPitch(user.MountedCenter, 2, 28, -0f);
         }
     }

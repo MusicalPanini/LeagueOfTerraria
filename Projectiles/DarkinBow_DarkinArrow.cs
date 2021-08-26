@@ -18,36 +18,36 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.friendly = true;
-            projectile.penetrate = -1;
-            projectile.alpha = 0;
-            projectile.scale = 1f;
-            projectile.timeLeft = 60;
-            projectile.ranged = true;
-            projectile.extraUpdates = 1;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 0;
+            Projectile.scale = 1f;
+            Projectile.timeLeft = 60;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, 1f - (projectile.alpha/255f), 0f, 0f);
-            projectile.scale = 1 + projectile.ai[0];
-            projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+            Lighting.AddLight(Projectile.Center, 1f - (Projectile.alpha/255f), 0f, 0f);
+            Projectile.scale = 1 + Projectile.ai[0];
+            Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X) + 1.57f;
 
-            if (projectile.timeLeft < 10)
+            if (Projectile.timeLeft < 10)
             {
-                projectile.alpha += 26;
+                Projectile.alpha += 26;
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 0, default, projectile.scale + 0.2f);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Blood, 0, 0, 0, default, Projectile.scale + 0.2f);
             dust.noGravity = true;
             dust.velocity.Y *= 0.1f;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             return true;
         }
 

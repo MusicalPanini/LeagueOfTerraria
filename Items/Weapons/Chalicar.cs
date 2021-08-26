@@ -15,29 +15,30 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Chalicar of Setaka");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 14;
-            item.width = 38;
-            item.height = 38;
-            item.ranged = true;
-            item.useTime = 25;
-            item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 1.5f;
-            item.value = 10000;
-            item.rare = ItemRarityID.Green;
-            item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
-            item.shootSpeed = 12f;
-            item.shoot = ProjectileType<Projectiles.Chalicar_Disk>();
-            item.noMelee = true;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.noUseGraphic = true;
+            Item.damage = 14;
+            Item.width = 38;
+            Item.height = 38;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useTime = 25;
+            Item.useAnimation = 25;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 1.5f;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
+            Item.shootSpeed = 12f;
+            Item.shoot = ProjectileType<Projectiles.Chalicar_Disk>();
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new Ricochet(this));
             abilityItem.ChampQuote = "Better duck!";
             abilityItem.IsAbilityItem = true;
@@ -51,20 +52,15 @@ namespace TerraLeague.Items.Weapons
                 return false;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return true;
-        }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("TerraLeague:IronGroup", 10);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 10);
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddRecipeGroup("TerraLeague:IronGroup", 10)
+            .AddRecipeGroup("TerraLeague:GoldGroup", 10)
+            .AddIngredient(ItemType<Sunstone>(), 10)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }

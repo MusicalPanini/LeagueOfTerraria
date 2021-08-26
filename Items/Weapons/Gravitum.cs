@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Gravitum");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         string GetWeaponTooltip()
@@ -26,23 +27,23 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 100;
-            item.magic = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 66;
-            item.height = 38;
-            item.useAnimation = 30;
-            item.useTime = 30;
-            item.shootSpeed = 12f;
-            item.noMelee = true;
-            item.knockBack = 2;
-            item.value = 310000 * 5;
-            item.rare = ItemRarityID.Purple;
-            item.shoot = ProjectileType<Gravitum_Orb>();
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 111);
-            item.autoReuse = true;
+            Item.damage = 100;
+            Item.DamageType = DamageClass.Magic;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.width = 66;
+            Item.height = 38;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
+            Item.shootSpeed = 12f;
+            Item.noMelee = true;
+            Item.knockBack = 2;
+            Item.value = 310000 * 5;
+            Item.rare = ItemRarityID.Purple;
+            Item.shoot = ProjectileType<Gravitum_Orb>();
+            Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 111);
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new BindingEclipse(this));
             abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Grv));
             abilityItem.ChampQuote = "Darkness will weigh upon them";
@@ -64,25 +65,23 @@ namespace TerraLeague.Items.Weapons
             return base.CanUseItem(player);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo -= 5;
-            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX - 20, speedY - 20)) * 20;
+            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(velocity.X - 20, velocity.Y - 20)) * 20;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
                 position += muzzleOffset;
             }
-            Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, -1);
-            return false;
+            //Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, -1);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.LunarBar, 16);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemID.LunarBar, 16)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
         public override Vector2? HoldoutOffset()

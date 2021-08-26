@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class BlueBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Crest of Insight");
             Description.SetDefault("Greatly increased Max Mana" +

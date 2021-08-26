@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/RainofArrows";
+            return "TerraLeague/AbilityImages/RainofArrows";
         }
 
         public override string GetAbilityTooltip()
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.75f);
+            return (int)(abilityItem.Item.damage * 0.75f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -99,7 +99,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     //Vector2 velocity = new Vector2(Main.rand.NextFloat(-3, 0), Main.rand.NextFloat(-6, -5) * 1.5f);
                     //Vector2 velocity2 = new Vector2(Main.rand.NextFloat(0, 3), Main.rand.NextFloat(-6, -5) * 1.5f);
 
-                    Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
+                    Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                     //Projectile.NewProjectileDirect(position, velocity2, projType, damage, knockback, player.whoAmI);
                 }
 
@@ -111,7 +111,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item5, player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item5, player.Center);
         }
     }
 }

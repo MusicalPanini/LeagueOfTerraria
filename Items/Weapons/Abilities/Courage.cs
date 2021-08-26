@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/Courage";
+            return "TerraLeague/AbilityImages/Courage";
         }
 
         public override string GetAbilityTooltip()

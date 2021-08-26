@@ -3,12 +3,13 @@ using Terraria.ModLoader;
 using TerraLeague.NPCs;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
+using Terraria.DataStructures;
 
 namespace TerraLeague.Buffs
 {
     public class Stasis : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Stasis");
             Description.SetDefault("Frozen in time");
@@ -27,11 +28,11 @@ namespace TerraLeague.Buffs
     {
         public override void PreUpdate()
         {
-            if (player.HasBuff(BuffType<Stasis>()))
+            if (Player.HasBuff(BuffType<Stasis>()))
             {
-                player.position = player.oldPosition;
-                player.velocity = Vector2.Zero;
-                Lighting.AddLight(player.Center, 1, 1, 0);
+                Player.position = Player.oldPosition;
+                Player.velocity = Vector2.Zero;
+                Lighting.AddLight(Player.Center, 1, 1, 0);
             }
 
 
@@ -40,7 +41,7 @@ namespace TerraLeague.Buffs
 
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
-            if (player.HasBuff(BuffType<Stasis>()))
+            if (Player.HasBuff(BuffType<Stasis>()))
                 return false;
             else
                 return base.CanBeHitByNPC(npc, ref cooldownSlot);
@@ -48,21 +49,21 @@ namespace TerraLeague.Buffs
 
         public override bool CanBeHitByProjectile(Projectile proj)
         {
-            if (player.HasBuff(BuffType<Stasis>()))
+            if (Player.HasBuff(BuffType<Stasis>()))
                 return false;
             else
                 return base.CanBeHitByProjectile(proj);
         }
 
-        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
-            if (player.HasBuff(BuffType<Stasis>()))
+            if (drawInfo.drawPlayer.HasBuff(BuffType<Stasis>()))
             {
                 r = 1;
                 g = 1;
                 b = 0;
             }
-
+            base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         }
     }
 }

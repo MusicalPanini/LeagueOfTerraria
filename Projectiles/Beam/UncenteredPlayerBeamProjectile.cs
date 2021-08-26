@@ -19,12 +19,12 @@ namespace TerraLeague.Projectiles.Beam
 		// The AI of the projectile
 		public override void AI()
 		{
-			BeamAI(projectile.Center, projectile.Center + projectile.velocity);
+			BeamAI(Projectile.Center, Projectile.Center + Projectile.velocity);
 		}
 
 		public override void BeamAI(Vector2 Center, Vector2 TargetPosition)
         {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
 
 			BeamPositioning(Center, TargetPosition);
 			ChargeLaser(Center);
@@ -44,12 +44,12 @@ namespace TerraLeague.Projectiles.Beam
 			{
 				normalizedTarget = -Vector2.UnitY;
 			}
-			normalizedTarget = Vector2.Normalize(Vector2.Lerp(normalizedTarget, Vector2.Normalize(projectile.velocity), 1 - (1f / turningFactor)));
-			if (normalizedTarget.X != projectile.velocity.X || normalizedTarget.Y != projectile.velocity.Y)
+			normalizedTarget = Vector2.Normalize(Vector2.Lerp(normalizedTarget, Vector2.Normalize(Projectile.velocity), 1 - (1f / turningFactor)));
+			if (normalizedTarget.X != Projectile.velocity.X || normalizedTarget.Y != Projectile.velocity.Y)
 			{
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
-			projectile.velocity = normalizedTarget;
+			Projectile.velocity = normalizedTarget;
         }
 	}
 }

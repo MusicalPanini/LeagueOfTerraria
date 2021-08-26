@@ -11,6 +11,7 @@ using TerraLeague.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Dusts;
 using Terraria.Audio;
+using Terraria.ModLoader.Utilities;
 
 namespace TerraLeague.NPCs
 {
@@ -18,30 +19,30 @@ namespace TerraLeague.NPCs
     {
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[npc.type] = 14;
+            Main.npcFrameCount[NPC.type] = 14;
             DisplayName.SetDefault("Void Rift");
         }
         public override void SetDefaults()
         {
-            npc.width = 128;
-            npc.height = 128;
-            npc.defense = 0;
-            npc.lifeMax = 10;
-            npc.HitSound = new LegacySoundStyle(3, 5);
-            npc.DeathSound = new LegacySoundStyle(4, 7);
-            npc.value = 0;
-            npc.buffImmune[BuffType<TideCallerBubbled>()] = true;
-            npc.buffImmune[BuffType<Stunned>()] = true;
-            npc.knockBackResist = 0f;
-            npc.SpawnedFromStatue = true;
-            npc.noGravity = true;
-            npc.behindTiles = true;
+            NPC.width = 128;
+            NPC.height = 128;
+            NPC.defense = 0;
+            NPC.lifeMax = 10;
+            NPC.HitSound = new LegacySoundStyle(3, 5);
+            NPC.DeathSound = new LegacySoundStyle(4, 7);
+            NPC.value = 0;
+            NPC.buffImmune[BuffType<TideCallerBubbled>()] = true;
+            NPC.buffImmune[BuffType<Stunned>()] = true;
+            NPC.knockBackResist = 0f;
+            NPC.SpawnedFromStatue = true;
+            NPC.noGravity = true;
+            NPC.behindTiles = true;
             base.SetDefaults();
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (NPC.CountNPCS(npc.type) != 0)
+            if (NPC.CountNPCS(NPC.type) != 0)
                 return 0;
             float height = spawnInfo.player.position.Y;
             if (spawnInfo.player.ZoneUndergroundDesert )
@@ -53,7 +54,7 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI()
         {
-            Lighting.AddLight(npc.Center, 1,0,1);
+            Lighting.AddLight(NPC.Center, 1,0,1);
             return base.PreAI();
         }
 
@@ -71,12 +72,12 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life > 0)
+            if (NPC.life > 0)
             {
                 int count = 0;
-                while ((double)count < damage / (double)npc.lifeMax * 50.0)
+                while ((double)count < damage / (double)NPC.lifeMax * 50.0)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, Color.Purple, 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PortalBolt, 0f, 0f, 0, Color.Purple, 1.5f);
                     dust.noGravity = true;
                     count++;
                     break;
@@ -86,7 +87,7 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.PortalBolt, 0f, 0f, 0, Color.Purple, 1.5f);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.PortalBolt, 0f, 0f, 0, Color.Purple, 1.5f);
                     dust.velocity *= 2f;
                     dust.noGravity = true;
                 }
@@ -95,23 +96,18 @@ namespace TerraLeague.NPCs
             base.HitEffect(hitDirection, damage);
         }
 
-        public override void NPCLoot()
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            base.NPCLoot();
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-        {
-            //Texture2D texture = Main.npcTexture[npc.type];
+            //Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             //spriteBatch.Draw
             //(
             //    texture,
-            //    npc.Center - Main.screenPosition,
+            //    NPC.Center - Main.screenPosition,
             //    new Rectangle(0, 0, texture.Width, texture.Height),
             //    Color.White,
-            //    npc.rotation,
+            //    NPC.rotation,
             //    texture.Size() * 0.5f,
-            //    npc.scale,
+            //    NPC.scale,
             //    SpriteEffects.None,
             //    0f
             //);
@@ -119,15 +115,15 @@ namespace TerraLeague.NPCs
 
         public override void FindFrame(int frameHeight)
         {
-            if ((int)npc.frameCounter > 13)
-                npc.frameCounter = -60;
+            if ((int)NPC.frameCounter > 13)
+                NPC.frameCounter = -60;
 
-            if ((int)npc.frameCounter < 0)
-                npc.frame.Y = (((int)npc.frameCounter * -1) % 4) * frameHeight;
+            if ((int)NPC.frameCounter < 0)
+                NPC.frame.Y = (((int)NPC.frameCounter * -1) % 4) * frameHeight;
             else
-                npc.frame.Y = (int)npc.frameCounter * frameHeight;
+                NPC.frame.Y = (int)NPC.frameCounter * frameHeight;
 
-            npc.frameCounter += 0.25d;
+            NPC.frameCounter += 0.25d;
         }
         
     }

@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/NoxiousTrap";
+            return "TerraLeague/AbilityImages/NoxiousTrap";
         }
 
         public override string GetAbilityTooltip()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 1.5);
+            return (int)(abilityItem.Item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
-              ) + " minion damage";
+              ) + " summon damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -87,7 +87,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
                 for (int i = 0; i < 2 + player.maxTurrets; i++)
                 {
-                    Projectile.NewProjectile(position, velocity + (velocity * 0.5f * i), projType, damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity + (velocity * 0.5f * i), projType, damage, knockback, player.whoAmI);
 
                 }
 
@@ -99,7 +99,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item1, player.Center);
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item1, player.Center);
         }
     }
 }

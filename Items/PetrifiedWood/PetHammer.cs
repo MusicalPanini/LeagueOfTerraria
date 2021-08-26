@@ -11,39 +11,33 @@ namespace TerraLeague.Items.PetrifiedWood
         {
             DisplayName.SetDefault("Petrified Wood Hammer");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 6;
-            item.melee = true;
-            item.width = 32;
-            item.height = 32;
-            item.useTime = 29;
-            item.useAnimation = 29;
-            item.hammer = 25;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 5.5f;
-            item.value = 100;
-            item.rare = ItemRarityID.White;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.damage = 6;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 32;
+            Item.height = 32;
+            Item.useTime = 29;
+            Item.useAnimation = 29;
+            Item.hammer = 25;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 5.5f;
+            Item.value = 100;
+            Item.rare = ItemRarityID.White;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
             base.SetDefaults();
-        }
-
-        public override bool UseItem(Player player)
-        {
-            return base.UseItem(player);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PetWood>(), 8);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-            base.AddRecipes();
+            CreateRecipe()
+            .AddIngredient(ItemType<PetWood>(), 8)
+            .AddTile(TileID.WorkBenches)
+            .Register();
         }
     }
 }

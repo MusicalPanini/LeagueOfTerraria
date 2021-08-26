@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class FrozenCooldown : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frozen Cooldown");
             Main.debuff[Type] = true;

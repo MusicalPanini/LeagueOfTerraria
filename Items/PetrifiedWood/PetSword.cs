@@ -11,36 +11,31 @@ namespace TerraLeague.Items.PetrifiedWood
         {
             DisplayName.SetDefault("Petrified Wood Sword");
             base.SetStaticDefaults();
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 9;
-            item.melee = true;
-            item.width = 32;
-            item.height = 32;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 5f;
-            item.value = 100;
-            item.rare = ItemRarityID.White;
-            item.UseSound = SoundID.Item1;
+            Item.damage = 9;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 32;
+            Item.height = 32;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 5f;
+            Item.value = 100;
+            Item.rare = ItemRarityID.White;
+            Item.UseSound = SoundID.Item1;
             base.SetDefaults();
-        }
-
-        public override bool UseItem(Player player)
-        {
-            return base.UseItem(player);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<PetWood>(), 7);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<PetWood>(), 7)
+            .AddTile(TileID.WorkBenches)
+            .Register();
             base.AddRecipes();
         }
 

@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/ToxicShot";
+            return "TerraLeague/AbilityImages/ToxicShot";
         }
 
         public override string GetAbilityTooltip()

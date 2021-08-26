@@ -7,7 +7,7 @@ namespace TerraLeague.Buffs
     public class Hemorrhage : ModBuff
     {
         public bool initial = true;
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hemorrhaging");
             Description.SetDefault("You are bleeding");

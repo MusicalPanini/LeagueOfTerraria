@@ -5,6 +5,7 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -19,26 +20,27 @@ namespace TerraLeague.Items.Weapons
 		{
 			DisplayName.SetDefault("Celestial Staff");
             Tooltip.SetDefault("");
+            Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 26;
-            item.mana = 18;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.magic = true;
-            item.useTime = 35;
-            item.useAnimation = 35;
-            item.noMelee = true;
-            item.knockBack = 0;
-            item.value = 4000;
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item8;
-            item.shoot = ProjectileType<CelestialStaff_Starcall>();
-            item.shootSpeed = 12f;
-            item.autoReuse = true;
+            Item.damage = 26;
+            Item.mana = 18;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.DamageType = DamageClass.Magic;
+            Item.useTime = 35;
+            Item.useAnimation = 35;
+            Item.noMelee = true;
+            Item.knockBack = 0;
+            Item.value = 4000;
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = SoundID.Item8;
+            Item.shoot = ProjectileType<CelestialStaff_Starcall>();
+            Item.shootSpeed = 12f;
+            Item.autoReuse = true;
 
-            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new AstralInfusion(this));
             abilityItem.SetAbility(AbilityType.R, new Wish(this));
             abilityItem.ChampQuote = "Stars, hear me";
@@ -72,14 +74,14 @@ namespace TerraLeague.Items.Weapons
             base.ModifyTooltips(tooltips);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             position = player.Center;
             position.X += Main.rand.NextFloat(-300, 300);
             position.Y -= 600;
-            Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 14f);
-            item.damage = 26;
-            Projectile.NewProjectile(position, velocity, type, damage, 0, player.whoAmI);
+            velocity = TerraLeague.CalcVelocityToMouse(position, 14f);
+            Item.damage = 26;
+            Projectile.NewProjectile(source, position, velocity, type, damage, 0, player.whoAmI);
             return false;
         }
 
@@ -90,14 +92,12 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddIngredient(ItemType<CelestialBar>(), 10);
-            recipe2.AddIngredient(ItemID.PurificationPowder, 5);
-            recipe2.AddIngredient(ItemID.FallenStar, 5);
-            recipe2.AddIngredient(ItemID.Topaz, 1);
-            recipe2.AddTile(TileID.Anvils);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            CreateRecipe()
+            .AddIngredient(ItemType<CelestialBar>(), 10)
+            .AddIngredient(ItemID.PurificationPowder, 5)
+            .AddIngredient(ItemID.FallenStar, 5)
+            .AddIngredient(ItemID.Topaz, 1)
+            .Register();
         }
     }
 }

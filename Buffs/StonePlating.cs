@@ -6,7 +6,7 @@ namespace TerraLeague.Buffs
 {
     public class StonePlating : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Stone Skin");
             Description.SetDefault("Your armor and resist have been increased");
