@@ -25,14 +25,14 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 55;
+            Item.damage = 75;
             Item.width = 48;
             Item.height = 48;
             Item.DamageType = DamageClass.Magic;
             Item.useTime = 35;
             Item.useAnimation = 35;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.knockBack = 5;
+            Item.knockBack = 10;
             Item.mana = 40;
             Item.value = 35000;
             Item.rare = ItemRarityID.Lime;

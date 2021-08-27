@@ -32,6 +32,8 @@ namespace TerraLeague.Projectiles
             //DrawOriginOffsetY = 192;
             Projectile.hide = true;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.idStaticNPCHitCooldown = 180;
+            Projectile.usesIDStaticNPCImmunity = true; 
         }
 
         public override void AI()
@@ -59,6 +61,7 @@ namespace TerraLeague.Projectiles
             }
             if (Projectile.timeLeft == 84)
             {
+                Projectile.friendly = false;
                 Projectile.velocity *= 0;
                 Projectile.extraUpdates = 0;
                 for (int i = 0; i < 3; i++)
@@ -72,7 +75,7 @@ namespace TerraLeague.Projectiles
                     for (int i = 0; i < numberProjectiles; i++)
                     {
                         Vector2 perturbedSpeed = new Vector2(0, -16).RotatedByRandom(MathHelper.ToRadians(16));
-                        Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TerrorOfTheVoid_VorpalSpike>(), Projectile.damage, 1, Projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TerrorOfTheVoid_VorpalSpike>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                     }
                 }
             }
@@ -87,8 +90,6 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            //target.velocity = new Vector2(0, -16);
-
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
