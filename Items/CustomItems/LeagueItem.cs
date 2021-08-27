@@ -16,21 +16,6 @@ namespace TerraLeague.Items.CustomItems
     {
         public Passive[] Passives = null;
         public Active Active = null;
-        public bool CanBeMasterWorkItem;
-        public bool IsMasterWorkItem { get; private set; }
-        public static Texture2D MasterWorkIcon = ModContent.Request<Texture2D>("TerraLeague/Textures/UI/MasterWorkIcon").Value;
-
-        public override TagCompound Save()
-        {
-            return new TagCompound { ["Masterwork"] = CanBeMasterWorkItem };
-        }
-
-        public override void Load(TagCompound tag)
-        {
-            IsMasterWorkItem = tag.GetBool("Masterwork");
-            base.Load(tag);
-        }
-
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -600,20 +585,6 @@ namespace TerraLeague.Items.CustomItems
                 return doesKill != 0;
             }
             return null;
-        }
-
-        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            if (IsMasterWorkItem)
-            {
-                TerraLeague.GetTextureIfNull(ref MasterWorkIcon, "TerraLeague/Textures/UI/MasterWorkIcon");
-
-                Vector2 center = new Vector2(position.X + (frame.Width * scale / 2), position.Y + (frame.Height * scale / 2));
-
-                spriteBatch.Draw(MasterWorkIcon, center - new Vector2(16, 16), new Rectangle(0, 0, 32, 32), drawColor, 0, origin, 1, SpriteEffects.None, 0);
-            }
-
-            base.PostDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
     }
 }
