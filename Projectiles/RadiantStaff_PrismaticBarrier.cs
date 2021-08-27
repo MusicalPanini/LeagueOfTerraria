@@ -186,7 +186,7 @@ namespace TerraLeague.Projectiles
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = height = 10; 
             return true;
