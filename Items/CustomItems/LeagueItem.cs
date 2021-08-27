@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace TerraLeague.Items.CustomItems
 {
@@ -591,11 +592,13 @@ namespace TerraLeague.Items.CustomItems
 
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            //if (Mas)
+            if (IsMasterWorkItem)
             {
                 TerraLeague.GetTextureIfNull(ref MasterWorkIcon, "TerraLeague/Textures/UI/MasterWorkIcon");
 
-                spriteBatch.Draw(MasterWorkIcon, new Rectangle(0, 0, 32, 32), default);
+                Vector2 center = new Vector2(position.X + (frame.Width * scale / 2), position.Y + (frame.Height * scale / 2));
+
+                spriteBatch.Draw(MasterWorkIcon, center - new Vector2(16, 16), new Rectangle(0, 0, 32, 32), drawColor, 0, origin, 1, SpriteEffects.None, 0);
             }
 
             base.PostDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
