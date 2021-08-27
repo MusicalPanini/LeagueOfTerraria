@@ -588,5 +588,17 @@ namespace TerraLeague.Items.CustomItems
             }
             return null;
         }
+
+        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            //if (Mas)
+            {
+                TerraLeague.GetTextureIfNull(ref MasterWorkIcon, "TerraLeague/Textures/UI/MasterWorkIcon");
+
+                spriteBatch.Draw(MasterWorkIcon, new Rectangle(0, 0, 32, 32), default);
+            }
+
+            base.PostDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+        }
     }
 }
