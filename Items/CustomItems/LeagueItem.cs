@@ -20,6 +20,18 @@ namespace TerraLeague.Items.CustomItems
         public bool IsMasterWorkItem { get; private set; }
         public static Texture2D MasterWorkIcon = ModContent.Request<Texture2D>("TerraLeague/Textures/UI/MasterWorkIcon").Value;
 
+        public override TagCompound Save()
+        {
+            return new TagCompound { ["Masterwork"] = CanBeMasterWorkItem };
+        }
+
+        public override void Load(TagCompound tag)
+        {
+            IsMasterWorkItem = tag.GetBool("Masterwork");
+            base.Load(tag);
+        }
+
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (Passives != null)
