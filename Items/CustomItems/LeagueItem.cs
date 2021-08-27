@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +15,9 @@ namespace TerraLeague.Items.CustomItems
     {
         public Passive[] Passives = null;
         public Active Active = null;
-
-        // public int armor = 0;
-        // public int resist = 0;
-        // public double meleeAtkSpd = 0;
-        // public double ammoConsumeChance = 0;
-        // public double cdr = 0;
-        // public double cdr = 0;
-
+        public bool CanBeMasterWorkItem;
+        public bool IsMasterWorkItem { get; private set; }
+        public static Texture2D MasterWorkIcon = ModContent.Request<Texture2D>("TerraLeague/Textures/UI/MasterWorkIcon").Value;
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
