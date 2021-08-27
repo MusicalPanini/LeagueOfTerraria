@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dead Man's Plate");
-            Tooltip.SetDefault("Increases maximum life by 30" +
+            Tooltip.SetDefault("Increases maximum life by 20" +
                 "\nIncreases armor by 6" +
                 "\nImmunity to Weakness and Broken Armor");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 30;
+            player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
 
             player.buffImmune[BuffID.Weak] = true;

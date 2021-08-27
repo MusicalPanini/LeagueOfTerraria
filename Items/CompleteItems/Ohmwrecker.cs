@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ohmwrecker");
-            Tooltip.SetDefault("Increases maximum life by 40" +
+            Tooltip.SetDefault("Increases maximum life by 20" +
                 "\nIncreases armor by 6" +
                 "\nIncreases life regeneration by 3" +
                 "\nIncreases ability haste by 10" +
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.moveSpeed += 0.08f;
-            player.statLifeMax2 += 40;
+            player.statLifeMax2 += 20;
             player.lifeRegen += 3;
             player.maxTurrets += 1;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;

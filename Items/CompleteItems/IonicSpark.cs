@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Ionic Spark");
             Tooltip.SetDefault("12% increased ranged attack speed" +
-                "\nIncreases maximum life by 20");
+                "\nIncreases maximum life by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12;
             base.UpdateAccessory(player, hideVisual);
         }

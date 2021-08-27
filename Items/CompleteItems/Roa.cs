@@ -15,8 +15,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Rod of Ages");
             Tooltip.SetDefault("3% increased magic and summon damage" +
-                "\nIncreases maximum life by 20" +
-                "\nIncreases maximum mana by 20");
+                "\nIncreases maximum life by 10" +
+                "\nIncreases maximum mana by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -38,8 +38,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20;
-            player.statManaMax2 += 20;
+            player.statLifeMax2 += 10;
+            player.statManaMax2 += 10;
             player.GetDamage(DamageClass.Magic) += 0.03f;
             player.GetDamage(DamageClass.Summon) += 0.03f;
 

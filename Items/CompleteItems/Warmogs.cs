@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Warmog's Armor");
-            Tooltip.SetDefault("Increases maximum life by 50" +
+            Tooltip.SetDefault("Increases maximum life by 40" +
                 "\nIncreases life regeneration by 50%" +
                 "\nIncreases ability haste by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

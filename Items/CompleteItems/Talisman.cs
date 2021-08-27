@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Talisman of Ascension");
-            Tooltip.SetDefault("Increases maximum life by 20" +
+            Tooltip.SetDefault("Increases maximum life by 10" +
                 "\nIncreases life regeneration by 2" +
                 "\nIncreases mana regeneration by 50%" +
                 "\n10% increased healing power" +
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.moveSpeed += 0.05f;
             player.lifeRegen += 2;
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;

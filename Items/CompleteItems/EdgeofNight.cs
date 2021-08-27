@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Edge of Night");
             Tooltip.SetDefault("5% increased melee damage" +
-                "\nIncreases maximum life by 20" +
+                "\nIncreases maximum life by 10" +
                 "\nIncreases melee armor penetration by 7");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Melee) += 0.05f;
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
         }
 
