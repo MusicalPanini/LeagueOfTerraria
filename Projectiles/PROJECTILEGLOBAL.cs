@@ -98,12 +98,6 @@ namespace TerraLeague.Projectiles
                 return base.CanHitPlayer(projectile, target);
         }
 
-        public override bool TileCollideStyle(Projectile projectile, ref int width, ref int height, ref bool fallThrough)
-        {
-
-            return base.TileCollideStyle(projectile, ref width, ref height, ref fallThrough);
-        }
-
         public void SyncProjectileKill(Projectile projectile)
         {
             if (Main.LocalPlayer.whoAmI != projectile.whoAmI)
