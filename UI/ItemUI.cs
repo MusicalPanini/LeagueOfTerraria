@@ -607,7 +607,7 @@ namespace TerraLeague.UI
                             //string heading = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.Item.type).Value);
 
                             int baseTooltipLines = 0;
-                            if (modItem is MasterworkItem masterItem)
+                            if (modItem is MasterworkItem masterItem && masterItem.IsMasterWorkItem)
                             {
                                 ToolTip += "\n" + masterItem.MasterworkTooltip();
                             }
