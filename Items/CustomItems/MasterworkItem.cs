@@ -65,12 +65,27 @@ namespace TerraLeague.Items.CustomItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             UpdateMasterwork(player);
+            player.GetModPlayer<PLAYERGLOBAL>().HasMasterworkEquipped |= IsMasterWorkItem;
             base.UpdateAccessory(player, hideVisual);
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
         {
-            return base.CanEquipAccessory(player, slot);
+            if (!player.GetModPlayer<PLAYERGLOBAL>().HasMasterworkEquipped || !IsMasterWorkItem)
+            {
+                return base.CanEquipAccessory(player, slot);
+            }
+            else
+            {
+                if (player.armor[slot].ModItem is MasterworkItem masterItem)
+                {
+                    if (masterItem.IsMasterWorkItem)
+                    {
+                        return base.CanEquipAccessory(player, slot);
+                    }
+                }
+            }
+            return false;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -85,14 +100,14 @@ namespace TerraLeague.Items.CustomItems
             {
                 if (IsMasterWorkItem)
                 {
-                    tooltips.Insert(1, new TooltipLine(TerraLeague.instance, "IsMasterwork", LeagueTooltip.CreateColorString(Color.OrangeRed, "MASTERWORK")));
+                    //tooltips.Insert(1, new TooltipLine(TerraLeague.instance, "IsMasterwork", LeagueTooltip.CreateColorString(Color.OrangeRed, "MASTERWORK")));
                 
                     int startPos = tooltips.FindIndex(x => x.Name == "Tooltip0" && x.mod == "Terraria");
                     string[] masterworkLines = MasterworkTooltip().Split('\n');
 
                     for (int i = 0; i < masterworkLines.Length; i++)
                     {
-                        tooltips.Insert(startPos, new TooltipLine(TerraLeague.instance, "MasterworkTooltip" + i, masterworkLines[i])); 
+                        tooltips.Insert(startPos + i, new TooltipLine(TerraLeague.instance, "MasterworkTooltip" + i, masterworkLines[i])); 
                     }
                         
                     for (int i = 0; i < tooltips.Count; i++)
