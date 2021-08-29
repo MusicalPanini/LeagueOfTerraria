@@ -23,6 +23,7 @@ namespace TerraLeague.Projectiles
             Projectile.alpha = 255;
             Projectile.scale = 1f;
             Projectile.timeLeft = 60;
+            Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = true;
         }
@@ -30,19 +31,9 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             Dust dust;
-
-            dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, Projectile.velocity.X, Projectile.velocity.Y, 100, default, 1.5f);
+            dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 197, 0, 0, 200, default, 2f);
             dust.noGravity = true;
-            dust.noLight = true;
-            dust.velocity *= 0.1f;
-
-            for (int i = 0; i < 2; i++)
-            {
-                Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Vortex, Projectile.velocity.X, Projectile.velocity.Y, 124, default, 1.25f);
-                dust2.noGravity = true;
-                dust2.noLight = true;
-                dust2.velocity *= 0.6f;
-            }
+            dust.velocity = Projectile.velocity * 1.6f;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -59,11 +50,6 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            var sound = TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 10, 0);
-            if (sound != null)
-            {
-                sound.Volume *= 0.5f;
-            }
             base.Kill(timeLeft);
         }
 
