@@ -661,6 +661,7 @@ namespace TerraLeague
         // Accessories
         public int[] accessoryCooldown = new int[6];
         public double[] accessoryStat = new double[6];
+        public bool HasMasterworkEquipped = false;
 
         #region Starting Items
         public bool dblade = false;
@@ -823,6 +824,8 @@ namespace TerraLeague
             darkinCostumeForceVanity = false;
 
             #region Accessories
+            HasMasterworkEquipped = false;
+
             // Starting
             dblade = false;
             dring = false;
