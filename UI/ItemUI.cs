@@ -157,6 +157,7 @@ namespace TerraLeague.UI
 
         public override void Update(GameTime gameTime)
         {
+            Width.Set(96, 0f);
             MoveMode(Anchor, ref Config.sumUIXOffset, ref Config.sumUIYOffset);
             base.Update(gameTime);
         }
@@ -421,6 +422,7 @@ namespace TerraLeague.UI
             itemImage.Top.Pixels = 0;//-6;
             Append(itemImage);
 
+            TerraLeague.GetTextureIfNull(ref masterwork_texture, MasterworkItem.MasterworkIconPath);
             masterWorkImage = new UIImage(masterwork_texture);
             masterWorkImage.Width.Pixels = Width.Pixels;
             masterWorkImage.Height.Pixels = Height.Pixels;
@@ -600,22 +602,30 @@ namespace TerraLeague.UI
                             }
 
                             string ToolTip = "";
-                            ToolTip = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.Item.type).Value);
+                            ToolTip = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, modItem.Item.Name);
 
                             //string heading = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.Item.type).Value);
-                            var itemsBaseTooltip = Lang.GetTooltip(modItem.Item.type);
+
+                            int baseTooltipLines = 0;
+                            if (modItem is MasterworkItem masterItem)
+                            {
+                                ToolTip += "\n" + masterItem.MasterworkTooltip();
+                            }
+                            else
+                            {
+                                ItemTooltip itemsBaseTooltip = Lang.GetTooltip(modItem.Item.type);
+                                baseTooltipLines = itemsBaseTooltip.Lines;
+                                if (baseTooltipLines == 1 && itemsBaseTooltip.GetLine(0) == "")
+                                    baseTooltipLines = 0;
+                                for (int i = 0; i < baseTooltipLines; i++)
+                                {
+                                    ToolTip += "\n" + itemsBaseTooltip.GetLine(i);
+                                }
+                            }
 
                             //string[] compiledTooltip = new string[];
                             //compiledTooltip[0] = heading;
 
-                            int baseTooltipLines = itemsBaseTooltip.Lines;
-                            if (baseTooltipLines == 1 && itemsBaseTooltip.GetLine(0) == "")
-                                baseTooltipLines = 0;
-
-                            for (int i = 0; i < baseTooltipLines; i++)
-                            {
-                                ToolTip += "\n" + itemsBaseTooltip.GetLine(i);
-                            }
                             for (int i = 0; i < activePassiveTooltips.Count; i++)
                             {
                                 ToolTip += "\n" + activePassiveTooltips[i];
