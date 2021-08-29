@@ -10,8 +10,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Stoneplate : LeagueItem
+    public class Stoneplate : MasterworkItem
     {
+        public override string MasterworkName => "Dvarapala's Stoneplate";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gargoyle's Stoneplate");
@@ -73,6 +75,18 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases armor by 5" + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases resist by 5" + LeagueTooltip.CreateColorString(MasterColor, "8");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 3;
         }
     }
 }

@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Talisman : LeagueItem
+    public class Talisman : MasterworkItem
     {
+        public override string MasterworkName => "Vitality of the Ascended";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Talisman of Ascension");
@@ -35,7 +37,6 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.moveSpeed += 0.05f;
             player.lifeRegen += 2;
             player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
@@ -71,6 +72,24 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nIncreases life regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "3") +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "70%") +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased healing power" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "25");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.lifeRegen += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.05;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

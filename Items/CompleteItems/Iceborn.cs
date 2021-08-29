@@ -8,12 +8,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Iceborn : LeagueItem
+    public class Iceborn : MasterworkItem
     {
+        public override string MasterworkName => "Frozen Fist";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Iceborn Gauntlet");
-            Tooltip.SetDefault("Increases armor by 7" +
+            Tooltip.SetDefault("Increases armor by 6" +
                 "\nIncreases maximum mana by 40" +
                 "\nIncreases ability haste by 15" +
                 "\nIncreases melee knockback" +
@@ -38,9 +40,9 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().armor += 7;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
             player.statManaMax2 += 40;
-            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;
             player.noKnockback = true;
             player.kbGlove = true;
 
@@ -58,6 +60,22 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum mana by " + LeagueTooltip.CreateColorString(MasterColor, "50") +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "10") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "25") +
+                "\nIncreases melee knockback" +
+                "\nGrants immunity to knockback";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statManaMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

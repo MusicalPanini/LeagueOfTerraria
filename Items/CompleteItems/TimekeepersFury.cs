@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class TimekeepersFury : LeagueItem
+    public class TimekeepersFury : MasterworkItem
     {
+        public override string MasterworkName => "Timekeeper's Warclock";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Timekeeper's Wrath");
@@ -65,11 +67,27 @@ namespace TerraLeague.Items.CompleteItems
 
         public override string GetStatText()
         {
-            if (Active.currentlyActive)
+            if (Passives[0].currentlyActive)
             {
                 return Impendulum.GetStat.ToString();
             }
             return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "6%") + " increased magic and summon damage" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nIncreases maximum mana by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\n[c/007399:TOUCH OF DEATH's magic pen is based on IMPENDULUM]";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.statManaMax2 += 10;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
         }
     }
 }

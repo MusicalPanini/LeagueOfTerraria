@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Mikaels : LeagueItem
+    public class Mikaels : MasterworkItem
     {
+        public override string MasterworkName => "Mikael's Blessing";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mikael's Crucible");
@@ -73,6 +75,23 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases resist by " + LeagueTooltip.CreateColorString(MasterColor, "5") +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "50%") +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased healing power" + 
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nImmunity to Curse";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.05;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

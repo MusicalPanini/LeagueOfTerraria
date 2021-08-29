@@ -9,11 +9,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class BloodThirster : LeagueItem
+    public class BloodThirster : MasterworkItem
     {
+        public override string MasterworkName => "Blood Devourer";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Bloodthirster");
+            DisplayName.SetDefault("Bloodthirster");
             Tooltip.SetDefault("6% increased ranged damage" +
                 "\n+1 ranged life steal"/* +
                 "\n30% decreased maximum life" +
@@ -56,6 +58,18 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased ranged damage" +
+                "\n+" + LeagueTooltip.CreateColorString(MasterColor, "2") + " ranged life steal";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Ranged) += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;
         }
     }
 }

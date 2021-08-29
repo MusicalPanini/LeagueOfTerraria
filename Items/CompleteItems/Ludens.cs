@@ -9,8 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Ludens : LeagueItem
+    public class Ludens : MasterworkItem
     {
+        public override string MasterworkName => "Eye of Luden";
 
         public override void SetStaticDefaults()
         {
@@ -78,6 +79,20 @@ namespace TerraLeague.Items.CompleteItems
         public override bool OnCooldown(Player player)
         {
             return (Passives[0].cooldownCount > 0);
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10") + " increased magic damage" +
+                "\nIncreases maximum mana by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "25");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.04f;
+            player.statManaMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;
         }
     }
 }

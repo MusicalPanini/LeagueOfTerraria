@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class NashorsTooth : LeagueItem
+    public class NashorsTooth : MasterworkItem
     {
+        public override string MasterworkName => "Nashor's Bite";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nashor's Tooth");
@@ -51,6 +53,20 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.Anvils)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased summon damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "40%") + " increased melee speed" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "30");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Summon) += 0.03f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.meleeSpeed += 0.15f;
         }
     }
 }

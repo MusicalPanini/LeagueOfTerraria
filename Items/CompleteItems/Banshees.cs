@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Banshees : LeagueItem
+    public class Banshees : MasterworkItem
     {
+        public override string MasterworkName => "Banshee's Silence";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Banshee's Veil");
@@ -78,6 +80,22 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased magic and summon damage" +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "15") +
+                "\nImmunity to Silence and Curse";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
         }
     }
 }

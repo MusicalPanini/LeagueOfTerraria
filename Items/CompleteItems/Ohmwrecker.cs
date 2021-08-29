@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Ohmwrecker : LeagueItem
+    public class Ohmwrecker : MasterworkItem
     {
+        public override string MasterworkName => "Ohmverloader";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ohmwrecker");
@@ -58,6 +60,25 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.Anvils)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases life regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "5") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "15") +
+                "\nIncreases your max number of sentries" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "12%") + " increased movement speed";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 30;
+            player.lifeRegen += 2;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
+            player.moveSpeed += 0.04f;
         }
     }
 }

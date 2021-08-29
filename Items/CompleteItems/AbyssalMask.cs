@@ -9,12 +9,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class AbyssalMask : LeagueItem
+    public class AbyssalMask : MasterworkItem
     {
+        public override string MasterworkName => "Infernal Mask";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abyssal Mask");
-            Tooltip.SetDefault("Increases maximum life by 30" +
+            Tooltip.SetDefault("Increases maximum life by 20" +
                 "\nIncreases maximum mana by 30" +
                 "\nIncreases resist by 5" +
                 "\nIncreases ability haste by 10");
@@ -40,7 +42,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
-            player.statLifeMax2 += 30;
+            player.statLifeMax2 += 20;
             player.statManaMax2 += 30;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
 
@@ -59,6 +61,22 @@ namespace TerraLeague.Items.CompleteItems
             .AddIngredient(ItemID.SoulofFright, 10)
             .AddTile(TileID.MythrilAnvil)
             .Register();
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases maximum mana by " + LeagueTooltip.CreateColorString(MasterColor, "40") +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "15");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 3;
+            player.statLifeMax2 += 10;
+            player.statManaMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
         }
     }
 }

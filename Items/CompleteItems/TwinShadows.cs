@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class TwinShadows : LeagueItem
+    public class TwinShadows : MasterworkItem
     {
+        public override string MasterworkName => "Frost Queen's Claim";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Twin Shadows");
@@ -65,6 +67,20 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased summon damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased movement speed" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Summon) += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.moveSpeed += 0.1f;
         }
     }
 }

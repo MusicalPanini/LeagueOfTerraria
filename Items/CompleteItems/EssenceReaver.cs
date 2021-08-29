@@ -9,14 +9,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class EssenceReaver : LeagueItem
+    public class EssenceReaver : MasterworkItem
     {
+        public override string MasterworkName => "Death's Harvest";
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Essence Reaver");
             Tooltip.SetDefault("4% increased melee and ranged damage" +
-                "\n6% increased melee and ranged critical strike chance" +
+                "\n4% increased melee and ranged critical strike chance" +
                 "\nIncreases ability haste by 20");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -37,8 +38,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetCritChance(DamageClass.Melee) += 6;
-            player.GetCritChance(DamageClass.Ranged) += 6;
+            player.GetCritChance(DamageClass.Melee) += 4;
+            player.GetCritChance(DamageClass.Ranged) += 4;
             player.GetDamage(DamageClass.Melee) += 0.04f;
             player.GetDamage(DamageClass.Ranged) += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
@@ -56,6 +57,22 @@ namespace TerraLeague.Items.CompleteItems
             .AddIngredient(ItemID.Bone, 10)
             .AddTile(TileID.Anvils)
             .Register();
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased melee and ranged damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "6%") + " increased melee and ranged critical strike chance" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "30");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetCritChance(DamageClass.Melee) += 4;
+            player.GetCritChance(DamageClass.Ranged) += 4;
+            player.GetDamage(DamageClass.Melee) += 0.02f;
+            player.GetDamage(DamageClass.Ranged) += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

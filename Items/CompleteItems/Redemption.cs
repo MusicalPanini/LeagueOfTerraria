@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Redemption : LeagueItem
+    public class Redemption : MasterworkItem
     {
+        public override string MasterworkName => "Salvation";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Redemption");
@@ -71,6 +73,24 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "25") +
+                "\nIncreases life regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "3") +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "75") +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "20%") + " increased healing power" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "15");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.statLifeMax2 += 5;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.25;
+            player.lifeRegen += 3;
         }
     }
 }

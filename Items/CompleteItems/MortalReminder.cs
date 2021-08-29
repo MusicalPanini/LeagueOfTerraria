@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class MortalReminder : LeagueItem
+    public class MortalReminder : MasterworkItem
     {
+        public override string MasterworkName => "King Slayer";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mortal Reminder");
@@ -47,6 +49,16 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased ranged damage";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
         }
     }
 }

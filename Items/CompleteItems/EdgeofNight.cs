@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class EdgeofNight : LeagueItem
+    public class EdgeofNight : MasterworkItem
     {
+        public override string MasterworkName => "Midnight's Embrace";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Edge of Night");
@@ -36,6 +38,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetDamage(DamageClass.Melee) += 0.05f;
             player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -69,6 +72,20 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased melee damage" + 
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nIncreases melee armor penetration by " + LeagueTooltip.CreateColorString(MasterColor, "10");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.05f;
+            player.statLifeMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 3;
         }
     }
 }

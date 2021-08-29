@@ -9,15 +9,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class TitanicHydra : LeagueItem
+    public class TitanicHydra : MasterworkItem
     {
+        public override string MasterworkName => "Jörmungandr";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Titanic Hydra");
             Tooltip.SetDefault("7% increased melee damage" +
                 "\nIncreases maximum life by 20" +
-                "\nIncreases life regeneration by 30%" +
-                "\nCan only have one Hydra item equiped at a time");
+                "\nIncreases life regeneration by 2" +
+                "\nCan only have one CLEAVE item equiped at a time");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -66,6 +68,21 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased melee damage" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases life regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "3") +
+                "\nCan only have one CLEAVE item equiped at a time";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.03f;
+            player.lifeRegen += 1;
+            player.statLifeMax2 += 10;
         }
     }
 }

@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Protobelt : LeagueItem
+    public class Protobelt : MasterworkItem
     {
+        public override string MasterworkName => "Hextech Rocketbelt";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hextech Protobelt-01");
@@ -88,6 +90,23 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased magic and summon damage" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nAllows flight and slow fall" +
+                "\nPress UP to rocket faster";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
+            player.statLifeMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

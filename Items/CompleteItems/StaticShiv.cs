@@ -8,8 +8,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class StaticShiv : LeagueItem
+    public class StaticShiv : MasterworkItem
     {
+        public override string MasterworkName => "Statikk Discharge";
 
         public override void SetStaticDefaults()
         {
@@ -39,7 +40,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.GetCritChance(DamageClass.Melee) += 6;
             player.GetCritChance(DamageClass.Ranged) += 6;
-            player.meleeSpeed += 0.15f;
+            player.meleeSpeed += 0.12f;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12;
             player.moveSpeed += 0.05f;
             base.UpdateAccessory(player, hideVisual);
@@ -75,6 +76,22 @@ namespace TerraLeague.Items.CompleteItems
         public override bool OnCooldown(Player player)
         {
             return !Passives[0].currentlyActive;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "18%") + " increased melee and ranged attack speed" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased melee and ranged critical strike chance" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased movement speed";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetCritChance(DamageClass.Melee) += 4;
+            player.GetCritChance(DamageClass.Ranged) += 4;
+            player.meleeSpeed += 0.06f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.06;
+            player.moveSpeed += 0.05f;
         }
     }
 }

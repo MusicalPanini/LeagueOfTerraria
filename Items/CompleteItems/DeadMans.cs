@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class DeadMans : LeagueItem
+    public class DeadMans : MasterworkItem
     {
+        public override string MasterworkName => "Dead Man's Augments";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dead Man's Plate");
@@ -62,6 +64,18 @@ namespace TerraLeague.Items.CompleteItems
                 return ((int)Passives[0].passiveStat).ToString() + "%";
             else
                 return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "10");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
         }
     }
 }

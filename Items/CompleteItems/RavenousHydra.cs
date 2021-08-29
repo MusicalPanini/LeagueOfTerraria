@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class RavenousHydra : LeagueItem
+    public class RavenousHydra : MasterworkItem
     {
+        public override string MasterworkName => "Leviathan";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ravenous Hydra");
@@ -19,7 +21,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\n+1 melee life steal" +
                 //"\n12% reduced maximum life" +
                 //"\n12% increased damage taken" +
-                "\nCan only have one Hydra item equiped at a time");
+                "\nCan only have one CLEAVE item equiped at a time");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -70,6 +72,21 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased melee damage" +
+                "\nIncreases life regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "3") +
+                "\n+" + LeagueTooltip.CreateColorString(MasterColor, "2") + " melee life steal" +
+                "\nCan only have one CLEAVE item equiped at a time";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.03f;
+            player.lifeRegen += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;
         }
     }
 }

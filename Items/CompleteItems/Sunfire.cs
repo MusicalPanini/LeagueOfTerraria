@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Sunfire : LeagueItem
+    public class Sunfire : MasterworkItem
     {
+        public override string MasterworkName => "Forgefire Cape";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sunfire Cape");
@@ -58,6 +60,19 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "9") +
+                "\nImmunity to Bleeding and Poisoned";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
         }
     }
 }

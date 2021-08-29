@@ -9,13 +9,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Rageblade : LeagueItem
+    public class Rageblade : MasterworkItem
     {
+        public override string MasterworkName => "Guinsoo's Reckoning";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Guinsoo's Rageblade");
             Tooltip.SetDefault("5% increased damage" +
-                "\n12% increased melee and ranged attack speed");
+                "\n6% increased melee and ranged attack speed");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -61,6 +63,19 @@ namespace TerraLeague.Items.CompleteItems
                 return ((int)Passives[0].passiveStat).ToString();
             else
                 return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased melee and ranged attack speed";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Generic) += 0.03f;
+            player.meleeSpeed += 0.09f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.09;
         }
     }
 }

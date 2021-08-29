@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Zekes : LeagueItem
+    public class Zekes : MasterworkItem
     {
+        public override string MasterworkName => "Zeke's Singularity";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zeke's Convergence");
@@ -75,6 +77,25 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases armor by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                 "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "6") +
+                 "\nIncreases maximum mana by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                 "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "15") +
+                 "\nIncreases item haste by " + LeagueTooltip.CreateColorString(MasterColor, "25") +
+                 "\nGrants immunity to knockback and fire blocks";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 2;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 2;
+            player.statManaMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
+            player.GetModPlayer<PLAYERGLOBAL>().itemHaste += 15;
         }
     }
 }

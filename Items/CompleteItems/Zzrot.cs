@@ -10,8 +10,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Zzrot : LeagueItem
+    public class Zzrot : MasterworkItem
     {
+        public override string MasterworkName => "Zz'Rot Beckoning";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zz'Rot Portal");
@@ -34,7 +36,6 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeSpeed += 0.15f;
             player.maxTurrets += 1;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 6;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
@@ -71,6 +72,22 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases armor by " + LeagueTooltip.CreateColorString(MasterColor, "4") +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "6") +
+                "\nIncreases your max number of sentries by " + LeagueTooltip.CreateColorString(MasterColor, "2") +
+                "\nIncreases life regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "3");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.maxTurrets += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 2;
+            player.lifeRegen += 1;
         }
     }
 }

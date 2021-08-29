@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Rylais : LeagueItem
+    public class Rylais : MasterworkItem
     {
+        public override string MasterworkName => "Rylai's Frozen Fury";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rylai's Crystal Scepter");
@@ -48,6 +50,18 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.Anvils)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased magic damage" +
+                "\nIncreases health by 30" + LeagueTooltip.CreateColorString(MasterColor, "40");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.05f;
+            player.statLifeMax2 += 10;
         }
     }
 }

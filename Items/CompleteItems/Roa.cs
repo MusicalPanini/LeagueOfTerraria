@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Roa : LeagueItem
+    public class Roa : MasterworkItem
     {
+        public override string MasterworkName => "Rod of Millennia";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rod of Ages");
@@ -67,6 +69,21 @@ namespace TerraLeague.Items.CompleteItems
                 return (Impendulum.GetStat).ToString();
             else
                 return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "5%") + "3% increased magic and summon damage" +
+                "\nIncreases maximum life by 10" + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nIncreases maximum mana by 10" + LeagueTooltip.CreateColorString(MasterColor, "20");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.statManaMax2 += 10;
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
         }
     }
 }

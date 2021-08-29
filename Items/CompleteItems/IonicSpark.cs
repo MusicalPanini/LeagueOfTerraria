@@ -9,8 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class IonicSpark : LeagueItem
+    public class IonicSpark : MasterworkItem
     {
+        public override string MasterworkName => "Covalent Spark";
 
         public override void SetStaticDefaults()
         {
@@ -66,6 +67,18 @@ namespace TerraLeague.Items.CompleteItems
         public override bool OnCooldown(Player player)
         {
             return !Passives[0].currentlyActive;
+        }
+
+        public override string MasterworkTooltip()
+        {
+           return LeagueTooltip.CreateColorString(MasterColor, "20%") + " increased ranged attack speed" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "25");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 15;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.08;
         }
     }
 }

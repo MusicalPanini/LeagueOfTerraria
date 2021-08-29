@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Maw : LeagueItem
+    public class Maw : MasterworkItem
     {
+        public override string MasterworkName => "Malmortius' Manabane";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Maw of Malmortius");
@@ -71,6 +73,18 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased ranged damage" +
+                 "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "10");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Ranged) += 0.04f;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
         }
     }
 }

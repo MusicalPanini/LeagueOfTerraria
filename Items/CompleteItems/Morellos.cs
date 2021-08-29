@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Morellos : LeagueItem
+    public class Morellos : MasterworkItem
     {
+        public override string MasterworkName => "Morello's Forbidden Writings";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Morellonomicon");
@@ -52,6 +54,18 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.CrystalBall)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased magic damage" +
+                "\nIncreases health by " + LeagueTooltip.CreateColorString(MasterColor, "30");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.05f;
+            player.statLifeMax2 += 10;
         }
     }
 }
