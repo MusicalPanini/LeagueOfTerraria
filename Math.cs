@@ -37,5 +37,53 @@ namespace TerraLeague
             else
                 return value;
         }
+
+        public static int GetIfLower(this int value, int min)
+        {
+            if (value < min)
+                return min;
+            else
+                return value;
+        }
+
+        public static float GetIfLower(this float value, float min)
+        {
+            if (value < min)
+                return min;
+            else
+                return value;
+        }
+
+        public static double GetIfLower(this double value, double min)
+        {
+            if (value < min)
+                return min;
+            else
+                return value;
+        }
+
+        public static int GetIfHigher(this int value, int max)
+        {
+            if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static float GetIfHigher(this float value, float max)
+        {
+            if (value > max)
+                return max;
+            else
+                return value;
+        }
+
+        public static double GetIfHigher(this double value, double max)
+        {
+            if (value > max)
+                return max;
+            else
+                return value;
+        }
     }
 }
