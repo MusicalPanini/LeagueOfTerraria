@@ -12,7 +12,7 @@ namespace TerraLeague.Common.ModSystems
 {
     public class UISystem : ModSystem
     {
-        static internal StatUI statUI;
+        //static internal StatUI statUI;
         static internal ItemUI itemUI;
         static internal AbilityUI abilityUI;
         static internal CustomResourceUI healthbarUI;
@@ -20,7 +20,7 @@ namespace TerraLeague.Common.ModSystems
         static internal TeleportUI teleportUI;
         static internal PlayerUI playerUI;
 
-        private UserInterface userInterface1;
+        //private UserInterface userInterface1;
         private UserInterface userInterface2;
         private UserInterface userInterface3;
         private UserInterface PlayerInterface;
@@ -31,40 +31,41 @@ namespace TerraLeague.Common.ModSystems
 
         public override void OnModLoad()
         {
-            userInterface1 = new UserInterface();
-            statUI = new StatUI();
-            StatUI.visible = 1;
-            userInterface1.SetState(statUI);
+            //userInterface1 = new UserInterface();
+            //statUI = new StatUI();
+            //StatUI.visible = 1;
+            //userInterface1.SetState(statUI);
+            if (Main.netMode != Terraria.ID.NetmodeID.Server)
+            {
+                userInterface2 = new UserInterface();
+                itemUI = new ItemUI();
+                ItemUI.visible = true;
+                userInterface2.SetState(itemUI);
 
-            userInterface2 = new UserInterface();
-            itemUI = new ItemUI();
-            ItemUI.visible = true;
-            userInterface2.SetState(itemUI);
+                userInterface3 = new UserInterface();
+                abilityUI = new AbilityUI();
+                AbilityUI.visible = true;
+                userInterface3.SetState(abilityUI);
 
-            userInterface3 = new UserInterface();
-            abilityUI = new AbilityUI();
-            AbilityUI.visible = true;
-            userInterface3.SetState(abilityUI);
+                HealthbarInterface = new UserInterface();
+                healthbarUI = new CustomResourceUI();
+                CustomResourceUI.visible = true;
+                HealthbarInterface.SetState(healthbarUI);
 
-            HealthbarInterface = new UserInterface();
-            healthbarUI = new CustomResourceUI();
-            CustomResourceUI.visible = true;
-            HealthbarInterface.SetState(healthbarUI);
+                tooltipInterface = new UserInterface();
+                tooltipUI = new ToolTipUI();
+                //ToolTipUI.visible = true;
+                tooltipInterface.SetState(tooltipUI);
 
-            tooltipInterface = new UserInterface();
-            tooltipUI = new ToolTipUI();
-            //ToolTipUI.visible = true;
-            tooltipInterface.SetState(tooltipUI);
+                teleportInterface = new UserInterface();
+                teleportUI = new TeleportUI();
+                TeleportUI.visible = false;
+                teleportInterface.SetState(teleportUI);
 
-            teleportInterface = new UserInterface();
-            teleportUI = new TeleportUI();
-            TeleportUI.visible = false;
-            teleportInterface.SetState(teleportUI);
-
-            PlayerInterface = new UserInterface();
-            playerUI = new PlayerUI();
-            PlayerInterface.SetState(playerUI);
-
+                PlayerInterface = new UserInterface();
+                playerUI = new PlayerUI();
+                PlayerInterface.SetState(playerUI);
+            }
             base.OnModLoad();
         }
 
@@ -123,18 +124,18 @@ namespace TerraLeague.Common.ModSystems
             if (inventoryLayer < 0)
                 inventoryLayer = 4;
 
-            layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
-            "TerraLeague: Stat Hud",
-            delegate
-            {
-                if (StatUI.visible < 0)
-                {
-                    userInterface1.Update(Main._drawInterfaceGameTime);
-                    statUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
+            //layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+            //"TerraLeague: Stat Hud",
+            //delegate
+            //{
+            //    if (StatUI.visible < 0)
+            //    {
+            //        userInterface1.Update(Main._drawInterfaceGameTime);
+            //        statUI.Draw(Main.spriteBatch);
+            //    }
+            //    return true;
+            //},
+            //InterfaceScaleType.UI));
 
             layers.Insert(0, new LegacyGameInterfaceLayer(
             "TerraLeague: Player Hud",
