@@ -754,6 +754,7 @@ namespace TerraLeague
             Passive.del_OnHitByProjectileNPC = null;
             Passive.del_OnKilledNPC = null;
             Passive.del_PreKill = null;
+            Passive.del_SendHealPacket = null;
 
             Active.del_PostPlayerUpdate = null;
             Active.del_NPCHit = null;
@@ -2852,6 +2853,8 @@ namespace TerraLeague
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
+                LeagueItem.RunEnabled_SendHealPacket(Player, ref healAmount, healTarget);
+
                 if (bloodPool)
                 {
                     healAmount += (int)GetPassiveStat(new BloodPool(0, null));

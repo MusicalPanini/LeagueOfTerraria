@@ -15,6 +15,7 @@ namespace TerraLeague.Items.CustomItems
         public delegate void On_OnHitByProjectileNPC(NPC npc, ref int damage, ref bool crit, Player player);
         public delegate void On_OnKilledNPC(NPC npc, ref int damage, ref bool crit, Player player);
         public delegate int On_PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player);
+        public delegate void On_SendHealPacket(ref int healAmount, int healTarget, Player player);
 
         public static On_PostPlayerUpdate del_PostPlayerUpdate;
         public static On_NPCHit del_NPCHit;
@@ -24,6 +25,7 @@ namespace TerraLeague.Items.CustomItems
         public static On_OnHitByProjectileNPC del_OnHitByProjectileNPC;
         public static On_OnKilledNPC del_OnKilledNPC;
         public static On_PreKill del_PreKill;
+        public static On_SendHealPacket del_SendHealPacket;
 
         static internal PassivePacketHandler PacketHandler = new PassivePacketHandler(4);
 
@@ -91,6 +93,11 @@ namespace TerraLeague.Items.CustomItems
         }
 
         virtual public void OnKilledNPC(NPC npc, ref int damage, ref bool crit, Player player)
+        {
+
+        }
+
+        virtual public void SendHealPacket(ref int healAmount, int healTarget, Player player)
         {
 
         }

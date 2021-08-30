@@ -92,6 +92,12 @@ namespace TerraLeague.Items.CustomItems
             return null;
         }
 
+        static public void RunEnabled_SendHealPacket(Player player, ref int healAmount, int healTarget)
+        {
+            if (Passive.del_SendHealPacket != null)
+                Passive.del_SendHealPacket(ref healAmount, healTarget,  player);
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (Passives != null)
@@ -132,12 +138,16 @@ namespace TerraLeague.Items.CustomItems
                             Passive.del_OnHitByProjectileNPC = pas.OnHitByProjectile;
                         else
                             Passive.del_OnHitByProjectileNPC += pas.OnHitByProjectile;
-
                         
                         if (Passive.del_OnKilledNPC == null)
                             Passive.del_OnKilledNPC = pas.OnKilledNPC;
                         else
                             Passive.del_OnKilledNPC += pas.OnKilledNPC;
+
+                        if (Passive.del_SendHealPacket == null)
+                            Passive.del_SendHealPacket = pas.SendHealPacket;
+                        else
+                            Passive.del_SendHealPacket += pas.SendHealPacket;
                     }
                 }
             }
