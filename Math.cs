@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TerraLeague
 {
-    public static class Math
+    public static class LegMath
     {
         public static int GetBetween(this int value, int min, int max)
         {
