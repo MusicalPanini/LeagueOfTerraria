@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int manaToADConversion;
         readonly int manaToAPConversion;
 
-        public Awe(int ManaReduction, int ManaToADConversion, int ManaToAPConversion)
+        public Awe(int ManaReduction, int ManaToADConversion, int ManaToAPConversion, LeagueItem item) : base(item)
         {
             manaReduction = ManaReduction;
             manaToADConversion = ManaToADConversion;

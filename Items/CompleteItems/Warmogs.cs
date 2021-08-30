@@ -29,13 +29,15 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[] 
             {
-                new WarmogsHeart()
+                new WarmogsHeart(this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 50;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

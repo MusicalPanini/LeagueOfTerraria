@@ -8,12 +8,12 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class AngelsBlessing : Passive
     {
-        public AngelsBlessing()
+        public AngelsBlessing(LeagueItem item) : base(item)
         {
             passiveCooldown = 300;
         }
 
-        public AngelsBlessing(int Cooldown)
+        public AngelsBlessing(int Cooldown, LeagueItem item) : base(item)
         {
             passiveCooldown = Cooldown;
         }
@@ -24,7 +24,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 + "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
-        public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player, ModItem modItem)
+        public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player)
         {
             if (cooldownCount <= 0)
             {

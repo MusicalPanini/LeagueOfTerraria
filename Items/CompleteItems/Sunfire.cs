@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Immolate(500, false)
+                new Immolate(500, false, this)
             };
         }
 
@@ -46,6 +46,8 @@ namespace TerraLeague.Items.CompleteItems
 
             player.buffImmune[BuffID.Bleeding] = true;
             player.buffImmune[BuffID.Poisoned] = true;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

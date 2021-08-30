@@ -32,8 +32,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Dissonance(1, 40),
-                new BloodPool(250)
+                new Dissonance(1, 40, this),
+                new BloodPool(250, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

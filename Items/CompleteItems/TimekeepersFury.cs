@@ -34,8 +34,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Impendulum(2, 1.5),
-                new TouchOfDeath(2)
+                new Impendulum(2, 1.5, this),
+                new TouchOfDeath(2, this)
             };
         }
 

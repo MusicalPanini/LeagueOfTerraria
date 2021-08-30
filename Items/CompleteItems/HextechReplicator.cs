@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new WindsFury(true)
+                new WindsFury(true, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

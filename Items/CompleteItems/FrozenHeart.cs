@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new ColdSteel(3, 400)
+                new ColdSteel(3, 400, this)
             };
         }
 
@@ -43,6 +43,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.noKnockback = true;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

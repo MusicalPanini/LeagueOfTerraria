@@ -6,6 +6,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Haste : Passive
     {
+        public Haste(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("HASTE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain an additional 10 Ability, Item, and Summoner Spell Haste");

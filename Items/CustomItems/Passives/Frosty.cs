@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int debuffDuration;
 
-        public Frosty(int DebuffDuration)
+        public Frosty(int DebuffDuration, LeagueItem legItem) : base(legItem)
         {
             debuffDuration = DebuffDuration;
         }
@@ -24,13 +24,13 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             if (proj.DamageType == DamageClass.Magic)
             {
                 target.AddBuff(BuffType<Slowed>(), debuffDuration * 60);
             }
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
     }
 }

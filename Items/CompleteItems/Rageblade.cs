@@ -31,8 +31,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new GuinsoosRage(2),
-                new Afterburn(15, 5, 5, 5)
+                new GuinsoosRage(2, this),
+                new Afterburn(15, 5, 5, 5, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

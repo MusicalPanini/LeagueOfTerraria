@@ -59,8 +59,8 @@ namespace TerraLeague.Items.CompleteItems
             Active = new ManaShield(4, 15, 200, 50, 90);
             Passives = new Passive[]
             {
-                new Awe(8, 0, 50),
-                new Haste()
+                new Awe(8, 0, 50, this),
+                new Haste(this)
             };
         }
 

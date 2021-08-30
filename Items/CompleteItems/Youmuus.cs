@@ -40,6 +40,8 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
             player.moveSpeed += 0.08f;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

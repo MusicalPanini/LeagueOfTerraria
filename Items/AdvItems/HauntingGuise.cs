@@ -29,7 +29,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Madness(1)
+                new Madness(1, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

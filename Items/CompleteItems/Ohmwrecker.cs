@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Disruption()
+                new Disruption(this)
             };
         }
 

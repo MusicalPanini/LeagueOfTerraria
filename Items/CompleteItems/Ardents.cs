@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new ArdentsFrenzy()
+                new ArdentsFrenzy(this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

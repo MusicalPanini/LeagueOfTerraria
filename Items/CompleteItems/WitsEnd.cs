@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Absorption()
+                new Absorption(this)
             };
         }
 

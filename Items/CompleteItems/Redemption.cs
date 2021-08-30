@@ -42,6 +42,7 @@ namespace TerraLeague.Items.CompleteItems
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
             player.lifeRegen += 2;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

@@ -32,9 +32,9 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new TempestEcho(40, 10, 16),
+                new TempestEcho(40, 10, 16, this),
                 //new Echo(40, 10),
-                new Haste()
+                new Haste(this)
             };
         }
 

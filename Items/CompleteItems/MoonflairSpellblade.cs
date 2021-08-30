@@ -40,6 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.buffImmune[BuffID.Slow] = true;
             player.buffImmune[BuffID.Chilled] = true;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

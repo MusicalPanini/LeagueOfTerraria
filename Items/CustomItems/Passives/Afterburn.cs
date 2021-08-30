@@ -10,7 +10,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int rangedScaling;
         readonly int magicScaling;
 
-        public Afterburn(int MinionScaling, int MeleeScaling, int RangedScaling, int MagicScaling)
+        public Afterburn(int MinionScaling, int MeleeScaling, int RangedScaling, int MagicScaling, LeagueItem legItem) : base(legItem) 
         {
             minionScaling = MinionScaling;
             meleeScaling = MeleeScaling;
@@ -36,16 +36,16 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             OnHitDamage += (int)(meleeScaling * modPlayer.MEL / 100d) + (int)(rangedScaling * modPlayer.RNG / 100d) + (int)(magicScaling * modPlayer.MAG / 100d) + (int)(minionScaling * modPlayer.SUM / 100d);
 
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -54,7 +54,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 OnHitDamage += (int)(meleeScaling * modPlayer.MEL / 100d) + (int)(rangedScaling * modPlayer.RNG / 100d) + (int)(magicScaling * modPlayer.MAG / 100d) + (int)(minionScaling * modPlayer.SUM / 100d);
             }
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
     }
 }

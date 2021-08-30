@@ -34,8 +34,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new AbyssalCurse(),
-                new Eternity()
+                new AbyssalCurse(this),
+                new Eternity(this)
             };
         }
 

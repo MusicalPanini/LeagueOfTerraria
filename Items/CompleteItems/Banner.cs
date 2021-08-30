@@ -39,6 +39,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.lifeRegen += 2;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

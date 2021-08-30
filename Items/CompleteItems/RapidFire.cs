@@ -30,8 +30,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Energized(70, 40),
-                new Detonate()
+                new Energized(70, 40, this),
+                new Detonate(this)
             };
         }
 

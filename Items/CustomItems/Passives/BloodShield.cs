@@ -5,6 +5,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class BloodShield : Passive
     {
+        public BloodShield(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("BLOOD Barrier") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Life stealing will overheal, converting the heal into a shield (Max 200 shield)");

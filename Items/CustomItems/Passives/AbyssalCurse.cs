@@ -11,6 +11,10 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int effectRadius = 400;
 
+        public AbyssalCurse(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("ABYSSAL CURSE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Debuff nearby enemies to make them take 8% more magic damage");
@@ -23,16 +27,16 @@ namespace TerraLeague.Items.CustomItems.Passives
 
        
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            DoThing(player, modItem);
+            DoThing(player);
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
-        public void DoThing(Player player, ModItem modItem)
+        public void DoThing(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 

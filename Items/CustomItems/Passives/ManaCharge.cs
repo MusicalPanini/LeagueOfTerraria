@@ -5,6 +5,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class ManaCharge : Passive
     {
+        public ManaCharge(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("MANA CHARGE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Picking up Mana Stars will grant a stack up to 750\nGain 1 max mana per 10 stacks");

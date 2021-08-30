@@ -29,7 +29,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Spellblade(1.5)
+                new Spellblade(1.5, this)
             };
         }
 

@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Rapids()
+                new Rapids(this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new TouchOfDeath(7)
+                new TouchOfDeath(7, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

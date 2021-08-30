@@ -44,6 +44,7 @@ namespace TerraLeague.Items.CompleteItems
             player.wingTimeMax = 120;
             player.wings = 4;
             player.wingsLogic = 4;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,

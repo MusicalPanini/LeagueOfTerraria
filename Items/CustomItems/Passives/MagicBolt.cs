@@ -12,7 +12,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int extraDamage;
         readonly int magicMinionScaling;
 
-        public MagicBolt(int Damage, int MagicMinionScaling, int Cooldown)
+        public MagicBolt(int Damage, int MagicMinionScaling, int Cooldown, LeagueItem legItem) : base(legItem)
         {
             extraDamage = Damage;
             magicMinionScaling = MagicMinionScaling;
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -50,12 +50,12 @@ namespace TerraLeague.Items.CustomItems.Passives
                 SetCooldown(player);
             }
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         override public void Efx(Player player, NPC HitNPC)

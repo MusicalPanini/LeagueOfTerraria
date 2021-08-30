@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int lifePerTime;
         readonly double magicMinionDamage;
         
-        public Impendulum(int LifePerTime, double magicMinionDamagePercentPer)
+        public Impendulum(int LifePerTime, double magicMinionDamagePercentPer, LeagueItem legItem) : base(legItem)
         {
             lifePerTime = LifePerTime;
             magicMinionDamage = magicMinionDamagePercentPer;

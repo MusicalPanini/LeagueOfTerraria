@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int magicArmorPen;
 
-        public TouchOfDeath(int MagicArmorPen)
+        public TouchOfDeath(int MagicArmorPen, LeagueItem legItem) : base(legItem)
         {
             magicArmorPen = MagicArmorPen;
         }

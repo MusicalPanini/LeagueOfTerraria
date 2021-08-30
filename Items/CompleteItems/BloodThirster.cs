@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new BloodShield()
+                new BloodShield(this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

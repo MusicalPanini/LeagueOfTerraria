@@ -31,8 +31,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new CursedStrike(),
-                new TouchOfDeath(15)
+                new CursedStrike(this),
+                new TouchOfDeath(15, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

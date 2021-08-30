@@ -29,7 +29,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new RawPower()
+                new RawPower(this)
             };
         }
 

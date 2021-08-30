@@ -46,7 +46,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new NightsVeil(7, 120, 75);
             Passives = new Passive[]
             {
-                new TouchOfDeath(10)
+                new TouchOfDeath(10, this)
             };
         }
 

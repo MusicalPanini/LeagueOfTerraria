@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int scaling;
         readonly int maxStacks;
 
-        public StarlitGrace(int Heal, int Scaling, int MaxStacks, int Cooldown)
+        public StarlitGrace(int Heal, int Scaling, int MaxStacks, int Cooldown, LeagueItem legItem) : base(legItem)
         {
             heal = Heal;
             scaling = Scaling;
@@ -35,7 +35,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -48,21 +48,21 @@ namespace TerraLeague.Items.CustomItems.Passives
                 AddStat(player, 60 * maxStacks, 1);
             }
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             Heal(player);
 
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             Heal(player);
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
 
         void Heal(Player player)

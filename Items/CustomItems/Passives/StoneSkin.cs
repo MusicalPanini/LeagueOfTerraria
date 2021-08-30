@@ -10,7 +10,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int enemies;
         readonly int armorResist;
 
-        public StoneSkin(int EnemyAmount, int ArmorResistBonus)
+        public StoneSkin(int EnemyAmount, int ArmorResistBonus, LeagueItem legItem) : base(legItem)
         {
             enemies = EnemyAmount;
             armorResist = ArmorResistBonus;
@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 modPlayer.armor += armorResist;
                 modPlayer.resist += armorResist;
             }
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int rangedScaling;
         readonly bool superCharge = false;
 
-        public Energized(int BaseDamage, int RangedScaling, bool SuperCharge = false)
+        public Energized(int BaseDamage, int RangedScaling, LeagueItem legItem, bool SuperCharge = false) : base(legItem)
         {
             baseDamage = BaseDamage;
             rangedScaling = RangedScaling;
@@ -60,7 +60,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             float stat;
             float chargeRate = superCharge ? 0.1f : 0.05f;
@@ -81,10 +81,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 player.AddBuff(BuffType<Buffs.EnergizedStrike>(), 1);
             }
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -128,10 +128,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 passiveStat = 0;
             }
 
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -207,7 +207,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             }
 
             modPlayer.energized = false;
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
 
         override public void Efx(Player player, NPC HitNPC)

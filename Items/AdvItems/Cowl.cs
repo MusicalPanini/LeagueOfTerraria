@@ -29,7 +29,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                 new SpectresRegen()
+                 new SpectresRegen(this)
             };
         }
 
@@ -37,6 +37,8 @@ namespace TerraLeague.Items.AdvItems
         {
             player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 3;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

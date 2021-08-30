@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new FrostBolt(45, 20, 30);
             Passives = new Passive[]
             {
-                new Haste()
+                new Haste(this)
             };
         }
 

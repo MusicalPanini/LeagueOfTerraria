@@ -5,6 +5,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class ArdentsFrenzy : Passive
     {
+        public ArdentsFrenzy(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("FRENZY") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Healing an ally will give you both 20% melee and " +

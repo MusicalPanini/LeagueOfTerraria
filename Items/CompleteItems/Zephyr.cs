@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new WindPower()
+                new WindPower(this)
             };
         }
 

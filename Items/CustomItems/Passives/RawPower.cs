@@ -5,6 +5,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class RawPower : Passive
     {
+        public RawPower(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();

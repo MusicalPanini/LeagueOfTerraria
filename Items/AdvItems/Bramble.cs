@@ -28,13 +28,15 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Thorns()
+                new Thorns(this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

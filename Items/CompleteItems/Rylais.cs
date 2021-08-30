@@ -30,13 +30,14 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Frosty(2)
+                new Frosty(2, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Magic) += 0.05f;
             player.statLifeMax2 += 30;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Dreadnought(0.05f)
+                new Dreadnought(0.05f, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -41,6 +41,7 @@ namespace TerraLeague.Items.CompleteItems
 
             player.buffImmune[BuffID.Weak] = true;
             player.buffImmune[BuffID.BrokenArmor] = true;
+            base.UpdateAccessory(player, hideVisual);
 
         }
 

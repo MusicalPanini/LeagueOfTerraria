@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int percentLifesteal;
 
-        public Omniheal(int PercentLifesteal)
+        public Omniheal(int PercentLifesteal, LeagueItem legItem) : base(legItem)
         {
             percentLifesteal = PercentLifesteal;
         }

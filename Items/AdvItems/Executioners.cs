@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Executioner(3)
+                new Executioner(3, this)
             };
         }
 
@@ -36,6 +36,8 @@ namespace TerraLeague.Items.AdvItems
         {
             player.GetDamage(DamageClass.Melee) += 0.04f;
             player.GetDamage(DamageClass.Ranged) += 0.04f;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

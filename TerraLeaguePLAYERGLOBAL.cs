@@ -746,6 +746,21 @@ namespace TerraLeague
             ResetShieldStuff();
             ResetCustomStats();
 
+            Passive.del_PostPlayerUpdate = null;
+            Passive.del_NPCHit = null;
+            Passive.del_NPCHitWithProjectile = null;
+            Passive.del_OnHitByNPC = null;
+            Passive.del_OnHitByProjectile = null;
+            Passive.del_OnHitByProjectileNPC = null;
+            Passive.del_OnKilledNPC = null;
+            Passive.del_PreKill = null;
+
+            Active.del_PostPlayerUpdate = null;
+            Active.del_NPCHit = null;
+            Active.del_NPCHitWithProjectile = null;
+            Active.del_OnHitByNPC = null;
+            Active.del_OnHitByProjectile = null;
+            Active.del_OnHitByProjectileNPC = null;
 
             #region Buffs
             bioBarrage = false;
@@ -2839,8 +2854,8 @@ namespace TerraLeague
             {
                 if (bloodPool)
                 {
-                    healAmount += (int)GetPassiveStat(new BloodPool(0));
-                    FindAndSetPassiveStat(new BloodPool(0), 0);
+                    healAmount += (int)GetPassiveStat(new BloodPool(0, null));
+                    FindAndSetPassiveStat(new BloodPool(0, null), 0);
                 }
 
                 if (ardentsFrenzy)
@@ -2875,8 +2890,8 @@ namespace TerraLeague
             {
                 if (bloodPool)
                 {
-                    SendHealPacket((int)GetPassiveStat(new BloodPool(0)), shieldTarget, toWho, fromWho);
-                    FindAndSetPassiveStat(new BloodPool(0), 0);
+                    SendHealPacket((int)GetPassiveStat(new BloodPool(0, null)), shieldTarget, toWho, fromWho);
+                    FindAndSetPassiveStat(new BloodPool(0, null), 0);
                 }
 
                 if (ardentsFrenzy)

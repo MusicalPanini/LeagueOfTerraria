@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Immolate(300, true)
+                new Immolate(300, true, this)
             };
         }
 
@@ -37,6 +37,8 @@ namespace TerraLeague.Items.AdvItems
             player.statLifeMax2 += 10;
             if (!hideVisual)
                 player.GetModPlayer<PLAYERGLOBAL>().immolate = true;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new MagicVeil(40)
+                new MagicVeil(40, this)
             };
         }
 

@@ -31,8 +31,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new ArcanePrecision(),
-                new Haste()
+                new ArcanePrecision(this),
+                new Haste(this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

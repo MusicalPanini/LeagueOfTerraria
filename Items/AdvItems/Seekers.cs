@@ -30,7 +30,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Attunement(20, 0.2m, 0.2m)
+                new Attunement(20, 0.2m, 0.2m, this)
             };
         }
 

@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Cleave(40, CleaveType.Basic)
+                new Cleave(40, CleaveType.Basic, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

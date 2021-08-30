@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int debuffDuration;
 
-        public Torment(int DebuffDuration)
+        public Torment(int DebuffDuration, LeagueItem item) : base(item)
         {
             debuffDuration = DebuffDuration;
         }
@@ -24,11 +24,11 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             if (proj.DamageType == DamageClass.Magic || proj.DamageType == DamageClass.Summon)
                 target.AddBuff(BuffType<Buffs.Torment>(), debuffDuration * 60);
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
     }
 }

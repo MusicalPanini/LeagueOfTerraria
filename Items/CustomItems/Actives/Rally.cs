@@ -40,14 +40,14 @@ namespace TerraLeague.Items.CustomItems.Actives
         }
 
 
-        public override void PostPlayerUpdate(Player player, LeagueItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             if (modPlayer.rally)
                 modPlayer.minionModifer += modPlayer.SUM * minionScaling / 10000d;
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         override public void Efx(Player user)

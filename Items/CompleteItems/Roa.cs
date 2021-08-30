@@ -33,8 +33,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Impendulum(4, 1),
-                new Eternity()
+                new Impendulum(4, 1, this),
+                new Eternity(this)
             };
         }
 

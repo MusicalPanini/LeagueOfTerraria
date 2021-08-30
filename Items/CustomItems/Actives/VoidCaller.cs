@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             return TooltipName("VOID CALLER") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Summon a Zz'Rot portal at your cursor" +
                 "\nIt ejects ") + LeagueTooltip.TooltipValue(3, false, "", new System.Tuple<int, ScaleType>(100, ScaleType.Minions)) +
                 LeagueTooltip.CreateColorString(ActiveSecondaryColor, " Zz'Rots every second for 5 seconds." +
-                "\nThe Zz'Rots deal ") + LeagueTooltip.TooltipValue(baseDamage, false, "", new System.Tuple<int, ScaleType>(sumScaling, ScaleType.Summon)) + " summon damage" +
+                "\nThe Zz'Rots deal ") + LeagueTooltip.TooltipValue(baseDamage, false, "", new System.Tuple<int, ScaleType>(sumScaling, ScaleType.Summon)) + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " summon damage") +
                  "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
@@ -52,9 +52,9 @@ namespace TerraLeague.Items.CustomItems.Actives
             base.Efx(user);
         }
 
-        public override void PostPlayerUpdate(Player player, LeagueItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
     }
 }

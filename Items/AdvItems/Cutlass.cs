@@ -37,6 +37,8 @@ namespace TerraLeague.Items.AdvItems
             player.GetDamage(DamageClass.Ranged) += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

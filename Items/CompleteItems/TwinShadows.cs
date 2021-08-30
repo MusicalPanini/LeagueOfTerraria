@@ -37,6 +37,8 @@ namespace TerraLeague.Items.CompleteItems
             player.GetDamage(DamageClass.Summon) += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.moveSpeed += 0.05f;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

@@ -29,13 +29,14 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new CustomItems.Passives.LastWhisper(20, false),
-                new Executioner(3)
+                new CustomItems.Passives.LastWhisper(20, false, this),
+                new Executioner(3, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Ranged) += 0.05f;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

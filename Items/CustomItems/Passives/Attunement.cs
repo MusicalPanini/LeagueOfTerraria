@@ -10,7 +10,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly decimal magicPerStack;
         readonly decimal armorPerStack;
 
-        public Attunement(int MaxStacks, decimal MagicPerStack, decimal ArmorPerStack)
+        public Attunement(int MaxStacks, decimal MagicPerStack, decimal ArmorPerStack, LeagueItem item) : base(item)
         {
             maxStacks = MaxStacks;
             magicPerStack = MagicPerStack;
@@ -36,18 +36,18 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void OnKilledNPC(NPC npc, int damage, bool crit, Player player, ModItem modItem)
+        public override void OnKilledNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
             AddStat(player, maxStacks, 1);
 
-            base.OnKilledNPC(npc, damage, crit, player, modItem);
+            base.OnKilledNPC(npc, ref damage, ref crit, player);
         }
 
-        public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player, ModItem modItem)
+        public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player)
         {
             passiveStat = 0;
 
-            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, modItem);
+            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly double damageModifier;
         readonly int type = 0;
 
-        public Spellblade(double DamageModifier)
+        public Spellblade(double DamageModifier, LeagueItem legItem) : base(legItem)
         {
             damageModifier = DamageModifier;
         }
 
-        public Spellblade(double DamageModifier, int Type)
+        public Spellblade(double DamageModifier, int Type, LeagueItem legItem) : base(legItem)
         {
             damageModifier = DamageModifier;
             type = Type;
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -80,10 +80,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -109,7 +109,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         override public void Efx(Player User, NPC HitNPC)

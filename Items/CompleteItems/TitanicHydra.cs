@@ -43,7 +43,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Cleave(40, CleaveType.MaxLife)
+                new Cleave(40, CleaveType.MaxLife, this)
             };
         }
 

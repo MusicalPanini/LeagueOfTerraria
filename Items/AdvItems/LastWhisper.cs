@@ -26,13 +26,15 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new CustomItems.Passives.LastWhisper(15, true)
+                new CustomItems.Passives.LastWhisper(15, true, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Melee) += 0.03f;
             player.GetDamage(DamageClass.Ranged) += 0.03f;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

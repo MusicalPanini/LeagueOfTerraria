@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new DiseaseHarvest(12, 5, 15, 60);
             Passives = new Passive[]
             {
-                new Pox()
+                new Pox(this)
             };
         }
 
@@ -44,6 +44,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetDamage(DamageClass.Summon) += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

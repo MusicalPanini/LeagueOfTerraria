@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Energized(10, 15),
+                new Energized(10, 15, this),
             };
         }
 

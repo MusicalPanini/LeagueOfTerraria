@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Nightstalker(3, 50)
+                new Nightstalker(3, 50, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

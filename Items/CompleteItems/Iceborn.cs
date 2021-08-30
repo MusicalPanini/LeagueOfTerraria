@@ -33,8 +33,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Spellblade(1.5),
-                new IcyZone()
+                new Spellblade(1.5, this),
+                new IcyZone(this)
             };
         }
 

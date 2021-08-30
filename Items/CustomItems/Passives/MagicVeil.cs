@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     public class MagicVeil : Passive
     {
 
-        public MagicVeil(int Cooldown)
+        public MagicVeil(int Cooldown, LeagueItem legItem) : base(legItem)
         {
             passiveCooldown = Cooldown;
         }
@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (modPlayer.veil)
@@ -41,10 +41,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 SetCooldown(player);
             }
 
-            base.OnHitByProjectile(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (modPlayer.veil)
@@ -54,12 +54,12 @@ namespace TerraLeague.Items.CustomItems.Passives
                 SetCooldown(player);
             }
 
-            base.OnHitByProjectile(proj, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(proj, ref damage, ref crit, player);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         public override void Efx(Player user)

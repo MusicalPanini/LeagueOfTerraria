@@ -12,7 +12,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int effectRadius;
         readonly bool weaker;
 
-        public Immolate(int EffectRadius, bool Weaker)
+        public Immolate(int EffectRadius, bool Weaker, LeagueItem legItem) : base(legItem)
         {
             effectRadius = EffectRadius;
             weaker = Weaker;
@@ -28,10 +28,10 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             DoThing(player, modItem);
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         public void DoThing(Player player, ModItem modItem)

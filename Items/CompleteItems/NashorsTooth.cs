@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new VoidSharpened(15, 25)
+                new VoidSharpened(15, 25, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -45,7 +45,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Cleave(50, CleaveType.Lifesteal)
+                new Cleave(50, CleaveType.Lifesteal, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -29,7 +29,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Eternity()
+                new Eternity(this)
             };
         }
 

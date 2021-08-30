@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new SoulReave(7)
+                new SoulReave(7, this)
             };
         }
 

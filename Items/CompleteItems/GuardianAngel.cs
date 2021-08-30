@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new AngelsBlessing(240)
+                new AngelsBlessing(240, this)
             };
         }
 
@@ -40,6 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetDamage(DamageClass.Melee) += 0.06f;
             player.GetDamage(DamageClass.Ranged) += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

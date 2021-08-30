@@ -30,7 +30,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Strengthen(10, 1)
+                new Strengthen(10, 1, this)
             };
         }
 

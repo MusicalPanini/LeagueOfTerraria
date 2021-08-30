@@ -42,6 +42,8 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

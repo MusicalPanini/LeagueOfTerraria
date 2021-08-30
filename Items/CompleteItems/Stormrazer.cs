@@ -31,8 +31,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Energized(15, 25),
-                new Storm()
+                new Energized(15, 25, this),
+                new Storm(this)
             };
         }
 

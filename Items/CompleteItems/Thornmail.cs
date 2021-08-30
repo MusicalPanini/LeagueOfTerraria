@@ -32,8 +32,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Thorns(),
-                new ColdSteel(2, 350)
+                new Thorns(this),
+                new ColdSteel(2, 350, this)
             };
         }
 
@@ -41,6 +41,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

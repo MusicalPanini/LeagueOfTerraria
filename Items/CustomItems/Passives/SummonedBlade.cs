@@ -10,7 +10,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int minionScaling;
 
-        public SummonedBlade(int MinionScaling)
+        public SummonedBlade(int MinionScaling, LeagueItem legItem) : base(legItem)
         {
             minionScaling = MinionScaling;
         }
@@ -29,7 +29,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -49,12 +49,12 @@ namespace TerraLeague.Items.CustomItems.Passives
                     modPlayer.spellBladeBuff = false;
                 }
             }
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
     }
 }

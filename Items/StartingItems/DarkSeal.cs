@@ -27,7 +27,7 @@ namespace TerraLeague.Items.StartingItems
 
             Passives = new Passive[]
             {
-                new Dread(10, 4, 1)
+                new Dread(10, 4, 1, this)
             };
         }
 
