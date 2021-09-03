@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Warmog's Armor");
             Tooltip.SetDefault("Increases maximum life by 40" +
-                "\nIncreases life regeneration by 50%" +
+                "\nIncreases life regeneration by 3" +
                 "\nIncreases ability haste by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -36,6 +36,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.statLifeMax2 += 50;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.lifeRegen += 3;
 
             base.UpdateAccessory(player, hideVisual);
         }

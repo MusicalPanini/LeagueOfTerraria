@@ -477,5 +477,65 @@ namespace TerraLeague
 
             return currentChoice;
         }
+
+        public static List<T> SortListByDistance<T> (this List<T> listToSort, Vector2 Center) where T : Entity
+        {
+            var clonedList = new List<T>(listToSort.Count);
+
+            for (int i = 0; i < listToSort.Count; i++)
+            {
+                var item = listToSort[i];
+                var currentIndex = i;
+
+                while (currentIndex > 0 && clonedList[currentIndex - 1].Distance(Center) > item.Distance(Center))
+                {
+                    currentIndex--;
+                }
+
+                clonedList.Insert(currentIndex, item);
+            }
+
+            return clonedList;
+        }
+
+        public static List<int> SortPlayersByDistance(this List<int> listToSort, Vector2 Center)
+        {
+            var clonedList = new List<int>(listToSort.Count);
+
+            for (int i = 0; i < listToSort.Count; i++)
+            {
+                var item = listToSort[i];
+                var currentIndex = i;
+
+                while (currentIndex > 0 && Main.player[clonedList[currentIndex - 1]].Distance(Center) > Main.player[item].Distance(Center))
+                {
+                    currentIndex--;
+                }
+
+                clonedList.Insert(currentIndex, item);
+            }
+
+            return clonedList;
+        }
+
+        public static List<int> SortNPCsByDistance(this List<int> listToSort, Vector2 Center)
+        {
+            var clonedList = new List<int>(listToSort.Count);
+
+            for (int i = 0; i < listToSort.Count; i++)
+            {
+                var item = listToSort[i];
+                var currentIndex = i;
+
+                while (currentIndex > 0 && Main.npc[clonedList[currentIndex - 1]].Distance(Center) > Main.npc[item].Distance(Center))
+                {
+                    currentIndex--;
+                }
+
+                clonedList.Insert(currentIndex, item);
+            }
+
+            return clonedList;
+        }
     }
 }

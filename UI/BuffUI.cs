@@ -210,7 +210,8 @@ namespace TerraLeague.UI
                 else
                 {
                     buffDescription = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(BuffType)) +
-                    "\n" + Lang.GetBuffDescription(BuffType);
+                    "\nHeal Power nullified" +
+                    "\nMagic and Summon damage reduced by ";
                     if (BuffType == Terraria.ID.BuffID.MonsterBanner)
                     {
                         string name1 = "";

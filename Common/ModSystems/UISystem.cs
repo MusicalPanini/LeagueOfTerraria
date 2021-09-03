@@ -69,6 +69,17 @@ namespace TerraLeague.Common.ModSystems
             base.OnModLoad();
         }
 
+        public override void Unload()
+        {
+            itemUI = null;
+            abilityUI = null;
+            healthbarUI = null;
+            tooltipUI = null;
+            teleportUI = null;
+            playerUI = null;
+            base.Unload();
+        }
+
         public override void UpdateUI(GameTime gameTime)
         {
             if (TerraLeague.ToggleStats.JustReleased)

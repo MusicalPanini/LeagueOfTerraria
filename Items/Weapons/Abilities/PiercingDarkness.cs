@@ -51,11 +51,11 @@ namespace TerraLeague.Items.Weapons.Abilities
             {
                 case DamageType.RNG:
                     if (checkingForHealing)
-                        return 50;
+                        return 40;
                     else
                         return 125;
                 case DamageType.MAG:
-                    return 35;
+                    return 25;
                 default:
                     return 0;
             }
@@ -79,7 +79,7 @@ namespace TerraLeague.Items.Weapons.Abilities
               ) + " ranged damage";
 
             checkingForHealing = true;
-            text += "\n" + LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
+            text += "\n" + LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), true, "",
               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.RNG), ScaleType.Ranged),
               new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
               ) + " healing";

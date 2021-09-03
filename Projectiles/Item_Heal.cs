@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
                 int dustBoxWidth = Projectile.width - 12;
                 int dustBoxHeight = Projectile.height - 12;
-                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Ice, 0, 0, 50, new Color(0, 255, 100), 1.5f);
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.GemEmerald, 0, 0, 50, new Color(0, 255, 100), 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += Projectile.velocity * 0.1f;
@@ -67,16 +67,20 @@ namespace TerraLeague.Projectiles
             Projectile.netUpdate = true;
             if (Projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                if (player.whoAmI != Projectile.owner)
-                    Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(Projectile.damage, player.whoAmI, -1, Projectile.owner);
-                if (player.whoAmI == Main.myPlayer)
+                if (Projectile.owner == Main.LocalPlayer.whoAmI)
                 {
-                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += Projectile.damage;
+                    Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SendHealPacket(Projectile.damage, player.whoAmI, -1, Projectile.owner);
                 }
+                //if (player.whoAmI != Projectile.owner)
+                //    Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(Projectile.damage, player.whoAmI, -1, Projectile.owner);
+                //if (player.whoAmI == Main.myPlayer)
+                //{
+                //    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += Projectile.damage;
+                //}
             }
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, 0, 0, 50, new Color(0, 255, 100), 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemEmerald, 0, 0, 50, new Color(0, 255, 100), 1.2f);
                 dust.noGravity = true;
             }
 
