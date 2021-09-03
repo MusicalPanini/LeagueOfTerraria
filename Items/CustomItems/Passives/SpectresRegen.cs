@@ -14,6 +14,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class SpectresRegen : Passive
     {
+        public SpectresRegen(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
@@ -21,25 +25,25 @@ namespace TerraLeague.Items.CustomItems.Passives
             return TooltipName("Incorporeal") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Gain 'Regeneration' for 4 seconds after taking damage");
         }
 
-        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
                 player.AddBuff(BuffID.Regeneration, 240);
 
-            base.OnHitByNPC(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByNPC(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
                 player.AddBuff(BuffID.Regeneration, 240);
 
-            base.OnHitByProjectile(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
                 player.AddBuff(BuffID.Regeneration, 240);
 
-            base.OnHitByProjectile(proj, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(proj, ref damage, ref crit, player);
         }
     }
 }

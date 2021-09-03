@@ -92,7 +92,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     player.statLife -= player.GetModPlayer<PLAYERGLOBAL>().GetRealHeathWithoutShield(true) / 10;
 
                     Vector2 position = player.position;
-                    Vector2 velocity = new Vector2(0, 0);
+                    Vector2 velocity = TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.player[target].MountedCenter, 16);
                     int projType = ProjectileType<Item_Heal>();
                     int healing = player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG));
                     int knockback = 0;

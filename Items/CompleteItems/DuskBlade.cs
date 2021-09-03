@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class DuskBlade : LeagueItem
+    public class DuskBlade : MasterworkItem
     {
+        public override string MasterworkName => "Draktharr's Shadowcarver";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Duskblade of Draktharr");
@@ -29,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Nightstalker(3, 50)
+                new Nightstalker(3, 50, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -61,6 +63,20 @@ namespace TerraLeague.Items.CompleteItems
                 return ((int)Passives[0].passiveStat).ToString() + "%";
             else
                 return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "12%") + " increased melee damage" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nIncreases melee armor penetration by " + LeagueTooltip.CreateColorString(MasterColor, "12");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 5;
         }
     }
 }

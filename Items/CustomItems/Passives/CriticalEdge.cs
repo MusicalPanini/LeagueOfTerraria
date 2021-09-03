@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int percentIncrease;
 
-        public CriticalEdge(int PercentCritDamageIncrease)
+        public CriticalEdge(int PercentCritDamageIncrease, LeagueItem item) : base(item)
         {
             percentIncrease = PercentCritDamageIncrease;
         }
@@ -23,14 +23,14 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             if (crit && proj.DamageType == DamageClass.Ranged)
                 modPlayer.rangedModifer *= (0.01 * percentIncrease) + 1;
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
     }
 }

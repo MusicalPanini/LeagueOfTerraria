@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spectre's Cowl");
-            Tooltip.SetDefault("Increases maximum life by 20" +
+            Tooltip.SetDefault("Increases maximum life by 10" +
                 "\nResist increased by 3");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -29,14 +29,16 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                 new SpectresRegen()
+                 new SpectresRegen(this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 3;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

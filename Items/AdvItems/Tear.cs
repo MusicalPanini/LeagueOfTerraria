@@ -29,8 +29,8 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new ManaCharge(),
-                new Awe(6, 0, 0)
+                new ManaCharge(this),
+                new Awe(6, 0, 0, this)
             };
         }
 

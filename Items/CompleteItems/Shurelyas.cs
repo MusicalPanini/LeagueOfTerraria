@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Shurelyas : LeagueItem
+    public class Shurelyas : MasterworkItem
     {
+        public override string MasterworkName => "Shurelya's Battlesong";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shurelya's Reverie");
@@ -48,6 +50,7 @@ namespace TerraLeague.Items.CompleteItems
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -80,6 +83,25 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased magic and summon damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased movement speed" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "100%") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Summon) += 0.03f;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.moveSpeed += 0.1f;
+            player.statLifeMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.4;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
         }
     }
 }

@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class StaffOfFlowingWater : LeagueItem
+    public class StaffOfFlowingWater : MasterworkItem
     {
+        public override string MasterworkName => "Staff of Rapids";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Staff of Flowing Water");
@@ -29,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Rapids()
+                new Rapids(this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -53,6 +55,21 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased magic and summon damage" +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "50%") +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased healing power";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.07;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.3;
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
         }
     }
 }

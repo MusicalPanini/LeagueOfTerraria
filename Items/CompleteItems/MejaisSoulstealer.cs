@@ -27,7 +27,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Dread(25, 6, 1.5f)
+                new Dread(25, 6, 1.5f, this)
             };
         }
         

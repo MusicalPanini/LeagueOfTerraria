@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int minDamage;
         readonly int maxDamage;
 
-        public SoulTaint(int PercentMaxLifeDamage, int MinDamage, int MaxDamage)
+        public SoulTaint(int PercentMaxLifeDamage, int MinDamage, int MaxDamage, LeagueItem legItem) : base(legItem)
         {
             percentMaxLifeDamage = PercentMaxLifeDamage;
             minDamage = MinDamage;
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             int SoulTaintDamage = (int)(target.lifeMax * percentMaxLifeDamage * 0.01);
 
@@ -43,10 +43,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             OnHitDamage += SoulTaintDamage;
 
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             if ((proj.DamageType == DamageClass.Melee || proj.DamageType == DamageClass.Ranged) /*&& !TerraLeague.DoNotCountRangedDamage(proj)*/)
             {
@@ -60,7 +60,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 OnHitDamage += SoulTaintDamage;
             }
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
     }
 }

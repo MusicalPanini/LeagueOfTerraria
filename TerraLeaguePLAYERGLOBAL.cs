@@ -248,11 +248,26 @@ namespace TerraLeague
             get { return 100 / (ultHasteLastStep + 100f); }
         }
 
+        public double healPower
+        {
+            get
+            {
+                if (Player.manaSick)
+                    return 1;
+                else
+                    return HealPower;
+            }
+            set
+            {
+                HealPower = value;
+            }
+        }
+
         // Healpower Stuff
         /// <summary>
         /// Healing and shielding multiplier
         /// </summary>
-        public double healPower = 1;
+        public double HealPower = 1;
         /// <summary>
         /// <para>The healPower last frame.</para>
         /// Used for tooltips or situations where you may not have calculated everything on the current frame
@@ -661,6 +676,7 @@ namespace TerraLeague
         // Accessories
         public int[] accessoryCooldown = new int[6];
         public double[] accessoryStat = new double[6];
+        public bool HasMasterworkEquipped = false;
 
         #region Starting Items
         public bool dblade = false;
@@ -745,7 +761,6 @@ namespace TerraLeague
             ResetShieldStuff();
             ResetCustomStats();
 
-
             #region Buffs
             bioBarrage = false;
             crushingBlows = false;
@@ -823,6 +838,8 @@ namespace TerraLeague
             darkinCostumeForceVanity = false;
 
             #region Accessories
+            HasMasterworkEquipped = false;
+
             // Starting
             dblade = false;
             dring = false;
@@ -1380,6 +1397,24 @@ namespace TerraLeague
         {
             OldMethodRun();
             CheckActivesandPassivesAreActive();
+
+            Passive.del_PostPlayerUpdate = null;
+            Passive.del_NPCHit = null;
+            Passive.del_NPCHitWithProjectile = null;
+            Passive.del_OnHitByNPC = null;
+            Passive.del_OnHitByProjectile = null;
+            Passive.del_OnHitByProjectileNPC = null;
+            Passive.del_OnKilledNPC = null;
+            Passive.del_PreKill = null;
+            Passive.del_SendHealPacket = null;
+
+            Active.del_PostPlayerUpdate = null;
+            Active.del_NPCHit = null;
+            Active.del_NPCHitWithProjectile = null;
+            Active.del_OnHitByNPC = null;
+            Active.del_OnHitByProjectile = null;
+            Active.del_OnHitByProjectileNPC = null;
+
             if (stunned)
             {
                 Player.velocity = Vector2.Zero;
@@ -2155,10 +2190,10 @@ namespace TerraLeague
             AbilityCooldownsAndStuff();
 
             healPowerLastStep = healPower;
-            meleeDamageLastStep = (double)Player.GetDamage(DamageClass.Melee).Additive;
-            rangedDamageLastStep = (double)Player.GetDamage(DamageClass.Ranged).Additive;
-            magicDamageLastStep = (double)Player.GetDamage(DamageClass.Magic).Additive; // Mana Sickness?
-            minionDamageLastStep = (double)Player.GetDamage(DamageClass.Summon).Additive;
+            meleeDamageLastStep = (double)Player.GetDamage(DamageClass.Melee);
+            rangedDamageLastStep = (double)Player.GetDamage(DamageClass.Ranged);
+            magicDamageLastStep = (double)Player.GetDamage(DamageClass.Magic); // Mana Sickness?
+            minionDamageLastStep = (double)Player.GetDamage(DamageClass.Summon);
             rocketDamageLastStep = (double)Player.rocketDamage;
             arrowDamageLastStep = (double)Player.arrowDamage;
             bulletDamageLastStep = (double)Player.bulletDamage;
@@ -2834,10 +2869,12 @@ namespace TerraLeague
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
+                LeagueItem.RunEnabled_SendHealPacket(Player, ref healAmount, healTarget);
+
                 if (bloodPool)
                 {
-                    healAmount += (int)GetPassiveStat(new BloodPool(0));
-                    FindAndSetPassiveStat(new BloodPool(0), 0);
+                    healAmount += (int)GetPassiveStat(new BloodPool(0, null));
+                    FindAndSetPassiveStat(new BloodPool(0, null), 0);
                 }
 
                 if (ardentsFrenzy)
@@ -2872,8 +2909,8 @@ namespace TerraLeague
             {
                 if (bloodPool)
                 {
-                    SendHealPacket((int)GetPassiveStat(new BloodPool(0)), shieldTarget, toWho, fromWho);
-                    FindAndSetPassiveStat(new BloodPool(0), 0);
+                    SendHealPacket((int)GetPassiveStat(new BloodPool(0, null)), shieldTarget, toWho, fromWho);
+                    FindAndSetPassiveStat(new BloodPool(0, null), 0);
                 }
 
                 if (ardentsFrenzy)

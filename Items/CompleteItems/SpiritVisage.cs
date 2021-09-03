@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class SpiritVisage : LeagueItem
+    public class SpiritVisage : MasterworkItem
     {
+        public override string MasterworkName => "Anima Visage";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spirit Visage");
@@ -31,13 +33,12 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new SpiritualRestoration()
+                new SpiritualRestoration(this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().spiritualRestur = true;
             player.statLifeMax2 += 30;
             player.lifeRegen += 2;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 6;
@@ -57,6 +58,22 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "40") +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases life regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "4") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.lifeRegen += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Athenes : LeagueItem
+    public class Athenes : MasterworkItem
     {
+        public override string MasterworkName => "Athene's Curse";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Athene's Unholy Grail");
@@ -30,8 +32,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Dissonance(1, 40),
-                new BloodPool(250)
+                new Dissonance(1, 40, this),
+                new BloodPool(250, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -64,6 +66,22 @@ namespace TerraLeague.Items.CompleteItems
                 return ((int)Passives[1].passiveStat).ToString();
             else
                 return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "7%") + " increased magic and summon damage" +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "6") +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "50%") +
+                "\nIncreases ability haste by "  + LeagueTooltip.CreateColorString(MasterColor, "20");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.2;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
         }
     }
 }

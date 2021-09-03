@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int lostStacks;
         readonly float magicMinionDamage;
 
-        public Dread(int MaxStacks, int LostStacks, float magicMinionDamageIncrease)
+        public Dread(int MaxStacks, int LostStacks, float magicMinionDamageIncrease, LeagueItem item) : base(item)
         {
             maxStacks = MaxStacks;
             lostStacks = LostStacks;
@@ -31,29 +31,29 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void OnKilledNPC(NPC npc, int damage, bool crit, Player player, ModItem modItem)
+        public override void OnKilledNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
             AddStat(player, maxStacks, 1);
 
-            base.OnKilledNPC(npc, damage, crit, player, modItem);
+            base.OnKilledNPC(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
             AddStat(player, maxStacks, -lostStacks, true);
-            base.OnHitByNPC(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByNPC(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
             AddStat(player, maxStacks, -lostStacks, true);
-            base.OnHitByProjectile(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
             AddStat(player, maxStacks, -lostStacks, true);
-            base.OnHitByProjectile(proj, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(proj, ref damage, ref crit, player);
         }
     }
 }

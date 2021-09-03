@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int meleeScaling;
 
-        public GiantStrength(int MeleeScaling)
+        public GiantStrength(int MeleeScaling, LeagueItem legItem) : base(legItem)
         {
             meleeScaling = MeleeScaling;
         }

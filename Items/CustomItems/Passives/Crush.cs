@@ -10,6 +10,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Crush : Passive
     {
+        public Crush(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("CARVE") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Melee attacks will reduce enemy defence by 6% stacking 6 times.")
@@ -22,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             int stacks = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks;
 
@@ -59,10 +63,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             target.AddBuff(BuffType<Cleaved>(), 360);
 
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             if (proj.DamageType == DamageClass.Melee)
             {
@@ -75,7 +79,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
 
         public void DoThing(Player player, ModItem modItem)

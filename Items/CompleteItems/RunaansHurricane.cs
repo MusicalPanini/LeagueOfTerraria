@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class RunaansHurricane : LeagueItem
+    public class RunaansHurricane : MasterworkItem
     {
+        public override string MasterworkName => "Runaan's Tempest";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Runaan's Hurricane");
@@ -30,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new WindsFury(false)
+                new WindsFury(false, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -53,6 +55,20 @@ namespace TerraLeague.Items.CompleteItems
             .AddIngredient(ItemID.SoulofLight, 6)
             .AddTile(TileID.MythrilAnvil)
             .Register();
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "25%") + "15% increased ranged attack speed" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "12%") + "8% increased ranged critical strike chance" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + "7% increased movement speed";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetCritChance(DamageClass.Ranged) += 4;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.1;
+            player.moveSpeed += 0.08f;
         }
     }
 }

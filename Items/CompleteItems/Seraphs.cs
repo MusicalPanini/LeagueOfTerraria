@@ -12,8 +12,9 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Seraphs : LeagueItem
+    public class Seraphs : MasterworkItem
     {
+        public override string MasterworkName => "Seraph's Blessing";
 
         public override void SetStaticDefaults()
         {
@@ -58,8 +59,8 @@ namespace TerraLeague.Items.CompleteItems
             Active = new ManaShield(4, 15, 200, 50, 90);
             Passives = new Passive[]
             {
-                new Awe(8, 0, 50),
-                new Haste()
+                new Awe(8, 0, 50, this),
+                new Haste(this)
             };
         }
 
@@ -68,7 +69,7 @@ namespace TerraLeague.Items.CompleteItems
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             player.GetDamage(DamageClass.Magic) += 0.05f;
-            modPlayer.TrueMinionDamage += 0.05;
+            player.GetDamage(DamageClass.Summon) += 0.05f;
             modPlayer.abilityHaste += 15;
             player.statManaMax2 += 100;
 
@@ -91,6 +92,22 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased magic and summon damage" +
+                "\nIncreases maximum mana by 100" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nCan only have one AWE item equiped at a time";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
+            modPlayer.abilityHaste += 15;
         }
     }
 }

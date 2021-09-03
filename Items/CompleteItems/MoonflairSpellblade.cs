@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class MoonflairSpellblade : LeagueItem
+    public class MoonflairSpellblade : MasterworkItem
     {
+        public override string MasterworkName => "Eclipse";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Moonflair Spellblade");
@@ -38,6 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.buffImmune[BuffID.Slow] = true;
             player.buffImmune[BuffID.Chilled] = true;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -49,6 +52,23 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.Anvils)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "6%") + " increased magic and summon damage" +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nImmunity to Slow and Chilled";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -8,12 +8,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Sunfire : LeagueItem
+    public class Sunfire : MasterworkItem
     {
+        public override string MasterworkName => "Forgefire Cape";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sunfire Cape");
-            Tooltip.SetDefault("Increases maximum life by 30" +
+            Tooltip.SetDefault("Increases maximum life by 20" +
                 "\nIncreases armor by 6" +
                 "\nImmunity to Bleeding and Poisoned");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -30,13 +32,13 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Immolate(500, false)
+                new Immolate(500, false, this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 30;
+            player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
 
             if (!hideVisual)
@@ -44,6 +46,8 @@ namespace TerraLeague.Items.CompleteItems
 
             player.buffImmune[BuffID.Bleeding] = true;
             player.buffImmune[BuffID.Poisoned] = true;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -58,6 +62,19 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "9") +
+                "\nImmunity to Bleeding and Poisoned";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
         }
     }
 }

@@ -10,8 +10,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class PoxArcana : LeagueItem
+    public class PoxArcana : MasterworkItem
     {
+        public override string MasterworkName => "Plague Arcana";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pox Arcana");
@@ -32,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new DiseaseHarvest(12, 5, 15, 60);
             Passives = new Passive[]
             {
-                new Pox()
+                new Pox(this)
             };
         }
 
@@ -42,6 +44,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetDamage(DamageClass.Summon) += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -74,6 +77,21 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased magic and summon damage" +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "100%") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.04f;
+            player.GetDamage(DamageClass.Summon) += 0.04f;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.4f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

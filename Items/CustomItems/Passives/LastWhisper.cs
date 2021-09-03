@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int percentArmorReduction;
         readonly bool includeMeleeDamage;
 
-        public LastWhisper(int PercentArmorReduction, bool IncludeMeleeDamage)
+        public LastWhisper(int PercentArmorReduction, bool IncludeMeleeDamage, LeagueItem legItem) : base(legItem)
         {
             percentArmorReduction = PercentArmorReduction;
             includeMeleeDamage = IncludeMeleeDamage;
@@ -29,17 +29,17 @@ namespace TerraLeague.Items.CustomItems.Passives
             return TooltipName("LAST WHISPER") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, text);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             if (includeMeleeDamage)
                 modPlayer.meleeArmorPen += (int)(target.defense * percentArmorReduction * 0.01);
 
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -48,7 +48,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             if (proj.DamageType == DamageClass.Ranged)
                 modPlayer.rangedArmorPen += (int)(target.defense * percentArmorReduction * 0.01);
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
     }
 }

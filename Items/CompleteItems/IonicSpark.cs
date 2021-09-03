@@ -9,14 +9,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class IonicSpark : LeagueItem
+    public class IonicSpark : MasterworkItem
     {
+        public override string MasterworkName => "Covalent Spark";
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ionic Spark");
             Tooltip.SetDefault("12% increased ranged attack speed" +
-                "\nIncreases maximum life by 20");
+                "\nIncreases maximum life by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -30,14 +31,14 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Energized(10, 20),
-                new Discharge()
+                new Energized(10, 20, this),
+                new Discharge(this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12;
             base.UpdateAccessory(player, hideVisual);
         }
@@ -66,6 +67,18 @@ namespace TerraLeague.Items.CompleteItems
         public override bool OnCooldown(Player player)
         {
             return !Passives[0].currentlyActive;
+        }
+
+        public override string MasterworkTooltip()
+        {
+           return LeagueTooltip.CreateColorString(MasterColor, "20%") + " increased ranged attack speed" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "25");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 15;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.08;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             else
                 scaleText = LeagueTooltip.TooltipValue(baseDamage, false, "", new Tuple<int, ScaleType>(magicMinionScaling, ScaleType.Magic));
 
-            return TooltipName("FROST BOLT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Fire 10 frost projectiles in a cone that deal ") + baseDamage + " + " + scaleText + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed'")
+            return TooltipName("FROST BOLT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Fire a wave of frost dealing ") + baseDamage + " + " + scaleText + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " magic damage and applies 'Slowed'")
                 + "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
@@ -40,17 +40,17 @@ namespace TerraLeague.Items.CustomItems.Actives
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 Vector2 position = player.Center;
-                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 14f);
+                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 10f);
                 int projType = ProjectileType<Item_FrostBolt>();
                 int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 int knockback = 1;
-                int numberProjectiles = 10;
+                int numberProjectiles = 20;
                 float startingAngle = 20;
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
                     Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(modItem.Item), position, perturbedSpeed, projType, damage, knockback, player.whoAmI);
-                    startingAngle -= 4f;
+                    startingAngle -= 2f;
                 }
 
                 Efx(player);
@@ -61,9 +61,9 @@ namespace TerraLeague.Items.CustomItems.Actives
             }
         }
 
-        public override void PostPlayerUpdate(Player player, LeagueItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         public override void Efx(Player user)

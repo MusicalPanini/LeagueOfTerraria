@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Zephyr : LeagueItem
+    public class Zephyr : MasterworkItem
     {
+        public override string MasterworkName => "Typhoon";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zephyr");
@@ -32,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new WindPower()
+                new WindPower(this)
             };
         }
 
@@ -66,6 +68,25 @@ namespace TerraLeague.Items.CompleteItems
         public override string GetStatText()
         {
             return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "6%") + " increased melee and ranged damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "12%") + " increased melee and ranged attack speed" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "25%") + " increased movement speed" +
+                "\nIncreases ability haste by 10" + LeagueTooltip.CreateColorString(MasterColor, "15") +
+                "\nImmunity to Slow and Chilled";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.02f;
+            player.GetDamage(DamageClass.Ranged) += 0.02f;
+            player.moveSpeed += 0.15f;
+            player.meleeSpeed += 0.07f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.07;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
         }
     }
 }

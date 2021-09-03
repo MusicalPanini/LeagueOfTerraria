@@ -11,7 +11,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Giant's Belt");
-            Tooltip.SetDefault("Increases maximum life by 40");
+            Tooltip.SetDefault("Increases maximum life by 20");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -27,7 +27,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 40;
+            player.statLifeMax2 += 20;
         }
 
         public override void AddRecipes()

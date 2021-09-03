@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Lifeline(90)
+                new Lifeline(90, this)
             };
         }
 

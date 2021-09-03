@@ -37,7 +37,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new Damnation(250, 60);
             Passives = new Passive[]
             {
-                 new SoulTaint(2, 20, 50)
+                 new SoulTaint(2, 20, 50, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -50,6 +50,7 @@ namespace TerraLeague.Items.CompleteItems
             player.meleeSpeed += 0.12f;
             //player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.12;
             //player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.12;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

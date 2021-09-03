@@ -464,9 +464,15 @@ namespace TerraLeague
         {
             if (canLog)
             {
-                color.A = 0;
-
-                Main.NewText(message, color);
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    Console.WriteLine(message);
+                }
+                else
+                {
+                    color.A = 0;
+                    Main.NewText(message, color);
+                }
             }
         }
 

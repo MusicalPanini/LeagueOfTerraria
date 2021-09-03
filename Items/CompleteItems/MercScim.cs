@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class MercScim : LeagueItem
+    public class MercScim : MasterworkItem
     {
+        public override string MasterworkName => "Ethereal Scimitar";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mercurial Scimitar");
@@ -39,6 +41,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
             //player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.1;
             //player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier -= 0.1;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -70,6 +73,20 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased ranged damage" +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\n+" + LeagueTooltip.CreateColorString(MasterColor, "2") + " ranged life steal";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Ranged) += 0.03f;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 3;
         }
     }
 }

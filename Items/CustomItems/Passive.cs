@@ -7,6 +7,26 @@ namespace TerraLeague.Items.CustomItems
 {
     abstract public class Passive
     {
+        public delegate void On_PostPlayerUpdate(Player player);
+        public delegate void On_NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int onhitdamage, Player player);
+        public delegate void On_NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int onhitdamage, Player player);
+        public delegate void On_OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player);
+        public delegate void On_OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player);
+        public delegate void On_OnHitByProjectileNPC(NPC npc, ref int damage, ref bool crit, Player player);
+        public delegate void On_OnKilledNPC(NPC npc, ref int damage, ref bool crit, Player player);
+        public delegate int On_PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player);
+        public delegate void On_SendHealPacket(ref int healAmount, int healTarget, Player player);
+
+        public static On_PostPlayerUpdate del_PostPlayerUpdate;
+        public static On_NPCHit del_NPCHit;
+        public static On_NPCHitWithProjectile del_NPCHitWithProjectile;
+        public static On_OnHitByNPC del_OnHitByNPC;
+        public static On_OnHitByProjectile del_OnHitByProjectile;
+        public static On_OnHitByProjectileNPC del_OnHitByProjectileNPC;
+        public static On_OnKilledNPC del_OnKilledNPC;
+        public static On_PreKill del_PreKill;
+        public static On_SendHealPacket del_SendHealPacket;
+
         static internal PassivePacketHandler PacketHandler = new PassivePacketHandler(4);
 
         internal static string PassiveMainColor = "0099cc";
@@ -19,6 +39,12 @@ namespace TerraLeague.Items.CustomItems
         public float passiveStat = 0;
         public int cooldownCount = 0;
         public int passiveCooldown = 0;
+        public LeagueItem modItem;
+
+        public Passive(LeagueItem item)
+        {
+            modItem = item;
+        }
 
         public abstract string Tooltip(Player player, ModItem modItem);
 
@@ -32,7 +58,7 @@ namespace TerraLeague.Items.CustomItems
             
         }
 
-        virtual public void PostPlayerUpdate(Player player, ModItem modItem)
+        virtual public void PostPlayerUpdate(Player player)
         {
             if (passiveCooldown != 0)
             {
@@ -41,37 +67,42 @@ namespace TerraLeague.Items.CustomItems
             }
         }
 
-        virtual public void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        virtual public void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
 
         }
 
-        virtual public void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        virtual public void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
 
         }
 
-        virtual public void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        virtual public void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
 
         }
 
-        virtual public void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player, ModItem modItem)
+        virtual public void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
 
         }
 
-        virtual public void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        virtual public void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
 
         }
 
-        virtual public void OnKilledNPC(NPC npc, int damage, bool crit, Player player, ModItem modItem)
+        virtual public void OnKilledNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
 
         }
 
-        virtual public int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player, ModItem modItem)
+        virtual public void SendHealPacket(ref int healAmount, int healTarget, Player player)
+        {
+
+        }
+
+        virtual public int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player)
         {
             return -1;
         }

@@ -9,13 +9,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Thornmail : LeagueItem
+    public class Thornmail : MasterworkItem
     {
+        public override string MasterworkName => "Razormail";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Thornmail");
             Tooltip.SetDefault("Increases maximum life by 20" +
-                "\nIncreases armor by 8");
+                "\nIncreases armor by 6");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -30,15 +32,17 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Thorns(),
-                new ColdSteel(2, 350)
+                new Thorns(this),
+                new ColdSteel(2, 350, this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().armor += 8;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -53,6 +57,18 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "12");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statLifeMax2 += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
         }
     }
 }

@@ -175,8 +175,8 @@ namespace TerraLeague.UI
 
         public override void OnInitialize()
         {
-            Width.Set(500, 0);
-            Height.Set(52, 0f);
+            Width.Set(480, 0);
+            Height.Set(40, 0f);
 
             hp = new ResourceBar(ResourceBarMode.HP, 20, 480);
             // hp.Left.Set(10, 0f);
@@ -193,8 +193,6 @@ namespace TerraLeague.UI
 
         public override void Update(GameTime gameTime)
         {
-            Top.Set(0, 0);
-
             base.Update(gameTime);
         }
     }

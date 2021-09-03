@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int lifeRegen;
         readonly int preMana;
 
-        public Harmony(int LifeRegenIncrease, int PerMana)
+        public Harmony(int LifeRegenIncrease, int PerMana, LeagueItem legItem) : base(legItem)
         {
             lifeRegen = LifeRegenIncrease;
             preMana = PerMana;
@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             for (int i = 3; i < 10; i++)
             {
@@ -58,7 +58,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
 

@@ -30,8 +30,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Madness(2),
-                new Torment(3)
+                new Madness(2, this),
+                new Torment(3, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -5,6 +5,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Eternity : Passive
     {
+        public Eternity(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("ETERNITY") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Taking damage restores mana\nUsing mana heals life");
@@ -17,7 +21,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -31,7 +35,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             modPlayer.manaLastStep = player.statMana;
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int debuffDuration;
 
-        public Icy(int DebuffDuration)
+        public Icy(int DebuffDuration, LeagueItem legItem) : base(legItem)
         {
             debuffDuration = DebuffDuration;
         }
@@ -24,19 +24,19 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
             target.AddBuff(BuffType<Slowed>(), debuffDuration * 60);
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             if (proj.DamageType == DamageClass.Melee || proj.DamageType == DamageClass.Ranged)
             {
                 target.AddBuff(BuffType<Slowed>(), debuffDuration * 60);
             }
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
     }
 }

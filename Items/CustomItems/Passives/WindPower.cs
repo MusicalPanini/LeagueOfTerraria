@@ -6,6 +6,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class WindPower : Passive
     {
+        public WindPower(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("WIND POWER") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "15% increased attack speed");

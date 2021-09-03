@@ -35,10 +35,10 @@ namespace TerraLeague.Items.CustomItems.Actives
             }
         }
 
-        public override void PostPlayerUpdate(Player player, LeagueItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             //AddStat(player, modItem, cooldown * 60, -1, true);
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         public void DoAction(int npc, Player player, LeagueItem modItem)

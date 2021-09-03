@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int damageThreshold;
         readonly int damageReduction;
 
-        public PowersBane(int DamageThreshold, int DamageReduction)
+        public PowersBane(int DamageThreshold, int DamageReduction, LeagueItem legItem) : base(legItem)
         {
             damageThreshold = DamageThreshold;
             damageReduction = DamageReduction;
@@ -32,25 +32,25 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
             if (damage >= damageThreshold)
                 damage -= damageReduction;
-            base.OnHitByNPC(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByNPC(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
             if (damage >= damageThreshold)
                 damage -= damageReduction;
-            base.OnHitByProjectile(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
             if (damage >= damageThreshold)
                 damage -= damageReduction;
-            base.OnHitByProjectile(proj, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(proj, ref damage, ref crit, player);
         }
     }
 }

@@ -28,13 +28,15 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new ColdSteel(2, 250)
+                new ColdSteel(2, 250, this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

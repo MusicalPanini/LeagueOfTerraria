@@ -15,7 +15,7 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Jaurim's Fist");
             Tooltip.SetDefault("5% increased melee damage" +
-                "\nIncreases maximum life by 10");
+                "\nIncreases maximum life by 5");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -30,7 +30,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Strengthen(20, 1)
+                new Strengthen(10, 1, this)
             };
         }
 
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 10;
+            player.statLifeMax2 += 5;
             player.GetDamage(DamageClass.Melee) += 0.05f;
             base.UpdateAccessory(player, hideVisual);
         }

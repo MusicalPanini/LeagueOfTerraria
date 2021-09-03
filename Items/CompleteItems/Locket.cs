@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Locket : LeagueItem
+    public class Locket : MasterworkItem
     {
+        public override string MasterworkName => "Circlet of the Iron Solari";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Locket of the Iron Solari");
@@ -38,6 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().resist += 6;
             player.noKnockback = true;
             player.buffImmune[BuffID.Burning] = true;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -70,6 +73,20 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases armor by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "10") +
+                "\nGrants immunity to knockback and fire blocks" +
+                "\nIncreases length of invincibility after taking damage";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
         }
     }
 }

@@ -10,14 +10,29 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Bloodletters : LeagueItem
+    public class Bloodletters : MasterworkItem
     {
+        public override string MasterworkName => "Hemomancer's Veil";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bloodletter's Veil");
             Tooltip.SetDefault("5% increased magic and summon damage" +
-                "\nIncreases maximum life by 20");
+                "\nIncreases maximum life by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "7%") + " increased magic and summon damage" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "30");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.statLifeMax2 += 20;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
         }
 
         public override void SetDefaults()
@@ -31,15 +46,21 @@ namespace TerraLeague.Items.CompleteItems
             Active = new NightsVeil(7, 120, 75);
             Passives = new Passive[]
             {
-                new TouchOfDeath(10)
+                new TouchOfDeath(10, this)
             };
+        }
+
+        public override void UpdateVanity(Player player)
+        {
+            base.UpdateVanity(player);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Magic) += 0.05f;
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.GetDamage(DamageClass.Summon) += 0.05f;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

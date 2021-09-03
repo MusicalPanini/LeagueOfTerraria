@@ -32,8 +32,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Spellblade(1.5),
-                new SummonedBlade(120)
+                new Spellblade(1.5, this),
+                new SummonedBlade(120, this)
             };
         }
 

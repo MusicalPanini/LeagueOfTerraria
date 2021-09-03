@@ -8,13 +8,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class FrozenHeart : LeagueItem
+    public class FrozenHeart : MasterworkItem
     {
+        public override string MasterworkName => "Cryogenic Heart";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frozen Heart");
             Tooltip.SetDefault("Increases mana by 40" +
-                "\nIncreases armor by 10" +
+                "\nIncreases armor by 6" +
                  "\nIncreases ability haste by 25" +
                  "\nGrants immunity to knockback");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -31,16 +33,17 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new ColdSteel(3, 400)
+                new ColdSteel(3, 400, this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statManaMax2 += 40;
-            player.GetModPlayer<PLAYERGLOBAL>().armor += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.noKnockback = true;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -53,6 +56,21 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return "Increases mana by " + LeagueTooltip.CreateColorString(MasterColor, "60") +
+                "\nIncreases armor by " + LeagueTooltip.CreateColorString(MasterColor, "10") +
+                 "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                 "\nGrants immunity to knockback";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statManaMax2 += 20;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
         }
     }
 }

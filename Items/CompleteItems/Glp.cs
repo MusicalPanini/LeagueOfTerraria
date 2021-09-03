@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Glp : LeagueItem
+    public class Glp : MasterworkItem
     {
+        public override string MasterworkName => "Hextech GLP-901";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hextech GLP-800");
@@ -31,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new FrostBolt(45, 20, 30);
             Passives = new Passive[]
             {
-                new Haste()
+                new Haste(this)
             };
         }
 
@@ -73,6 +75,21 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased magic and summon damage" +
+                "\nIncreases maximum mana by " + LeagueTooltip.CreateColorString(MasterColor, "50") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.statManaMax2 += 10;
+            player.GetDamage(DamageClass.Magic) += 0.03f;
+            player.GetDamage(DamageClass.Summon) += 0.03f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int SlowDuration;
         readonly int radius;
-        public ColdSteel(int slowDurationSeconds, int Radius)
+        public ColdSteel(int slowDurationSeconds, int Radius, LeagueItem item) : base(item)
         {
             SlowDuration = slowDurationSeconds;
             radius = Radius;
@@ -30,22 +30,22 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
             DoThing(player, modItem);
-            base.OnHitByNPC(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByNPC(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
             DoThing(player, modItem);
-            base.OnHitByProjectile(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
             DoThing(player, modItem);
-            base.OnHitByProjectile(proj, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(proj, ref damage, ref crit, player);
         }
 
         public void DoThing(Player player, ModItem modItem)

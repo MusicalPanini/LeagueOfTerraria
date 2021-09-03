@@ -8,8 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Ardents : LeagueItem
+    public class Ardents : MasterworkItem
     {
+        public override string MasterworkName => "Fervent Censer";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ardent Censer");
@@ -31,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new ArdentsFrenzy()
+                new ArdentsFrenzy(this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -58,6 +60,25 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.MythrilAnvil)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "8%") + " increased magic and summon damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "12%") + " increased movement speed" +
+                "\nIncreases mana regeneration by " + LeagueTooltip.CreateColorString(MasterColor, "50%") +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased healing power" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "15");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
+            player.moveSpeed += 0.04f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.3;
+            player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.7;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-               new TheVow(600)
+               new TheVow(600, this)
             };
         }
 
@@ -42,6 +42,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().armor += 8;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.hasPaladinShield = true;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

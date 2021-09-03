@@ -12,7 +12,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int baseMeleeDamage;
         readonly CleaveType type;
 
-        public Cleave(int AdditionMeleeDamage, CleaveType Type)
+        public Cleave(int AdditionMeleeDamage, CleaveType Type, LeagueItem item) : base(item)
         {
             baseMeleeDamage = AdditionMeleeDamage;
             type = Type;

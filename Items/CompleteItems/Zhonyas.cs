@@ -35,6 +35,8 @@ namespace TerraLeague.Items.CompleteItems
             player.GetDamage(DamageClass.Magic) += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste -= 10;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

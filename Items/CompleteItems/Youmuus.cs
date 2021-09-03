@@ -8,15 +8,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Youmuus : LeagueItem
+    public class Youmuus : MasterworkItem
     {
+        public override string MasterworkName => "Yomuus's Wraithblade";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Youmuu's Ghostblade");
             Tooltip.SetDefault("8% increased melee and ranged damage" +
                 "\n8% increased movement speed" +
                 "\nIncreases ability haste by 10" +
-                "\nIncreases melee armor penetration by 15");
+                "\nIncreases melee armor penetration by 7");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -38,6 +40,8 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
             player.moveSpeed += 0.08f;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -69,6 +73,23 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased melee and ranged damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "15%") + " increased movement speed" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "20") +
+                "\nIncreases melee armor penetration by " + LeagueTooltip.CreateColorString(MasterColor, "12");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.02f;
+            player.GetDamage(DamageClass.Ranged) += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 5;
+            player.moveSpeed += 0.07f;
         }
     }
 }

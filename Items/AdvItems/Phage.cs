@@ -14,7 +14,7 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Phage");
             Tooltip.SetDefault("4% increased melee and ranged damage" +
-                "\nIncreases maximum life by 20");
+                "\nIncreases maximum life by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -29,15 +29,17 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Rage(3)
+                new Rage(3, this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.GetDamage(DamageClass.Melee) += 0.04f;
             player.GetDamage(DamageClass.Ranged) += 0.04f;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

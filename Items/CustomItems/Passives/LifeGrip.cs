@@ -7,14 +7,14 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class LifeGrip : Passive
     {
-        public LifeGrip()
+        public LifeGrip(LeagueItem legItem) : base(legItem) 
         {
             deactivateIfNotUnique = false;
         }
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Triggering LIFELINE grants LIFEGRIP") + "\n" + TooltipName("LAST WHISPER") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Grants 5% life steal, melee and ranged damage, and 5 resist");
+            return LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Triggering LIFELINE grants LIFEGRIP") + "\n" + TooltipName("LIFEGRIP") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Grants 5% life steal, melee and ranged damage, and 5 resist");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -23,7 +23,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             if (TerraLeague.FindAccessorySlotOnPlayer(player, GetInstance<Maw>()) != -1)
             {
@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
     }
 }

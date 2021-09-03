@@ -10,7 +10,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int effectRadius;
 
-        public TheVow(int EffectRadius)
+        public TheVow(int EffectRadius, LeagueItem legItem) : base(legItem)
         {
             effectRadius = EffectRadius;
         }
@@ -27,10 +27,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 
        
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             DoThing(player, modItem);
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         public void DoThing(Player player, ModItem modItem)

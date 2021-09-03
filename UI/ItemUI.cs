@@ -157,6 +157,7 @@ namespace TerraLeague.UI
 
         public override void Update(GameTime gameTime)
         {
+            Width.Set(96, 0f);
             MoveMode(Anchor, ref Config.sumUIXOffset, ref Config.sumUIYOffset);
             base.Update(gameTime);
         }
@@ -395,9 +396,11 @@ namespace TerraLeague.UI
         Texture2D cooldown_texture;
         Texture2D active_texture;
         Texture2D normal_texture;
+        Texture2D masterwork_texture;
 
         readonly Texture2D placeholderArt = TextureAssets.Buff[BuffID.Oiled].Value;
         readonly UIImage itemImage;
+        readonly UIImage masterWorkImage;
         readonly UIText itemCooldown;
         readonly UIText itemStat;
         readonly UIText itemKey;
@@ -418,6 +421,14 @@ namespace TerraLeague.UI
             itemImage.Left.Pixels = 0;//-6;
             itemImage.Top.Pixels = 0;//-6;
             Append(itemImage);
+
+            TerraLeague.GetTextureIfNull(ref masterwork_texture, MasterworkItem.MasterworkIconPath);
+            masterWorkImage = new UIImage(masterwork_texture);
+            masterWorkImage.Width.Pixels = Width.Pixels;
+            masterWorkImage.Height.Pixels = Height.Pixels;
+            masterWorkImage.Left.Pixels = 12;//-6;
+            masterWorkImage.Top.Pixels = 12;//-6;
+            Append(masterWorkImage);
 
             itemStat = new UIText("", 0.75f);
             itemStat.Left.Pixels = 8;
@@ -446,10 +457,30 @@ namespace TerraLeague.UI
                 TerraLeague.GetTextureIfNull(ref cooldown_texture, "TerraLeague/UI/ItemBorderCooldown");
                 TerraLeague.GetTextureIfNull(ref active_texture, "TerraLeague/UI/ItemBorderActive");
                 TerraLeague.GetTextureIfNull(ref normal_texture, "TerraLeague/UI/ItemBorder");
+                TerraLeague.GetTextureIfNull(ref masterwork_texture, MasterworkItem.MasterworkIconPath);
 
 
                 if (Main.LocalPlayer.armor[accessorySlot + 2].ModItem is LeagueItem legItem)
                 {
+                    if (legItem is MasterworkItem mastItem)
+                    {
+                        if (mastItem.IsMasterWorkItem)
+                        {
+                            masterWorkImage.SetImage(masterwork_texture);
+                            masterWorkImage.Color = Color.White;
+                            masterWorkImage.Left.Pixels = 9;//-6;
+                            masterWorkImage.Top.Pixels = 7;//-6;
+                        }
+                        else
+                        {
+                            masterWorkImage.Color = Color.White * 0;
+                        }
+                    }
+                    else
+                    {
+                        masterWorkImage.Color = Color.White * 0;
+                    }
+
                     if (legItem.OnCooldown(Main.LocalPlayer))
                     {
                         itemCooldown.SetText(legItem.GetStatText());
@@ -479,6 +510,7 @@ namespace TerraLeague.UI
                     itemCooldown.SetText("");
                     itemStat.SetText("");
                     _backgroundTexture = normal_texture;
+                    masterWorkImage.Color = Color.White * 0;
                 }
 
 
@@ -493,6 +525,8 @@ namespace TerraLeague.UI
                     itemImage.ImageScale = 1;
                     itemCooldown.HAlign = 0.5f;
                     itemCooldown.Top.Pixels = 12;
+
+                    
                 }
                 else
                 {
@@ -568,22 +602,30 @@ namespace TerraLeague.UI
                             }
 
                             string ToolTip = "";
-                            ToolTip = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.Item.type).Value);
+                            ToolTip = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, modItem.Item.Name);
 
                             //string heading = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.Item.type).Value);
-                            var itemsBaseTooltip = Lang.GetTooltip(modItem.Item.type);
+
+                            int baseTooltipLines = 0;
+                            if (modItem is MasterworkItem masterItem && masterItem.IsMasterWorkItem)
+                            {
+                                ToolTip += "\n" + masterItem.MasterworkTooltip();
+                            }
+                            else
+                            {
+                                ItemTooltip itemsBaseTooltip = Lang.GetTooltip(modItem.Item.type);
+                                baseTooltipLines = itemsBaseTooltip.Lines;
+                                if (baseTooltipLines == 1 && itemsBaseTooltip.GetLine(0) == "")
+                                    baseTooltipLines = 0;
+                                for (int i = 0; i < baseTooltipLines; i++)
+                                {
+                                    ToolTip += "\n" + itemsBaseTooltip.GetLine(i);
+                                }
+                            }
 
                             //string[] compiledTooltip = new string[];
                             //compiledTooltip[0] = heading;
 
-                            int baseTooltipLines = itemsBaseTooltip.Lines;
-                            if (baseTooltipLines == 1 && itemsBaseTooltip.GetLine(0) == "")
-                                baseTooltipLines = 0;
-
-                            for (int i = 0; i < baseTooltipLines; i++)
-                            {
-                                ToolTip += "\n" + itemsBaseTooltip.GetLine(i);
-                            }
                             for (int i = 0; i < activePassiveTooltips.Count; i++)
                             {
                                 ToolTip += "\n" + activePassiveTooltips[i];

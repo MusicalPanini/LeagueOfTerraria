@@ -8,13 +8,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class FrozenMallet : LeagueItem
+    public class FrozenMallet : MasterworkItem
     {
+        public override string MasterworkName => "True Ice Warhammer";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frozen Mallet");
             Tooltip.SetDefault("6% increased melee and ranged damage" +
-                "\nIncreases health by 40");
+                "\nIncreases maximum life by 25");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -28,14 +30,15 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Icy(2)
+                new Icy(2, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Melee) += 0.06f;
             player.GetDamage(DamageClass.Ranged) += 0.06f;
-            player.statLifeMax2 += 40;
+            player.statLifeMax2 += 25;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -48,6 +51,19 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.Anvils)
             .Register();
             
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased melee and ranged damage" +
+                "\nIncreases maximum life by " + LeagueTooltip.CreateColorString(MasterColor, "40");
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.04f;
+            player.GetDamage(DamageClass.Ranged) += 0.04f;
+            player.statLifeMax2 += 15;
         }
     }
 }

@@ -27,12 +27,13 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Dissolve(40)
+                new Dissolve(40, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Magic) += 0.15f;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

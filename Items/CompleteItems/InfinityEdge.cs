@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new CriticalEdge(25)
+                new CriticalEdge(25, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

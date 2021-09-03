@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new MagicBolt(20, 20, 30)
+                new MagicBolt(20, 20, 30, this)
             };
         }
 
@@ -36,6 +36,8 @@ namespace TerraLeague.Items.AdvItems
         {
             player.GetDamage(DamageClass.Magic) += 0.04f;
             player.GetDamage(DamageClass.Summon) += 0.04f;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

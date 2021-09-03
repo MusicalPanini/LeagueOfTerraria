@@ -5,6 +5,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Rapids : Passive
     {
+        public Rapids(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("Rapids") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Healing an ally will give you both 15% movement speed and " +

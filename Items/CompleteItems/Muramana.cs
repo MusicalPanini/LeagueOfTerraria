@@ -12,8 +12,10 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Muramana : LeagueItem
+    public class Muramana : MasterworkItem
     {
+        public override string MasterworkName => "Myōhō Muramana";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Muramana");
@@ -47,8 +49,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Shock(5, 15),
-                new Awe(6, 60, 0)
+                new Shock(5, 15, this),
+                new Awe(6, 60, 0, this)
             };
         }
 
@@ -62,6 +64,22 @@ namespace TerraLeague.Items.CompleteItems
             player.statManaMax2 += 100;
 
             base.UpdateAccessory(player, hideVisual);
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "7%") + " increased melee and ranged damage" +
+                "\nIncreases maximum mana by 100" +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "30") +
+                "\nCan only have one AWE item equiped at a time";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            player.GetDamage(DamageClass.Melee) += 0.02f;
+            player.GetDamage(DamageClass.Ranged) += 0.02f;
+            modPlayer.abilityHaste += 15;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int cooldown;
 
-        public Lifeline(int Cooldown)
+        public Lifeline(int Cooldown, LeagueItem item) : base(item)
         {
             cooldown = Cooldown;
         }
@@ -64,7 +64,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -86,10 +86,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
-        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -107,10 +107,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.OnHitByNPC(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByNPC(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -132,10 +132,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
                 
-            base.OnHitByProjectile(npc, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(npc, ref damage, ref crit, player);
         }
 
-        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player, ModItem modItem)
+        public override void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -157,7 +157,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.OnHitByProjectile(proj, ref damage, ref crit, player, modItem);
+            base.OnHitByProjectile(proj, ref damage, ref crit, player);
         }
 
         public void DoEffect(Player player, ModItem modItem)

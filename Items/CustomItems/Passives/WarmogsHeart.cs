@@ -7,6 +7,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class WarmogsHeart : Passive
     {
+        public WarmogsHeart(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("WARMOG'S HEART") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "If you have over 600 maximum life and are standing still, gain a huge life regen boost");

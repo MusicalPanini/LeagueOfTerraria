@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Catalyst of Aeons");
-            Tooltip.SetDefault("\nIncreases maximum life by 20" +
+            Tooltip.SetDefault("\nIncreases maximum life by 10" +
                 "\nIncreases maximum mana by 20");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -29,13 +29,13 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Eternity()
+                new Eternity(this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             player.statManaMax2 += 20;
 
             base.UpdateAccessory(player, hideVisual);

@@ -10,12 +10,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Spellbinder : LeagueItem
+    public class Spellbinder : MasterworkItem
     {
+        public override string MasterworkName => "Spell Capacitor";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spellbinder");
-            Tooltip.SetDefault("5% summon damage" +
+            Tooltip.SetDefault("5% increased summon damage" +
                 "\n10% increased movement speed");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -35,6 +37,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.GetDamage(DamageClass.Summon) += 0.05f;
             player.moveSpeed += 0.1f;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -65,6 +68,18 @@ namespace TerraLeague.Items.CompleteItems
                 return true;
             else
                 return false;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased summon damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "25%") + " increased movement speed";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Summon) += 0.05f;
+            player.moveSpeed += 0.15f;
         }
     }
 }

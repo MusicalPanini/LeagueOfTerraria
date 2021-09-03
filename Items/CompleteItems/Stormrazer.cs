@@ -9,8 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class Stormrazer : LeagueItem
+    public class Stormrazer : MasterworkItem
     {
+        public override string MasterworkName => "Stormbringer";
 
         public override void SetStaticDefaults()
         {
@@ -30,8 +31,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Energized(15, 25),
-                new Storm()
+                new Energized(15, 25, this),
+                new Storm(this)
             };
         }
 
@@ -41,7 +42,6 @@ namespace TerraLeague.Items.CompleteItems
             player.GetDamage(DamageClass.Ranged) += 0.05f;
             player.meleeSpeed += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.08;
-            player.moveSpeed += 0.05f;
             base.UpdateAccessory(player, hideVisual);
         }
 
@@ -54,9 +54,6 @@ namespace TerraLeague.Items.CompleteItems
             .AddIngredient(ItemID.Muramasa, 1)
             .AddTile(TileID.Anvils)
             .Register();
-            
-
-            
         }
 
         public override string GetStatText()
@@ -70,6 +67,20 @@ namespace TerraLeague.Items.CompleteItems
         public override bool OnCooldown(Player player)
         {
             return !Passives[0].currentlyActive;
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased melee and ranged damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "12%") + " increased melee and ranged attack speed";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.GetDamage(DamageClass.Melee) += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
+            player.meleeSpeed += 0.04f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.04;
         }
     }
 }

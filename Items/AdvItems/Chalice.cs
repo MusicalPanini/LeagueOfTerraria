@@ -29,7 +29,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Harmony(1, 40)
+                new Harmony(1, 40, this)
             };
         }
 
@@ -37,6 +37,8 @@ namespace TerraLeague.Items.AdvItems
         {
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.3;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

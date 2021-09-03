@@ -29,8 +29,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Omniheal(2),
-                new CauterizedWounds(30)
+                new Omniheal(2, this),
+                new CauterizedWounds(30, this)
             };
         }
 

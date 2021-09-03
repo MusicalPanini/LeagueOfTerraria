@@ -48,8 +48,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Awe(6, 50, 0),
-                new ManaCharge()
+                new Awe(6, 50, 0, this),
+                new ManaCharge(this)
             };
         }
 

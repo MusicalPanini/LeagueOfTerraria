@@ -29,8 +29,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Lifeline(90),
-                new GiantStrength(25)
+                new Lifeline(90, this),
+                new GiantStrength(25, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

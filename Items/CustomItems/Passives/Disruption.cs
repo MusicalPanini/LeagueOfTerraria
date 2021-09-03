@@ -7,6 +7,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Disruption : Passive
     {
+        public Disruption(LeagueItem item) : base(item)
+        {
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TooltipName("DISRUPTION") + LeagueTooltip.CreateColorString(PassiveSecondaryColor, "Reduces NPC spawnrate");

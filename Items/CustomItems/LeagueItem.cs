@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace TerraLeague.Items.CustomItems
 {
@@ -14,13 +17,86 @@ namespace TerraLeague.Items.CustomItems
         public Passive[] Passives = null;
         public Active Active = null;
 
-        // public int armor = 0;
-        // public int resist = 0;
-        // public double meleeAtkSpd = 0;
-        // public double ammoConsumeChance = 0;
-        // public double cdr = 0;
-        // public double cdr = 0;
+        static public void RunEnabled_PostPlayerUpdate(Player player)
+        {
+            if (Passive.del_PostPlayerUpdate != null)
+                Passive.del_PostPlayerUpdate(player);
+            if (Active.del_PostPlayerUpdate != null)
+                Active.del_PostPlayerUpdate(player);
+        }
+        static public void RunEnabled_NPCHit(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int onhitdamage)
+        {
+            if (Passive.del_NPCHit != null)
+                Passive.del_NPCHit(item, target, ref damage, ref knockback, ref crit, ref onhitdamage, player);
+            if (Active.del_NPCHit != null)
+                Active.del_NPCHit(item, target, ref damage, ref knockback, ref crit, ref onhitdamage, player);
+        }
+        static public void RunEnabled_NPCHitWithProjectile(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int onhitdamage)
+        {
+            if (Passive.del_NPCHitWithProjectile != null)
+                Passive.del_NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage, player);
+            if (Active.del_NPCHitWithProjectile != null)
+                Active.del_NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage, player);
+        }
+        static public void RunEnabled_OnHitByNPC(Player player, NPC npc, ref int damage, ref bool crit)
+        {
+            if (Passive.del_OnHitByNPC != null)
+                Passive.del_OnHitByNPC(npc, ref damage, ref crit, player);
+            if (Active.del_OnHitByNPC != null)
+                Active.del_OnHitByNPC(npc, ref damage, ref crit, player);
+        }
+        static public void RunEnabled_OnHitByProjectile(Player player, Projectile proj, ref int damage, ref bool crit)
+        {
+            if (Passive.del_OnHitByProjectile != null)
+                Passive.del_OnHitByProjectile(proj, ref damage, ref crit, player);
+            if (Active.del_OnHitByProjectile != null)
+                Active.del_OnHitByProjectile(proj, ref damage, ref crit, player);
+        }
+        static public void RunEnabled_OnHitByProjectile(Player player, NPC npc, ref int damage, ref bool crit)
+        {
+            if (Passive.del_OnHitByProjectileNPC != null)
+                Passive.del_OnHitByProjectileNPC(npc, ref damage, ref crit, player);
+            if (Active.del_OnHitByProjectileNPC != null)
+                Active.del_OnHitByProjectileNPC(npc, ref damage, ref crit, player);
+        }
 
+        static public void RunEnabled_OnKilledNPC(Player player, NPC npc, ref int damage, ref bool crit)
+        {
+            if (Passive.del_OnKilledNPC != null)
+                Passive.del_OnKilledNPC(npc, ref damage, ref crit, player);
+            //Active.del_OnKilledNPC(npc, ref damage, ref crit, player);
+        }
+
+
+        /// <summary>
+        /// Returns false if you live, true if you die, and null if vanilla will decide
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="damage"></param>
+        /// <param name="hitDirection"></param>
+        /// <param name="pvp"></param>
+        /// <param name="playSound"></param>
+        /// <param name="genGore"></param>
+        /// <param name="damageSource"></param>
+        /// <returns></returns>
+        static public bool? RunEnabled_PreKill(Player player, double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            int doesKill = -1;
+            if (Passive.del_PreKill != null)
+                doesKill = Passive.del_PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player);
+
+            if (doesKill != -1)
+            {
+                return doesKill != 0;
+            }
+            return null;
+        }
+
+        static public void RunEnabled_SendHealPacket(Player player, ref int healAmount, int healTarget)
+        {
+            if (Passive.del_SendHealPacket != null)
+                Passive.del_SendHealPacket(ref healAmount, healTarget,  player);
+        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -30,10 +106,85 @@ namespace TerraLeague.Items.CustomItems
                 {
                     if (Passives[i].currentlyActive)
                     {
-                        Passives[i].UpdateAccessory(player, this);
+                        Passive pas = Passives[i];
+                        pas.UpdateAccessory(player, this);
+
+                        if (Passive.del_PostPlayerUpdate == null)
+                            Passive.del_PostPlayerUpdate = pas.PostPlayerUpdate;
+                        else
+                            Passive.del_PostPlayerUpdate += pas.PostPlayerUpdate;
+
+                        if (Passive.del_NPCHit == null)
+                            Passive.del_NPCHit = pas.NPCHit;
+                        else
+                            Passive.del_NPCHit += pas.NPCHit;
+
+                        if (Passive.del_NPCHitWithProjectile == null)
+                            Passive.del_NPCHitWithProjectile = pas.NPCHitWithProjectile;
+                        else
+                            Passive.del_NPCHitWithProjectile += pas.NPCHitWithProjectile;
+
+                        if (Passive.del_OnHitByNPC == null)
+                            Passive.del_OnHitByNPC = pas.OnHitByNPC;
+                        else
+                            Passive.del_OnHitByNPC += pas.OnHitByNPC;
+
+                        if (Passive.del_OnHitByProjectile == null)
+                            Passive.del_OnHitByProjectile = pas.OnHitByProjectile;
+                        else
+                            Passive.del_OnHitByProjectile += pas.OnHitByProjectile;
+
+                        if (Passive.del_OnHitByProjectileNPC == null)
+                            Passive.del_OnHitByProjectileNPC = pas.OnHitByProjectile;
+                        else
+                            Passive.del_OnHitByProjectileNPC += pas.OnHitByProjectile;
+                        
+                        if (Passive.del_OnKilledNPC == null)
+                            Passive.del_OnKilledNPC = pas.OnKilledNPC;
+                        else
+                            Passive.del_OnKilledNPC += pas.OnKilledNPC;
+
+                        if (Passive.del_SendHealPacket == null)
+                            Passive.del_SendHealPacket = pas.SendHealPacket;
+                        else
+                            Passive.del_SendHealPacket += pas.SendHealPacket;
                     }
                 }
             }
+
+            if (Active != null)
+            {
+                if (Active.del_PostPlayerUpdate == null)
+                    Active.del_PostPlayerUpdate = this.Active.PostPlayerUpdate;
+                else
+                    Active.del_PostPlayerUpdate += this.Active.PostPlayerUpdate;
+
+                if (Active.del_NPCHit == null)
+                    Active.del_NPCHit = this.Active.NPCHit;
+                else
+                    Active.del_NPCHit += this.Active.NPCHit;
+
+                if (Active.del_NPCHitWithProjectile == null)
+                    Active.del_NPCHitWithProjectile = this.Active.NPCHitWithProjectile;
+                else
+                    Active.del_NPCHitWithProjectile += this.Active.NPCHitWithProjectile;
+
+                if (Active.del_OnHitByNPC == null)
+                    Active.del_OnHitByNPC = this.Active.OnHitByNPC;
+                else
+                    Active.del_OnHitByNPC += this.Active.OnHitByNPC;
+
+                if (Active.del_OnHitByProjectile == null)
+                    Active.del_OnHitByProjectile = this.Active.OnHitByProjectile;
+                else
+                    Active.del_OnHitByProjectile += this.Active.OnHitByProjectile;
+
+                if (Active.del_OnHitByProjectileNPC == null)
+                    Active.del_OnHitByProjectileNPC = this.Active.OnHitByProjectile;
+                else
+                    Active.del_OnHitByProjectileNPC += this.Active.OnHitByProjectile;
+            }
+
             //if (Active != null)
             //{
 
@@ -189,23 +340,23 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player)
         {
-            if (Active != null)
-            {
-                if (Active.currentlyActive)
-                {
-                    Active.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, this);
-                }
-            }
-            if (Passives != null)
-            {
-                for (int i = 0; i < Passives.Length; i++)
-                {
-                    if (Passives[i].currentlyActive)
-                    {
-                        Passives[i].NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, this);
-                    }
-                }
-            }
+            //if (Active != null)
+            //{
+            //    if (Active.currentlyActive)
+            //    {
+            //        Active.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, this);
+            //    }
+            //}
+            //if (Passives != null)
+            //{
+            //    for (int i = 0; i < Passives.Length; i++)
+            //    {
+            //        if (Passives[i].currentlyActive)
+            //        {
+            //            Passives[i].NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, this);
+            //        }
+            //    }
+            //}
 
             //if (GetPrimaryPassive() != null)
             //    GetPrimaryPassive().NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, this);
@@ -217,23 +368,24 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
-            if (Active != null)
-            {
-                if (Active.currentlyActive)
-                {
-                    Active.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, this);
-                }
-            }
-            if (Passives != null)
-            {
-                for (int i = 0; i < Passives.Length; i++)
-                {
-                    if (Passives[i].currentlyActive)
-                    {
-                        Passives[i].NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, this);
-                    }
-                }
-            }
+
+            //if (Active != null)
+            //{
+            //    if (Active.currentlyActive)
+            //    {
+            //        Active.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, this);
+            //    }
+            //}
+            //if (Passives != null)
+            //{
+            //    for (int i = 0; i < Passives.Length; i++)
+            //    {
+            //        if (Passives[i].currentlyActive)
+            //        {
+            //            Passives[i].NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, this);
+            //        }
+            //    }
+            //}
 
             //if (GetPrimaryPassive() != null)
             //    GetPrimaryPassive().NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, this);
@@ -245,23 +397,23 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
-            if (Active != null)
-            {
-                if (Active.currentlyActive)
-                {
-                    Active.OnHitByNPC(npc, ref damage, ref crit, player, this);
-                }
-            }
-            if (Passives != null)
-            {
-                for (int i = 0; i < Passives.Length; i++)
-                {
-                    if (Passives[i].currentlyActive)
-                    {
-                        Passives[i].OnHitByNPC(npc, ref damage, ref crit, player, this);
-                    }
-                }
-            }
+            //if (Active != null)
+            //{
+            //    if (Active.currentlyActive)
+            //    {
+            //        Active.OnHitByNPC(npc, ref damage, ref crit, player, this);
+            //    }
+            //}
+            //if (Passives != null)
+            //{
+            //    for (int i = 0; i < Passives.Length; i++)
+            //    {
+            //        if (Passives[i].currentlyActive)
+            //        {
+            //            Passives[i].OnHitByNPC(npc, ref damage, ref crit, player, this);
+            //        }
+            //    }
+            //}
 
             //if (GetPrimaryPassive() != null)
             //    GetPrimaryPassive().OnHitByNPC(npc, ref damage, ref crit, player, this);
@@ -273,23 +425,23 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void OnHitByProjectile(Projectile proj, ref int damage, ref bool crit, Player player)
         {
-            if (Active != null)
-            {
-                if (Active.currentlyActive)
-                {
-                    Active.OnHitByProjectile(proj, ref damage, ref crit, player, this);
-                }
-            }
-            if (Passives != null)
-            {
-                for (int i = 0; i < Passives.Length; i++)
-                {
-                    if (Passives[i].currentlyActive)
-                    {
-                        Passives[i].OnHitByProjectile(proj, ref damage, ref crit, player, this);
-                    }
-                }
-            }
+            //if (Active != null)
+            //{
+            //    if (Active.currentlyActive)
+            //    {
+            //        Active.OnHitByProjectile(proj, ref damage, ref crit, player, this);
+            //    }
+            //}
+            //if (Passives != null)
+            //{
+            //    for (int i = 0; i < Passives.Length; i++)
+            //    {
+            //        if (Passives[i].currentlyActive)
+            //        {
+            //            Passives[i].OnHitByProjectile(proj, ref damage, ref crit, player, this);
+            //        }
+            //    }
+            //}
 
             //if (GetPrimaryPassive() != null)
             //    GetPrimaryPassive().OnHitByProjectile(proj, ref damage, ref crit, player, this);
@@ -301,23 +453,23 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void OnHitByProjectile(NPC npc, ref int damage, ref bool crit, Player player)
         {
-            if (Active != null)
-            {
-                if (Active.currentlyActive)
-                {
-                    Active.OnHitByProjectile(npc, ref damage, ref crit, player, this);
-                }
-            }
-            if (Passives != null)
-            {
-                for (int i = 0; i < Passives.Length; i++)
-                {
-                    if (Passives[i].currentlyActive)
-                    {
-                        Passives[i].OnHitByProjectile(npc, ref damage, ref crit, player, this);
-                    }
-                }
-            }
+            //if (Active != null)
+            //{
+            //    if (Active.currentlyActive)
+            //    {
+            //        Active.OnHitByProjectile(npc, ref damage, ref crit, player, this);
+            //    }
+            //}
+            //if (Passives != null)
+            //{
+            //    for (int i = 0; i < Passives.Length; i++)
+            //    {
+            //        if (Passives[i].currentlyActive)
+            //        {
+            //            Passives[i].OnHitByProjectile(npc, ref damage, ref crit, player, this);
+            //        }
+            //    }
+            //}
 
             //if (GetPrimaryPassive() != null)
             //    GetPrimaryPassive().OnHitByProjectile(npc, ref damage, ref crit, player, this);
@@ -329,16 +481,16 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void OnKilledNPC(NPC npc, int damage, bool crit, Player player)
         {
-            if (Passives != null)
-            {
-                for (int i = 0; i < Passives.Length; i++)
-                {
-                    if (Passives[i].currentlyActive)
-                    {
-                        Passives[i].OnKilledNPC(npc, damage, crit, player, this);
-                    }
-                }
-            }
+            //if (Passives != null)
+            //{
+            //    for (int i = 0; i < Passives.Length; i++)
+            //    {
+            //        if (Passives[i].currentlyActive)
+            //        {
+            //            Passives[i].OnKilledNPC(npc, damage, crit, player, this);
+            //        }
+            //    }
+            //}
 
             //if (GetPrimaryPassive() != null)
             //    GetPrimaryPassive().OnKilledNPC(npc, damage, crit, player, this);
@@ -391,205 +543,6 @@ namespace TerraLeague.Items.CustomItems
             return -1;
         }
 
-        static public void RunEnabled_PostPlayerUpdate(Player player)
-        {
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                legItem.Passives[j].PostPlayerUpdate(player, legItem);
-                        }
-                    }
-                    if (legItem.Active != null)
-                    {
-                        if (legItem.Active.currentlyActive)
-                            legItem.Active.PostPlayerUpdate(player, legItem);
-                    }
-                }
-            }
-        }
-
-        static public void RunEnabled_NPCHit(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int onhitdamage)
-        {
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                legItem.Passives[j].NPCHit(item, target, ref damage, ref knockback, ref crit, ref onhitdamage, player, legItem);
-                        }
-                    }
-                    if (legItem.Active != null)
-                    {
-                        if (legItem.Active.currentlyActive)
-                            legItem.Active.NPCHit(item, target, ref damage, ref knockback, ref crit, ref onhitdamage, player, legItem);
-                    }
-                }
-            }
-        }
-
-        static public void RunEnabled_NPCHitWithProjectile(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int onhitdamage)
-        {
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                legItem.Passives[j].NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage, player, legItem);
-                        }
-                    }
-                    if (legItem.Active != null)
-                    {
-                        if (legItem.Active.currentlyActive)
-                            legItem.Active.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage, player, legItem);
-                    }
-                }
-            }
-        }
-
-        static public void RunEnabled_OnHitByNPC(Player player, NPC npc, ref int damage, ref bool crit)
-        {
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                legItem.Passives[j].OnHitByNPC(npc, ref damage, ref crit, player, legItem);
-                        }
-                    }
-                    if (legItem.Active != null)
-                    {
-                        if (legItem.Active.currentlyActive)
-                            legItem.Active.OnHitByNPC(npc, ref damage, ref crit, player, legItem);
-                    }
-                }
-            }
-        }
-
-        static public void RunEnabled_OnHitByProjectile(Player player, Projectile proj, ref int damage, ref bool crit)
-        {
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                legItem.Passives[j].OnHitByProjectile(proj, ref damage, ref crit, player, legItem);
-                        }
-                    }
-                    if (legItem.Active != null)
-                    {
-                        if (legItem.Active.currentlyActive)
-                            legItem.Active.OnHitByProjectile(proj, ref damage, ref crit, player, legItem);
-                    }
-                }
-            }
-        }
-
-        static public void RunEnabled_OnHitByProjectile(Player player, NPC npc, ref int damage, ref bool crit)
-        {
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                legItem.Passives[j].OnHitByProjectile(npc, ref damage, ref crit, player, legItem);
-                        }
-                    }
-                    if (legItem.Active != null)
-                    {
-                        if (legItem.Active.currentlyActive)
-                            legItem.Active.OnHitByProjectile(npc, ref damage, ref crit, player, legItem);
-                    }
-                }
-            }
-        }
-
-        static public void RunEnabled_OnKilledNPC(Player player, NPC npc, ref int damage, ref bool crit)
-        {
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                legItem.Passives[j].OnKilledNPC(npc, damage, crit, player, legItem);
-                        }
-                    }
-                    //if (legItem.Active != null)
-                    //{
-                    //    legItem.Active.OnKilledNPC();
-                    //}
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns false if you live, true if you die, and null if vanilla will decide
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="damage"></param>
-        /// <param name="hitDirection"></param>
-        /// <param name="pvp"></param>
-        /// <param name="playSound"></param>
-        /// <param name="genGore"></param>
-        /// <param name="damageSource"></param>
-        /// <returns></returns>
-        static public bool? RunEnabled_PreKill(Player player, double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
-        {
-            int doesKill = -1;
-
-            for (int i = 3; i < 10; i++)
-            {
-                if (player.armor[i].ModItem is LeagueItem legItem)
-                {
-                    if (legItem.Passives != null)
-                    {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
-                        {
-                            if (legItem.Passives[j].currentlyActive)
-                                doesKill = legItem.Passives[j].PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, legItem);
-                        }
-                    }
-                    //if (legItem.Active != null)
-                    //{
-                    //    legItem.Active.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, legItem);
-                    //}
-                }
-            }
-            
-            if (doesKill != -1)
-            {
-                return doesKill != 0;
-            }
-            return null;
-        }
+        
     }
 }

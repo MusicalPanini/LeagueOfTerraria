@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bami's Cinder");
-            Tooltip.SetDefault("Increases maximum life by 20");
+            Tooltip.SetDefault("Increases maximum life by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -28,15 +28,17 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new Immolate(300, true)
+                new Immolate(300, true, this)
             };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 20;
+            player.statLifeMax2 += 10;
             if (!hideVisual)
                 player.GetModPlayer<PLAYERGLOBAL>().immolate = true;
+
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

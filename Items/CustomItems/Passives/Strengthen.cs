@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int maxStacks;
         readonly int lifeperStack;
 
-        public Strengthen(int MaxStacks, int LifePerStack)
+        public Strengthen(int MaxStacks, int LifePerStack, LeagueItem item) : base(item)
         {
             maxStacks = MaxStacks;
             lifeperStack = LifePerStack;
@@ -30,20 +30,20 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void OnKilledNPC(NPC npc, int damage, bool crit, Player player, ModItem modItem)
+        public override void OnKilledNPC(NPC npc, ref int damage, ref bool crit, Player player)
         {
             AddStat(player, maxStacks, lifeperStack);
 
-            base.OnKilledNPC(npc, damage, crit, player, modItem);
+            base.OnKilledNPC(npc, ref damage, ref crit, player);
         }
 
-        public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player, ModItem modItem)
+        public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             passiveStat = 0;
 
-            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, modItem);
+            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player);
         }
     }
 }

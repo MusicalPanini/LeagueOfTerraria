@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Moonstone");
+            DisplayName.SetDefault("Moonstone Renewer");
             Tooltip.SetDefault("6% increased magic and summon damage" +
                 "\nIncreases mana regeneration by 20%" +
                 "\nIncreases maximum life by 20" +
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new StarlitGrace(12, 25, 4, 4)
+                new StarlitGrace(12, 25, 4, 4, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

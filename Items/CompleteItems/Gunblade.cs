@@ -29,7 +29,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new LightningBolt(250, 50, 30);
             Passives = new Passive[]
             {
-                new Omniheal(2)
+                new Omniheal(2, this)
             };
         }
 

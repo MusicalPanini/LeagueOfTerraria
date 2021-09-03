@@ -29,8 +29,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Crush(),
-                new Rage(5)
+                new Crush(this),
+                new Rage(5, this)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -38,6 +38,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.GetDamage(DamageClass.Melee) += 0.15f;
             player.statLifeMax2 += 40;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

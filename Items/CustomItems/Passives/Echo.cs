@@ -19,7 +19,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         readonly int baseDamage;
         readonly double magicScaling;
 
-        public Echo(int BaseDamage, int MagicScaling)
+        public Echo(int BaseDamage, int MagicScaling, LeagueItem legItem) : base(legItem)
         {
             baseDamage = BaseDamage;
             magicScaling = MagicScaling;
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -57,10 +57,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 modPlayer.echo = false;
             }
 
-            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -84,7 +84,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             else
                 player.ClearBuff(BuffType<Buffs.Echo>());
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         public override void Efx(Player user, NPC effectedNPC)

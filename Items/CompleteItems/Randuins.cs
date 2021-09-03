@@ -30,8 +30,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new PowersBane(100, 30),
-                new ColdSteel(3, 350)
+                new PowersBane(100, 30, this),
+                new ColdSteel(3, 350, this)
             };
         }
 

@@ -56,9 +56,9 @@ namespace TerraLeague.Items.CustomItems.Actives
             }
         }
 
-        public override void PostPlayerUpdate(Player player, LeagueItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
 
         static public void Efx(int user)

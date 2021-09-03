@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         readonly int meleeRangedAttackSpeed;
 
-        public GuinsoosRage(int meleeAttacksSpeedAmmoConsumeChance)
+        public GuinsoosRage(int meleeAttacksSpeedAmmoConsumeChance, LeagueItem legItem) : base(legItem)
         {
             meleeRangedAttackSpeed = meleeAttacksSpeedAmmoConsumeChance;
         }
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.UpdateAccessory(player, modItem);
         }
 
-        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        public override void PostPlayerUpdate(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -53,7 +53,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
-            base.PostPlayerUpdate(player, modItem);
+            base.PostPlayerUpdate(player);
         }
     }
 }

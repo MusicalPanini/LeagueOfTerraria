@@ -9,8 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CompleteItems
 {
-    public class WitsEnd : LeagueItem
+    public class WitsEnd : MasterworkItem
     {
+        public override string MasterworkName => "Wit's Deathwish";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wit's End");
@@ -31,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Absorption()
+                new Absorption(this)
             };
         }
 
@@ -65,6 +67,21 @@ namespace TerraLeague.Items.CompleteItems
                 return (Passives[0].passiveStat).ToString();
             else
                 return "";
+        }
+
+        public override string MasterworkTooltip()
+        {
+            return LeagueTooltip.CreateColorString(MasterColor, "32") + " melee On hit Damage" +
+                "\n" + LeagueTooltip.CreateColorString(MasterColor, "20%") + " increased melee speed" +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "6") +
+                "\nIncreases your max number of minions";
+        }
+
+        public override void UpdateMasterwork(Player player)
+        {
+            player.meleeSpeed += 0.5f;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 2;
+            player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit += 8;
         }
     }
 }
