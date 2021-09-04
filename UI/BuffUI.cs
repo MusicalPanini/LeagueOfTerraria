@@ -209,9 +209,8 @@ namespace TerraLeague.UI
                 }
                 else
                 {
-                    buffDescription = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(BuffType)) +
-                    "\nHeal Power nullified" +
-                    "\nMagic and Summon damage reduced by ";
+                    buffDescription = LeagueTooltip.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(BuffType));
+                    
                     if (BuffType == Terraria.ID.BuffID.MonsterBanner)
                     {
                         string name1 = "";
@@ -252,6 +251,8 @@ namespace TerraLeague.UI
                     }
                     else if (BuffType == Terraria.ID.BuffID.ManaSickness)
                     {
+                        buffDescription += "\nHeal Power nullified" +
+                            "\nMagic and Summon damage reduced by ";
                         buffDescription += (int)(Main.LocalPlayer.manaSickReduction * 100) + "%";
                     }
 
