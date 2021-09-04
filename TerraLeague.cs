@@ -80,12 +80,12 @@ namespace TerraLeague
             Logger.InfoFormat("{0} logging", Name);
 
             ToggleStats = KeybindLoader.RegisterKeybind(this,"Toggle Stats Page", "L");
-            Item1 = KeybindLoader.RegisterKeybind(this, "Active item 1", "1");
-            Item2 = KeybindLoader.RegisterKeybind(this, "Active item 2", "2");
-            Item3 = KeybindLoader.RegisterKeybind(this, "Active item 3", "3");
-            Item4 = KeybindLoader.RegisterKeybind(this, "Active item 4", "4");
-            Item5 = KeybindLoader.RegisterKeybind(this, "Active item 5", "5");
-            Item6 = KeybindLoader.RegisterKeybind(this, "Active item 6", "6");
+            Item1 = KeybindLoader.RegisterKeybind(this, "Active item 1", "D1");
+            Item2 = KeybindLoader.RegisterKeybind(this, "Active item 2", "D2");
+            Item3 = KeybindLoader.RegisterKeybind(this, "Active item 3", "D3");
+            Item4 = KeybindLoader.RegisterKeybind(this, "Active item 4", "D4");
+            Item5 = KeybindLoader.RegisterKeybind(this, "Active item 5", "D5");
+            Item6 = KeybindLoader.RegisterKeybind(this, "Active item 6", "D6");
             Sum1 = KeybindLoader.RegisterKeybind(this, "Summoner Spell 1", "F");
             Sum2 = KeybindLoader.RegisterKeybind(this, "Summoner Spell 2", "G");
             QAbility = KeybindLoader.RegisterKeybind(this, "Ability 1", "Z");
