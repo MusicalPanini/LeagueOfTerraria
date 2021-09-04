@@ -54,7 +54,7 @@ namespace TerraLeague
         [Label("Item UI Anchor Y Offset")]
         public int itemUIYOffset;
 
-        [DefaultValue(UIAnchor.BottomRight)]
+        [DefaultValue(UIAnchor.BottomCenter)]
         [BackgroundColor(137, 129, 58)]
         [Label("Item UI Anchor Point")]
         public UIAnchor itemUIAnchor;
