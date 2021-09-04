@@ -3749,7 +3749,7 @@ namespace TerraLeague
             }
             if (keyDir == num)
             {
-                if ((solariSet && solariCharge >= solariMaxCharge) || TerraLeague.noItemCooldowns)
+                if (solariSet && solariCharge >= solariMaxCharge && Player.whoAmI == Main.LocalPlayer.whoAmI)
                 {
                     if (TerraLeague.noItemCooldowns)
                         solariCharge = solariMaxCharge - 60;
