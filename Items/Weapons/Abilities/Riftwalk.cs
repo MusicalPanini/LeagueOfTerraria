@@ -129,7 +129,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 19, SoundType.Sound));
+            //Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 19, SoundType.Sound));
         }
     }
 }
