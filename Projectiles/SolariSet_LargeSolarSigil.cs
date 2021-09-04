@@ -62,11 +62,13 @@ namespace TerraLeague.Projectiles
                     {
                         TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 9, 0.5f);
                     }
-
-                    if (Projectile.timeLeft == attackDuration)
+                    if (Projectile.owner == Main.LocalPlayer.whoAmI)
                     {
-                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 91, -0.5f);
-                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.UnitY, ModContent.ProjectileType<SolariSet_SolarLaser>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                        if (Projectile.timeLeft == attackDuration)
+                        {
+                            TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 91, -0.5f);
+                            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.UnitY, ModContent.ProjectileType<SolariSet_SolarLaser>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                        }
                     }
                 }
             }
