@@ -25,14 +25,14 @@ namespace TerraLeague.Items.CompleteItems
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
-        public override bool CanEquipAccessory(Player player, int slot)
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
             if (TerraLeague.FindAccessorySlotOnPlayer(player, GetInstance<TitanicHydra>()) == slot - 3)
                 return true;
             if (TerraLeague.FindAccessorySlotOnPlayer(player, GetInstance<TitanicHydra>()) != -1)
                 return false;
 
-            return base.CanEquipAccessory(player, slot);
+            return base.CanEquipAccessory(player, slot, modded);
         }
 
         public override void SetDefaults()

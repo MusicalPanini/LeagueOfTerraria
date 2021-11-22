@@ -483,7 +483,7 @@ namespace TerraLeague
             }
             else
             {
-                Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().CausticWoundsEffect(Main.npc[target]);
+                Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ShatterEffect(Main.npc[target]);
             }
         }
 
@@ -1016,6 +1016,7 @@ namespace TerraLeague
         public const byte TeleportRequest = 17;
         public const byte TeleportPosition = 18;
         public const byte TeleportRequestPlayer = 19;
+        public const byte SyncSpells = 20;
         #endregion
 
         public SummonerSpellsPacketHandler(byte handlerType) : base(handlerType)
@@ -1082,6 +1083,9 @@ namespace TerraLeague
                     break;
                 case (TeleportRequestPlayer):
                     ReceiveTeleportRequestPlayer(reader, fromWho);
+                    break;
+                case (SyncSpells):
+                    RecieveSyncSpells(reader, fromWho);
                     break;
             }
 
@@ -1620,6 +1624,37 @@ namespace TerraLeague
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 TeleportRune.DoTP(Main.player[player], point);
+            }
+        }
+
+        public void SendSyncSpells(int toWho, int fromWho, int spell1, int spell2, int player)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(SyncSpells, fromWho);
+                packet.Write(spell1);
+                packet.Write(spell2);
+                packet.Write(player);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending New Summoner Spells", Color.LightSlateGray);
+            }
+        }
+        private void RecieveSyncSpells(BinaryReader reader, int fromWho)
+        {
+            TerraLeague.Log("[DEBUG] - Received New Summoner Spells", new Color(80, 80, 80));
+
+            int spell1 = reader.ReadInt32();
+            int spell2 = reader.ReadInt32();
+            int player = reader.ReadInt32();
+
+            if (Main.netMode == NetmodeID.Server)
+            {
+                SummonerSpell sum1 = (SummonerSpell)GetModItem(spell1);
+                SummonerSpell sum2 = (SummonerSpell)GetModItem(spell2);
+                Main.player[player].GetModPlayer<PLAYERGLOBAL>().sumSpells = new SummonerSpell[2]
+                {
+                    sum1, sum2
+                };
             }
         }
     }

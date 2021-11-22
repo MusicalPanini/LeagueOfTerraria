@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Weapons
             return true;
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
             return Main.rand.Next(0, 100) < 33;
         }

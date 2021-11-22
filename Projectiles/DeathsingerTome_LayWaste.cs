@@ -58,7 +58,7 @@ namespace TerraLeague.Projectiles
                 dust.alpha = Projectile.alpha;
             }
 
-            Lighting.AddLight(Projectile.Center, 0f, 0.75f, 0.3f);
+            Lighting.AddLight(Projectile.Center, 0f, 0.75f * (1 - (Projectile.timeLeft - 12)/30f), 0.3f * (1 - (Projectile.timeLeft - 12) / 30f));
             if (Projectile.timeLeft > 12)
             {
                 Projectile.alpha -= 1;

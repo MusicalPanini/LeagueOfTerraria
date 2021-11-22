@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Armor
                 "\nMAG increased by 30");
             base.SetStaticDefaults();
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
         }
 
         public override void SetDefaults()
@@ -57,9 +58,9 @@ namespace TerraLeague.Items.Armor
             player.armorEffectDrawShadowLokis = true;
         }
 
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawHair = true;
-        }
+        //public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
+        //{
+        //    drawHair = true;
+        //}
     }
 }

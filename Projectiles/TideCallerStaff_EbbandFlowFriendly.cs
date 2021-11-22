@@ -74,7 +74,7 @@ namespace TerraLeague.Projectiles
                 Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
                 int dustBoxWidth = Projectile.width - 12;
                 int dustBoxHeight = Projectile.height - 12;
-                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Ice, 0f, 0f, 100, color, 1.5f);
+                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 211, 0f, 0f, 100, color, 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += Projectile.velocity * 0.1f;

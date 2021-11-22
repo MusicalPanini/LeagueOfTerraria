@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Armor
                 "\nIncreases life regeneration by 2");
             base.SetStaticDefaults();
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
         }
 
         public override void SetDefaults()
@@ -54,11 +55,6 @@ namespace TerraLeague.Items.Armor
                 "\nCharge up solar energy during the day" +
                 "\nAt full charge double tap " + Terraria.Localization.Language.GetTextValue(Main.ReversedUpDownArmorSetBonuses ? "Key.UP" : "Key.DOWN") + " to summon a Solar Flare";
             player.GetModPlayer<PLAYERGLOBAL>().solariSet = true;
-        }
-
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawHair = true;
         }
     }
 }

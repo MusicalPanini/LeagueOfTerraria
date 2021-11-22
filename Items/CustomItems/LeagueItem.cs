@@ -192,7 +192,7 @@ namespace TerraLeague.Items.CustomItems
             base.UpdateAccessory(player, hideVisual);
         }
 
-        public override bool CanEquipAccessory(Player player, int slot)
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
             if (slot >= 3 && slot <= 8)
             {
@@ -211,7 +211,7 @@ namespace TerraLeague.Items.CustomItems
                 }
             }
 
-            return base.CanEquipAccessory(player, slot);
+            return base.CanEquipAccessory(player, slot, modded);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

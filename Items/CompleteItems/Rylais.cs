@@ -56,7 +56,7 @@ namespace TerraLeague.Items.CompleteItems
         public override string MasterworkTooltip()
         {
             return LeagueTooltip.CreateColorString(MasterColor, "10%") + " increased magic damage" +
-                "\nIncreases health by 30" + LeagueTooltip.CreateColorString(MasterColor, "40");
+                "\nIncreases health by " + LeagueTooltip.CreateColorString(MasterColor, "40");
         }
 
         public override void UpdateMasterwork(Player player)

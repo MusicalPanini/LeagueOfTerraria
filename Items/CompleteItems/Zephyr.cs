@@ -75,7 +75,7 @@ namespace TerraLeague.Items.CompleteItems
             return LeagueTooltip.CreateColorString(MasterColor, "6%") + " increased melee and ranged damage" +
                 "\n" + LeagueTooltip.CreateColorString(MasterColor, "12%") + " increased melee and ranged attack speed" +
                 "\n" + LeagueTooltip.CreateColorString(MasterColor, "25%") + " increased movement speed" +
-                "\nIncreases ability haste by 10" + LeagueTooltip.CreateColorString(MasterColor, "15") +
+                "\nIncreases ability haste by " + LeagueTooltip.CreateColorString(MasterColor, "15") +
                 "\nImmunity to Slow and Chilled";
         }
 

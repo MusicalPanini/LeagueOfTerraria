@@ -17,7 +17,7 @@ namespace TerraLeague.Projectiles.Minions
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            //ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             base.SetStaticDefaults();
         }
 

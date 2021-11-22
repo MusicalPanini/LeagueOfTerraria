@@ -71,7 +71,7 @@ namespace TerraLeague.Items.SummonerSpells
             }
 
             Efx(player);
-            PacketHandler.SendHeal(-1, player.whoAmI, player.whoAmI, player.whoAmI);
+            //PacketHandler.SendHeal(-1, player.whoAmI, player.whoAmI, player.whoAmI);
 
             SetCooldowns(player, spellSlot);
         }

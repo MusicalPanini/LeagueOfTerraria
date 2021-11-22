@@ -15,6 +15,8 @@ namespace TerraLeague.Items.Armor
             DisplayName.SetDefault("Spiritual Gown");
             Tooltip.SetDefault("10% increased heal power");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Body.Sets.HidesArms[Mod.GetEquipSlot(Name, EquipType.Body)] = true;
+            ArmorIDs.Body.Sets.HidesHands[Mod.GetEquipSlot(Name, EquipType.Body)] = false;
         }
 
         public override void SetDefaults()
@@ -52,10 +54,10 @@ namespace TerraLeague.Items.Armor
         }
 
 
-        public override void DrawHands(ref bool drawHands, ref bool drawArms)
-        {
-            drawHands = true;
-            drawArms = false;
-        }
+        //public override void DrawHands(ref bool drawHands, ref bool drawArms)
+        //{
+        //    drawHands = true;
+        //    drawArms = false;
+        //}
     }
 }

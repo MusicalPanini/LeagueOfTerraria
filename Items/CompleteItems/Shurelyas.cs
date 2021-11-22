@@ -35,7 +35,7 @@ namespace TerraLeague.Items.CompleteItems
             Active = new FleetFoot(500, 4, 90);
         }
 
-        public override bool CanEquipAccessory(Player player, int slot)
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
             if (slot >= 3 && slot <= 8)
                 player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot - 3] = (int)(90 * player.GetModPlayer<PLAYERGLOBAL>().Cdr * 60);

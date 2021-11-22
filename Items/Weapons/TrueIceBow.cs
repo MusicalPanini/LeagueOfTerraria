@@ -80,10 +80,8 @@ namespace TerraLeague.Items.Weapons
             .Register();
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
-            int num = (int)(Item.useAnimation * UseTimeMultiplier(player)) - Item.useAnimation;
-
             return !(player.itemAnimation < (player.itemAnimationMax) - 2);
         }
     }

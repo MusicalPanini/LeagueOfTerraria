@@ -40,16 +40,5 @@ namespace TerraLeague.Items.Armor
             .Register();
             
         }
-
-        public override void UpdateArmorSet(Player player)
-        {
-            
-        }
-
-        public override void DrawHands(ref bool drawHands, ref bool drawArms)
-        {
-            drawHands = false;
-            drawArms = false;
-        }
     }
 }

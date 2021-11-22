@@ -11,7 +11,7 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ////ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             DisplayName.SetDefault("Hextech Bolt");
         }
 
@@ -40,18 +40,18 @@ namespace TerraLeague.Projectiles
                 Projectile.velocity.Y = 16f;
             }
 
-                for (int i = 0; i < 10; i++)
-                {
-                    float x2 = Projectile.position.X - Projectile.velocity.X / 10f * (float)i;
-                    float y2 = Projectile.position.Y - Projectile.velocity.Y / 10f * (float)i;
-                    int num141 = Dust.NewDust(new Vector2(x2, y2), 1, 1, 111, 0f, 0f, 0, default(Color), 0.5f);
-                    Main.dust[num141].alpha = Projectile.alpha;
-                    Main.dust[num141].position.X = x2;
-                    Main.dust[num141].position.Y = y2;
-                    Dust obj77 = Main.dust[num141];
-                    obj77.velocity *= 0f;
-                    Main.dust[num141].noGravity = true;
-                }
+            for (int i = 0; i < 3; i++)
+            {
+                float x2 = Projectile.position.X - Projectile.velocity.X / 3f * (float)i;
+                float y2 = Projectile.position.Y - Projectile.velocity.Y / 3f * (float)i;
+                int num141 = Dust.NewDust(new Vector2(x2, y2), 1, 1, 111, 0f, 0f, 0, default(Color), 0.5f);
+                Main.dust[num141].alpha = Projectile.alpha;
+                Main.dust[num141].position.X = x2;
+                Main.dust[num141].position.Y = y2;
+                Dust obj77 = Main.dust[num141];
+                obj77.velocity *= 0f;
+                Main.dust[num141].noGravity = true;
+            }
 
             //Dust dust = Dust.NewDustPerfect(Projectile.position, 111, Vector2.Zero, 0, default, 0.5f);
             //dust.noGravity = true;

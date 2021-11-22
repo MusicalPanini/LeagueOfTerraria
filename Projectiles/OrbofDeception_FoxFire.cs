@@ -38,12 +38,19 @@ namespace TerraLeague.Projectiles
             Projectile.Center = player.MountedCenter + offset.RotatedBy(Projectile.ai[0]);
 
             Lighting.AddLight(Projectile.position, 1f, 1f, 1f);
+
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ice, Projectile.velocity.X, Projectile.velocity.Y, 200, new Color(255, 255, 255), 1.5f);
+                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
+                int dustBoxWidth = Projectile.width - 12;
+                int dustBoxHeight = Projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 180, 0f, 0f, 124, default, 1.8f);
                 dust.noGravity = true;
-                dust.noLight = true;
-                dust.velocity *= 0.3f;
+                dust.velocity *= 0.1f;
+                dust.rotation += Main.rand.NextFloat(0, MathHelper.PiOver2);
+                dust.velocity += Projectile.velocity * 0.1f;
+                dust.position.X -= Projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
         }
 
@@ -51,7 +58,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, 16, 16, DustID.Ice, 0, 0, 50, new Color(255, 255, 255), 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, 16, 16, 180, 0, 0, 50, new Color(255, 255, 255), 1.2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

@@ -16,7 +16,7 @@ namespace TerraLeague.Projectiles
             DisplayName.SetDefault("Sand Solder");
             //Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            //ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 6;
 
             DrawOriginOffsetY -= 12;

@@ -14,6 +14,9 @@ namespace TerraLeague.Items.Armor
             Tooltip.SetDefault("15% increased magic damage" +
                 "\nIncreases ability haste by 10");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
+            ArmorIDs.Head.Sets.UseAltFaceHeadDraw[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
+            TerraLeague.DrawHairOverHelmet.Add(Mod.GetEquipSlot(Name, EquipType.Head));
             base.SetStaticDefaults();
         }
 
@@ -43,7 +46,9 @@ namespace TerraLeague.Items.Armor
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            if(body.type == ItemType<HextechEvolutionBreastplate>() && legs.type == ItemType<HextechEvolutionLeggings>())
+            int sd = ArmorIDs.Head.MimeMask;
+            var pog = ArmorIDs.Head.Sets.DrawBackHair[Mod.GetEquipSlot(Name, EquipType.Head)];
+            if (body.type == ItemType<HextechEvolutionBreastplate>() && legs.type == ItemType<HextechEvolutionLeggings>())
                 return true;
             else
                 return false;
@@ -55,10 +60,10 @@ namespace TerraLeague.Items.Armor
             player.GetModPlayer<PLAYERGLOBAL>().hextechEvolutionSet = true;
         }
 
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawHair = true;
-            //drawAltHair = true;
-        }
+        //public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
+        //{
+        //    drawHair = true;
+        //    //drawAltHair = true;
+        //}
     }
 }

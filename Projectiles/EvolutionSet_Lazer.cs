@@ -41,10 +41,10 @@ namespace TerraLeague.Projectiles
             }
             Projectile.soundDelay = 100;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Vector2 pos = Projectile.position;
-                pos -= Projectile.velocity * ((float)i * 0.25f);
+                pos -= Projectile.velocity * ((float)i * 0.5f);
 
                 Dust dust = Dust.NewDustDirect(pos, 1, 1, 162, 0f, 0f, 0, default, 1f);
                 dust.position = pos;

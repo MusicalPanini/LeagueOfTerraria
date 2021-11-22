@@ -32,6 +32,7 @@ namespace TerraLeague
     public class TerraLeague : Mod
     {
         internal static string TooltipHeadingColor = "0099cc";
+        internal static List<int> DrawHairOverHelmet = new List<int>();
 
         internal static TerraLeague instance;
         internal int SumCurrencyID;

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Locket of the Iron Solari");
+            DisplayName.SetDefault("Endenier");
             Tooltip.SetDefault("Increases resist by 6" +
                 "\nGrants immunity to knockback and fire blocks" +
                 "\nIncreases length of invincibility after taking damage");
@@ -47,7 +47,7 @@ namespace TerraLeague.Items.CompleteItems
             CreateRecipe()
             .AddIngredient(ItemType<Cowl>(), 1)
             .AddIngredient(ItemType<GiantsBelt>(), 1)
-            .AddIngredient(ItemID.HallowedChest, 1)
+            .AddIngredient(ItemID.HallowedPlateMail, 1)
             .AddIngredient(ItemType<DamnedSoul>(), 20)
             .AddIngredient(ItemID.SoulofSight, 10)
             .AddIngredient(ItemID.Spike, 6)

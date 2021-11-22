@@ -1082,9 +1082,14 @@ namespace TerraLeague
                     initSum2 = null;
                 }
             }
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                SummonerSpell.PacketHandler.SendSyncSpells(-1, player.whoAmI, sumSpells[0].Item.type, sumSpells[1].Item.type, player.whoAmI);
+            }
         }
 
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
             if (Player.whoAmI == Main.LocalPlayer.whoAmI)
             {
@@ -1094,30 +1099,22 @@ namespace TerraLeague
 
                 if (Player.active)
                 {
-                    return new TagCompound
-                    {
-                        {"manaChargeStacks", manaChargeStacks},
-                        {"sumSpellOne", sumSpells[0].GetType().Name},
-                        {"sumSpellTwo", sumSpells[1].GetType().Name},
-                        {"blessingCooldown", blessingCooldown},
-                    };
+                    tag.Add("manaChargeStacks", manaChargeStacks);
+                    tag.Add("sumSpellOne", sumSpells[0].GetType().Name);
+                    tag.Add("sumSpellTwo", sumSpells[1].GetType().Name);
+                    tag.Add("blessingCooldown", blessingCooldown);
                 }
                 else
                 {
-                    return new TagCompound
-                    {
-                        {"manaChargeStacks", manaChargeStacks},
-                        {"sumSpellOne", "BarrierRune"},
-                        {"sumSpellTwo", "GhostRune"},
-                        {"blessingCooldown", blessingCooldown},
-                    };
+                    tag.Add("manaChargeStacks", manaChargeStacks);
+                    tag.Add("sumSpellOne", "BarrierRune");
+                    tag.Add("sumSpellTwo", "GhostRune");
+                    tag.Add("blessingCooldown", blessingCooldown);
                 }
-
             }
-            return null;
         }
 
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             if (Player.name == "TestDude")
             {
@@ -1203,6 +1200,7 @@ namespace TerraLeague
         }
 
         #region Multiplayer Stuff
+
         public override void clientClone(ModPlayer clientClone)
         {
             if (clientClone is PLAYERGLOBAL clone)
@@ -1214,6 +1212,7 @@ namespace TerraLeague
                 clone.NormalShield = NormalShield;
                 clone.zoneBlackMist = zoneBlackMist;
                 clone.zoneSurfaceMarble = zoneSurfaceMarble;
+                clone.sumSpells = sumSpells;
             }
         }
 
@@ -1257,6 +1256,13 @@ namespace TerraLeague
             {
                 PacketHandler.SendBiome(-1, Player.whoAmI, Player.whoAmI, 1, zoneBlackMist);
             }
+        }
+
+        public override void PlayerConnect(Player player)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                
+            base.PlayerConnect(player);
         }
         #endregion
 
@@ -1492,7 +1498,7 @@ namespace TerraLeague
             {
                 Lighting.AddLight(Player.Center, 0f, 0.75f, 0.3f);
                 Color color = Main.rand.NextBool() ? new Color(0, 255, 140) : new Color(0, 255, 0);
-                Dust dust = Dust.NewDustDirect(new Vector2(Player.position.X, Player.Center.Y - 320), Player.width, 400, DustID.SomethingRed, 0f, -5f, 197, color, 2.5f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Player.position.X, Player.Center.Y - 320), Player.width, 400, 186, 0f, -5f, 197, color, 2.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity.X *= 0.3f;
@@ -1572,7 +1578,7 @@ namespace TerraLeague
 
             }
 
-            if (Player.itemTime <= 1 && oldUsedInventorySlot != -1)
+            if (Player.itemTime <= 1 && oldUsedInventorySlot != -1 && Main.LocalPlayer.whoAmI == Player.whoAmI)
             {
                 Player.selectedItem = oldUsedInventorySlot;
                 Player.itemLocation = Vector2.Zero;
@@ -2219,7 +2225,7 @@ namespace TerraLeague
             base.UpdateEquips();
         }
 
-        public override void UpdateVanityAccessories()
+        public override void UpdateVisibleVanityAccessories()
         {
             for (int n = 13; n < 18; n++)
             {
@@ -3122,8 +3128,8 @@ namespace TerraLeague
             }
             if (Player.ownedProjectileCounts[ProjectileType<AtlasGauntlets_Right>()] > 0)
             {
-                drawInfo.missingArm = true;
-                drawInfo.missingHand = true;
+                drawInfo.armorHidesArms = true;
+                drawInfo.armorHidesHands = true;
             }
 
             //if (Player.armor.FirstOrDefault(x => x.type == ItemType<Items.Armor.HextechEvolutionMask>()) != null)
@@ -3641,9 +3647,17 @@ namespace TerraLeague
                 oldUsedInventorySlot = Player.selectedItem;
 
             Player.selectedItem = Player.FindItem(itemToUse);
+            
 
             if (oldUsedInventorySlot == 58 && Player.selectedItem == -1)
+            {
                 Player.selectedItem = 58;
+                Player.lastVisualizedSelectedItem = Player.HeldItem.Clone();
+            }
+            else
+            {
+                Player.lastVisualizedSelectedItem = Player.inventory[Player.selectedItem].Clone();
+            }
         }
 
         public void MeleeProjectileCooldown()

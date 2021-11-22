@@ -22,7 +22,7 @@ namespace TerraLeague.Items.CompleteItems
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
-        public override bool CanEquipAccessory(Player player, int slot)
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             string itemName = player.armor[slot].Name;
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
             if (modPlayer.awe)
                 return false;
 
-            return base.CanEquipAccessory(player, slot);
+            return base.CanEquipAccessory(player, slot, modded);
         }
 
         public override void SetDefaults()

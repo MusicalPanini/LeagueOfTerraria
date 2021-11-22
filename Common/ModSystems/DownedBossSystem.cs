@@ -29,8 +29,8 @@ namespace TerraLeague.Common.ModSystems
 			//downedOtherBoss = false;
 		}
 
-		public override TagCompound SaveWorldData()
-		{
+        public override void SaveWorldData(TagCompound tag)
+        {
 			var downed = new List<string>();
 
 			if (downedTargonBoss)
@@ -43,10 +43,7 @@ namespace TerraLeague.Common.ModSystems
 			//	downed.Add("downedOtherBoss");
 			//}
 
-			return new TagCompound
-			{
-				["downed"] = downed,
-			};
+			tag.Add("downed", downed);
 		}
 
 		public override void LoadWorldData(TagCompound tag)

@@ -14,7 +14,7 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chaos Storm");
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            //ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
 
         public override void SetDefaults()

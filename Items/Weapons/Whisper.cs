@@ -25,7 +25,9 @@ namespace TerraLeague.Items.Weapons
         string GetWeaponTooltip()
         {
             return "Fire 4 shots before having to reload" +
-                "\nThe 4th shot will deal 2x damage and crit";
+                "\nThe 4th shot will deal 2x damage and crit" +
+                "\nIs unaffected by attack speed" +
+                "\nInstead, will convert 1% " + LeagueTooltip.CreateColorString(LeagueTooltip.RngAtkSpdColor, "ATS") + " into 1 damage";
         }
 
         public override void SetDefaults()
@@ -62,10 +64,17 @@ namespace TerraLeague.Items.Weapons
             return base.CanUseItem(player);
         }
 
-        public override float UseTimeMultiplier(Player player)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
+        {
+            flat += (int)(player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed * 100f) - 100;
+        }
+
+        public override float UseSpeedMultiplier(Player player)
         {
             return 1;
         }
+        
+
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TerraLeague.UI;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,10 +19,35 @@ namespace TerraLeague.Items.SummonerSpells
         public override void Load()
         {
 			IL.Terraria.Player.HasUnityPotion += HookHasUnityPotion;
+			IL.Terraria.Player.TakeUnityPotion += HookTakeUnityPotion;
 			IL.Terraria.Player.InInteractionRange += HookInteractionRange;
 			IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookIsNearPylon;
 			IL.Terraria.GameContent.TeleportPylonsSystem.HowManyNPCsDoesPylonNeed += HookEnoughtNPCS;
-			//IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookInteractionRange;
+		}
+
+		private static void HookTakeUnityPotion(ILContext il)
+        {
+			ILCursor c = new ILCursor(il);
+
+            //Define a lable
+            var label = il.DefineLabel();
+
+			// Push Player (this) onto the stack
+            c.Emit(OpCodes.Ldarg_0);
+
+			// Check if Player has teleport and push result onto stack
+			c.EmitDelegate<Func<Player, bool>>(player => TeleportRune.CheckForTeleportSum(player));
+
+			// If player does not have teleport, branch to label
+			c.Emit(OpCodes.Brfalse, label);
+
+			// Return
+			c.Emit(OpCodes.Ret);
+
+			// The defined label branching point
+			c.MarkLabel(label);
+
+			// The rest of the code
 		}
 
 		private static void HookHasUnityPotion(ILContext il)
@@ -44,25 +70,9 @@ namespace TerraLeague.Items.SummonerSpells
 			// Call a delegate using the int and Player from the stack.
 			c.EmitDelegate<Func<bool, Player, bool>>((returnValue, player) => {
 				// Regular c# code
-
+				if (Main.netMode == NetmodeID.Server)
+					Console.WriteLine("HookHasUnityPotion");
 				return TeleportRune.CheckForTeleportSum(player);
-				//bool hasTP = false;
-				//PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-				//for (int i = 0; i < modPlayer.sumSpells.Length; i++)
-				//{
-				//	hasTP = modPlayer.sumSpells[i].Name == "TeleportRune";
-
-				//	if (hasTP)
-				//	{
-				//		if (modPlayer.sumCooldowns[i] <= 0)
-				//			break;
-				//		else
-				//			return false;
-				//	}
-				//}
-
-				//return hasTP;
 			});
 
 		}
@@ -80,7 +90,9 @@ namespace TerraLeague.Items.SummonerSpells
 			c.Emit(OpCodes.Ldarg_0);
 			// Call a delegate using the int and Player from the stack.
 			c.EmitDelegate<Func<bool, Player, bool>>((returnValue, player) => {
-				if (TeleportRune.CheckForTeleportSum(Main.LocalPlayer))
+				if (Main.netMode == NetmodeID.Server)
+					Console.WriteLine("HookIsNearPylon");
+				if (TeleportRune.CheckForTeleportSum(player))
 				{
 					return true;
 				}
@@ -101,10 +113,13 @@ namespace TerraLeague.Items.SummonerSpells
             // returnvalue already pushed
             // Push the Player instance onto the stack
             c.Emit(OpCodes.Ldloc_2);
-            // Call a delegate using the int and Player from the stack.
-            c.EmitDelegate<Func<bool, Tile, bool>>((returnValue, tile) =>
+			// Call a delegate using the int and Player from the stack.
+			c.Emit(OpCodes.Ldarg_0);
+            c.EmitDelegate<Func<bool, Tile, Player, bool>>((returnValue, tile, player) =>
             {
-                if (tile.type == 597 && TeleportRune.CheckForTeleportSum(Main.LocalPlayer))
+				if (Main.netMode == NetmodeID.Server)
+					Console.WriteLine("HookInteractionRange");
+				if (tile.type == 597 && TeleportRune.CheckForTeleportSum(player))
                 {
                     return true;
                 }
@@ -118,29 +133,33 @@ namespace TerraLeague.Items.SummonerSpells
 		{
 			ILCursor c = new ILCursor(il);
 
-			if (!c.TryGotoNext(i => i.MatchRet()))
-			{
-				return; // Patch unable to be applied
-			}
+            if (!c.TryGotoNext(i => i.MatchRet()))
+            {
+                return; // Patch unable to be applied
+            }
 
-			// returnvalue already pushed
-			// Call a delegate using the int and Player from the stack.
-			c.Emit(OpCodes.Ldloc_1);
-			c.EmitDelegate<Func<int, Player, int>>((returnValue, player) => {
+            // returnvalue already pushed
+            // Call a delegate using the int and Player from the stack.
+            c.Emit(OpCodes.Ldarg_2);
+            c.EmitDelegate<Func<int, Player, int>>((returnValue, player) =>
+            {
+				//ChatHelper.SendChatMessageToClient(Terraria.Localization.NetworkText.FromLiteral(), new Color(255, 240, 20), player.whoAmI);
+				if (Main.netMode == NetmodeID.Server)
+					Console.WriteLine(player.name + " HookEnoughtNPCS");
 				if (TeleportRune.CheckForTeleportSum(player))
-				{
-					return 0;
-				}
-				return returnValue;
-			});
+                {
+                    return 0;
+                }
+                return returnValue;
+            });
 
-		}
+        }
 
 		public static bool CheckForTeleportSum(Player player)
 		{
 			bool hasTP = false;
-			PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-
+			PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+			
 			for (int i = 0; i < modPlayer.sumSpells.Length; i++)
 			{
 				hasTP = modPlayer.sumSpells[i].Name == "TeleportRune";
@@ -153,7 +172,8 @@ namespace TerraLeague.Items.SummonerSpells
 						return false;
 				}
 			}
-
+			if (Main.netMode == NetmodeID.Server)
+				Console.WriteLine("Player " + player.name + " has TP: " + hasTP);
 			return hasTP;
 		}
 

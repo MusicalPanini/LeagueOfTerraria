@@ -26,14 +26,14 @@ namespace TerraLeague.Items.CompleteItems
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
-        public override bool CanEquipAccessory(Player player, int slot)
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             string itemName = player.armor[slot].Name;
 
             if (itemName == "Tear of the Goddess" || itemName == "Archangel's Staff" || itemName == "Seraph's Embrase" || itemName == "Manamune" || itemName == "Muramana")
             {
-                base.CanEquipAccessory(player, slot);
+                base.CanEquipAccessory(player, slot, modded);
                 return true;
             }
             else if (modPlayer.awe)
@@ -42,7 +42,7 @@ namespace TerraLeague.Items.CompleteItems
             }
             else
             {
-                base.CanEquipAccessory(player, slot);
+                base.CanEquipAccessory(player, slot, modded);
                 return true;
             }
 

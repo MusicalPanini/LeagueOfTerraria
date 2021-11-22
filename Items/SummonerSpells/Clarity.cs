@@ -62,7 +62,7 @@ namespace TerraLeague.Items.SummonerSpells
             player.ManaEffect((int)(player.statManaMax2));
             player.statMana += player.statManaMax2;
             Efx(player, true);
-            PacketHandler.SendClarity(-1, player.whoAmI, player.whoAmI, true);
+            //PacketHandler.SendClarity(-1, player.whoAmI, player.whoAmI, true);
 
             SetCooldowns(player, spellSlot);
         }

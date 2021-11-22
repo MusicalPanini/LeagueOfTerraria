@@ -281,7 +281,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 player.itemAnimationMax = useAnimation + 1;
                 player.itemAnimation = useAnimation;
                 player.itemTime = useTime;
-                NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
+                NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
                 NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
             }
         }

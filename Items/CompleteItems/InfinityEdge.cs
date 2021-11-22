@@ -51,10 +51,5 @@ namespace TerraLeague.Items.CompleteItems
             .AddTile(TileID.LunarCraftingStation)
             .Register();
         }
-
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            return base.CanEquipAccessory(player, slot);
-        }
     }
 }

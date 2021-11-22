@@ -47,27 +47,28 @@ namespace TerraLeague.Items.Accessories
         }
     }
 
-    public class DarkinHead : EquipTexture
-    {
-        public override bool DrawHead()
-        {
-            return false;
-        }
-    }
+    //public class DarkinHead : EquipTexture
+    //{
+    //    override 
+    //    public override bool DrawHead()
+    //    {
+    //        return false;
+    //    }
+    //}
 
-    public class DarkinBody : EquipTexture
-    {
-        public override bool DrawBody()
-        {
-            return false;
-        }
-    }
+    //public class DarkinBody : EquipTexture
+    //{
+    //    public override bool DrawBody()
+    //    {
+    //        return false;
+    //    }
+    //}
 
-    public class DarkinLegs : EquipTexture
-    {
-        public override bool DrawLegs()
-        {
-            return false;
-        }
-    }
+    //public class DarkinLegs : EquipTexture
+    //{
+    //    public override bool DrawLegs()
+    //    {
+    //        return false;
+    //    }
+    //}
 }

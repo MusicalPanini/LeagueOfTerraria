@@ -255,6 +255,10 @@ namespace TerraLeague.UI
                             "\nMagic and Summon damage reduced by ";
                         buffDescription += (int)(Main.LocalPlayer.manaSickReduction * 100) + "%";
                     }
+                    else
+                    {
+                        buffDescription += "\n" + Lang.GetBuffDescription(BuffType);
+                    }
 
                     //buffText.SetText(buffDescription);
                 }

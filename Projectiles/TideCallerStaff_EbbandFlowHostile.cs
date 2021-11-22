@@ -59,12 +59,12 @@ namespace TerraLeague.Projectiles
             {
                 Color color = new Color(0, 255, 255);
                 if (i > 3)
-                    color = new Color(100, 100, 255);
+                    color = new Color(75, 150, 255);
 
                 Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 6, Projectile.position.Y + 6);
                 int dustBoxWidth = Projectile.width - 12;
                 int dustBoxHeight = Projectile.height - 12;
-                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Ice, 0f, 0f, 100, color, 1.5f);
+                dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 211, 0f, 0f, 100, color, 1.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
                 dust.velocity += Projectile.velocity * 0.1f;

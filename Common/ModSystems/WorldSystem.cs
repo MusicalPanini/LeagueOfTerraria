@@ -588,8 +588,8 @@ namespace TerraLeague.Common.ModSystems
             }
         }
 
-        public override TagCompound SaveWorldData()
-        {
+        public override void SaveWorldData(TagCompound tag)
+    {
             var OreSpawned = new List<string>();
             if (Main.hardMode) OreSpawned.Add("TargonOreSpawned");
             if (NPC.downedBoss2) OreSpawned.Add("ManaOreSpawned");
@@ -598,12 +598,10 @@ namespace TerraLeague.Common.ModSystems
             if (TargonUnlocked) OreSpawned.Add("TargonUnlockedSpawned");
             if (BlackMistDefeated) OreSpawned.Add("BlackMistDefeated");
 
-            return new TagCompound {
-                {"OreSpawned", OreSpawned},
-                {"BlackMistEvent", BlackMistEvent},
-                {"TargonXCord", TargonCenterX},
-                {"TargonWidth", TargonWidthFromCenter }
-            };
+            tag.Add("OreSpawned", OreSpawned);
+            tag.Add("BlackMistEvent", BlackMistEvent);
+            tag.Add("TargonXCord", TargonCenterX);
+            tag.Add("TargonWidth", TargonWidthFromCenter);
         }
 
         public override void LoadWorldData(TagCompound tag)

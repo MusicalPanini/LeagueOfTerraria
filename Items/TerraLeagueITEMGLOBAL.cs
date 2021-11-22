@@ -121,6 +121,9 @@ namespace TerraLeague.Items
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
+            if (item.type == ItemType<Weapons.Whisper>())
+                return 1;
+
             float num = 1;
 
             if (modPlayer.forDemacia)
@@ -201,7 +204,7 @@ namespace TerraLeague.Items
             return base.CanUseItem(item, player);
         }
 
-        public override bool ConsumeAmmo(Item item, Player player)
+        public override bool CanConsumeAmmo(Item weapon, Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 

@@ -81,11 +81,9 @@ namespace TerraLeague.Items.Weapons
             }
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
-            int num = (int)(Item.useAnimation * UseTimeMultiplier(player)) - Item.useAnimation;
-
-                return !(player.itemAnimation < (player.itemAnimationMax) - 2);
+            return !(player.itemAnimation < (player.itemAnimationMax) - 2);
         }
 
         public override Vector2? HoldoutOffset()

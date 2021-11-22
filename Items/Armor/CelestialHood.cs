@@ -16,6 +16,7 @@ namespace TerraLeague.Items.Armor
                 "\nIncreases ability haste by 20" +
                 "\nIncreases item and summoner spell haste by 15");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawHatHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
         }
 
         public override void SetDefaults()
@@ -36,11 +37,11 @@ namespace TerraLeague.Items.Armor
             player.GetModPlayer<PLAYERGLOBAL>().itemHaste += 15;
         }
 
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawAltHair = true;
-            //base.DrawHair(ref drawHair, ref drawAltHair);
-        }
+        //public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
+        //{
+        //    drawAltHair = true;
+        //    //base.DrawHair(ref drawHair, ref drawAltHair);
+        //}
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {

@@ -16,7 +16,7 @@ namespace TerraLeague.Projectiles
         {
             DisplayName.SetDefault("Gravitum");
             Main.projFrames[Projectile.type] = 4;
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            //ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
 
         public override void SetDefaults()

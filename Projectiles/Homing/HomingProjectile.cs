@@ -67,7 +67,7 @@ namespace TerraLeague.Projectiles.Homing
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            //ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
 
         public override void AI()

@@ -83,13 +83,15 @@ namespace TerraLeague.Items.SummonerSpells
                 {
                     if (player.altFunctionUse == 2)
                     {
-                        modPlayer.sumSpells[1] = this;
+                        modPlayer.sumSpells[1] = (SummonerSpell)ModContent.GetModItem(SummonerSpell.SummonerID[GetType().Name]);
                     }
                     else
                     {
-                        modPlayer.sumSpells[0] = this;
+                        modPlayer.sumSpells[0] = (SummonerSpell)ModContent.GetModItem(SummonerSpell.SummonerID[GetType().Name]);
                     }
                     Item.stack = 0;
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        PacketHandler.SendSyncSpells(-1, player.whoAmI, modPlayer.sumSpells[0].Item.type, modPlayer.sumSpells[1].Item.type, player.whoAmI);
                     return base.CanUseItem(player);
                 }
             }

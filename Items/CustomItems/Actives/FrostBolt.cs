@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             else
                 scaleText = LeagueTooltip.TooltipValue(baseDamage, false, "", new Tuple<int, ScaleType>(magicMinionScaling, ScaleType.Magic));
 
-            return TooltipName("FROST BOLT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Fire a wave of frost dealing ") + baseDamage + " + " + scaleText + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " magic damage and applies 'Slowed'")
+            return TooltipName("FROST BOLT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Fire a wave of frost dealing ") + scaleText + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " magic damage and applies 'Slowed'")
                 + "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with either MAG or SUM");
         }
 

@@ -20,16 +20,15 @@ namespace TerraLeague.Items.CustomItems
         Texture2D MasterWorkIcon = ModContent.Request<Texture2D>(MasterworkIconPath).Value;
         public static Color MasterColor { get { return LeagueTooltip.PulseText(Color.OrangeRed); } }
 
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
-            return new TagCompound { ["Masterwork"] = IsMasterWorkItem };
+            tag.Add("Masterwork", IsMasterWorkItem );
         }
 
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             IsMasterWorkItem = tag.GetBool("Masterwork");
             ToggleMasterwork(IsMasterWorkItem);
-            base.Load(tag);
         }
 
 
@@ -69,11 +68,11 @@ namespace TerraLeague.Items.CustomItems
             base.UpdateAccessory(player, hideVisual);
         }
 
-        public override bool CanEquipAccessory(Player player, int slot)
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
             if (!player.GetModPlayer<PLAYERGLOBAL>().HasMasterworkEquipped || !IsMasterWorkItem)
             {
-                return base.CanEquipAccessory(player, slot);
+                return base.CanEquipAccessory(player, slot, modded);
             }
             else
             {
@@ -81,7 +80,7 @@ namespace TerraLeague.Items.CustomItems
                 {
                     if (masterItem.IsMasterWorkItem)
                     {
-                        return base.CanEquipAccessory(player, slot);
+                        return base.CanEquipAccessory(player, slot, modded);
                     }
                 }
             }

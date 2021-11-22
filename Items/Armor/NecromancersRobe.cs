@@ -14,6 +14,8 @@ namespace TerraLeague.Items.Armor
             DisplayName.SetDefault("Necromancer's Robe");
             Tooltip.SetDefault("Increases your max number of sentries by 1");
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Body.Sets.HidesArms[Mod.GetEquipSlot(Name, EquipType.Body)] = false;
+            ArmorIDs.Body.Sets.HidesHands[Mod.GetEquipSlot(Name, EquipType.Body)] = true;
         }
 
         public override void SetDefaults()
@@ -41,10 +43,10 @@ namespace TerraLeague.Items.Armor
             
         }
 
-        public override void DrawHands(ref bool drawHands, ref bool drawArms)
-        {
-            drawHands = true;
-            drawArms = false;
-        }
+        //public override void DrawHands(ref bool drawHands, ref bool drawArms)
+        //{
+        //    drawHands = true;
+        //    drawArms = false;
+        //}
     }
 }

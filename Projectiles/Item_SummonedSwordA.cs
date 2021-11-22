@@ -19,7 +19,7 @@ namespace TerraLeague.Projectiles
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             DisplayName.SetDefault("Summoned Sword");
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            //ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
 
         public override void SetDefaults()

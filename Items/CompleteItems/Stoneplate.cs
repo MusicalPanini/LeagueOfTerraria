@@ -81,8 +81,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override string MasterworkTooltip()
         {
-            return "Increases armor by 5" + LeagueTooltip.CreateColorString(MasterColor, "8") +
-                "\nIncreases resist by 5" + LeagueTooltip.CreateColorString(MasterColor, "8");
+            return "Increases armor by " + LeagueTooltip.CreateColorString(MasterColor, "8") +
+                "\nIncreases resist by " + LeagueTooltip.CreateColorString(MasterColor, "8");
         }
 
         public override void UpdateMasterwork(Player player)
