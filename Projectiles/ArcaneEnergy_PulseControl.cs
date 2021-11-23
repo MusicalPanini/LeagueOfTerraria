@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Achievements;
 using Terraria.ID;
@@ -10,9 +11,12 @@ namespace TerraLeague.Projectiles
 {
     public class ArcaneEnergy_PulseControl : ModProjectile
     {
+        float orbWidth { get { return 32 * (Projectile.localAI[0] * 2 / 540f); } }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Arcane Energy Pulse Control");
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
@@ -56,17 +60,14 @@ namespace TerraLeague.Projectiles
             {
                 Projectile.Center = player.MountedCenter;
 
-                for (int k = 0; k < 2 + 1; k++)
+                for (int k = 0; k < 1; k++)
                 {
-                    float scale = Projectile.localAI[0]  / 60f;
-                    if (k % 2 == 1)
-                        scale = Projectile.localAI[0]  / 75f;
+                    float scale = Projectile.localAI[0] / 240f;
 
-                    Vector2 postion = (player.Top + new Vector2(0, -16)) + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
-                    Dust dust = Dust.NewDustDirect(postion - Vector2.One * 8f, 16, 16, 113, 0, 0, 0, new Color(255, 0, 0), scale);
-                    dust.velocity = Vector2.Normalize(Projectile.Center - postion) * 1.5f * (10f - (float)2 * 2f) / 10f;
+                    Vector2 postion = player.Top + new Vector2(0, -16) - (Vector2.One * orbWidth * 0.5f);
+                    Dust dust = Dust.NewDustDirect(postion, (int)orbWidth, (int)orbWidth, 113, 0, 0, 225, default, scale);
+                    dust.velocity *= 0.2f;
                     dust.noGravity = true;
-                    dust.customData = player;
                 }
 
                 if (Projectile.localAI[0]  < 540)
@@ -101,7 +102,7 @@ namespace TerraLeague.Projectiles
                 player.itemAnimation = 24;
                 Projectile.Kill();
             }
-
+            AnimateProjectile();
             base.AI();
         }
 
@@ -114,9 +115,12 @@ namespace TerraLeague.Projectiles
         {
             Player player = Main.player[Projectile.owner];
 
-            float rot = Projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
-            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, new Vector2(10, 0).RotatedBy(rot), ModContent.ProjectileType<ArcaneEnergy_Pulse>(), (int)(Projectile.damage * (1 + Projectile.localAI[0] /60f)), Projectile.knockBack, Projectile.owner, Projectile.localAI[0] );
-            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 3, 53, -0.5f);
+            if (player.whoAmI == Projectile.owner)
+            {
+                float rot = Projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
+                Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, new Vector2(10, 0).RotatedBy(rot), ModContent.ProjectileType<ArcaneEnergy_Pulse>(), (int)(Projectile.damage * (1 + Projectile.localAI[0] / 60f)), Projectile.knockBack, Projectile.owner, Projectile.localAI[0]);
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 3, 53, -0.5f);
+            }
 
             base.Kill(timeLeft);
         }
@@ -130,6 +134,89 @@ namespace TerraLeague.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             return true;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D orb = null;
+            TerraLeague.GetTextureIfNull(ref orb, "TerraLeague/Projectiles/ArcaneEnergy_Artillery");
+            Texture2D background = null;
+            TerraLeague.GetTextureIfNull(ref background, "TerraLeague/Projectiles/ArcaneEnergy_PulseControlEFX");
+            Vector2 position = (Main.player[Projectile.owner].Top + new Vector2(0, -16));
+            if (Projectile.localAI[0] > 60 * 4)
+            {
+                Main.spriteBatch.Draw
+                (
+                    background,
+                    new Vector2
+                    (
+                        position.X - Main.screenPosition.X,
+                        position.Y - Main.screenPosition.Y
+                    ),
+                    new Rectangle(0, 0, background.Width, background.Height),
+                    Color.White * ((Projectile.localAI[0] - 240) / 520f),
+                    MathHelper.ToRadians(Projectile.timeLeft),
+                    new Vector2(background.Width/2f, background.Height/2f),
+                    Projectile.localAI[0] * 3 / 540f,
+                    SpriteEffects.None,
+                    0f
+                );
+
+                Main.spriteBatch.Draw
+                (
+                    background,
+                    new Vector2
+                    (
+                        position.X - Main.screenPosition.X,
+                        position.Y - Main.screenPosition.Y
+                    ),
+                    new Rectangle(0, 0, background.Width, background.Height),
+                    Color.White * ((Projectile.localAI[0] - 240) / 450),
+                    MathHelper.ToRadians(-Projectile.timeLeft),
+                    new Vector2(background.Width / 2f, background.Height / 2f),
+                    Projectile.localAI[0] * 2 / 540f,
+                    SpriteEffects.FlipHorizontally,
+                    0f
+                );
+            }
+
+            Main.spriteBatch.Draw
+                (
+                    orb,
+                    new Vector2
+                    (
+                        position.X - Main.screenPosition.X,
+                        position.Y - Main.screenPosition.Y/* - (orb.Height / 4)*/
+                    ),
+                    new Rectangle(0, (orb.Height / 4) * Projectile.frame, orb.Width, orb.Height / 4),
+                    Color.White * 0.5f,
+                    MathHelper.ToRadians(Projectile.timeLeft / 2f),
+                    new Vector2(orb.Width / 2f, orb.Height / 8f),
+                    Projectile.localAI[0] * 2 / 600f,
+                    SpriteEffects.None,
+                    0f
+                );
+
+
+
+            return base.PreDraw(ref lightColor);
+        }
+
+        public void AnimateProjectile()
+        {
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 8)
+            {
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
+            }
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(index);
+            base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
         }
     }
 }

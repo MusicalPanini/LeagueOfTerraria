@@ -4,20 +4,26 @@ using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
+using TerraLeague.Projectiles.Explosive;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace TerraLeague.Projectiles
 {
-    public class ArcaneEnergy_ShockingOrb : ModProjectile
+    public class ArcaneEnergy_ShockingOrb : ExplosiveProjectile
     {
+        int timeAlive { get { return 90 - Projectile.timeLeft; } }
+        float currentScale { get { return 0.25f + (timeAlive / 120f); } }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shocking Orb");
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 16;
-            Projectile.height = 16;
+            Projectile.width = 52;
+            Projectile.height = 52;
             Projectile.alpha = 255;
             Projectile.timeLeft = 90;
             Projectile.penetrate = -1;
@@ -26,59 +32,71 @@ namespace TerraLeague.Projectiles
             Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            Projectile.aiStyle = 0;
+            Projectile.scale = 1;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+        }
+
+        public override void PrePrime()
+        {
+            ExplosionWidth = 50 + (int)(250 * Projectile.ai[0]);
+            ExplosionHeight = 50 + (int)(250 * Projectile.ai[0]);
+
+            base.PrePrime();
         }
 
         public override void AI()
         {
-            if (Projectile.timeLeft == 2)
+            if (Projectile.soundDelay == 0)
+                Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+            Projectile.soundDelay = 10;
+            if (!explosionPrimed)
             {
-                Prime();
-            }
-            else if (Projectile.timeLeft > 2)
-            {
-                Projectile.localAI[0]  = 1 - Projectile.timeLeft / 90f;
+                Projectile.rotation += 0.05f * (Projectile.velocity.X > 0 ? 1 : -1);
+                Projectile.ai[0] = 1 - Projectile.timeLeft / 90f;
 
-                for (int i = 0; i < 3; i++)
+                float lenght = Projectile.width * currentScale;
+                Dust dust;
+                for (int i = 0; i < 2; i++)
                 {
-                    Vector2 dustBoxPosition = new Vector2(Projectile.position.X + 0, Projectile.position.Y + 0);
-                    int dustBoxWidth = Projectile.width - 8;
-                    int dustBoxHeight = Projectile.height - 8;
-                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 113, 0f, 0f, 100, default, 1.5f + (1.5f * Projectile.localAI[0] ));
-                    dust.noGravity = true;
+                    dust = Dust.NewDustDirect(new Vector2((Projectile.Center.X - (lenght / 2f)), Projectile.Center.Y - (lenght / 2f)), (int)lenght, (int)lenght, 113, 0, 0, 0, default, 2.5f * currentScale);
                     dust.velocity *= 0.1f;
-                    dust.velocity += Projectile.velocity * 1.4f;
-                    dust.position.X -= Projectile.velocity.X / 3f * (float)i;
-                    dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
-                }
+                    dust.noGravity = true;
 
+                }
+                if (Main.rand.NextBool(3))
+                {
+                    dust = Dust.NewDustDirect(new Vector2((Projectile.Center.X - (lenght / 2f)), Projectile.Center.Y - (lenght / 2f)), (int)lenght, (int)lenght, 226, 0, 0, 0, default, 0.25f + currentScale);
+                    dust.velocity *= 3;
+                    dust.noLight = true;
+                }
             }
+
+            AnimateProjectile();
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Prime();
-            target.AddBuff(BuffType<Stunned>(), 60 + (int)(180 * Projectile.localAI[0] ));
+            target.AddBuff(BuffType<Stunned>(), 60 + (int)(180 * Projectile.ai[0] ));
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
-        public override void Kill(int timeLeft)
+        public override void KillEffects()
         {
             Terraria.Audio.SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 53), Projectile.position);
-
-            TerraLeague.DustBorderRing(Projectile.width / 2, Projectile.Center, 113, default, 2f, true, true, 1);
+            TerraLeague.DustBorderRing(ExplosionWidth / 2, Projectile.Center, 113, default, 2f, true, true, 1);
 
             Dust dust;
-            for (int i = 0; i < 80 * Projectile.localAI[0] ; i++)
+            for (int i = 0; i < 60 * Projectile.ai[0]; i++)
             {
-                Vector2 dustBoxPosition = new Vector2(Projectile.position.X + (Projectile.width/6), Projectile.position.Y + (Projectile.height / 6));
-                int dustBoxWidth = Projectile.width - (Projectile.width / 3);
-                int dustBoxHeight = Projectile.height - (Projectile.height / 3);
+                Vector2 position = Projectile.Center - new Vector2(ExplosionWidth / 2, ExplosionHeight / 2);
+
+                Vector2 dustBoxPosition = new Vector2(position.X + (ExplosionWidth / 6), position.Y + (ExplosionHeight / 6));
+                int dustBoxWidth = ExplosionWidth - (ExplosionWidth / 3);
+                int dustBoxHeight = ExplosionHeight - (ExplosionHeight / 3);
 
                 dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 113, 0, 0, 0, default, 2f);
                 dust.noGravity = true;
-                dust.velocity = TerraLeague.CalcVelocityToPoint(Projectile.Center, dust.position,  10 * Vector2.Distance(dust.position, Projectile.Center)/(Projectile.width / 2));
+                dust.velocity = TerraLeague.CalcVelocityToPoint(Projectile.Center, dust.position, 10 * Vector2.Distance(dust.position, Projectile.Center) / (ExplosionWidth / 2));
 
                 dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 113, 0, 0, 0, default, 3f);
                 dust.velocity *= 1f;
@@ -86,35 +104,60 @@ namespace TerraLeague.Projectiles
                 dust.color = new Color(0, 220, 220);
             }
 
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
+            base.KillEffects();
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
+        public void AnimateProjectile()
         {
-            Prime();
-            return false;
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 4)
+            {
+                Projectile.frame++;
+                Projectile.frame %= 4;
+                Projectile.frameCounter = 0;
+            }
         }
 
-        public void Prime()
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            Projectile.friendly = true;
+            if (!explosionPrimed)
+            {
+                float lenght = Projectile.width * currentScale;
+                Rectangle rectangle = new Rectangle((int)(Projectile.Center.X - (lenght / 2f)), (int)(Projectile.Center.Y - (lenght / 2f)), (int)lenght, (int)lenght);
+                return rectangle.Intersects(targetHitbox);
+            }
+            else
+            {
+                return Targeting.IsHitboxWithinRange(Projectile.Center, targetHitbox, Projectile.width/2f);
+            }
+        }
 
-            Projectile.velocity = Vector2.Zero;
-            Projectile.tileCollide = false;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 50 + (int)(250 * Projectile.localAI[0] );
-            Projectile.height = 50 + (int)(250 * Projectile.localAI[0] );
-            
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 2;
+        public override void PostDraw(Color lightColor)
+        {
+            float scale = currentScale;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Main.spriteBatch.Draw
+            (
+                texture,
+                new Vector2
+                (
+                    Projectile.position.X - Main.screenPosition.X + Projectile.width * 0.5f,
+                    Projectile.position.Y - Main.screenPosition.Y + Projectile.height - (texture.Height / 4) * 0.5f
+                ),
+                new Rectangle(0, (texture.Height / 4) * Projectile.frame, texture.Width, texture.Height / 4),
+                Color.White,
+                Projectile.rotation,
+                new Vector2(texture.Width, texture.Width) * 0.5f,
+                scale,
+                SpriteEffects.None,
+                0f
+            );
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = height = (int)(Projectile.width * currentScale - 4);
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
         }
     }
 }

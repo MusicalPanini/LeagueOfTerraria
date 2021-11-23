@@ -42,7 +42,7 @@ namespace TerraLeague.Buffs
             if (player.buffTime[buffIndex] % 5 == 0 && Main.LocalPlayer.whoAmI == player.whoAmI)
             {
                 Vector2 position = new Vector2(Main.rand.NextFloat(-400, 400) + player.MountedCenter.X, player.MountedCenter.Y - 700);
-                Vector2 velocity = new Vector2(Main.rand.NextFloat(-6, 6), 16);
+                Vector2 velocity = new Vector2(Main.rand.NextFloat(-4, 4), 12).SafeNormalize(Vector2.One) * 16f;
                 Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(new ArcaneEnergy().Item), position, velocity, ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
 
                 //Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(Main.rand.NextFloat(-8 + 7 * player.buffTime[buffIndex] / 180f, 8 - 7 * player.buffTime[buffIndex] / 180f), Main.rand.NextFloat(-18, -16)), ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
