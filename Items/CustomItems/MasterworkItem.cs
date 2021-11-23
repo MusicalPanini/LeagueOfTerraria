@@ -63,7 +63,8 @@ namespace TerraLeague.Items.CustomItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            UpdateMasterwork(player);
+            if (IsMasterWorkItem)
+                UpdateMasterwork(player);
             player.GetModPlayer<PLAYERGLOBAL>().HasMasterworkEquipped |= IsMasterWorkItem;
             base.UpdateAccessory(player, hideVisual);
         }
