@@ -297,7 +297,7 @@ namespace TerraLeague
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
-                if (npc.active && !npc.immortal)
+                if (npc.active && !npc.immortal && !npc.townNPC)
                 {
                     if (IsHitboxWithinRange(center, npc.Hitbox, radius))
                     {
