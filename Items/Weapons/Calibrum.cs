@@ -91,5 +91,25 @@ namespace TerraLeague.Items.Weapons
         {
             return new Vector2(-20, 0);
         }
+
+        public override void OnCraft(Recipe recipe)
+        {
+            Item item = new Item();
+            Item.SetDefaults(ItemType<Severum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().SevPrefix = Item.prefix;
+
+            Item.SetDefaults(ItemType<Gravitum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().GravPrefix = Item.prefix;
+
+            Item.SetDefaults(ItemType<Infernum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().InfPrefix = Item.prefix;
+
+            Item.SetDefaults(ItemType<Crescendum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().CrePrefix = Item.prefix;
+        }
     }
 }

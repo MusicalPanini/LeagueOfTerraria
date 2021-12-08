@@ -133,10 +133,11 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         bool ChangeWeapon(Player player, int currentItem, int newItem)
         {
+            Item item = null;
+
             if (player.HeldItem.type == currentItem && player.HeldItem.type != player.inventory[58].type)
             {
-                player.HeldItem.SetDefaults(newItem);
-                return true;
+                item = player.HeldItem;
             }
             else
             {
@@ -144,10 +145,58 @@ namespace TerraLeague.Items.Weapons.Abilities
                 {
                     if (player.inventory[i].type == currentItem && i != 58)
                     {
-                        player.inventory[i].SetDefaults(newItem);
-                        return true;
+                        item = player.inventory[i];
+                        break;
                     }
                 }
+            }
+
+            if (item != null)
+            {
+                int oldPrefix = item.prefix;
+                int prefix = 0;
+                int cal = item.GetGlobalItem<LunariGun>().CalPrefix;
+                int sev = item.GetGlobalItem<LunariGun>().SevPrefix;
+                int grav = item.GetGlobalItem<LunariGun>().GravPrefix;
+                int inf = item.GetGlobalItem<LunariGun>().InfPrefix;
+                int cre = item.GetGlobalItem<LunariGun>().CrePrefix;
+
+                switch (gunType)
+                {
+                    case LunariGunType.Cal:
+                        prefix = item.GetGlobalItem<LunariGun>().SevPrefix;
+                        cal = item.prefix;
+                        break;
+                    case LunariGunType.Sev:
+                        prefix = item.GetGlobalItem<LunariGun>().GravPrefix;
+                        sev = item.prefix;
+                        break;
+                    case LunariGunType.Grv:
+                        prefix = item.GetGlobalItem<LunariGun>().InfPrefix;
+                        grav = item.prefix;
+                        break;
+                    case LunariGunType.Inf:
+                        prefix = item.GetGlobalItem<LunariGun>().CrePrefix;
+                        inf = item.prefix;
+                        break;
+                    case LunariGunType.Cre:
+                        prefix = item.GetGlobalItem<LunariGun>().CalPrefix;
+                        cre = item.prefix;
+                        break;
+                    default:
+                        break;
+                }
+
+                item.SetDefaults(newItem);
+                item.Prefix(prefix);
+
+                item.GetGlobalItem<LunariGun>().CalPrefix = cal;
+                item.GetGlobalItem<LunariGun>().SevPrefix = sev;
+                item.GetGlobalItem<LunariGun>().GravPrefix = grav;
+                item.GetGlobalItem<LunariGun>().InfPrefix = inf;
+                item.GetGlobalItem<LunariGun>().CrePrefix = cre;
+
+                return true;
             }
 
             return false;

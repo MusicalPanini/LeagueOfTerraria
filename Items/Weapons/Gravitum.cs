@@ -84,6 +84,26 @@ namespace TerraLeague.Items.Weapons
             .Register();
         }
 
+        public override void OnCraft(Recipe recipe)
+        {
+            Item item = new Item();
+            Item.SetDefaults(ItemType<Calibrum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().CalPrefix = Item.prefix;
+
+            Item.SetDefaults(ItemType<Severum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().SevPrefix = Item.prefix;
+
+            Item.SetDefaults(ItemType<Infernum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().InfPrefix = Item.prefix;
+
+            Item.SetDefaults(ItemType<Crescendum>());
+            Item.Prefix(-1);
+            Item.GetGlobalItem<LunariGun>().CrePrefix = Item.prefix;
+        }
+
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-20, -10);
