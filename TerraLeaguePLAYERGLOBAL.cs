@@ -579,6 +579,7 @@ namespace TerraLeague
         public bool ghosted = false;
         public bool grievousWounds = false;
         public bool highlander = false;
+        public bool hyperCharge = false;
         public bool lightningRush = false;
         public bool minions = false;
         public bool onslaught = false;
@@ -777,6 +778,7 @@ namespace TerraLeague
             ghosted = false;
             grievousWounds = false;
             highlander = false;
+            hyperCharge = false;
             lightningRush = false;
             minions = false;
             projectileDodge = false;
@@ -2003,6 +2005,15 @@ namespace TerraLeague
             {
                 Dust dustIndex = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.SomethingRed , 0, -4, 50);
                 dustIndex.velocity *= 0.3f;
+            }
+            if (hyperCharge)
+            {
+                if (Main.rand.NextBool(3))
+                {
+                    Dust dustIndex = Dust.NewDustDirect(Player.position + new Vector2(0, 32), Player.width, Player.height - 32, DustID.Electric, 0, -4, 50, default, 0.5f);
+                    dustIndex.velocity.X *= 0f;
+                    dustIndex.noGravity = true;
+                }
             }
             if (immolate)
             {

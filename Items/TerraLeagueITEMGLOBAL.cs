@@ -130,6 +130,8 @@ namespace TerraLeague.Items
                 num += 0.1f;
             if (modPlayer.windPower)
                 num += 0.1f;
+            if (modPlayer.hyperCharge)
+                num += 0.1f;
             if (modPlayer.chargerBlessing)
             {
                 num += 0.1f;
