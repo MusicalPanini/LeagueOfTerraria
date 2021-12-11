@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override string GetDamageTooltip(Player player)
         {
             return LeagueTooltip.TooltipValue(GetAbilityBaseDamage(player), false, "",
-              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.MAG), ScaleType.Magic)
+              new Tuple<int, ScaleType>(GetAbilityScalingAmount(player, DamageType.SUM), ScaleType.Summon)
               ) + " ranged On Hit damage";
         }
 
