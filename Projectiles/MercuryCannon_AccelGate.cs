@@ -30,7 +30,7 @@ namespace TerraLeague.Projectiles
         {
             if (Projectile.timeLeft > 300)
             {
-                Projectile.velocity = new Vector2(0, 8).RotatedBy(Projectile.rotation);
+                Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
                 Projectile.localAI[0] += 16;
             }
             else
@@ -66,49 +66,44 @@ namespace TerraLeague.Projectiles
                                 if (collides)
                                 {
                                     if (i == Projectile.owner)
-                                        player.AddBuff(ModContent.BuffType<Buffs.HyperCharge>(), 240);   
-                                    Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendBuffPacket(ModContent.BuffType<Buffs.HyperCharge>(), 240, i, -1, Projectile.owner);
+                                        player.AddBuff(ModContent.BuffType<Buffs.HyperCharge>(), 240, false);
+                                    else
+                                    {
+                                        player.AddBuff(ModContent.BuffType<Buffs.HyperCharge>(), 240, false);
+                                        Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendBuffPacket(ModContent.BuffType<Buffs.HyperCharge>(), 240, i, -1, Projectile.owner);
+                                    }
                                     Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), player.Center, player.velocity, ModContent.ProjectileType<MercuryCannon_AccelEFX>(), 0, 0);
                                 }
                             }
                         }
                     }
                 }
+            }
 
-                for (int i = 0; i < Main.maxProjectiles; i++)
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (Projectile.active)
                 {
-                    Projectile proj = Main.projectile[i];
-                    if (Projectile.active)
+                    if (proj.type == ModContent.ProjectileType<MercuryCannon_Shot>())
                     {
-                        if (proj.type == ModContent.ProjectileType<MercuryCannon_Shot>())
+                        if (!Main.player[proj.owner].InOpposingTeam(Main.player[Projectile.owner]))
                         {
-                            if (!Main.player[proj.owner].InOpposingTeam(Main.player[Projectile.owner]))
+                            if (proj.ai[0] == 0)
                             {
-                                if (proj.ai[0] == 0)
+                                float point = 0;
+                                bool collides = Collision.CheckAABBvLineCollision(
+                                    proj.Hitbox.TopLeft(),
+                                    proj.Hitbox.Size(),
+                                    beamPoint,
+                                    beamEnd,
+                                    Projectile.width,
+                                    ref point);
+                                if (collides)
                                 {
-                                    float point = 0;
-                                    bool collides = Collision.CheckAABBvLineCollision(
-                                        proj.Hitbox.TopLeft(),
-                                        proj.Hitbox.Size(),
-                                        beamPoint,
-                                        beamEnd,
-                                        Projectile.width,
-                                        ref point);
-                                    if (collides)
-                                    {
-                                        Vector2 old = proj.Center;
-                                        proj.ai[0] = 1;
-                                        proj.scale = 2;
-                                        proj.width *= 2;
-                                        proj.height *= 2;
-                                        proj.ModProjectile.DrawOffsetX = 10;
-                                        proj.ModProjectile.DrawOriginOffsetY = 8;
-                                        proj.velocity *= 2f;
-                                        proj.damage *= 2;
-                                        proj.netUpdate = true;
-                                        proj.Center = old;
-                                        Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), proj.Center, proj.velocity, ModContent.ProjectileType<MercuryCannon_AccelEFX>(), 0, 0);
-                                    }
+                                    proj.ai[0] = 1;
+                                    proj.netUpdate = true;
+                                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), proj.Center, proj.velocity, ModContent.ProjectileType<MercuryCannon_AccelEFX>(), 0, 0);
                                 }
                             }
                         }

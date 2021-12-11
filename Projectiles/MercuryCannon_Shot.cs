@@ -32,6 +32,20 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
+            if (Projectile.ai[0] == 1 && Projectile.localAI[0] == 0)
+            {
+                Vector2 old = Projectile.Center;
+                Projectile.localAI[0] = 1;
+                Projectile.scale = 2;
+                Projectile.width *= 2;
+                Projectile.height *= 2;
+                Projectile.ModProjectile.DrawOffsetX = 10;
+                Projectile.ModProjectile.DrawOriginOffsetY = 8;
+                Projectile.velocity *= 2f;
+                Projectile.damage *= 2;
+                Projectile.Center = old;
+            }
+
             Lighting.AddLight(Projectile.Center, 1, 1, 1);
 
             if (Projectile.alpha > 0)

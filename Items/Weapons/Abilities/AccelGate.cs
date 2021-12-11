@@ -74,14 +74,14 @@ namespace TerraLeague.Items.Weapons.Abilities
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
             {
                 Vector2 position = Main.MouseWorld;
-                Vector2 velocity = Vector2.Zero;
+                Vector2 velocity = new Vector2(0, 8).RotatedBy(player.Center.AngleTo(position));
                 int projType = ProjectileType<MercuryCannon_AccelGate>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 0;
 
                 DoEfx(player, type);
                 Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
-                proj.rotation = player.Center.AngleTo(position);
+                
                 SetCooldowns(player, type);
             }
         }
