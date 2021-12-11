@@ -31,7 +31,9 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Drop a smoke bomb that causes you to become obsucured and immune to projectiles while not using items";
+            return "Drop a smoke bomb at your feet." +
+                "\nWhile standing in the shroud and not using items," +
+                "\nincrease mana regeneration and become obsucured and immune to projectiles";
         }
 
         public override int GetBaseManaCost()

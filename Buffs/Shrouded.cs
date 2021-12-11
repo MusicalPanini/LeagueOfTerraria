@@ -20,6 +20,7 @@ namespace TerraLeague.Buffs
             {
                 player.GetModPlayer<PLAYERGLOBAL>().projectileDodge = true;
                 player.GetModPlayer<PLAYERGLOBAL>().trueInvis = true;
+                player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 2;
                 player.invis = true;
                 player.aggro = -750;
             }
