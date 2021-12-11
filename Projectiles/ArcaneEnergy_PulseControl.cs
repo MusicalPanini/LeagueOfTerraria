@@ -28,12 +28,12 @@ namespace TerraLeague.Projectiles
             Projectile.DamageType = DamageClass.Magic;
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
-            Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
         }
 
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
+            player.bodyFrame.Y = player.bodyFrame.Height * 5;
             player.slow = true;
             if (Projectile.owner == Main.LocalPlayer.whoAmI)
             {
@@ -114,10 +114,10 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
-
             if (player.whoAmI == Projectile.owner)
             {
                 float rot = Projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
+                player.itemRotation = Projectile.ai[1] + player.fullRotation;
                 Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, new Vector2(10, 0).RotatedBy(rot), ModContent.ProjectileType<ArcaneEnergy_Pulse>(), (int)(Projectile.damage * (1 + Projectile.localAI[0] / 60f)), Projectile.knockBack, Projectile.owner, Projectile.localAI[0]);
                 TerraLeague.PlaySoundWithPitch(player.MountedCenter, 3, 53, -0.5f);
             }

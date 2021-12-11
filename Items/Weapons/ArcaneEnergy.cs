@@ -37,16 +37,14 @@ namespace TerraLeague.Items.Weapons
             Item.DamageType = DamageClass.Magic;
             Item.useAnimation = 32;
             Item.useTime = 32;
-            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
             Item.value = 40000;
             Item.rare = ItemRarityID.LightRed;
             Item.shootSpeed = 12f;
             Item.shoot = ProjectileType<ArcaneEnergy_PulseControl>();
-            Item.useTurn = true;
             Item.noUseGraphic = true;
             Item.mana = 40;
-            Item.autoReuse = false;
             Item.channel = true;
             Item.noMelee = true;
             Item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
@@ -61,7 +59,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            return true;
+            return base.CanUseItem(player);
         }
 
         public override void AddRecipes()
