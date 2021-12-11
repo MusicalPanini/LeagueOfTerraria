@@ -19,7 +19,7 @@ namespace TerraLeague.Projectiles.Homing
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            if (Projectile.owner == Main.LocalPlayer.whoAmI)
+            if (Projectile.owner == Main.LocalPlayer.whoAmI && HaveHit != null)
             {
                 for (int i = 0; i < HaveHit.Length; i++)
                 {
