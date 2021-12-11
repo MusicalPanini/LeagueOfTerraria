@@ -22,7 +22,7 @@ namespace TerraLeague.Projectiles
             Projectile.timeLeft = 18000;
             Projectile.penetrate = 1;
             Projectile.friendly = false;
-            Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.scale = 1.2f;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }

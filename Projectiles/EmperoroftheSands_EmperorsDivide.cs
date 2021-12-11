@@ -26,7 +26,6 @@ namespace TerraLeague.Projectiles
             Projectile.penetrate = -1;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.minion = true;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
             Projectile.tileCollide = false;

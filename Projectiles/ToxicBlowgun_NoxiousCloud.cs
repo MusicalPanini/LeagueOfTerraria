@@ -30,7 +30,7 @@ namespace TerraLeague.Projectiles
             Projectile.hostile = false;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
-            Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
             Projectile.scale = 1.5f;
             base.SetDefaults();
