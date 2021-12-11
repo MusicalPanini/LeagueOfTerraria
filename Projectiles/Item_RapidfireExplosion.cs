@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using TerraLeague.Buffs;
+using TerraLeague.Projectiles.Explosive;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Achievements;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    public class Item_RapidfireExplosion : ModProjectile
+    public class Item_RapidfireExplosion : ExplosiveProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -21,19 +22,18 @@ namespace TerraLeague.Projectiles
         {
             Projectile.width = 8;
             Projectile.height = 8;
-            Projectile.timeLeft = 300;
-            Projectile.penetrate = 100;
+            Projectile.timeLeft = 2;
+            Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Ranged;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (Projectile.soundDelay == 0)
-                Prime();
-            Projectile.soundDelay = 100;
             base.AI();
         }
 
@@ -51,9 +51,9 @@ namespace TerraLeague.Projectiles
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
-        public override void Kill(int timeLeft)
+        public override void KillEffects()
         {
-            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
+            SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
 
             Dust dust;
             for (int i = 0; i < 15; i++)
@@ -74,35 +74,14 @@ namespace TerraLeague.Projectiles
             {
                 Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
             }
-
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            base.Kill(timeLeft);
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
+        public override void PrePrime()
         {
-            return false;
-        }
+            ExplosionWidth = (int)Projectile.ai[0] == 0 ? 90 : 135;
+            ExplosionHeight = ExplosionWidth;
 
-        public void Prime()
-        {
-            int size = (int)Projectile.ai[1] == 0 ? 90 : 135;
-
-            Projectile.tileCollide = false;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = size;
-            Projectile.height = size;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 1;
+            base.PrePrime();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using TerraLeague.Buffs;
 using TerraLeague.Items;
+using TerraLeague.Projectiles.Explosive;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -10,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Projectiles
 {
-    class World_CelestialMeteorite : ModProjectile
+    class World_CelestialMeteorite : ExplosiveProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -19,6 +20,9 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
+            ExplosionWidth = 1000;
+            ExplosionHeight = 1000;
+
             Projectile.width = 36;
             Projectile.height = 36;
             Projectile.alpha = 0;
@@ -70,19 +74,7 @@ namespace TerraLeague.Projectiles
             base.AI();
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            Prime();
-            return false;
-        }
-
-
-        public override void Kill(int timeLeft)
+        public override void KillEffects()
         {
             Vector2 position = Main.LocalPlayer.MountedCenter;
             if (Projectile.Distance(Main.LocalPlayer.MountedCenter) > 1000)
@@ -136,30 +128,6 @@ namespace TerraLeague.Projectiles
 
             //TerraLeague.DustBorderRing(Projectile.width / 2, Projectile.Center, 174, new Color(255, 0, 220), 3);
             Item.NewItem(Projectile.Hitbox, ItemType<FragmentOfTheAspect>());
-
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-
-
-            base.Kill(timeLeft);
-        }
-
-        public void Prime()
-        {
-            Projectile.velocity = Vector2.Zero;
-            Projectile.tileCollide = false;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 1000;
-            Projectile.height = 1000;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 1;
         }
 
     }

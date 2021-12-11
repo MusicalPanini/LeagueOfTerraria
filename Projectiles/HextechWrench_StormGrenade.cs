@@ -5,10 +5,11 @@ using Terraria.Audio;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.ID;
+using TerraLeague.Projectiles.Explosive;
 
 namespace TerraLeague.Projectiles
 {
-    class HextechWrench_StormGrenade : ModProjectile
+    class HextechWrench_StormGrenade : ExplosiveProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -17,6 +18,9 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
+            ExplosionWidth = 115;
+            ExplosionHeight = 115;
+
             Projectile.width = 24;
             Projectile.height = 24;
             Projectile.alpha = 0;
@@ -54,20 +58,13 @@ namespace TerraLeague.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffType<Stunned>(), 60);
-            Prime();
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
+        public override void KillEffects()
         {
-            Prime();
-            return false;
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
-            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(3, 53), Projectile.position);
+            SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
+            SoundEngine.PlaySound(new LegacySoundStyle(3, 53), Projectile.position);
 
             Dust dust;
             for (int i = 0; i < 10; i++)
@@ -98,29 +95,6 @@ namespace TerraLeague.Projectiles
                 dust.velocity.Y -= 1f;
                 dust.noLight = true;
             }
-
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-
-            base.Kill(timeLeft);
-        }
-
-        public void Prime()
-        {
-            Projectile.velocity = Vector2.Zero;
-            Projectile.tileCollide = false;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 115;
-            Projectile.height = 115;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 3;
         }
     }
 }

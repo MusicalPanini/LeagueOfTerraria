@@ -88,7 +88,7 @@ namespace TerraLeague.Projectiles
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void KillEffects()
         {
             Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 89), Projectile.position);
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Projectiles.Explosive;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    class Hexplosives_BouncingBomb : ModProjectile
+    class Hexplosives_BouncingBomb : ExplosiveProjectile
     {
         int bounces = 3;
         public override void SetStaticDefaults()
@@ -22,6 +23,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
+            ExplosionWidth = 128;
+            ExplosionHeight = 128;
             Projectile.width = 26;
             Projectile.height = 26;
             Projectile.alpha = 0;
@@ -52,12 +55,6 @@ namespace TerraLeague.Projectiles
 
             base.AI();
         }
-        
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            Prime();
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -66,7 +63,7 @@ namespace TerraLeague.Projectiles
             if (bounces <= 0)
                 Prime();
             else
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y);
+                SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y);
 
             return false;
         }
@@ -115,51 +112,29 @@ namespace TerraLeague.Projectiles
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
-        public override void Kill(int timeLeft)
+        public override void KillEffects()
         {
-            if (Projectile.penetrate == 1)
+            SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
+
+            Dust dust;
+            for (int i = 0; i < 20; i++)
             {
-                Prime();
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+                dust.velocity *= 0.5f;
+
             }
-            else
+            for (int i = 0; i < 50; i++)
             {
-                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 3f);
+                dust.noGravity = true;
+                dust.velocity *= 3f;
+                dust.color = new Color(255, 0, 220);
 
-                Dust dust;
-                for (int i = 0; i < 20; i++)
-                {
-                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
-                    dust.velocity *= 0.5f;
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 2f);
+                dust.color = new Color(255, 0, 220);
+                dust.noGravity = true;
 
-                }
-                for (int i = 0; i < 50; i++)
-                {
-                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 3f);
-                    dust.noGravity = true;
-                    dust.velocity *= 3f;
-                    dust.color = new Color(255, 0, 220);
-
-                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 2f);
-                    dust.color = new Color(255, 0, 220);
-                    dust.noGravity = true;
-
-                }
             }
-
-        }
-
-        public void Prime()
-        {
-            Projectile.tileCollide = false;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 128;
-            Projectile.height = 128;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 2;
         }
     }
 }

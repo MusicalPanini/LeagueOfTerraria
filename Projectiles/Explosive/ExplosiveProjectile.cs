@@ -52,12 +52,14 @@ namespace TerraLeague.Projectiles.Explosive
                 //Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
 
                 Projectile.ai[1] = 1;
-                Projectile.netUpdate = true;
+                //Projectile.netUpdate = true;
             }
         }
 
         public override void Kill(int timeLeft)
         {
+            if (!explosionPrimed)
+                Prime();
             KillEffects();
             base.Kill(timeLeft);
         }

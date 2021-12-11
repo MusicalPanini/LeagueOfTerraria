@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using TerraLeague.Buffs;
+using TerraLeague.Projectiles.Explosive;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -10,17 +11,19 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-	public class Gravitum_Orb : ModProjectile
+	public class Gravitum_Orb : ExplosiveProjectile
 	{
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gravitum");
             Main.projFrames[Projectile.type] = 4;
-            //ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
+            ExplosionWidth = 128;
+            ExplosionHeight = 128;
+
             Projectile.width = 20;
             Projectile.height = 20;
             Projectile.alpha = 255;
@@ -30,7 +33,7 @@ namespace TerraLeague.Projectiles
             Projectile.hostile = false;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = true;
-            Projectile.ignoreWater = true;
+            Projectile.ignoreWater = false;
         }
 
         public override void AI()
@@ -66,32 +69,9 @@ namespace TerraLeague.Projectiles
             }
         }
 
-        int GetTarget()
+        public override void KillEffects()
         {
-            float distance = 200;
-            NPC target = null;
-            for (int k = 0; k < 200; k++)
-            {
-                NPC npcCheck = Main.npc[k];
-
-                if (npcCheck.active && !npcCheck.friendly && npcCheck.lifeMax > 5 && !npcCheck.dontTakeDamage && !npcCheck.immortal && npcCheck.CanBeChasedBy())
-                {
-                    Vector2 newMove = Main.npc[k].Center - Projectile.Center;
-                    float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                    if (distanceTo < distance)
-                    {
-                        distance = distanceTo;
-                        target = npcCheck;
-                    }
-                }
-            }
-
-            return target == null ? -1 : target.whoAmI;
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
+            SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
             TerraLeague.DustBorderRing(Projectile.width / 2, Projectile.Center, 71, default, 2f);
             Dust dust;
             for (int i = 0; i < 30; i++)
@@ -114,32 +94,9 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (Projectile.width != 128)
-                Prime();
-
             target.AddBuff(ModContent.BuffType<GravitumMark>(), 60 * 6);
 
             base.OnHitNPC(target, damage, knockback, crit);
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            Prime();
-            return false;
-        }
-
-        public void Prime()
-        {
-            Projectile.tileCollide = false;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 128;
-            Projectile.height = 128;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 2;
         }
 
         public void AnimateProjectile()

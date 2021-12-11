@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TerraLeague.Projectiles.Explosive;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    public class Hexplosives_HexplosiveMine : ModProjectile
+    public class Hexplosives_HexplosiveMine : ExplosiveProjectile
     {
         bool grounded = false;
 
@@ -18,6 +19,9 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
+            ExplosionWidth = 64;
+            ExplosionHeight = 64;
+
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.alpha = 0;
@@ -54,61 +58,35 @@ namespace TerraLeague.Projectiles
 
         }
 
-        public override void Kill(int timeLeft)
+        public override void KillEffects()
         {
-            if (Projectile.penetrate == 1)
+            SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
+
+            Dust dust;
+            for (int i = 0; i < 20; i++)
             {
-                Prime();
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+                dust.velocity *= 0.5f;
             }
-            else
+            for (int i = 0; i < 30; i++)
             {
-                Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(2, 14), Projectile.position);
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 3f);
+                dust.noGravity = true;
+                dust.velocity *= 3f;
+                dust.color = new Color(255, 0, 220);
 
-                Dust dust;
-                for (int i = 0; i < 20; i++)
-                {
-                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
-                    dust.velocity *= 0.5f;
-                }
-                for (int i = 0; i < 30; i++)
-                {
-                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 3f);
-                    dust.noGravity = true;
-                    dust.velocity *= 3f;
-                    dust.color = new Color(255, 0, 220);
-
-                    dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 2f);
-                    dust.color = new Color(255, 0, 220);
-                    dust.noGravity = true;
-                }
+                dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default, 2f);
+                dust.color = new Color(255, 0, 220);
+                dust.noGravity = true;
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            Prime();
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (Projectile.velocity.Y <= 0)
                 grounded = true;
             return false;
-        }
-
-        public void Prime()
-        {
-            Projectile.tileCollide = false;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 64;
-            Projectile.height = 64;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 2;
         }
     }
 }
