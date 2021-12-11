@@ -118,9 +118,8 @@ namespace TerraLeague.Items.Weapons.Abilities
                     if ((Main.tile[blockX, blockY].wall != 87 || !((double)blockY > Main.worldSurface) || NPC.downedPlantBoss) && !Collision.SolidCollision(teleportPos, player.width, player.height))
                     {
                         player.velocity = TerraLeague.CalcVelocityToPoint(player.MountedCenter, teleportPos, player.velocity.Length());
-                        player.Teleport(teleportPos, 10, 0);
+                        player.Teleport(teleportPos, -1, 0);
                         NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, (float)player.whoAmI, teleportPos.X, teleportPos.Y, 10, 0, 0);
-                        
 
                         Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), player.Center, new Vector2(0, 0), ProjectileType<NezuksGauntlet_ArcaneShift>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG) + GetAbilityScaledDamage(player, DamageType.MAG), 0, player.whoAmI, -2);
                         player.CheckMana(GetBaseManaCost(), true);

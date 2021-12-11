@@ -59,7 +59,7 @@ namespace TerraLeague.Items.SummonerSpells
                 Efx(player.MountedCenter, Main.MouseWorld);
                 PacketHandler.SendFlash(-1, player.whoAmI, player.MountedCenter, Main.MouseWorld);
 
-                player.Teleport(tp, 10, 0);
+                player.Teleport(tp, -1, 0);
                 NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, (int)(Main.mouseX + Main.screenPosition.X), (int)(Main.mouseY + Main.screenPosition.Y), 1, 0, 0);
 
                 SetCooldowns(player, spellSlot);

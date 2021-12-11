@@ -30,11 +30,11 @@ namespace TerraLeague.Projectiles
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.ignoreWater = true;
-            Projectile.extraUpdates = 1;
+            Projectile.extraUpdates = 2;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
 
             CanOnlyHitTarget = true;
-            CanRetarget = true;
+            CanRetarget = false;
             TurningFactor = 0.93f;
             MaxVelocity = 16;
         }
@@ -45,7 +45,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FireworksRGB, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 0.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
@@ -62,7 +62,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FireworksRGB, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1.2f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 2.4f);
                 dust.noGravity = true;
             }
         }
