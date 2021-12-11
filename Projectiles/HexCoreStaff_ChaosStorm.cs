@@ -83,8 +83,8 @@ namespace TerraLeague.Projectiles
                         NPC npc = Main.npc[npcs[i]];
                         if (!npc.dontTakeDamage)
                         {
-                            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), npc.Center, Vector2.Zero, ProjectileType<HexCoreStaff_ChaosStormZap>(), Projectile.damage, Projectile.knockBack, Projectile.owner, npc.whoAmI);
-                            TerraLeague.DustLine(Projectile.Center, npc.Center, 160, 1, 1);
+                            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), npc.Center, Vector2.Zero, ProjectileType<HexCoreStaff_ChaosStormZap>(), Projectile.damage, Projectile.knockBack, Projectile.owner, npc.whoAmI, Projectile.identity);
+                            
                         }
                     }
 

@@ -33,6 +33,8 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
+            Projectile proj = Main.projectile[Projectile.GetByUUID(Projectile.owner, (int)Projectile.ai[1])];
+            TerraLeague.DustLine(Projectile.Center, proj.Center, 160, 1, 1);
             for (int i = 0; i < 4; i++)
             {
                 Vector2 dustPos = Projectile.position;
