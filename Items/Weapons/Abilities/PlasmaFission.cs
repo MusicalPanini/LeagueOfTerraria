@@ -97,7 +97,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             else if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
             {
                 Vector2 position = player.MountedCenter;
-                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
+                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 6);
                 int projType = ProjectileType<EyeOfTheVoid_Plasma>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 1;
