@@ -238,6 +238,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             if (!player.channel)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.Item.type);
+                ModNetHandler.abilitiesHandler.SendTempItem(-1, player.whoAmI, player.whoAmI, abilityItem.Item.type);
 
                 float xDist = player.MountedCenter.X - target.X;
                 float yDist = player.MountedCenter.Y - target.Y;
@@ -253,8 +254,10 @@ namespace TerraLeague.Items.Weapons.Abilities
                 player.itemAnimationMax = animationTime + 1;
                 player.itemAnimation = animationTime;
                 player.itemTime = useTime;
-                NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
-                NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+
+                PacketHandler.SendAbilityAnimation(-1, player.whoAmI, player.whoAmI, -facing, animationTime, useTime, player.itemRotation);
+                //NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
+                //NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
             }
         }
 
@@ -263,6 +266,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             if (!player.channel)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(abilityItem.Item.type);
+                ModNetHandler.abilitiesHandler.SendTempItem(-1, player.whoAmI, player.whoAmI, abilityItem.Item.type);
 
                 float xDist = player.MountedCenter.X - target.X;
                 float yDist = player.MountedCenter.Y - target.Y;
@@ -281,8 +285,11 @@ namespace TerraLeague.Items.Weapons.Abilities
                 player.itemAnimationMax = useAnimation + 1;
                 player.itemAnimation = useAnimation;
                 player.itemTime = useTime;
-                NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
-                NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+
+                PacketHandler.SendAbilityAnimation(-1, player.whoAmI, player.whoAmI, -facing, useAnimation, useTime, player.itemRotation);
+
+                //NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+                //NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
             }
         }
 
