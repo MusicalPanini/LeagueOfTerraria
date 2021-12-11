@@ -41,10 +41,12 @@ namespace TerraLeague.Projectiles
                 {
                     int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
                     player.ChangeDir(dir);
+                    Projectile.ai[0] = dir;
                     Projectile.ai[1] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
                     Projectile.netUpdate = true;
                 }
                 player.itemRotation = Projectile.ai[1];
+                player.ChangeDir((int)Projectile.ai[0]);
 
                 for (int k = 0; k < 2 + 1; k++)
                 {
@@ -66,7 +68,7 @@ namespace TerraLeague.Projectiles
                 }
                 else
                 {
-                    Projectile.ai[0] = 1;
+                    Projectile.localAI[1] = 1;
                     Projectile.Kill();
                 }
             }
@@ -85,7 +87,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            if (Projectile.ai[0] != 0)
+            if (Projectile.localAI[1] != 0)
             {
                 if (Projectile.owner == Main.LocalPlayer.whoAmI)
                 {
