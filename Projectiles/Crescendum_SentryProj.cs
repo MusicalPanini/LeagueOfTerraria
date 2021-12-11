@@ -15,7 +15,7 @@ namespace TerraLeague.Projectiles
             DisplayName.SetDefault("Crescendum Sentry");
         }
 
-        Projectile sentry;
+        Projectile sentry { get { return Main.projectile[Projectile.GetByUUID(Projectile.owner, Projectile.ai[0])]; } }
 
         public override void SetDefaults()
         {
@@ -37,7 +37,6 @@ namespace TerraLeague.Projectiles
         {
             if (Projectile.soundDelay == 0)
             {
-                sentry = Main.projectile.FirstOrDefault(x => x.owner == Projectile.owner && x.type == ModContent.ProjectileType<Crescendum_Sentry>());
                 if (sentry == null)
                 {
                     Projectile.Kill();
@@ -59,20 +58,19 @@ namespace TerraLeague.Projectiles
 
             if (!sentry.active)
             {
-                sentry = Main.projectile.FirstOrDefault(x => x.owner == Projectile.owner && x.type == ModContent.ProjectileType<Crescendum_Sentry>());
                 if (sentry == null)
                 {
                     Projectile.Kill();
                 }
             }
 
-            if (Projectile.ai[0] == 0f)
+            if (Projectile.ai[1] == 0f)
             {
-                Projectile.ai[1] += 1f;
-                if (Projectile.ai[1] >= 25f)
+                Projectile.localAI[1] += 1f;
+                if (Projectile.localAI[1] >= 25f)
                 {
-                    Projectile.ai[0] = 1f;
-                    Projectile.ai[1] = 0f;
+                    Projectile.ai[1] = 1f;
+                    Projectile.localAI[1] = 0f;
                     Projectile.netUpdate = true;
                 }
             }
@@ -151,11 +149,11 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if ((int)Projectile.ai[0] == 0)
+            if ((int)Projectile.ai[1] == 0)
             {
                 Projectile.velocity = -Projectile.velocity;
                 Projectile.netUpdate = true;
-                Projectile.ai[0] = 1;
+                Projectile.ai[1] = 1;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
@@ -163,7 +161,7 @@ namespace TerraLeague.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
-            Projectile.ai[0] = 1;
+            Projectile.ai[1] = 1;
             Projectile.velocity = -Projectile.velocity;
             return false;
         }

@@ -60,7 +60,7 @@ namespace TerraLeague.Projectiles
 
                 if (Projectile.ai[1] > 5 && player.ownedProjectileCounts[ModContent.ProjectileType<Crescendum_SentryProj>()] <= player.maxMinions + 5)
                 {
-                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, (Projectile.Center - npc.Center).SafeNormalize(-Vector2.UnitY) * -16, ModContent.ProjectileType<Crescendum_SentryProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, (Projectile.Center - npc.Center).SafeNormalize(-Vector2.UnitY) * -16, ModContent.ProjectileType<Crescendum_SentryProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.identity);
                     Projectile.ai[1] = 0;
                 }
                 else
