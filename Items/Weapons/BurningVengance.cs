@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons
             Item.height = 32;
             Item.knockBack = 1;
             Item.UseSound = new LegacySoundStyle(2, 34);
-            Item.useStyle = ItemUseStyleID.Thrust;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ProjectileType<BurningVengance_Flame>();
             Item.autoReuse = true;
 
