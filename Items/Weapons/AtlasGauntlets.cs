@@ -20,6 +20,11 @@ namespace TerraLeague.Items.Weapons
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
+        string GetWeaponTooltip()
+        {
+            return "Punching enemies grants " + LeagueTooltip.TooltipValue(0, true, "", new System.Tuple<int, ScaleType>( 1, ScaleType.MaxLife)) + " shield for 3 seconds";
+        }
+
         public override void SetDefaults()
         {
             Item.damage = 70;
@@ -42,6 +47,7 @@ namespace TerraLeague.Items.Weapons
             abilityItem.SetAbility(AbilityType.E, new ExcessiveForce(this));
             abilityItem.ChampQuote = "Here comes the punch line!";
             abilityItem.IsAbilityItem = true;
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
         }
 
         public override bool CanUseItem(Player player)

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -62,6 +63,13 @@ namespace TerraLeague.Projectiles
             player.ChangeDir(Projectile.direction);
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            PLAYERGLOBAL modPlayer = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>();
+            modPlayer.AddShield(modPlayer.ScaleValueWithHealPower(modPlayer.GetRealHeathWithoutShield(true) / 100), 60 * 3, Color.WhiteSmoke, ShieldType.Basic);
+            base.OnHitNPC(target, damage, knockback, crit);
+        }
+
         public override void Kill(int timeLeft)
         {
             
@@ -78,6 +86,12 @@ namespace TerraLeague.Projectiles
             if (!Main.player[Projectile.owner].CanHit(target))
                 return false;
             return base.CanHitNPC(target);
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(index);
+            base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
         }
     }
 }

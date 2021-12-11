@@ -59,6 +59,13 @@ namespace TerraLeague.Projectiles
             player.ChangeDir(Projectile.direction);
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            PLAYERGLOBAL modPlayer = Main.player[Projectile.owner].GetModPlayer<PLAYERGLOBAL>();
+            modPlayer.AddShield(modPlayer.ScaleValueWithHealPower(modPlayer.GetRealHeathWithoutShield(true) / 100), 60 * 3, Color.WhiteSmoke, ShieldType.Basic);
+            base.OnHitNPC(target, damage, knockback, crit);
+        }
+
         public override void Kill(int timeLeft)
         {
             
