@@ -1662,13 +1662,11 @@ namespace TerraLeague
     internal class AbilitiesPacketHandler : PacketHandler
     {
         #region Values
-        public const byte Efx = 0;
         public const byte UmbralTrespassNPC = 1;
         public const byte Requiem = 2;
         public const byte Contaminate = 3;
         public const byte Wish = 4;
-        public const byte TempItem = 5;
-        public const byte AbilityAnimation = 6;
+        public const byte Efx = 0;
         #endregion
 
         public AbilitiesPacketHandler(byte handlerType) : base(handlerType)
@@ -1687,12 +1685,6 @@ namespace TerraLeague
                     break;
                 case (UmbralTrespassNPC):
                     ReceiveUmbralNPC(reader, fromWho);
-                    break;
-                case (TempItem):
-                    RecieveTempItem(reader, fromWho);
-                    break;
-                case (AbilityAnimation):
-                    ReceiveAbilityAnimation(reader, fromWho);
                     break;
             }
         }
@@ -1798,70 +1790,6 @@ namespace TerraLeague
                 Main.player[Applier].GetModPlayer<PLAYERGLOBAL>().umbralTaggedNPC = Main.npc[Npc];
             }
         }
-
-        public void SendTempItem(int toWho, int fromWho, int player, int item)
-        {
-            if (Main.netMode != NetmodeID.SinglePlayer)
-            {
-                ModPacket packet = GetPacket(TempItem, fromWho);
-                packet.Write(player);
-                packet.Write(item);
-                packet.Send(toWho, fromWho);
-                TerraLeague.Log("[DEBUG] - Sending Temp Item", new Color(50, 200, 0));
-            }
-        }
-        private void RecieveTempItem(BinaryReader reader, int fromWho)
-        {
-            Player player = Main.player[reader.ReadInt32()];
-            int item = reader.ReadInt32();
-
-            player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(item);
-            TerraLeague.Log("[DEBUG] - Recieve Temp Item", new Color(200, 200, 0));
-
-            if (Main.netMode == NetmodeID.Server)
-            {
-                SendTempItem(-1, fromWho, player.whoAmI, item);
-            }
-        }
-
-        public void SendAbilityAnimation(int toWho, int fromWho, int player, int facing, int useAnimation, int useTime, float itemRotation)
-        {
-            if (Main.netMode != NetmodeID.SinglePlayer)
-            {
-                ModPacket packet = GetPacket(AbilityAnimation, fromWho);
-                packet.Write(player);
-                packet.Write(facing);
-                packet.Write(useAnimation);
-                packet.Write(useTime);
-                packet.Write(itemRotation);
-
-                packet.Send(toWho, fromWho);
-                TerraLeague.Log("[DEBUG] - Sending Ability Animation", new Color(50, 200, 0));
-            }
-        }
-        private void ReceiveAbilityAnimation(BinaryReader reader, int fromWho)
-        {
-            Player player = Main.player[reader.ReadInt32()];
-            int facing = reader.ReadInt32();
-            int useAnimation = reader.ReadInt32();
-            int useTime = reader.ReadInt32();
-            float itemRotation = reader.ReadSingle();
-
-            player.ChangeDir(facing);
-            player.itemLocation = Vector2.Zero;
-            player.itemAnimationMax = useAnimation + 1;
-            player.itemAnimation = useAnimation;
-            player.itemTime = useTime;
-            player.itemRotation = itemRotation;
-
-            TerraLeague.Log("[DEBUG] - Recieve Ability Animation", new Color(200, 200, 0));
-
-            if (Main.netMode == NetmodeID.Server)
-            {
-                SendAbilityAnimation(-1, fromWho, player.whoAmI, facing, useAnimation, useTime, itemRotation);
-            }
-        }
-
     }
 
     internal class WorldPacketHandler : PacketHandler

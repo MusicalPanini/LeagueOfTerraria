@@ -1551,8 +1551,6 @@ namespace TerraLeague
         
         public override void PostUpdate()
         {
-            AnimateSpellEffects();
-
             //if (TerraLeague.debugMode)
             {
                 if (TerraLeague.noAbilityCooldowns)
@@ -3130,7 +3128,7 @@ namespace TerraLeague
         public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
             DrawOnPlayer();
-            
+            AnimateSpellEffects();
             if (requiemChannel || finalsparkChannel || rightoftheArcaneChannel)
             {
                 Player.bodyFrame.Y = Player.bodyFrame.Height * 5;
