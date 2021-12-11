@@ -33,6 +33,8 @@ namespace TerraLeague.Projectiles
             Projectile.netImportant = true;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 5;
 
             Projectile.penetrate = (int)Projectile.ai[1] == 1 ? 9 : 6;
             CanOnlyHitTarget = true;
