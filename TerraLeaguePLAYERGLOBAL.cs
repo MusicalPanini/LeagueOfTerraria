@@ -2002,11 +2002,42 @@ namespace TerraLeague
             {
                 Dust dustIndex = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.JunglePlants, 0, -4, 50);
                 dustIndex.velocity *= 0.3f;
+
+                for (int i = 0; i < Main.projectile.Length; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (proj.active)
+                    {
+                        if (proj.owner == Player.whoAmI && proj.DamageType == DamageClass.Ranged)
+                        {
+                            Dust dust = Dust.NewDustDirect(proj.position, proj.width, proj.height, DustID.JunglePlants, proj.velocity.X, proj.velocity.Y, 50, default, 1f);
+                            dust.noGravity = true;
+                            dust.noLight = true;
+                            dust.velocity *= 0.3f;
+                        }
+                    }
+                }
             }
             if (toxicShot)
             {
-                Dust dustIndex = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.SomethingRed , 0, -4, 50);
+                Dust dustIndex = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Venom , 0, -4, 100, default, 1.5f);
                 dustIndex.velocity *= 0.3f;
+                dustIndex.noGravity = true;
+
+                for (int i = 0; i < Main.projectile.Length; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (proj.active)
+                    {
+                        if (proj.owner == Player.whoAmI && proj.DamageType == DamageClass.Ranged)
+                        {
+                            Dust dust = Dust.NewDustDirect(proj.position, proj.width, proj.height, DustID.Venom, proj.velocity.X, proj.velocity.Y, 50, default, 1f);
+                            dust.noGravity = true;
+                            dust.noLight = true;
+                            dust.velocity *= 0.3f;
+                        }
+                    }
+                }
             }
             if (hyperCharge)
             {
