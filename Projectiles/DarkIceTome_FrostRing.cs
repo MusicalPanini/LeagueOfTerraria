@@ -18,21 +18,20 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            Projectile.width = 8;
-            Projectile.height = 8;
-            Projectile.timeLeft = 300;
-            Projectile.penetrate = 100;
+            Projectile.width = 700;
+            Projectile.height = 700;
+            Projectile.timeLeft = 2;
+            Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
         }
 
         public override void AI()
         {
-            if (Projectile.soundDelay == 0)
-                Prime();
-            Projectile.soundDelay = 100;
             base.AI();
         }
 
@@ -52,7 +51,6 @@ namespace TerraLeague.Projectiles
 
         public override bool PreKill(int timeLeft)
         {
-           
             return base.PreKill(timeLeft);
         }
 
@@ -87,42 +85,17 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-
             base.Kill(timeLeft);
         }
 
-        public override bool? CanHitNPC(NPC target)
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (target.townNPC)
-                return false;
-            return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width/2);
+            return Targeting.IsHitboxWithinRange(Projectile.Center, targetHitbox, Projectile.width / 2);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             return false;
-        }
-
-        public void Prime()
-        {
-            int size = 700;
-
-            Projectile.tileCollide = false;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = size;
-            Projectile.height = size;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 2;
         }
 
         public override bool? CanCutTiles()

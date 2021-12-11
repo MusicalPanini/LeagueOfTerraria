@@ -42,17 +42,15 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             TerraLeague.DustRing(112, Projectile, default);
-            TerraLeague.DustBorderRing(256, Projectile.Center, 112, default, 2);
+            TerraLeague.DustBorderRing(Projectile.width/2, Projectile.Center, 112, default, 2);
             TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 82, -0.7f);
 
             base.Kill(timeLeft);
         }
 
-        public override bool? CanHitNPC(NPC target)
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (target.townNPC)
-                return false;
-            return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width / 2);
+            return Targeting.IsHitboxWithinRange(Projectile.Center, targetHitbox, Projectile.width / 2);
         }
 
         public override bool? CanCutTiles()

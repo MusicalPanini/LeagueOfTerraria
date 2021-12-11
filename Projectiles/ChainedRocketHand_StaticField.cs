@@ -19,21 +19,22 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            Projectile.width = 32;
-            Projectile.height = 32;
-            Projectile.timeLeft = 300;
+            Projectile.width = 700;
+            Projectile.height = 700;
+            Projectile.timeLeft = 2;
             Projectile.penetrate = 100;
             Projectile.friendly = true;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Magic;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.alpha = 255;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
-            if (Projectile.soundDelay == 0)
-                Prime();
-            Projectile.soundDelay = 100;
             base.AI();
         }
 
@@ -46,25 +47,22 @@ namespace TerraLeague.Projectiles
 
         public override bool PreKill(int timeLeft)
         {
-           
             return base.PreKill(timeLeft);
         }
 
         public override void Kill(int timeLeft)
         {
             Terraria.Audio.SoundEngine.PlaySound(new LegacySoundStyle(3, 53), Projectile.position);
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 175, Projectile.Center.Y - 175), 350, 350, DustID.AncientLight, 0, 0, 50, new Color(0, 255, 255), 1.5f);
-                dust.velocity *= 15f;
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 225, Projectile.Center.Y - 225), 450, 450, 226, 0, 0, 50, new Color(0, 255, 255), 1f);
+                dust.velocity *= 5f;
                 dust.noGravity = true;
                 dust.noLight = true;
-                dust.fadeIn = 2;
-            }
-            for (int i = 0; i < 100; i++)
-            {
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 175, Projectile.Center.Y - 175), 350, 350, DustID.AncientLight, 0, 0, 50, new Color(0, 255, 255), 1);
-                dust.velocity *= 10f;
+                dust.fadeIn = 1;
+
+                dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 225, Projectile.Center.Y - 225), 450, 450, 226, 0, 0, 50, new Color(0, 255, 255), 1);
+                dust.velocity *= 5f;
             }
 
             for (int j = 0; j < 4; j++)
@@ -87,27 +85,9 @@ namespace TerraLeague.Projectiles
             return false;
         }
 
-        public void Prime()
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            int size = 700;
-
-            Projectile.tileCollide = false;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = size;
-            Projectile.height = size;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 2;
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            if (target.townNPC)
-                return false;
-            return Targeting.IsHitboxWithinRange(Projectile.Center, target.Hitbox, Projectile.width / 2);
+            return Targeting.IsHitboxWithinRange(Projectile.Center, targetHitbox, Projectile.width / 2);
         }
 
         public override bool? CanCutTiles()
