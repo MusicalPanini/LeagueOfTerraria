@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             else
                 scaleText = LeagueTooltip.TooltipValue(baseDamage, false, "", new Tuple<int, ScaleType>(magicMinionScaling, ScaleType.Magic));
 
-            return TooltipName("FROST BOLT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Target an enemy to deal ") + baseDamage + " + " + scaleText + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed' to them")
+            return TooltipName("FROST BOLT") + LeagueTooltip.CreateColorString(ActiveSecondaryColor, "Target an enemy to deal ") + scaleText + LeagueTooltip.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed' to them")
                 + "\n" + LeagueTooltip.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
