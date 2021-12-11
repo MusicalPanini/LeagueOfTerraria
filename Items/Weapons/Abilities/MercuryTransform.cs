@@ -17,11 +17,10 @@ namespace TerraLeague.Items.Weapons.Abilities
     public class MercuryTransform : Ability
     {
         readonly MercuryType Type;
-        readonly ModItem Item;
 
         public MercuryTransform(ModItem item, MercuryType type)
         {
-            Item = item;
+            abilityItem = item;
             Type = type;
         }
 
@@ -172,10 +171,20 @@ namespace TerraLeague.Items.Weapons.Abilities
                 dust.velocity *= 2;
                 dust.noGravity = true;
                 dust.scale = 2;
-                if (Type == MercuryType.Hammer)
-                    dust.color = Color.Orange;
+                if (player.whoAmI != Main.LocalPlayer.whoAmI)
+                {
+                    if (Type == MercuryType.Hammer)
+                        dust.color = Color.Blue;
+                    else
+                        dust.color = Color.Orange;
+                }
                 else
-                    dust.color = Color.Blue;
+                {
+                    if (Type == MercuryType.Hammer)
+                        dust.color = Color.Orange;
+                    else
+                        dust.color = Color.Blue;
+                }
             }
             base.Efx(player);
         }
