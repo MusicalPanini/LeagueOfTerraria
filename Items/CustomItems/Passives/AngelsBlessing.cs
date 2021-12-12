@@ -24,6 +24,19 @@ namespace TerraLeague.Items.CustomItems.Passives
                 + "\n" + LeagueTooltip.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
+        public override void PostPlayerUpdate(Player player)
+        {
+            if (cooldownCount <= 0)
+            {
+                player.AddBuff(ModContent.BuffType<Buffs.AngelsProtection>(), 60);
+            }
+            else
+            {
+                if (player.HasBuff<Buffs.AngelsProtection>())
+                    player.DelBuff(player.FindBuffIndex(ModContent.BuffType<Buffs.AngelsProtection>()));
+            }
+        }
+
         public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player)
         {
             if (cooldownCount <= 0)
@@ -34,6 +47,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 player.HealEffect((int)(player.statLifeMax2 * 0.5));
                 player.statLife += (int)(player.statLifeMax2 * 0.5);
                 player.AddBuff(BuffID.Cursed, 360);
+
                 SetCooldown(player);
 
                 return 0;

@@ -36,6 +36,9 @@ namespace TerraLeague.Common.ModSystems
         static bool TargonArenaActive = false;
         static int targonArenaWidth = 100;
         static int targonArenaHeight = 100;
+        int CurrentWorldGenX = 0;
+        int VoidVarianceLastFrame;
+
         //static readonly Tile[,] TargonArenaSave = new Tile[100, 100];
 
         int[] floatingIslandHouse_XCord = new int[30];
@@ -751,22 +754,17 @@ namespace TerraLeague.Common.ModSystems
             {
                 if (!VoidOreSpawned)
                 {
-                    VoidOreSpawned = true;
 
-                    if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);
-                    else if (Main.netMode == NetmodeID.Server)
-                    {
-                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The Void has morphed some of this worlds matter"), new Color(255, 0, 255), -1);
-                        NetMessage.SendData(MessageID.WorldData);
-                    }
+                    
 
-                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.000005); k++)
-                    {
-                        int X = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        int Y = WorldGen.genRand.Next((int)(Main.rockLayer * 1.5), Main.maxTilesY - 200);
-                        WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(13, 18), WorldGen.genRand.Next(6, 8), (ushort)TileType<Tiles.VoidFragment>());
-                    }
+                    GenerateVoid();
+
+                    //for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.000005); k++)
+                    //{
+                    //    int X = WorldGen.genRand.Next(0, Main.maxTilesX);
+                    //    int Y = WorldGen.genRand.Next((int)(Main.rockLayer * 1.5), Main.maxTilesY - 200);
+                    //    WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(13, 18), WorldGen.genRand.Next(6, 8), (ushort)TileType<Tiles.VoidFragment>());
+                    //}
                 }
             }
 
@@ -804,6 +802,78 @@ namespace TerraLeague.Common.ModSystems
                         num142 *= num144;
                         num143 *= num144;
                         Projectile.NewProjectile(null, vector.X, vector.Y, num142, num143, ProjectileType<World_CelestialMeteorite>(), 10000, 10f, Main.myPlayer, 0f, 0f);
+                    }
+                }
+            }
+        }
+
+        void GenerateVoid()
+        {
+            //int x = CurrentWorldGenX;
+            for (int x = 0; x < Main.maxTilesX; x++)
+            {
+                int variance = Main.rand.Next(VoidVarianceLastFrame - 5, VoidVarianceLastFrame + 5);
+                if (variance + (Main.maxTilesY / 2) < (Main.maxTilesY * 2 / 5))
+                    variance = (Main.maxTilesY / 2) - (Main.maxTilesY * 2 / 5);
+                if (variance + (Main.maxTilesY / 2) > (Main.maxTilesY * 3 / 5))
+                    variance = (Main.maxTilesY / 2) - (Main.maxTilesY * 3 / 5);
+                VoidVarianceLastFrame = variance;
+                for (int y = (Main.maxTilesY / 2) + variance; y < Main.maxTilesY; y++)
+                {
+                    ushort type = 0;
+                    ushort wall = 0;
+                    Tile tile = Main.tile[x, y];
+
+                    if (tile.type == TileID.DesertFossil)
+                    {
+                        type = (ushort)TileType<Tiles.VoidFragment>();
+                    }
+                    else if (TileID.Sets.isDesertBiomeSand[tile.type])
+                    {
+                        type = (ushort)TileType<Tiles.VoidStone>();
+                    }
+
+                    if (tile.wall == WallID.HardenedSand || tile.wall == WallID.CorruptHardenedSand || tile.wall == WallID.CrimsonHardenedSand || tile.wall == WallID.HallowHardenedSand)
+                    {
+                        wall = (ushort)WallType<Walls.HardendVoidWall>();
+                    }
+                    else if (tile.wall == WallID.Sandstone || tile.wall == WallID.CorruptSandstone || tile.wall == WallID.CrimsonSandstone || tile.wall == WallID.HallowSandstone)
+                    {
+                        wall = (ushort)WallType<Walls.VoidWall>();
+                    }
+
+                    if (type != 0 || wall != 0)
+                    {
+                        if (type != 0)
+                        {
+                            Main.tile[x, y].type = type;
+                            WorldGen.SquareTileFrame(x, y, true);
+                        }
+
+                        if (wall != 0)
+                        {
+                            Main.tile[x, y].wall = wall;
+                            WorldGen.SquareWallFrame(x, y, true);
+                        }
+
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y, TileChangeType.None);
+                        }
+                    }
+                }
+                CurrentWorldGenX++;
+                if (CurrentWorldGenX == Main.maxTilesX)
+                {
+                    VoidOreSpawned = true;
+                    CurrentWorldGenX = 0;
+
+                    if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);
+                    else if (Main.netMode == NetmodeID.Server)
+                    {
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The Void has morphed some of this worlds matter"), new Color(255, 0, 255), -1);
+                        NetMessage.SendData(MessageID.WorldData);
                     }
                 }
             }

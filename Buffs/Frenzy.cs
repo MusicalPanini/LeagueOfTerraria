@@ -12,10 +12,8 @@ namespace TerraLeague.Buffs
             DisplayName.SetDefault("Frenzy");
             Description.SetDefault("Melee and ranged attack speed increased by 20%!" +
                 "\nMelee and ranged attacks deal 20 On Hit damage");
-            Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            LongerExpertDebuff = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

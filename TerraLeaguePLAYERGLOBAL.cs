@@ -3158,6 +3158,16 @@ namespace TerraLeague
             }
         }
 
+        public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
+        {
+            if (Player.HeldItem.type == ItemType<EchoingFlameCannon>())
+            {
+                drawInfo.weaponOverFrontArm = true;
+            }
+
+            //base.ModifyDrawInfo(ref drawInfo);
+        }
+
         public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
             DrawOnPlayer();
@@ -3165,15 +3175,6 @@ namespace TerraLeague
             if (requiemChannel || finalsparkChannel || rightoftheArcaneChannel)
             {
                 Player.bodyFrame.Y = Player.bodyFrame.Height * 5;
-            }
-            if (trueInvis)
-            {
-
-            }
-            if (Player.ownedProjectileCounts[ProjectileType<AtlasGauntlets_Right>()] > 0)
-            {
-                drawInfo.armorHidesArms = true;
-                drawInfo.armorHidesHands = true;
             }
 
             //if (Player.armor.FirstOrDefault(x => x.type == ItemType<Items.Armor.HextechEvolutionMask>()) != null)

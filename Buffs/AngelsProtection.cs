@@ -1,12 +1,12 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using TerraLeague.NPCs;
+using Terraria.ID;
 
 namespace TerraLeague.Buffs
 {
     public class AngelsProtection : ModBuff
     {
-        public bool initial = true;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Angel's Blessing");
@@ -15,7 +15,7 @@ namespace TerraLeague.Buffs
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
-
+            BuffID.Sets.TimeLeftDoesNotDecrease[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)
         {

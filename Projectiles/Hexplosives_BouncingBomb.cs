@@ -29,7 +29,7 @@ namespace TerraLeague.Projectiles
             Projectile.height = 26;
             Projectile.alpha = 0;
             Projectile.timeLeft = 600;
-            Projectile.penetrate = 100;
+            Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = true;

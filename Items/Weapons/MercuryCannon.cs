@@ -31,8 +31,8 @@ namespace TerraLeague.Items.Weapons
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.width = 66;
             Item.height = 38;
-            Item.useAnimation = 45;
-            Item.useTime = 45;
+            Item.useAnimation = 34;
+            Item.useTime = 34;
             Item.shootSpeed = 10f;
             Item.noMelee = true;
             Item.knockBack = 2;
