@@ -38,6 +38,7 @@ namespace TerraLeague.Items
             CreateRecipe(4)
             .AddIngredient(ItemID.ChlorophyteBar, 4)
             .AddIngredient(ItemType<VoidFragment>(), 16)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 4)
             .AddTile(TileID.AdamantiteForge)
             .Register();
             

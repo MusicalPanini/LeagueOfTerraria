@@ -63,6 +63,7 @@ namespace TerraLeague.Items.Weapons
         {
             CreateRecipe()
             .AddIngredient(ItemType<VoidFragment>(), 120)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 20)
             .AddTile(TileID.DemonAltar)
             .Register();
         }

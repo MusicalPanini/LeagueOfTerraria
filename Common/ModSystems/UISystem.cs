@@ -19,6 +19,7 @@ namespace TerraLeague.Common.ModSystems
         static internal ToolTipUI tooltipUI;
         static internal TeleportUI teleportUI;
         static internal PlayerUI playerUI;
+        static internal VoidUI voidUI;
 
         //private UserInterface userInterface1;
         private UserInterface userInterface2;
@@ -27,6 +28,7 @@ namespace TerraLeague.Common.ModSystems
         public UserInterface HealthbarInterface;
         public UserInterface tooltipInterface;
         public UserInterface teleportInterface;
+        public UserInterface voidInterface;
         public static bool StopHealthandManaText = true;
 
         public override void OnModLoad()
@@ -65,6 +67,10 @@ namespace TerraLeague.Common.ModSystems
                 PlayerInterface = new UserInterface();
                 playerUI = new PlayerUI();
                 PlayerInterface.SetState(playerUI);
+
+                voidInterface = new UserInterface();
+                voidUI = new VoidUI();
+                voidInterface.SetState(voidUI);
             }
             base.OnModLoad();
         }
@@ -77,6 +83,7 @@ namespace TerraLeague.Common.ModSystems
             tooltipUI = null;
             teleportUI = null;
             playerUI = null;
+            voidUI = null;
             base.Unload();
         }
 
@@ -115,6 +122,18 @@ namespace TerraLeague.Common.ModSystems
                 },
                 InterfaceScaleType.UI));
             }
+
+            layers.Insert(resourseBar, new LegacyGameInterfaceLayer("TerraLeague: VoidBar",
+                delegate
+                {
+                    if (VoidUI.visible)
+                    {
+                        voidInterface.Update(Main._drawInterfaceGameTime);
+                        voidUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
 
             int mousetextLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
             if (mousetextLayer < 0)
@@ -183,18 +202,18 @@ namespace TerraLeague.Common.ModSystems
             },
             InterfaceScaleType.UI));
 
-            layers.Insert(resourseBar, new LegacyGameInterfaceLayer(
-            "TerraLeague: Teleport UI",
-            delegate
-            {
-                if (TeleportUI.visible)
-                {
-                    teleportInterface.Update(Main._drawInterfaceGameTime);
-                    teleportUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
+            //layers.Insert(resourseBar, new LegacyGameInterfaceLayer(
+            //"TerraLeague: Teleport UI",
+            //delegate
+            //{
+            //    if (TeleportUI.visible)
+            //    {
+            //        teleportInterface.Update(Main._drawInterfaceGameTime);
+            //        teleportUI.Draw(Main.spriteBatch);
+            //    }
+            //    return true;
+            //},
+            //InterfaceScaleType.UI));
 
             //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
         }

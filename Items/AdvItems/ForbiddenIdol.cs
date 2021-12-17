@@ -40,7 +40,7 @@ namespace TerraLeague.Items.AdvItems
         {
             CreateRecipe()
             .AddIngredient(ItemType<FaerieCharm>(), 2)
-            .AddIngredient(ItemType<VoidFragment>(), 50)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 20)
             .AddRecipeGroup("TerraLeague:DemonPartGroup", 10)
             .AddTile(TileID.DemonAltar)
             .Register();

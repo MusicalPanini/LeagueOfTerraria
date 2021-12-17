@@ -59,6 +59,7 @@ namespace TerraLeague.Common.ModSystems
         public static bool CelestialMeteorCanSpawn = false;
         public static bool BlackMistDefeated = false;
         public static int marbleBlocks = 0;
+        public static int voidBlocks = 0;
         public static int targonMarker = 0;
         public int startingFrames = 0;
 
@@ -810,13 +811,17 @@ namespace TerraLeague.Common.ModSystems
         void GenerateVoid()
         {
             //int x = CurrentWorldGenX;
-            for (int x = 0; x < Main.maxTilesX; x++)
+            int MaxX = CurrentWorldGenX + 100;
+            if (MaxX > Main.maxTilesX)
+                MaxX = Main.maxTilesX;
+
+            for (int x = CurrentWorldGenX; x < MaxX; x++)
             {
-                int variance = Main.rand.Next(VoidVarianceLastFrame - 5, VoidVarianceLastFrame + 5);
-                if (variance + (Main.maxTilesY / 2) < (Main.maxTilesY * 2 / 5))
-                    variance = (Main.maxTilesY / 2) - (Main.maxTilesY * 2 / 5);
-                if (variance + (Main.maxTilesY / 2) > (Main.maxTilesY * 3 / 5))
-                    variance = (Main.maxTilesY / 2) - (Main.maxTilesY * 3 / 5);
+                int variance = Main.rand.Next(VoidVarianceLastFrame - 4, VoidVarianceLastFrame + 5);
+                if (variance + (Main.maxTilesY / 2) < (Main.maxTilesY * 3 / 7))
+                    variance = (Main.maxTilesY / 2) - (Main.maxTilesY * 3 / 7);
+                if (variance + (Main.maxTilesY / 2) > (Main.maxTilesY * 4 / 7))
+                    variance = (Main.maxTilesY / 2) - (Main.maxTilesY * 4 / 7);
                 VoidVarianceLastFrame = variance;
                 for (int y = (Main.maxTilesY / 2) + variance; y < Main.maxTilesY; y++)
                 {
@@ -824,7 +829,11 @@ namespace TerraLeague.Common.ModSystems
                     ushort wall = 0;
                     Tile tile = Main.tile[x, y];
 
-                    if (tile.type == TileID.DesertFossil)
+                    if (tile.type == TileID.RollingCactus)
+                    {
+                        type = (ushort)TileType<Tiles.CrystalBomb>();
+                    }
+                    else if (tile.type == TileID.DesertFossil)
                     {
                         type = (ushort)TileType<Tiles.VoidFragment>();
                     }
@@ -869,10 +878,10 @@ namespace TerraLeague.Common.ModSystems
                     CurrentWorldGenX = 0;
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);
+                        Main.NewText("A Void Rift has morphed the lower caves of the Underground Desert", 255, 0, 255);
                     else if (Main.netMode == NetmodeID.Server)
                     {
-                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("The Void has morphed some of this worlds matter"), new Color(255, 0, 255), -1);
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("A Void Rift has morphed the lower caves of the Underground Desert"), new Color(255, 0, 255), -1);
                         NetMessage.SendData(MessageID.WorldData);
                     }
                 }
@@ -884,11 +893,13 @@ namespace TerraLeague.Common.ModSystems
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             modPlayer.zoneTargonMonolith = false;
             marbleBlocks = 0;
+            voidBlocks = 0;
         }
 
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
             marbleBlocks = tileCounts[TileID.Marble] + tileCounts[TileType<PetrifiedGrass>()] + tileCounts[TileType<PetrifiedFlora>()] + tileCounts[TileType<Limestone>()];
+            voidBlocks =  tileCounts[TileType<VoidStone>()] + tileCounts[TileType<Tiles.VoidFragment>()];
 
             base.TileCountsAvailable(tileCounts);
         }

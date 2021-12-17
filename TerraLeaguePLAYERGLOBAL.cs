@@ -71,9 +71,9 @@ namespace TerraLeague
         internal bool zoneTargonPeak = false;
         internal bool zoneTargon = false;
         internal bool zoneTargonMonolith = false;
-        internal bool zoneVoidPortal = false;
+        internal bool zoneVoid = false;
         public const float VoidInfluMax = 100;
-        public float VoidInflu = 100;
+        public float VoidInflu = 0;
 
         /// <summary>
         /// Has the player hit an enemy with current melee swing
@@ -617,6 +617,8 @@ namespace TerraLeague
         public bool bottleOfStarDustBuffer = false;
         public bool targonArena = false;
 
+        public bool voidGem = false;
+
         // Lifeline Garbage
         public bool LifeLineHex = false;
         public bool LifeLineMaw = false;
@@ -812,6 +814,8 @@ namespace TerraLeague
             bottleOfStarDustBuffer = false;
             rapids = false;
             targonArena = false;
+
+            voidGem = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1037,6 +1041,7 @@ namespace TerraLeague
             rageTimer = 0;
             cauterizedDamage = 0;
             veil = false;
+            VoidInflu = 0;
 
             ClearShields();
 
@@ -1161,27 +1166,6 @@ namespace TerraLeague
 
         public void UpdateBiomes()
         {
-            if (NPC.CountNPCS(NPCType<VoidPortal>()) != 0)
-            {
-                List<NPC> portals = Main.npc.Where(x => x.type == NPCType<VoidPortal>()).ToList();
-                if (portals != null)
-                {
-                    for (int i = 0; i < portals.Count; i++)
-                    {
-                        if (Vector2.Distance(portals[i].Center, Player.MountedCenter) < 1500)
-                        {
-                            zoneVoidPortal = true;
-                            break;
-                        }
-                        zoneVoidPortal = false;
-                    }
-                }
-            }
-            else
-            {
-                zoneVoidPortal = false;
-            }
-
             if (zoneSurfaceMarble)
             {
                 nPCSpawnInfo.marble = true;
@@ -1340,6 +1324,14 @@ namespace TerraLeague
         public override void UpdateBadLifeRegen()
         {
             base.UpdateBadLifeRegen();
+            if (VoidInflu >= VoidInfluMax)
+            {
+                Player.lifeRegenTime = 0;
+                if (Player.lifeRegen < 0)
+                    Player.lifeRegen -= 100;
+                else
+                    Player.lifeRegen = -100;
+            }
             if (celestialFrostbite && !NPC.downedBoss1)
             {
                 Player.lifeRegenTime = 0;
@@ -1530,21 +1522,26 @@ namespace TerraLeague
             {
                 Player.noKnockback = true;
             }
+            if (manaRegenTimer % 60 == 1)
+            {
+                if (zoneVoid)
+                {
+                    int itemCount = Player.CountItem(ItemType<VoidFragment>(), 99);
+                    if (Player.inventory[58].type == ItemType<VoidFragment>())
+                        itemCount += Player.HeldItem.stack;
+                    if (itemCount > 99)
+                        itemCount = 99;
 
-            if (zoneVoidPortal)
-            {
-                if (VoidInflu > 0)
-                    VoidInflu -= Player.CountItem(ItemType<VoidFragment>(), 100) / 250f;
-                else
-                    VoidInflu = 0;
+                    AddVoidInfluence(itemCount + 1);
+                }
+                else if (Player.CountItem(ItemType<VoidFragment>(), 1) == 0 && Player.inventory[58].type != ItemType<VoidFragment>())
+                {
+                    AddVoidInfluence(-2);
+                }
             }
-            else
-            {
-                if (VoidInflu < VoidInfluMax)
-                    VoidInflu += 1f;
-                else
-                    VoidInflu = VoidInfluMax;
-            }
+            if (VoidInflu > 0)
+                Player.AddBuff(BuffType<VoidInfluence>(), 60);
+
 
             base.PreUpdate();
         }
@@ -2306,10 +2303,17 @@ namespace TerraLeague
         /// <returns></returns>
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            bool? itemKill = LeagueItem.RunEnabled_PreKill(Player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
-            if (itemKill != null)
+            if (VoidInflu >= VoidInfluMax)
             {
-                return (bool)itemKill;
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was consumed by the Void");
+            }
+            else
+            {
+                bool? itemKill = LeagueItem.RunEnabled_PreKill(Player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+                if (itemKill != null)
+                {
+                    return (bool)itemKill;
+                }
             }
             
             if (GetRealHeathWithoutShield() <= 0)
@@ -3748,6 +3752,25 @@ namespace TerraLeague
                     Terraria.Audio.SoundEngine.PlaySound(chosenItem.UseSound, Player.MountedCenter);
                 }
             }
+        }
+
+        public void AddVoidInfluence(int amount, bool smallText = true)
+        {
+            if (voidGem)
+                amount /= 2;
+
+            if (amount > 0)
+            {
+                CombatText.NewText(Player.Hitbox, Color.Purple, amount, false, smallText);
+            }
+
+            if (VoidInflu < VoidInfluMax)
+                VoidInflu += amount/10f;
+
+            if (VoidInflu > VoidInfluMax)
+                VoidInflu = VoidInfluMax;
+            else if (VoidInflu < 0)
+                VoidInflu = 0;
         }
 
         public int[] doubleTap = new int[4];

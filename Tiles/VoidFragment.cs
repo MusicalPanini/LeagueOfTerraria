@@ -24,8 +24,13 @@ namespace TerraLeague.Tiles
             ItemDrop = ItemType<Items.VoidFragment>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Void Matter");
-            AddMapEntry(new Color(255, 0, 255), name); 
+            AddMapEntry(new Color(200, 0, 200), name); 
             MinPick = 65;
+        }
+
+        public override bool CanExplode(int i, int j)
+        {
+            return false;
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
@@ -41,13 +46,33 @@ namespace TerraLeague.Tiles
                 zero = Vector2.Zero;
             }
 
+            float r = bLast;
+            float g = 0.0f;
+            float bl = bLast;
+
+            if (pulse)
+            {
+                bl += 0.000003f;
+            }
+            else
+            {
+                bl -= 0.000003f;
+            }
+
+            if (bl <= 0.1)
+                pulse = true;
+            else if (bl >= 0.25)
+                pulse = false;
+            bLast = bl;
+            Color color = new Color(255 * bl, 255 * bl, 255 * bl);
+
             if (tile.Slope == SlopeType.Solid && !tile.IsHalfBlock)
             {
                 spriteBatch.Draw(
                     GlowMask,
                     new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
                     new Rectangle(tile.frameX, tile.frameY, 16, 16),
-                    Color.White,
+                    color,
                     0,
                     default,
                     1,
@@ -61,7 +86,7 @@ namespace TerraLeague.Tiles
                     GlowMask,
                     new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 10) + zero,
                     new Rectangle(tile.frameX /*+ drawData.addFrX*/, tile.frameY /*+ drawData.addFrY*/, 16, 6),
-                    Color.White,
+                    color,
                     0f,
                     Vector2.Zero,
                     1f,
@@ -91,7 +116,7 @@ namespace TerraLeague.Tiles
                             num12 = num11 + 2;
                             break;
                     }
-                    Main.spriteBatch.Draw(GlowMask, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + (float)num12, (float)(j * 16 - (int)Main.screenPosition.Y + s * 2)) + zero, value, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(GlowMask, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + (float)num12, (float)(j * 16 - (int)Main.screenPosition.Y + s * 2)) + zero, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 }
             }
 
@@ -100,25 +125,25 @@ namespace TerraLeague.Tiles
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            DustType = DustID.DemonTorch;
-            r = bLast;
-            g = 0.0f;
-            b = bLast;
+            //DustType = DustID.DemonTorch;
+            //r = bLast;
+            //g = 0.0f;
+            //b = bLast;
 
-            if (pulse)
-            {
-                b += 0.000003f;
-            }
-            else
-            {
-                b -= 0.000003f;
-            }
+            //if (pulse)
+            //{
+            //    b += 0.000003f;
+            //}
+            //else
+            //{
+            //    b -= 0.000003f;
+            //}
 
-            if (b <= 0.2)
-                pulse = true;
-            else if (b >= 0.4)
-                pulse = false;
-            bLast = b;
+            //if (b <= 0.1)
+            //    pulse = true;
+            //else if (b >= 0.25)
+            //    pulse = false;
+            //bLast = b;
         }
     }
 }

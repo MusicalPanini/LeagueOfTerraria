@@ -54,6 +54,7 @@ namespace TerraLeague.Items.CompleteItems
             .AddIngredient(ItemType<Catalyst>(), 1)
             .AddIngredient(ItemType<BlastingWand>(), 1)
             .AddIngredient(ItemType<VoidFragment>(), 100)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 20)
             .AddRecipeGroup("TerraLeague:EvilPartGroup", 10)
             .AddIngredient(ItemID.SoulofLight, 6)
             .AddIngredient(ItemID.SoulofNight, 6)

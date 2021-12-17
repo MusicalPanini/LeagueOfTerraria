@@ -65,6 +65,15 @@ namespace TerraLeague.UI
 
         public override void Update(GameTime gameTime)
         {
+            TerraLeague.GetTextureIfNull(ref _backgroundTexture, "TerraLeague/UI/BarBackground");
+            TerraLeague.GetTextureIfNull(ref texture_breathBar, "TerraLeague/UI/BreathBar");
+            TerraLeague.GetTextureIfNull(ref texture_lavaBar, "TerraLeague/UI/BarBackground");
+            TerraLeague.GetTextureIfNull(ref texture_voidBar, "TerraLeague/UI/VoidBar");
+            TerraLeague.GetTextureIfNull(ref texture_voidBreathBar, "TerraLeague/UI/VoidAirBar");
+            TerraLeague.GetTextureIfNull(ref texture_voidLavaBar, "TerraLeague/UI/VoidLavaBar");
+
+            TerraLeague.GetTextureIfNull(ref texture_innerbar, "TerraLeague/UI/Blank");
+            TerraLeague.GetTextureIfNull(ref texture_smallBar, "TerraLeague/UI/SmallBlank_H");
             Recalculate();
             base.Update(gameTime);
         }
@@ -76,19 +85,19 @@ namespace TerraLeague.UI
             //int width = (int)Math.Ceiling(dimensions.Width);
             //int height = (int)Math.Ceiling(dimensions.Height);
             //Main.spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
-            //base.Width.Pixels = Main.screenWidth;
-            //base.Height.Pixels = Main.screenHeight;
+            //Main.screenWidth = Main.screenWidth;
+            //Main.screenHeight = Main.screenHeight;
 
             Player drawPlayer = Main.LocalPlayer;
             PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
 
             bool breathActive = drawPlayer.breath != drawPlayer.breathMax;
             bool lavaActive = drawPlayer.lavaTime != drawPlayer.lavaMax;
-            bool voidActive = modPlayer.VoidInflu != PLAYERGLOBAL.VoidInfluMax;
+            bool voidActive = false;
             bool duelMeter = false;
             Texture2D meter = texture_breathBar;
             
-            Rectangle destRec = new Rectangle((int)((base.Width.Pixels/2) - 58), (int)((base.Height.Pixels/2) - 48), 116, 20);
+            Rectangle destRec = new Rectangle((int)((Main.screenWidth/2) - 58), (int)((Main.screenHeight/2) - 48), 116, 20);
             Rectangle barTop = new Rectangle();
             Rectangle barBot = new Rectangle();
             Color topColor = Color.White;
@@ -98,13 +107,13 @@ namespace TerraLeague.UI
             {
                 if (breathActive)
                 {
-                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 8);
+                    barTop = new Rectangle((int)((Main.screenWidth / 2) - 50), (int)((Main.screenHeight / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 8);
                     topColor = Color.DarkCyan;
                     meter = texture_voidBreathBar;
                 }
                 else if (lavaActive)
                 {
-                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 8);
+                    barTop = new Rectangle((int)((Main.screenWidth / 2) - 50), (int)((Main.screenHeight / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 8);
                     topColor = new Color((int)(255 - 255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)), 0, (int)(255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)));
                     meter = texture_voidLavaBar;
                 }
@@ -112,12 +121,12 @@ namespace TerraLeague.UI
                 if (breathActive || lavaActive)
                 {
                     duelMeter = true;
-                    barBot = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 38), (int)(100 - 100 * (modPlayer.VoidInflu / PLAYERGLOBAL.VoidInfluMax)), 8);
+                    barBot = new Rectangle((int)((Main.screenWidth / 2) - 50), (int)((Main.screenHeight / 2) - 38), (int)(100 * (modPlayer.VoidInflu / PLAYERGLOBAL.VoidInfluMax)), 8);
                     botColor = Color.DarkMagenta;
                 }
                 else
                 {
-                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (modPlayer.VoidInflu / PLAYERGLOBAL.VoidInfluMax)), 16);
+                    barTop = new Rectangle((int)((Main.screenWidth / 2) - 50), (int)((Main.screenHeight / 2) - 46), (int)(100 * (modPlayer.VoidInflu / PLAYERGLOBAL.VoidInfluMax)), 16);
                     topColor = Color.DarkMagenta;
                     meter = texture_voidBar;
                 }
@@ -127,13 +136,13 @@ namespace TerraLeague.UI
             {
                 if (breathActive)
                 {
-                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
+                    barTop = new Rectangle((int)((Main.screenWidth / 2) - 50), (int)((Main.screenHeight / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
                     topColor = Color.DarkCyan;
                     meter = texture_breathBar;
                 }
                 else if (lavaActive)
                 {
-                    barTop = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 16);
+                    barTop = new Rectangle((int)((Main.screenWidth / 2) - 50), (int)((Main.screenHeight / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 16);
                     topColor = new Color((int)(255 - 255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)), 0, (int)(255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)));
                     meter = texture_voidLavaBar;
                 }

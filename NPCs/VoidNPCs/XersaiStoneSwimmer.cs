@@ -8,8 +8,12 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items.Banners;
 using Terraria.ModLoader.Utilities;
+using TerraLeague.Items.Accessories;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Bestiary;
+using TerraLeague.Biomes;
 
-namespace TerraLeague.NPCs
+namespace TerraLeague.NPCs.VoidNPCs
 {
     public class XersaiStoneSwimmer : ModNPC
     {
@@ -17,6 +21,14 @@ namespace TerraLeague.NPCs
         {
             DisplayName.SetDefault("Xer'Sai Stone Swimmer");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.SandShark];
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+                Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
+                Position = new Vector2(32, 0),
+                PortraitPositionXOverride = 8,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
@@ -25,6 +37,7 @@ namespace TerraLeague.NPCs
             NPC.damage = 20;
             NPC.defense = 10;
             NPC.lifeMax = 50;
+            NPC.aiStyle = -1;
             NPC.behindTiles = true;
             NPC.noGravity = true;
             NPC.HitSound = SoundID.NPCHit54;
@@ -37,14 +50,8 @@ namespace TerraLeague.NPCs
             NPC.knockBackResist = 0.9f;
             NPC.scale = 1f;
             base.SetDefaults();
-            //Banner = NPC.type;
-        }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-             if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneVoidPortal)
-                return SpawnCondition.Underground.Chance * 3;
-            return 0;
+            //Banner = NPC.type;
         }
 
         public override bool PreAI()
@@ -113,21 +120,21 @@ namespace TerraLeague.NPCs
                     NPC.TargetClosest(true);
                     NPC.velocity.X += (float)NPC.direction * 0.15f;
                     NPC.velocity.Y += (float)NPC.directionY * 0.15f;
-                    if (NPC.velocity.X > 12f)
+                    if (NPC.velocity.X > 5)
                     {
-                        NPC.velocity.X = 12f;
+                        NPC.velocity.X = 5;
                     }
-                    if (NPC.velocity.X < -12f)
+                    if (NPC.velocity.X < -5)
                     {
-                        NPC.velocity.X = -12f;
+                        NPC.velocity.X = -5;
                     }
-                    if (NPC.velocity.Y > 8f)
+                    if (NPC.velocity.Y > 3)
                     {
-                        NPC.velocity.Y = 8f;
+                        NPC.velocity.Y = 3;
                     }
-                    if (NPC.velocity.Y < -8f)
+                    if (NPC.velocity.Y < -3)
                     {
-                        NPC.velocity.Y = -8f;
+                        NPC.velocity.Y = -3;
                     }
                     Vector2 npcCenter = NPC.Center;
                     Vector2 npcVelocityNorm = NPC.velocity.SafeNormalize(Vector2.Zero);
@@ -168,7 +175,7 @@ namespace TerraLeague.NPCs
                         NPC.ai[0] = (float)NPC.directionY;
                     }
                     float num1409 = 6f;
-                    NPC.velocity.X += (float)NPC.direction * 3f;
+                    NPC.velocity.X += (float)NPC.direction * 0.1f;
                     //if (NPC.velocity.X < 0f - num1409 || NPC.velocity.X > num1409)
                     //{
                     //    NPC.velocity.X *= 0.95f;
@@ -247,34 +254,36 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            //if (NPC.life > 0)
-            //{
-            //    int count = 0;
-            //    while ((double)count < damage / (double)NPC.lifeMax * 50.0)
-            //    {
-            //        Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
-            //        dust.velocity *= 2f;
-            //        dust.noGravity = true;
-            //        count++;
-            //    }
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < 20; i++)
-            //    {
-            //        Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
-            //        dust.velocity *= 2f;
-            //        dust.noGravity = true;
-            //    }
+            if (NPC.life <= 0)
+            {
+                //for (int k = 0; k < 20; k++)
+                //{
+                //    Dust.NewDust(new Vector2(NPC.Center.X, NPC.Center.Y - 15), 1, 1, DustID.BlueCrystalShard, 0, 0, 0, default, 1.2f);
+                //}
 
-            //    Gore gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y - 10f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_1>(), NPC.scale);
-            //    gore.velocity *= 0.3f;
-            //    gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)(NPC.height / 2) - 15f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_2>(), NPC.scale);
-            //    gore.velocity *= 0.3f;
-            //    gore = Gore.NewGoreDirect(new Vector2(NPC.position.X, NPC.position.Y + (float)NPC.height - 20f), new Vector2((float)hitDirection, 0f), GoreType<MistPuff_3>(), NPC.scale);
-            //    gore.velocity *= 0.3f;
-            //}
-            //base.HitEffect(hitDirection, damage);
+                Gore.NewGore(NPC.position, NPC.velocity, GoreType<StoneSwimmer_1>(), NPC.scale);
+                Gore.NewGore(NPC.position, NPC.velocity, GoreType<StoneSwimmer_2>(), NPC.scale);
+                Gore.NewGore(NPC.position, NPC.velocity, GoreType<StoneSwimmer_3>(), NPC.scale);
+                Gore.NewGore(NPC.position, NPC.velocity, GoreType<StoneSwimmer_4>(), NPC.scale);
+            }
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemType<VoidbornFlesh>(), 2, 1));
+            npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<VoidStone>(), 300, 150));
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				// Sets the spawning conditions of this NPC that is listed in the bestiary.
+				ModContent.GetInstance<VoidBiome>().ModBiomeBestiaryInfoElement,
+
+				// Sets the description of this NPC that is listed in the bestiary.
+				new FlavorTextBestiaryInfoElement("With a smooth but hard exoskeleton, this voidborn made in the image of a shark is able to swim through stone as if it was water using brute force")
+            });
         }
     }
 }

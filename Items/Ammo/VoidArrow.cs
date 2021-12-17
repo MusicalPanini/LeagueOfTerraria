@@ -36,6 +36,7 @@ namespace TerraLeague.Items.Ammo
         {
             CreateRecipe(10)
             .AddIngredient(ItemType<VoidFragment>(), 10)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 1)
             .AddIngredient(ItemID.WoodenArrow, 10)
             .AddTile(TileID.Anvils)
             .Register();

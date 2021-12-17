@@ -11,19 +11,53 @@ namespace TerraLeague.Items
     {
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
-            DisplayName.SetDefault("Void Fragment");
+            DisplayName.SetDefault("Void Matter");
             base.SetStaticDefaults();
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+
+        public override bool OnPickup(Player player)
+        {
+            bool canTakeItem = false;
+
+            for (int i = 0; i < 50; i++)
+            {
+                Item invItem = player.inventory[i];
+                if ((invItem.type == Type && invItem.stack < invItem.maxStack) || invItem.type == ItemID.None)
+                {
+                    canTakeItem = true;
+                    break;
+                }
+            }
+
+            if (canTakeItem && player.GetModPlayer<PLAYERGLOBAL>().zoneVoid)
+                player.GetModPlayer<PLAYERGLOBAL>().AddVoidInfluence(10 * Item.stack);
+
+            return base.OnPickup(player);
         }
 
         public override void SetDefaults()
         {
             Item.maxStack = 999;
-            Item.width = 28;
-            Item.height = 28;
-            Item.rare = ItemRarityID.Green;
+            Item.width = 14;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.buyPrice(0, 0, 0, 50);
+            
+        }
+        
+        public override void Update(ref float gravity, ref float maxFallSpeed)
+        {
+            if (Item.timeSinceItemSpawned > 60 * 3)
+            {
+                Item.SetDefaults();
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDustDirect(Item.position, Item.width, Item.height, DustID.DemonTorch);
+                }
+            }
+            base.Update(ref gravity, ref maxFallSpeed);
         }
     }
 }

@@ -112,5 +112,42 @@ namespace TerraLeague.Projectiles
                 }
             }
         }
+
+        public override bool OnTileCollide(Projectile projectile, Vector2 oldVelocity)
+        {
+            Vector2 vector = projectile.position + oldVelocity;
+            int num = (int)(projectile.position.X / 16f) - 1;
+            int num2 = (int)((projectile.position.X + (float)projectile.width) / 16f) + 2;
+            int num3 = (int)(projectile.position.Y / 16f) - 1;
+            int num4 = (int)((projectile.position.Y + (float)projectile.height) / 16f) + 2;
+            if (num < 0)
+            {
+                num = 0;
+            }
+            if (num2 > Main.maxTilesX)
+            {
+                num2 = Main.maxTilesX;
+            }
+            if (num3 < 0)
+            {
+                num3 = 0;
+            }
+            if (num4 > Main.maxTilesY)
+            {
+                num4 = Main.maxTilesY;
+            }
+            for (int i = num; i < num2; i++)
+            {
+                for (int j = num3; j < num4; j++)
+                {
+                    if (Main.tile[i, j].type == ModContent.TileType<Tiles.CrystalBomb>() && WorldGen.CanCutTile(i, j, Terraria.Enums.TileCuttingContext.AttackProjectile))
+                    {
+                        WorldGen.KillTile(i, j, false, false, false);
+                    }
+                }
+            }
+
+            return base.OnTileCollide(projectile, oldVelocity);
+        }
     }
 }

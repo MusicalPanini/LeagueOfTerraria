@@ -14,7 +14,7 @@ namespace TerraLeague.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
-            AddMapEntry(new Color(140, 50, 140));
+            AddMapEntry(new Color(30, 0, 30));
         }
     }
 }

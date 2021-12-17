@@ -50,6 +50,7 @@ namespace TerraLeague.Items.CompleteItems
             .AddIngredient(ItemType<RaptorCloak>(), 1)
             .AddIngredient(ItemType<NegatronCloak>(), 1)
             .AddIngredient(ItemType<VoidFragment>(), 100)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 25)
             .AddIngredient(ItemID.SoulofSight, 10)
             .AddTile(TileID.MythrilAnvil)
             .Register();

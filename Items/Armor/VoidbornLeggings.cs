@@ -37,6 +37,7 @@ namespace TerraLeague.Items.Armor
             CreateRecipe()
             .AddIngredient(ItemID.FossilPants, 1)
             .AddIngredient(ItemType<VoidFragment>(), 50)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 10)
             .AddTile(TileID.Anvils)
             .Register();
             

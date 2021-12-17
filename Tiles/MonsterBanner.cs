@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Items.Banners;
 using TerraLeague.NPCs;
+using TerraLeague.NPCs.VoidNPCs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -171,7 +172,29 @@ namespace TerraLeague.Tiles
                     case BannerType.BansheeHive:
                          Main.SceneMetrics.NPCBannerBuff[NPCType<BansheeHive>()] = true;
                         break;
-                }
+
+					case BannerType.XerSaiBrute:
+						Main.SceneMetrics.NPCBannerBuff[NPCType<XersaiBrute>()] = true;
+						break;
+					case BannerType.VoidSlime:
+						Main.SceneMetrics.NPCBannerBuff[NPCType<VoidbornSlime>()] = true;
+						break;
+					case BannerType.TaintedSkele:
+						Main.SceneMetrics.NPCBannerBuff[NPCType<TaintedSkeleton>()] = true;
+						break;
+					case BannerType.TaintedBat:
+						Main.SceneMetrics.NPCBannerBuff[NPCType<TaintedCavebat>()] = true;
+						break;
+					case BannerType.ZzRotFlyer:
+						Main.SceneMetrics.NPCBannerBuff[NPCType<ZzRotFlyer>()] = true;
+						break;
+					case BannerType.TunnelingTerror:
+						Main.SceneMetrics.NPCBannerBuff[NPCType<TunnelingTerror_Head>()] = true;
+						break;
+					case BannerType.StoneSwimmer:
+						Main.SceneMetrics.NPCBannerBuff[NPCType<XersaiStoneSwimmer>()] = true;
+						break;
+				}
             }
         }
 
@@ -206,6 +229,13 @@ namespace TerraLeague.Tiles
 		Mistwraith,
 		PHMDesert_UNUSED,
 		ShadowArtilery,
-		BansheeHive
+		BansheeHive,
+		XerSaiBrute,
+		VoidSlime,
+		TaintedSkele,
+		TaintedBat,
+		ZzRotFlyer,
+		TunnelingTerror,
+		StoneSwimmer
     }
 }

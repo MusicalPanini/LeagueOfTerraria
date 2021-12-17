@@ -45,7 +45,8 @@ namespace TerraLeague.Items.AdvItems
             .AddIngredient(ItemType<RubyCrystal>(), 1)
             .AddIngredient(ItemType<AmpTome>(), 1)
             .AddIngredient(ItemID.SharkToothNecklace, 1)
-            .AddIngredient(ItemType<VoidFragment>(), 50)
+            .AddIngredient(ItemType<VoidFragment>(), 40)
+            .AddIngredient(ItemType<VoidbornFlesh>(), 10)
             .AddTile(TileID.Anvils)
             .Register();
             
