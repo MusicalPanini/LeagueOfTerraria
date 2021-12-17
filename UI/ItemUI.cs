@@ -29,37 +29,18 @@ namespace TerraLeague.UI
 
         public override void OnInitialize()
         {
-            MainPanel = new UIElement();
-            MainPanel.SetPadding(0);
-            MainPanel.Left.Set(Main.screenWidth - 316, 0f);
-            MainPanel.Top.Set(Main.screenHeight - 216, 0f);
-            MainPanel.Width.Set(250, 0f);
-            MainPanel.Height.Set(101, 0f);
-            
             ItemPanel = new UIItemPanel();
             SummonerPanel = new UISummonerPanel(700, 700, 99, 54);
             StatPanel = new UIStatPanel(150, 54);
 
             Append(SummonerPanel);
             Append(ItemPanel);
-            Append(MainPanel);
             Append(StatPanel);
         }
 
         public override void Update(GameTime gameTime)
         {
             StatPanel.extraStats = extraStats;
-
-            if (Main.invasionProgressNearInvasion)
-            {
-                MainPanel.Left.Set(Main.screenWidth - (MainPanel.Width.Pixels + 240), 0);
-                MainPanel.Top.Set(Main.screenHeight - (MainPanel.Height.Pixels + 44), 0f);
-            }
-            else
-            {
-                MainPanel.Left.Set(Main.screenWidth - (MainPanel.Width.Pixels + 40), 0);
-                MainPanel.Top.Set(Main.screenHeight - (MainPanel.Height.Pixels + 44), 0f);
-            }
 
             if (!ItemPanel.GetDimensions().ToRectangle().Intersects(GetDimensions().ToRectangle()))
             {
@@ -118,12 +99,6 @@ namespace TerraLeague.UI
                 ammoBarHeight = (int)(216 * (modPlayer.crescendumAmmo / 100f));
                 ammoBarPos = new Rectangle(left + 36, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
                 Main.spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
-            }
-
-            Vector2 MousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
-            if (MainPanel.ContainsPoint(MousePosition))
-            {
-                Main.LocalPlayer.mouseInterface = true;
             }
         }
     }
