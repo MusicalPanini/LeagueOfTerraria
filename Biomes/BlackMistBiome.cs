@@ -21,6 +21,8 @@ namespace TerraLeague.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/Biomes/Icon_BlackMist";
         //public override string BackgroundPath => "Textures/Bestiary/Biomes/Background_BlackMist";
         public override Color? BackgroundColor => new Color(43, 247, 165);
+        public override int Music => MusicID.OtherworldlyNight;
+        public override SceneEffectPriority Priority => SceneEffectPriority.Event;
 
         public override void SetStaticDefaults()
         {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TerraLeague.Common.ModSystems;
 using Terraria;
 using Terraria.Graphics.Capture;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerraLeague.Biomes
@@ -20,6 +21,9 @@ namespace TerraLeague.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/Biomes/Icon_SurfaceMarble";
         public override string BackgroundPath => "Textures/Bestiary/Biomes/Background_SurfaceMarble";
         public override Color? BackgroundColor => new Color(239, 231, 216);
+
+        public override int Music => MusicID.OtherworldlyOcean;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
         public override void SetStaticDefaults()
         {

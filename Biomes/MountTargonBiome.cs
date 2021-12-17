@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TerraLeague.Common.ModSystems;
 using Terraria;
 using Terraria.Graphics.Capture;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerraLeague.Biomes
@@ -20,6 +21,8 @@ namespace TerraLeague.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/Biomes/Icon_MountTargon";
         public override string BackgroundPath => "Textures/Bestiary/Biomes/Background_MountTargon";
         public override Color? BackgroundColor => default;
+        public override int Music => MusicID.OtherworldlySnow;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override void SetStaticDefaults()
         {
@@ -28,7 +31,7 @@ namespace TerraLeague.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            bool withinX = Math.Abs((WorldSystem.TargonCenterX * 16) - player.MountedCenter.X) < Main.maxTilesX / 21 * 16;
+            bool withinX = Math.Abs((WorldSystem.TargonCenterX * 16) - player.MountedCenter.X) < Main.maxTilesX / 32 * 16;
             bool withinY = Math.Abs((45 * 16) - player.MountedCenter.Y) < Main.worldSurface * 16;
 
             bool active = withinX && withinY;
