@@ -33,7 +33,7 @@ namespace TerraLeague.Projectiles
             Projectile.ignoreWater = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -2;
-            Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 

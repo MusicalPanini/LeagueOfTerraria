@@ -52,14 +52,6 @@ namespace TerraLeague.Items.Weapons
             abilityItem.IsAbilityItem = true;
         }
 
-        public override bool CanUseItem(Player player)
-        {
-            Item.damage = 35;
-            Item.useAnimation = 30;
-            Item.useTime = 30;
-            return true;
-        }
-
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             int ammoItem = -1;

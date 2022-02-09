@@ -41,6 +41,7 @@ namespace TerraLeague.Projectiles.Explosive
                 Projectile.tileCollide = false;
                 Projectile.alpha = 255;
                 Projectile.timeLeft = 2;
+                Projectile.penetrate = -1;
 
                 Vector2 originalCenter = Projectile.Center;
 
@@ -77,12 +78,20 @@ namespace TerraLeague.Projectiles.Explosive
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Prime();
-            return base.OnTileCollide(oldVelocity);
+            return false;
         }
 
         public virtual void KillEffects()
         {
 
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (explosionPrimed)
+                return Targeting.IsHitboxWithinRange(Projectile.Center, targetHitbox, Projectile.width / 2);
+
+            return base.Colliding(projHitbox, targetHitbox);
         }
     }
 }

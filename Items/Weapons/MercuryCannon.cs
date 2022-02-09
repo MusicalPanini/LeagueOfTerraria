@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 32;
+            Item.damage = 26;
             Item.DamageType = DamageClass.Ranged;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.width = 66;

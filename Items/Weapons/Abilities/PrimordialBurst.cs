@@ -82,14 +82,14 @@ namespace TerraLeague.Items.Weapons.Abilities
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
                 {
 
-                    Vector2 position = player.position;
-                    Vector2 velocity = new Vector2(0, 0);
+                    Vector2 position = player.Center;
+                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16);
                     int projType = ProjectileType<CrystalStaff_PrimordialBurst>();
                     int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                     int knockback = 3;
 
                     SetAnimation(player, Main.npc[npc].Center);
-                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, npc, -1);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI, npc);
                     SetCooldowns(player, type);
                 }
             }

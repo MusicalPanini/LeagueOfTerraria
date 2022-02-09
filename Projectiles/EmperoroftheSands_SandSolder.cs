@@ -32,6 +32,7 @@ namespace TerraLeague.Projectiles
             Projectile.timeLeft = 100;
             Projectile.friendly = true;
             Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.minionSlots = 1f;
             Projectile.penetrate = -1;
 
@@ -103,7 +104,7 @@ namespace TerraLeague.Projectiles
 
         public override bool MinionContactDamage()
         {
-            return true;
+            return (int)Projectile.ai[0] == 2;
         }
     }
 }

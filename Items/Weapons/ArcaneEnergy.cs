@@ -39,7 +39,7 @@ namespace TerraLeague.Items.Weapons
             Item.useTime = 32;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
-            Item.value = 40000;
+            Item.value = 40000 * 60;
             Item.rare = ItemRarityID.LightRed;
             Item.shootSpeed = 12f;
             Item.shoot = ProjectileType<ArcaneEnergy_PulseControl>();
@@ -69,6 +69,7 @@ namespace TerraLeague.Items.Weapons
                 .AddIngredient(ItemID.Chain, 4)
                 .AddIngredient(ItemID.SoulofMight, 10)
                 .AddIngredient(ItemID.FallenStar, 10)
+                .AddIngredient(ItemID.AncientBattleArmorMaterial, 1)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

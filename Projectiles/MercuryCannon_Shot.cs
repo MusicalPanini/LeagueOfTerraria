@@ -78,7 +78,7 @@ namespace TerraLeague.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             
-            return true;
+            return base.OnTileCollide(oldVelocity);
         }
 
         public override void Kill(int timeLeft)

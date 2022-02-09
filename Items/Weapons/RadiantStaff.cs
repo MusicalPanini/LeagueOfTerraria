@@ -56,7 +56,7 @@ namespace TerraLeague.Items.Weapons
             Item.useAnimation = 34;
             Item.noMelee = true;
             Item.knockBack = 3;
-            Item.value = 55000;
+            Item.value = 55000 * 5;
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = new LegacySoundStyle(2, 8, Terraria.Audio.SoundType.Sound);
             Item.shoot = ProjectileType<RadiantStaff_PrismaticBarrier>();

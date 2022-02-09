@@ -70,7 +70,11 @@ namespace TerraLeague.Projectiles
             }
             else if (projectile.minion)
             {
-                crit = (Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().haunted && Main.rand.Next(0, 100) < Haunted.critChance);
+                if (Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().haunted)
+                {
+                    crit = (Main.rand.Next(0, 100) < Haunted.critChance);
+                }
+                base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
             }
             else
             {

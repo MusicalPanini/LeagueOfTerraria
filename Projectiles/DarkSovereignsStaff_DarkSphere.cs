@@ -32,7 +32,7 @@ namespace TerraLeague.Projectiles
             Projectile.ignoreWater = true;
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 30;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -180,6 +180,13 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             base.Kill(timeLeft);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage += target.checkArmorPenetration(20);
+
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
     }
 }

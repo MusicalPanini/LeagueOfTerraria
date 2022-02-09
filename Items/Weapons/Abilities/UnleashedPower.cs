@@ -32,7 +32,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Launch " + LeagueTooltip.TooltipValue(2, false, "", new Tuple<int, ScaleType>(200, ScaleType.Minions)) + " dark spheres at a targeted enemy";
+            return "Launch " + LeagueTooltip.TooltipValue(0, false, "", new Tuple<int, ScaleType>(200, ScaleType.Minions)) + " dark spheres at a targeted enemy";
         }
 
         public override int GetAbilityBaseDamage(Player player)

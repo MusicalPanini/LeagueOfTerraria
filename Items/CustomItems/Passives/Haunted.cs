@@ -5,7 +5,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Haunted : Passive
     {
-        public static int critChance = 10;
+        public static int critChance = 5;
 
         public Haunted(LeagueItem legItem) : base(legItem)
         {

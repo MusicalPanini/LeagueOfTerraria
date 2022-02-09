@@ -28,7 +28,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 24;
+            Item.damage = 12;
             Item.DamageType = DamageClass.Summon;
             Item.mana = 20;
             Item.width = 48;
@@ -57,7 +57,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Item.damage = 24;
             position = Main.MouseWorld;
 
             if (player.altFunctionUse != 2)

@@ -28,7 +28,7 @@ namespace TerraLeague.Projectiles
             Projectile.extraUpdates = 4;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
         }
 
         public override void AI()
