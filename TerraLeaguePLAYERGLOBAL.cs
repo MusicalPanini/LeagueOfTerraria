@@ -1979,8 +1979,9 @@ namespace TerraLeague
             }
             if (spinningAxe)
             {
-                Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.WaterCandle, 0, 0, 0, new Color(255, 0, 0));
+                Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, 211, 0, 0, 0, new Color(255, 0, 0));
                 dust.noGravity = true;
+                dust.noLight = true;
                 dust.scale = 1.4f;
             }
             if (flameHarbinger)
@@ -3203,7 +3204,7 @@ namespace TerraLeague
             {
                 Texture2D texture = Request<Texture2D>("TerraLeague/Projectiles/DarksteelThrowingAxe_SpinningAxe").Value;
                 Color color = Lighting.GetColor((int)Player.Center.X / 16, (int)Player.Center.Y / 16);
-                float rotation = MathHelper.ToRadians(((float)Main.time % 15)*24) * Player.direction;
+                float rotation = MathHelper.ToRadians(((float)Main.timeForVisualEffects % 15)*24) * Player.direction;
                 Main.spriteBatch.Draw
                 (
                     texture,
