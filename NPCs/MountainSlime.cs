@@ -18,6 +18,13 @@ namespace TerraLeague.NPCs
         {
             DisplayName.SetDefault("Mountain Slime");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Slimer];
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+                Position = new Vector2(0, -4),
+                PortraitPositionYOverride = -24
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {

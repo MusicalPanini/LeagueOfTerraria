@@ -19,6 +19,11 @@ namespace TerraLeague.NPCs
         {
             DisplayName.SetDefault("Ethereal Remitter");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Wraith];
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {

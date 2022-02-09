@@ -16,6 +16,12 @@ namespace TerraLeague.NPCs.TargonBoss
         {
             DisplayName.SetDefault("Starfire Spellblade");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.EnchantedSword];
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+                Position = new Vector2(0, 16),
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {

@@ -66,9 +66,22 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            for (int k = 0; k < 60; k++)
+            if (NPC.life > 0)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.t_Slime, hitDirection, -2, 150, new Color(5, 245, 150), 1f);
+                int num262 = 0;
+                while ((double)num262 < damage / (double)NPC.lifeMax * 100.0)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.t_Slime, (float)hitDirection, -1f, NPC.alpha, new Color(5, 245, 150), 1f);
+                    int num5 = num262;
+                    num262 = num5 + 1;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.t_Slime, (float)hitDirection, -1f, NPC.alpha, new Color(5, 245, 150), 1f);
+                }
             }
 
             base.HitEffect(hitDirection, damage);

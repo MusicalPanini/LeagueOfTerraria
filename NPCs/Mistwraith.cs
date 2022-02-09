@@ -16,6 +16,14 @@ namespace TerraLeague.NPCs
         {
             DisplayName.SetDefault("Mistwraith");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.CursedSkull];
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+                Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
+                Position = new Vector2(0, 10),
+                SpriteDirection = 1
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
@@ -41,6 +49,7 @@ namespace TerraLeague.NPCs
             BannerItem = ItemType<MistwraithBanner>();
             base.SetDefaults();
         }
+    
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {

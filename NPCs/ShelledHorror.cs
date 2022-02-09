@@ -17,6 +17,14 @@ namespace TerraLeague.NPCs
         {
             DisplayName.SetDefault("Shelled Horror");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.GiantTortoise];
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+                Velocity = 0.5f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
+                Position = new Vector2(8, 0),
+                PortraitPositionXOverride = -6
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {

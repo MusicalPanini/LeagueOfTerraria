@@ -19,6 +19,15 @@ namespace TerraLeague.NPCs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mist Devourer");
+
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+                CustomTexturePath = "TerraLeague/Textures/Bestiary/NPCs/MistDevourer",
+                Position = new Vector2(42, 28),
+                PortraitPositionXOverride = 0,
+                PortraitPositionYOverride = 16
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
         }
         public override void SetDefaults()
         {
@@ -127,6 +136,7 @@ namespace TerraLeague.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				// Sets the spawning conditions of this NPC that is listed in the bestiary.
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
                 ModContent.GetInstance<BlackMistBiome>().ModBiomeBestiaryInfoElement,
 
 				// Sets the description of this NPC that is listed in the bestiary.

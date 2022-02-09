@@ -17,6 +17,12 @@ namespace TerraLeague.NPCs
         {
             DisplayName.SetDefault("Scuttlegeist");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.AnomuraFungus];
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+                Velocity = 1f // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {

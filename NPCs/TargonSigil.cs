@@ -163,7 +163,11 @@ namespace TerraLeague.NPCs
 
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if (Common.ModSystems.WorldSystem.TargonUnlocked && !Common.ModSystems.DownedBossSystem.downedTargonBoss)
+            if (!Common.ModSystems.WorldSystem.TargonUnlocked)
+            {
+
+            }
+            else if (Common.ModSystems.WorldSystem.TargonUnlocked && !Common.ModSystems.DownedBossSystem.downedTargonBoss)
             {
                 if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
                     button = "Teleport to Arena";

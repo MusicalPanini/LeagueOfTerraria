@@ -66,7 +66,7 @@ namespace TerraLeague.NPCs
                 Terraria.Audio.SoundEngine.PlaySound(SoundID.Item8, NPC.position);
                 for (int i = 0; i < 50; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Electric, 0f, 0f, 100, new Color(5, 245, 150), 3);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 100, new Color(5, 245, 150), 3);
                     dust.velocity *= 3f;
                     dust.fadeIn = 3;
                     dust.noGravity = true;
@@ -80,7 +80,7 @@ namespace TerraLeague.NPCs
                 Terraria.Audio.SoundEngine.PlaySound(SoundID.Item8, NPC.position);
                 for (int i = 0; i < 50; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Electric, 0f, 0f, 100, new Color(5, 245, 150), 3);
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 100, new Color(5, 245, 150), 3);
                     dust.velocity *= 3f;
                     dust.fadeIn = 3;
                     dust.noGravity = true;

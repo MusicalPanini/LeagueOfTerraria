@@ -20,6 +20,11 @@ namespace TerraLeague.NPCs
         {
             DisplayName.SetDefault("Marble Slime");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.BlueSlime];
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            { // Influences how the NPC looks in the Bestiary
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
@@ -40,6 +45,15 @@ namespace TerraLeague.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<MarbleSlimeBanner>();
         }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            //if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneSurfaceMarble)
+            //    return 1;
+
+            return 0;
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (Main.rand.Next(0, 12) == 0 && !Main.expertMode)
