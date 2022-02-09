@@ -24,10 +24,11 @@ namespace TerraLeague.Items.Weapons
         string GetWeaponTooltip()
         {
             return "Fire a serpent that applies 'Venom'." +
-                "\nIf a nearby enemy has 'Venom' launch Twin Fangs instead at nearby 'Venom' affected enemies instead." +
+                "\nRight Click to fire Twin Fangs that home in on 'Venom' affected enemies." +
                 "\nTwin Fangs deal " + LeagueTooltip.TooltipValue(Item.damage, false, "",
               new System.Tuple<int, ScaleType>(MAGScaling, ScaleType.Magic)
-              ) + " magic damage";
+              ) + " magic damage" +
+              "\nUses " + (int)(10 * Main.LocalPlayer.manaCost) + " mana";
         }
 
         public override void SetDefaults()
@@ -42,7 +43,7 @@ namespace TerraLeague.Items.Weapons
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 1;
-            Item.value = 160000;
+            Item.value = 60000 * 5;
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.Item5;
             Item.autoReuse = true;
@@ -56,23 +57,34 @@ namespace TerraLeague.Items.Weapons
             abilityItem.IsAbilityItem = true;
         }
 
+        public override bool AltFunctionUse(Player player)
+        {
+            return player.CheckMana(10, true);
+        }
+
         public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Targeting.IsThereAnNPCInRange(player.MountedCenter, 500, BuffID.Venom))
+            if (player.altFunctionUse == 2)
             {
                 int tfDamage = Item.damage + (MAGScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100);
-                Vector2 center = player.MountedCenter;
-
-                var targets = Targeting.GetAllNPCsInRange(center, 500, true);
-                for (int i = 0; i < targets.Count; i++)
-                {
-                    if (Main.npc[targets[i]].HasBuff(BuffID.Venom))
-                    {
-                        Projectile.NewProjectileDirect(source, center, TerraLeague.CalcVelocityToPoint(center, Main.npc[targets[i]].Center, 16), ProjectileType<SerpentsEmbrace_TwinFangs>(), tfDamage, 1, player.whoAmI, targets[i]);
-                    }
-                }
+                Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<SerpentsEmbrace_TwinFangs>(), tfDamage, 1, player.whoAmI, -2);
                 return false;
             }
+            //if (Targeting.IsThereAnNPCInRange(player.MountedCenter, 500, BuffID.Venom))
+            //{
+                
+            //    Vector2 center = player.MountedCenter;
+
+            //    var targets = Targeting.GetAllNPCsInRange(center, 500, true);
+            //    for (int i = 0; i < targets.Count; i++)
+            //    {
+            //        if (Main.npc[targets[i]].HasBuff(BuffID.Venom))
+            //        {
+            //            Projectile.NewProjectileDirect(source, center, TerraLeague.CalcVelocityToPoint(center, Main.npc[targets[i]].Center, 16), ProjectileType<SerpentsEmbrace_TwinFangs>(), tfDamage, 1, player.whoAmI, targets[i]);
+            //        }
+            //    }
+            //    return false;
+            //}
             else
             {
                 if (type == ProjectileID.WoodenArrowFriendly)
@@ -87,9 +99,10 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient(ItemType<TrueIceChunk>(), 4)
-            .AddIngredient(ItemID.HellwingBow, 1)
-            .AddIngredient(ItemID.FrostCore, 1)
+            .AddIngredient(ItemType<Sunstone>(), 10)
+            .AddIngredient(ItemID.Sapphire, 1)
+            .AddIngredient(ItemID.SoulofSight, 12)
+            .AddIngredient(ItemID.AncientBattleArmorMaterial, 1)
             .AddTile(TileID.Anvils)
             .Register();
         }

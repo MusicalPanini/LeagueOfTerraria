@@ -45,7 +45,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Venom, 60 * 4);
+            target.AddBuff(BuffID.Venom, 60 * 2);
             base.OnHitPlayer(target, damage, crit);
         }
 
