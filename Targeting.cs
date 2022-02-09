@@ -477,6 +477,100 @@ namespace TerraLeague
 
             return currentChoice;
         }
+        public static int GetClosestNPCWithBuff(Vector2 position, float maxDistance, int mustHaveBuff, int doNotInclude = -1, bool includeSmallCreatures = false, bool includeTargetDummy = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        {
+            int currentChoice = -1;
+            float range = maxDistance;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+
+                if (npc.active && npc.whoAmI != doNotInclude)
+                {
+                    if (npc.type == NPCID.TargetDummy && includeTargetDummy)
+                    {
+                        if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                        {
+                            currentChoice = i;
+                            range = Vector2.Distance(position, npc.Center);
+                        }
+                    }
+                    else if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    {
+                        if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
+                        {
+                            if (!includeImmortal && !npc.immortal || includeImmortal)
+                            {
+                                if (npc.HasBuff(mustHaveBuff))
+                                {
+                                    if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                                    {
+                                        currentChoice = i;
+                                        range = Vector2.Distance(position, npc.Center);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return currentChoice;
+        }
+        public static int GetClosestNPCInLOS(Entity entity, float maxDistance, int doNotInclude = -1, int prioritiseNPC = -1, bool includeSmallCreatures = false, bool includeTargetDummy = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        {
+            int currentChoice = -1;
+            float range = maxDistance;
+
+            if (prioritiseNPC != -1)
+            {
+                NPC npc = Main.npc[prioritiseNPC];
+                if (IsHitboxWithinRange(entity.Center, npc.Hitbox, range))
+                {
+                    return prioritiseNPC;
+                }
+            }
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+
+                if (npc.active && npc.whoAmI != doNotInclude)
+                {
+                    if (npc.type == NPCID.TargetDummy && includeTargetDummy)
+                    {
+                        if (Collision.CanHit(entity, npc))
+                        {
+                            if (IsHitboxWithinRange(entity.Center, npc.Hitbox, range))
+                            {
+                                currentChoice = i;
+                                range = Vector2.Distance(entity.Center, npc.Center);
+                            }
+                        }
+                    }
+                    else if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    {
+                        if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
+                        {
+                            if (!includeImmortal && !npc.immortal || includeImmortal)
+                            {
+                                if (Collision.CanHit(entity, npc))
+                                {
+                                    if (IsHitboxWithinRange(entity.Center, npc.Hitbox, range))
+                                    {
+                                        currentChoice = i;
+                                        range = Vector2.Distance(entity.Center, npc.Center);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return currentChoice;
+        }
 
         public static List<T> SortListByDistance<T> (this List<T> listToSort, Vector2 Center) where T : Entity
         {
