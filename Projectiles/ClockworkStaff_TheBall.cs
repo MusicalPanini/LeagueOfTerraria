@@ -2,9 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.CodeDom;
+using System.IO;
 using TerraLeague.Buffs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,11 +14,32 @@ namespace TerraLeague.Projectiles
 {
     public class ClockworkStaff_TheBall : ModProjectile
     {
-        bool attacking = false;
+        Vector2 targetLocation = Vector2.Zero;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Ball");
+        }
+
+        const int IDLE = 0;
+        const int ATTACKING = 1;
+        const int POST_ATTACK = 2;
+        const int RETURNING = 3;
+        int AIState 
+        { 
+            get { return (int)Projectile.ai[0]; }
+            set { Projectile.ai[0] = value; }
+        }
+
+        int AITimer
+        {
+            get { return (int)Projectile.ai[1]; }
+            set { Projectile.ai[1] = value; }
+        }
+
+        Vector2 IdlePosition
+        {
+            get { return new Vector2(Main.player[Projectile.owner].MountedCenter.X - (32 * Main.player[Projectile.owner].direction), Main.player[Projectile.owner].MountedCenter.Y - 32); }
         }
 
         public override void SetDefaults()
@@ -35,6 +58,52 @@ namespace TerraLeague.Projectiles
             Projectile.minionSlots = 3;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(targetLocation);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            targetLocation = reader.ReadVector2();
+            base.ReceiveExtraAI(reader);
+        }
+
+        void GetTarget()
+        {
+            Player player = Main.player[Projectile.owner];
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            {
+                int targetNPC;
+                if (AIState == IDLE)
+                    targetNPC = Targeting.GetClosestNPCInLOS(Projectile, 700, -1, player.MinionAttackTargetNPC);
+                else
+                    targetNPC = Targeting.GetClosestNPC(Projectile.Center, 700, -1, player.MinionAttackTargetNPC);
+                if (targetNPC >= 0)
+                {
+                    NPC npc = Main.npc[targetNPC];
+                    Vector2 predictedPosition = npc.Center + (npc.velocity * npc.Center.Distance(Projectile.Center) / 10f);
+                    Vector2 offset = new Vector2(64, 0).RotatedBy(Projectile.AngleTo(predictedPosition));
+
+                    targetLocation = predictedPosition + offset;
+                    Projectile.netUpdate = true;
+                    AIState = ATTACKING;
+                }
+                else
+                {
+                    targetLocation = Vector2.Zero;
+                    Projectile.netUpdate = true;
+                    if (AIState == POST_ATTACK)
+                        AIState = RETURNING;
+                    else
+                        AIState = IDLE;
+                }
+
+                Projectile.netUpdate = true;
+            }
+        }
+
         public override void AI()
         {
             if (Projectile.soundDelay == 0)
@@ -46,106 +115,71 @@ namespace TerraLeague.Projectiles
                 }
             }
             Projectile.soundDelay = 100;
-
+            Projectile.velocity = Vector2.Zero;
             Player player = Main.player[Projectile.owner];
 
-            if (player.whoAmI == Main.LocalPlayer.whoAmI && (int)Projectile.localAI[0]  > 0)
+            // Idle
+            if (AIState == IDLE)
             {
-                Projectile.localAI[0] --;
+                Projectile.Center = new Vector2(player.MountedCenter.X - (32 * player.direction), player.MountedCenter.Y - 32);
+                GetTarget();
             }
-            if (!attacking && player.whoAmI == Main.LocalPlayer.whoAmI && (int)Projectile.localAI[0]  == 0)
+            // Attacking
+            else if(AIState == ATTACKING && targetLocation != Vector2.Zero)
             {
-                Projectile.ai[0] = (int)player.MountedCenter.X - (32 * player.direction);
-                Projectile.ai[1] = (int)player.MountedCenter.Y - 32;
-
-                float distance = 700;
-
-                if (player.MinionAttackTargetNPC != -1)
+                float distance = Projectile.Distance(targetLocation);
+                if (distance > 10)
                 {
-                    NPC npc = Main.npc[player.MinionAttackTargetNPC];
-                    if (npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.immortal && npc.whoAmI != (int)Projectile.ai[0])
-                    {
-                        float distanceTo = Projectile.Distance(npc.Center);
-                        if (distanceTo < distance)
-                        {
-                            distance = distanceTo;
-                            Vector2 predictedPosition = npc.Center + (npc.velocity * distance / 10f);
-                            Vector2 offset = new Vector2(64, 0).RotatedBy(Projectile.AngleTo(predictedPosition));
-                            Projectile.ai[0] = predictedPosition.X + offset.X;
-                            Projectile.ai[1] = predictedPosition.Y + offset.Y;
-                            attacking = true;
-                        }
-                    }
+                    Projectile.velocity = new Vector2(10, 0).RotatedBy(Projectile.AngleTo(targetLocation));
                 }
                 else
                 {
-                    for (int k = 0; k < 200; k++)
-                    {
-                        NPC npc = Main.npc[k];
-
-                        if (player.Distance(npc.Center) <= 1000 && npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.immortal && npc.whoAmI != (int)Projectile.ai[0] && k != (int)Projectile.localAI[1] - 1)
-                        {
-                            float distanceTo = Projectile.Distance(npc.Center);
-                            if (distanceTo < distance && Collision.CanHit(player.position, Projectile.width * 2, Projectile.height * 2, npc.position, npc.width, npc.height))
-                            {
-                                distance = distanceTo;
-                                Vector2 predictedPosition = npc.Center + (npc.velocity * distance / 10f);
-                                Vector2 offset = new Vector2(64, 0).RotatedBy(Projectile.AngleTo(predictedPosition));
-                                Projectile.ai[0] = predictedPosition.X + offset.X;
-                                Projectile.ai[1] = predictedPosition.Y + offset.Y;
-                                attacking = true;
-                            }
-                        }
-                    }
+                    Projectile.Center = targetLocation;
+                    
+                    AITimer = 30;
+                    AIState = POST_ATTACK;
+                    Projectile.netUpdate = true;
                 }
-
-                Projectile.netUpdate = true;
             }
-
-            float speed = Projectile.Distance(new Vector2(Projectile.ai[0], Projectile.ai[1]));
-            if (speed > 10)
-                speed = 10;
-            if (speed < 0.5f)
+            // Post Attack
+            else if (AIState == POST_ATTACK)
             {
-                if (player.whoAmI == Main.LocalPlayer.whoAmI)
-                {
-                    if (Projectile.Colliding(Projectile.Hitbox, new Rectangle((int)Projectile.ai[0], (int)Projectile.ai[1], 1, 1)) && Projectile.localAI[0]  == 0)
-                    {
-                        Projectile.localAI[0]  = 20;
-
-                        if (!attacking)
-                        {
-                            Projectile.localAI[1] = 0;
-                        }
-                    }
-                    if (attacking)
-                    {
-                        attacking = false;
-                    }
-                }
                 Projectile.velocity = Vector2.Zero;
-
-            }
-            else
-            {
-                if (!Projectile.Colliding(Projectile.Hitbox, new Rectangle((int)player.MountedCenter.X, (int)player.MountedCenter.Y - 32, 1, 1)) && attacking )
+                AITimer--;
+                if (AITimer <= 0)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.ai[0], Projectile.ai[1]), 1, 1, DustID.Sand, 0, 0, 0, default, 2);
-                    dust.noGravity = true;
-                    dust.velocity *= 0;
+                    GetTarget();
                 }
-                Projectile.velocity = TerraLeague.CalcVelocityToPoint(Projectile.Center, new Vector2(Projectile.ai[0], Projectile.ai[1]), speed);
+            }
+            // Returning
+            else if (AIState == RETURNING) 
+            {
+                float distance = Projectile.Distance(IdlePosition);
+                if (distance > 10)
+                {
+                    Projectile.velocity = new Vector2(10, 0).RotatedBy(Projectile.AngleTo(IdlePosition));
+                }
+                else
+                {
+                    Projectile.Center = IdlePosition;
+                    if (player.whoAmI == Main.LocalPlayer.whoAmI)
+                    {
+                        AIState = IDLE;
+                        Projectile.netUpdate = true;
+                    }
+                }
             }
 
             if (Projectile.Distance(player.MountedCenter) > 1000)
             {
-                Projectile.Center = new Vector2(player.MountedCenter.X - (32 * player.direction), player.MountedCenter.Y - 32);
+                targetLocation = Vector2.Zero;
+                AIState = IDLE;
                 Projectile.netUpdate = true;
             }
-            else if (Projectile.Distance(player.MountedCenter) > 700)
+            else if (Projectile.Distance(player.MountedCenter) > 700 && AITimer == 0 && AIState != ATTACKING)
             {
-                Projectile.ai[0] = (int)player.MountedCenter.X - (32 * player.direction);
-                Projectile.ai[1] = (int)player.MountedCenter.Y - 32;
+                targetLocation = Vector2.Zero;
+                AIState = RETURNING;
                 Projectile.netUpdate = true;
             }
             
@@ -181,6 +215,38 @@ namespace TerraLeague.Projectiles
         {
             //damage *= (int)Projectile.minionSlots;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (AIState == ATTACKING || AIState == RETURNING)
+            {
+                Texture2D texture = null;
+                TerraLeague.GetTextureIfNull(ref texture, "TerraLeague/Projectiles/ClockworkStaff_TheBallAttack");
+                Main.spriteBatch.Draw
+                (
+                    texture,
+                    new Vector2
+                    (
+                        Projectile.position.X - Main.screenPosition.X + Projectile.width * 0.5f,
+                        Projectile.position.Y - Main.screenPosition.Y + Projectile.height * 0.5f
+                    ),
+                    new Rectangle(0, 0, texture.Width, texture.Height),
+                    Color.White * 0.4f,
+                    (float)Main.timeForVisualEffects * 0.3f,
+                    new Vector2(texture.Width, texture.Width) * 0.5f,
+                    Projectile.scale * 1.5f,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+
+            return base.PreDraw(ref lightColor);
+        }
+
+        public override bool MinionContactDamage()
+        {
+            return AIState == ATTACKING || AIState == RETURNING;
         }
     }
 }
