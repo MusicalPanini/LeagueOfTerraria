@@ -22,8 +22,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-
-            if(!Terraria.ID.NPCID.Sets.ShouldBeCountedAsBoss[npc.type])
+            if(!Terraria.ID.NPCID.Sets.ShouldBeCountedAsBoss[npc.type] && !npc.boss)
             {
                 npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().stunned = true;
             }
