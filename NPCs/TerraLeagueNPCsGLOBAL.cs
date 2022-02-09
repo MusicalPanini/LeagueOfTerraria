@@ -11,6 +11,7 @@ using Terraria.Localization;
 using System;
 using TerraLeague.Items.SummonerSpells;
 using Terraria.ModLoader.Utilities;
+using TerraLeague.NPCs.VoidNPCs;
 
 namespace TerraLeague.NPCs
 {
@@ -80,11 +81,10 @@ namespace TerraLeague.NPCs
 
         public override void SetDefaults(NPC npc)
         {
-            if (npc.type == NPCID.GolemFistLeft || npc.type == NPCID.GolemFistRight || npc.type == NPCID.GolemHead ||
-                npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsTail)
+            if (NPCID.Sets.ShouldBeCountedAsBoss[npc.type] || npc.boss)
             {
                 npc.buffImmune[BuffType<Stunned>()] = true;
-                npc.buffImmune[BuffType<TideCallerBubbled>()] = true;
+                //npc.buffImmune[BuffType<TideCallerBubbled>()] = true;
 
             }
             base.SetDefaults(npc);
@@ -466,6 +466,26 @@ namespace TerraLeague.NPCs
 
             }
             
+            if (modPlayer.zoneVoid)
+            {
+                pool.Clear();
+
+                pool.Add(NPCType<TaintedCavebat>(), 1);
+                pool.Add(NPCType<TaintedSkeleton>(), 1);
+                pool.Add(NPCType<ZzRotFlyer>(), 1);
+                pool.Add(NPCType<XersaiBrute>(), 0.75f);
+
+                if (Main.hardMode)
+                {
+                    pool.Add(NPCType<VoidbornSlime>(), 0.5f);
+
+                    if (NPC.CountNPCS(NPCType<TunnelingTerror_Head>()) < 1)
+                        pool.Add(NPCType<TunnelingTerror_Head>(), 0.25f);
+
+                    if (NPC.CountNPCS(NPCType<XersaiStoneSwimmer>()) < 1)
+                        pool.Add(NPCType<XersaiStoneSwimmer>(), 0.25f);
+                }
+            }
 
             base.EditSpawnPool(pool, spawnInfo);
         }
