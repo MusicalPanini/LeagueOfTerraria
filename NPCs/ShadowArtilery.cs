@@ -117,33 +117,33 @@ namespace TerraLeague.NPCs
                     int num282 = (int)(NPC.position.X + (float)(NPC.width / 2)) / 16;
                     int num283 = (int)(NPC.position.X + (float)NPC.width) / 16;
                     int num284 = (int)(NPC.position.Y + (float)NPC.height) / 16;
-                    if (Main.tile[num281, num284] == null)
-                    {
-                        Tile[,] tile15 = Main.tile;
-                        int num285 = num281;
-                        int num286 = num284;
-                        Tile tile16 = new Tile();
-                        tile15[num285, num286] = tile16;
-                    }
-                    if (Main.tile[num282, num284] == null)
-                    {
-                        Tile[,] tile17 = Main.tile;
-                        int num287 = num281;
-                        int num288 = num284;
-                        Tile tile18 = new Tile();
-                        tile17[num287, num288] = tile18;
-                    }
-                    if (Main.tile[num283, num284] == null)
-                    {
-                        Tile[,] tile19 = Main.tile;
-                        int num289 = num281;
-                        int num290 = num284;
-                        Tile tile20 = new Tile();
-                        tile19[num289, num290] = tile20;
-                    }
-                    if (Main.tile[num281, num284].IsActuated && Main.tileSolid[Main.tile[num281, num284].type] ||
-                        Main.tile[num282, num284].IsActuated && Main.tileSolid[Main.tile[num282, num284].type] ||
-                        Main.tile[num283, num284].IsActuated && Main.tileSolid[Main.tile[num283, num284].type])
+                    //if (Main.tile[num281, num284] == null)
+                    //{
+                    //    Tile[,] tile15 = Main.tile;
+                    //    int num285 = num281;
+                    //    int num286 = num284;
+                    //    Tile tile16 = new Tile();
+                    //    tile15[num285, num286] = tile16;
+                    //}
+                    //if (Main.tile[num282, num284] == null)
+                    //{
+                    //    Tile[,] tile17 = Main.tile;
+                    //    int num287 = num281;
+                    //    int num288 = num284;
+                    //    Tile tile18 = new Tile();
+                    //    tile17[num287, num288] = tile18;
+                    //}
+                    //if (Main.tile[num283, num284] == null)
+                    //{
+                    //    Tile[,] tile19 = Main.tile;
+                    //    int num289 = num281;
+                    //    int num290 = num284;
+                    //    Tile tile20 = new Tile();
+                    //    tile19[num289, num290] = tile20;
+                    //}
+                    if (Main.tile[num281, num284].IsActuated && Main.tileSolid[Main.tile[num281, num284].TileType] ||
+                        Main.tile[num282, num284].IsActuated && Main.tileSolid[Main.tile[num282, num284].TileType] ||
+                        Main.tile[num283, num284].IsActuated && Main.tileSolid[Main.tile[num283, num284].TileType])
                     {
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;

@@ -166,30 +166,30 @@ namespace TerraLeague.NPCs
 
                 int num250 = (int)(NPC.position.X + (float)(NPC.width / 2)) / 16;
                 int num251 = (int)(NPC.position.Y + (float)(NPC.height / 2)) / 16;
-                if (Main.tile[num250, num251 - 1] == null)
-                {
-                    Tile[,] tile3 = Main.tile;
-                    int num252 = num250;
-                    int num253 = num251 - 1;
-                    Tile tile4 = new Tile();
-                    tile3[num252, num253] = tile4;
-                }
-                if (Main.tile[num250, num251 + 1] == null)
-                {
-                    Tile[,] tile5 = Main.tile;
-                    int num254 = num250;
-                    int num255 = num251 + 1;
-                    Tile tile6 = new Tile();
-                    tile5[num254, num255] = tile6;
-                }
-                if (Main.tile[num250, num251 + 2] == null)
-                {
-                    Tile[,] tile7 = Main.tile;
-                    int num256 = num250;
-                    int num257 = num251 + 2;
-                    Tile tile8 = new Tile();
-                    tile7[num256, num257] = tile8;
-                }
+                //if (Main.tile[num250, num251 - 1] == null)
+                //{
+                //    Tile[,] tile3 = Main.tile;
+                //    int num252 = num250;
+                //    int num253 = num251 - 1;
+                //    Tile tile4 = new Tile();
+                //    tile3[num252, num253] = tile4;
+                //}
+                //if (Main.tile[num250, num251 + 1] == null)
+                //{
+                //    Tile[,] tile5 = Main.tile;
+                //    int num254 = num250;
+                //    int num255 = num251 + 1;
+                //    Tile tile6 = new Tile();
+                //    tile5[num254, num255] = tile6;
+                //}
+                //if (Main.tile[num250, num251 + 2] == null)
+                //{
+                //    Tile[,] tile7 = Main.tile.;
+                //    int num256 = num250;
+                //    int num257 = num251 + 2;
+                //    Tile tile8 = new Tile();
+                //    tile7[num256, num257] = tile8;
+                //}
                 if (NPC.type != NPCID.Arapaima && ((double)NPC.velocity.Y > 0.4 || (double)NPC.velocity.Y < -0.4))
                 {
                     NPC.velocity.Y *= 0.95f;

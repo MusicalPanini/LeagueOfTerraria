@@ -110,7 +110,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 {
                     int blockX = (int)(teleportPos.X / 16f);
                     int blockY = (int)(teleportPos.Y / 16f);
-                    if ((Main.tile[blockX, blockY].wall != 87 || !((double)blockY > Main.worldSurface) || NPC.downedPlantBoss) && !Collision.SolidCollision(teleportPos, player.width, player.height))
+                    if ((Main.tile[blockX, blockY].WallType != 87 || !((double)blockY > Main.worldSurface) || NPC.downedPlantBoss) && !Collision.SolidCollision(teleportPos, player.width, player.height))
                     {
                         player.Teleport(teleportPos, 1, 0);
                         NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, (float)player.whoAmI, teleportPos.X, teleportPos.Y, 2, 0, 0);

@@ -71,7 +71,7 @@ namespace TerraLeague.Tiles
                 spriteBatch.Draw(
                     GlowMask,
                     new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
-                    new Rectangle(tile.frameX, tile.frameY, 16, 16),
+                    new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16),
                     color,
                     0,
                     default,
@@ -85,7 +85,7 @@ namespace TerraLeague.Tiles
                 Main.spriteBatch.Draw(
                     GlowMask,
                     new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + 10) + zero,
-                    new Rectangle(tile.frameX /*+ drawData.addFrX*/, tile.frameY /*+ drawData.addFrY*/, 16, 6),
+                    new Rectangle(tile.TileFrameX /*+ drawData.addFrX*/, tile.TileFrameY /*+ drawData.addFrY*/, 16, 6),
                     color,
                     0f,
                     Vector2.Zero,
@@ -99,9 +99,9 @@ namespace TerraLeague.Tiles
                 for (int s = 0; s < 8; s++)
                 {
                     int num11 = s << 1;
-                    Rectangle value = new Rectangle(tile.frameX, tile.frameY + s * 2, num11, 2);
+                    Rectangle value = new Rectangle(tile.TileFrameX, tile.TileFrameY + s * 2, num11, 2);
                     int num12 = 0;
-                    switch ((byte)((tile.sTileHeader & 0x7000) >> 12))
+                    switch ((byte)tile.Slope)
                     {
                         case 2:
                             value.X = 16 - num11;

@@ -109,7 +109,7 @@ namespace TerraLeague.Tiles
             if (closer)
             {
                 Player player = Main.LocalPlayer;
-                BannerType style = (BannerType)(Main.tile[i, j].frameX / 18);
+                BannerType style = (BannerType)(Main.tile[i, j].TileFrameX / 18);
                 switch (style)
                 {
                     case BannerType.MarbleSlime:

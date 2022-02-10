@@ -1171,7 +1171,7 @@ namespace TerraLeague
                 nPCSpawnInfo.marble = true;
             }
 
-            if (Main.tile[(int)Player.MountedCenter.X / 16, (int)Player.MountedCenter.Y / 16].wall == (ushort)WallType<Walls.TargonStoneWall_Arena>())
+            if (Main.tile[(int)Player.MountedCenter.X / 16, (int)Player.MountedCenter.Y / 16].WallType == (ushort)WallType<Walls.TargonStoneWall_Arena>())
             {
                 Player.AddBuff(BuffType<InTargonArena>(), 5);
             }

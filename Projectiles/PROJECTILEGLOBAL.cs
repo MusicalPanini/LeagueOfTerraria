@@ -144,7 +144,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int j = num3; j < num4; j++)
                 {
-                    if (Main.tile[i, j].type == ModContent.TileType<Tiles.CrystalBomb>() && WorldGen.CanCutTile(i, j, Terraria.Enums.TileCuttingContext.AttackProjectile))
+                    if (Main.tile[i, j].TileType == ModContent.TileType<Tiles.CrystalBomb>() && WorldGen.CanCutTile(i, j, Terraria.Enums.TileCuttingContext.AttackProjectile))
                     {
                         WorldGen.KillTile(i, j, false, false, false);
                     }

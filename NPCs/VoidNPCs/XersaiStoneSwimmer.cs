@@ -69,7 +69,7 @@ namespace TerraLeague.NPCs.VoidNPCs
             bool CanSwim = true;
             Point npcCenterTilePoint = NPC.Center.ToTileCoordinates();
             Tile SafeTile = Framing.GetTileSafely(npcCenterTilePoint);
-            CanSwim = (SafeTile.IsActiveUnactuated && Main.tileSolid[SafeTile.type]);
+            CanSwim = (SafeTile.HasUnactuatedTile && Main.tileSolid[SafeTile.TileType]);
             CanSwim |= NPC.wet;
             bool TargetAbove = false;
             NPC.TargetClosest(false);
@@ -106,7 +106,7 @@ namespace TerraLeague.NPCs.VoidNPCs
                 bool TileBelowIsSwimable = false;
                 Point TilePointBelowNPC = (NPC.Center + new Vector2(0f, 24f)).ToTileCoordinates();
                 SafeTile = Framing.GetTileSafely(TilePointBelowNPC.X, TilePointBelowNPC.Y - 2);
-                if (SafeTile.IsActiveUnactuated && Main.tileSolid[SafeTile.type])
+                if (SafeTile.HasUnactuatedTile && Main.tileSolid[SafeTile.TileType])
                 {
                     TileBelowIsSwimable = true;
                 }
@@ -142,7 +142,7 @@ namespace TerraLeague.NPCs.VoidNPCs
                     Vector2 pointInMovementPath = npcCenter + npcVelocityNorm * npcSize.Length() / 2f + NPC.velocity;
                     Point tilePointInMovementPath = pointInMovementPath.ToTileCoordinates();
                     SafeTile = Framing.GetTileSafely(tilePointInMovementPath);
-                    bool TileIsSwimable = SafeTile.IsActiveUnactuated && Main.tileSolid[SafeTile.type];
+                    bool TileIsSwimable = SafeTile.HasUnactuatedTile && Main.tileSolid[SafeTile.TileType];
                     if (!TileIsSwimable && NPC.wet)
                     {
                         TileIsSwimable = (SafeTile.LiquidType > 0);

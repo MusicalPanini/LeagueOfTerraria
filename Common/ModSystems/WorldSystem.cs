@@ -179,12 +179,12 @@ namespace TerraLeague.Common.ModSystems
                     for (int y = 0; y < biomeDepth; y++)
                     {
                         Tile tile = Main.tile[x, y];
-                        if (tile.type == TileID.Grass || tile.type == TileID.CorruptGrass || tile.type == TileID.CrimsonGrass)
-                            Main.tile[x, y].type = (ushort)TileType<PetrifiedGrass>();
-                        else if (tile.type == TileID.Stone)
-                            Main.tile[x, y].type = TileID.Marble;
-                        else if (tile.type == TileID.ClayBlock)
-                            Main.tile[x, y].type = (ushort)TileType<Limestone>();
+                        if (tile.TileType == TileID.Grass || tile.TileType == TileID.CorruptGrass || tile.TileType == TileID.CrimsonGrass)
+                            Main.tile[x, y].TileType = (ushort)TileType<PetrifiedGrass>();
+                        else if (tile.TileType == TileID.Stone)
+                            Main.tile[x, y].TileType = TileID.Marble;
+                        else if (tile.TileType == TileID.ClayBlock)
+                            Main.tile[x, y].TileType = (ushort)TileType<Limestone>();
                     }
                 }
 
@@ -208,7 +208,7 @@ namespace TerraLeague.Common.ModSystems
                 {
                     for (int ym = Y - 5; ym < Y + 6; ym++)
                     {
-                        if (Main.tile[xm, ym].type == TileID.Marble)
+                        if (Main.tile[xm, ym].TileType == TileID.Marble)
                         {
                             marbleNearby = true;
                         }
@@ -264,8 +264,8 @@ namespace TerraLeague.Common.ModSystems
                 int x = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
                 int y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200);
                 Tile tile = Main.tile[x, y];
-                if (tile.type == TileID.Sandstone || tile.type == TileID.HardenedSand)
-                    Main.tile[x, y].type = (ushort)TileType<SunstoneOre>();
+                if (tile.TileType == TileID.Sandstone || tile.TileType == TileID.HardenedSand)
+                    Main.tile[x, y].TileType = (ushort)TileType<SunstoneOre>();
 
             }
         }
@@ -278,20 +278,20 @@ namespace TerraLeague.Common.ModSystems
             {
                 for (int y = 0; y < Main.maxTilesY / 2; y++)
                 {
-                    if (Main.tile[x, y].type == TileID.Marble)
+                    if (Main.tile[x, y].TileType == TileID.Marble)
                     {
                         for (int xw = -1; xw < 2; xw++)
                         {
                             for (int yw = -1; yw < 2; yw++)
                             {
                                 if (
-                                    Main.tile[x + xw, y + yw].wall == WallID.GrassUnsafe ||
-                                    Main.tile[x + xw, y + yw].wall == WallID.CorruptGrassUnsafe ||
-                                    Main.tile[x + xw, y + yw].wall == WallID.FlowerUnsafe ||
-                                    Main.tile[x + xw, y + yw].wall == WallID.CrimsonGrassUnsafe)
+                                    Main.tile[x + xw, y + yw].WallType == WallID.GrassUnsafe ||
+                                    Main.tile[x + xw, y + yw].WallType == WallID.CorruptGrassUnsafe ||
+                                    Main.tile[x + xw, y + yw].WallType == WallID.FlowerUnsafe ||
+                                    Main.tile[x + xw, y + yw].WallType == WallID.CrimsonGrassUnsafe)
                                 {
-                                    if (Main.tile[x + xw, y + yw].IsActive)
-                                        Main.tile[x + xw, y + yw].wall = WallID.MarbleUnsafe;
+                                    if (Main.tile[x + xw, y + yw].HasTile)
+                                        Main.tile[x + xw, y + yw].WallType = WallID.MarbleUnsafe;
                                 }
                             }
                         }
@@ -308,9 +308,9 @@ namespace TerraLeague.Common.ModSystems
             {
                 for (int y = 0; y < Main.maxTilesY / 2; y++)
                 {
-                    if (Main.tile[x, y].type == TileType<PetrifiedGrass>())
+                    if (Main.tile[x, y].TileType == TileType<PetrifiedGrass>())
                     {
-                        if (!Framing.GetTileSafely(x, y - 1).IsActive && Main.rand.Next(3) == 0)
+                        if (!Framing.GetTileSafely(x, y - 1).HasTile && Main.rand.Next(3) == 0)
                         {
                             int style = Main.rand.Next(22);
                             if (WorldGen.PlaceObject(x, y - 1, TileType<PetrifiedFlora>(), false, style))
@@ -333,7 +333,7 @@ namespace TerraLeague.Common.ModSystems
             int displacementFromTop = 50;
             for (int i = 0; i < Main.maxTilesY; i++)
             {
-                if (Main.tile[xCord, i].IsActive)
+                if (Main.tile[xCord, i].HasTile)
                 {
                     distanceFromGroundToSky = i - 20;
                     break;
@@ -359,10 +359,12 @@ namespace TerraLeague.Common.ModSystems
                 {
                     if (Y >= mountStart)
                     {
-                        Main.tile[xCord + X, Y].type = (ushort)TileID.Dirt;
-                        //Main.tile[xCord + X, Y].wall = (ushort)WallID.StoneSlab;
-                        Main.tile[xCord + X, Y].IsActive = true;
-                        Main.tile[xCord + X, Y].Slope = SlopeType.Solid;
+                        Main.tile[xCord + X, Y].ResetToType(TileID.Dirt);
+
+                        //Main.tile[xCord + X, Y].TileType = (ushort)TileID.Dirt;
+                        ////Main.tile[xCord + X, Y].wall = (ushort)WallID.StoneSlab;
+                        //Main.tile[xCord + X, Y].HasTile = true;
+                        //Main.tile[xCord + X, Y].s = SlopeType.Solid;
                     }
                 }
             }
@@ -371,7 +373,7 @@ namespace TerraLeague.Common.ModSystems
 
             for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
             {
-                if (Main.tile[(int)(xCord - width * distFromMid), y].IsActive)
+                if (Main.tile[(int)(xCord - width * distFromMid), y].HasTile)
                 {
                     leftBottom = new Vector2(xCord - (width * distFromMid), y);
                     break;
@@ -379,7 +381,7 @@ namespace TerraLeague.Common.ModSystems
             }
             for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
             {
-                if (Main.tile[(int)(xCord - width * distFromMid), y].IsActive)
+                if (Main.tile[(int)(xCord - width * distFromMid), y].HasTile)
                 {
                     rightBottom = new Vector2(xCord + (width * distFromMid), y);
                     break;
@@ -416,29 +418,29 @@ namespace TerraLeague.Common.ModSystems
                     {
                         if (y < (Main.worldSurface * 0.35))
                         {
-                            if (tile.IsActive)
+                            if (tile.HasTile)
                             {
-                                Main.tile[x, y].type = (ushort)TileType<TargonStone>();
-                                if (Main.tile[x - 1, y].IsActive && Main.tile[x - 1, y - 1].IsActive && Main.tile[x, y - 1].IsActive && Main.tile[x + 1, y - 1].IsActive && Main.tile[x + 1, y].IsActive && Main.tile[x + 1, y + 1].IsActive && Main.tile[x, y + 1].IsActive && Main.tile[x - 1, y + 1].IsActive)
-                                    Main.tile[x, y].wall = (ushort)WallType<TargonStoneWall>();
+                                Main.tile[x, y].TileType = (ushort)TileType<TargonStone>();
+                                if (Main.tile[x - 1, y].HasTile && Main.tile[x - 1, y - 1].HasTile && Main.tile[x, y - 1].HasTile && Main.tile[x + 1, y - 1].HasTile && Main.tile[x + 1, y].HasTile && Main.tile[x + 1, y + 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x - 1, y + 1].HasTile)
+                                    Main.tile[x, y].WallType = (ushort)WallType<TargonStoneWall>();
                             }
                         }
                         else if (Main.rand.NextFloat() > (y - (Main.worldSurface * 0.35)) / 50f)
                         {
-                            if (Main.tile[x, y].IsActive)
+                            if (Main.tile[x, y].HasTile)
                             {
-                                Main.tile[x, y].type = (ushort)TileType<TargonStone>();
-                                if (Main.tile[x - 1, y].IsActive && Main.tile[x - 1, y - 1].IsActive && Main.tile[x, y - 1].IsActive && Main.tile[x + 1, y - 1].IsActive && Main.tile[x + 1, y].IsActive && Main.tile[x + 1, y + 1].IsActive && Main.tile[x, y + 1].IsActive && Main.tile[x - 1, y + 1].IsActive)
-                                    Main.tile[x, y].wall = (ushort)WallType<TargonStoneWall>();
+                                Main.tile[x, y].TileType = (ushort)TileType<TargonStone>();
+                                if (Main.tile[x - 1, y].HasTile && Main.tile[x - 1, y - 1].HasTile && Main.tile[x, y - 1].HasTile && Main.tile[x + 1, y - 1].HasTile && Main.tile[x + 1, y].HasTile && Main.tile[x + 1, y + 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x - 1, y + 1].HasTile)
+                                    Main.tile[x, y].WallType = (ushort)WallType<TargonStoneWall>();
                             }
                         }
                         else
                         {
-                            if (Main.tile[x, y].IsActive)
+                            if (Main.tile[x, y].HasTile)
                             {
-                                Main.tile[x, y].type = TileID.SnowBlock;
-                                if (Main.tile[x - 1, y].IsActive && Main.tile[x - 1, y - 1].IsActive && Main.tile[x, y - 1].IsActive && Main.tile[x + 1, y - 1].IsActive && Main.tile[x + 1, y].IsActive && Main.tile[x + 1, y + 1].IsActive && Main.tile[x, y + 1].IsActive && Main.tile[x - 1, y + 1].IsActive)
-                                    Main.tile[x, y].wall = WallID.SnowWallUnsafe;
+                                Main.tile[x, y].TileType = TileID.SnowBlock;
+                                if (Main.tile[x - 1, y].HasTile && Main.tile[x - 1, y - 1].HasTile && Main.tile[x, y - 1].HasTile && Main.tile[x + 1, y - 1].HasTile && Main.tile[x + 1, y].HasTile && Main.tile[x + 1, y + 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x - 1, y + 1].HasTile)
+                                    Main.tile[x, y].WallType = WallID.SnowWallUnsafe;
                             }
                         }
                     }
@@ -446,20 +448,20 @@ namespace TerraLeague.Common.ModSystems
                     {
                         if (y < (Main.worldSurface * 0.5))
                         {
-                            if (Main.tile[x, y].IsActive)
+                            if (Main.tile[x, y].HasTile)
                             {
-                                Main.tile[x, y].type = TileID.SnowBlock;
-                                if (Main.tile[x - 1, y].IsActive && Main.tile[x - 1, y - 1].IsActive && Main.tile[x, y - 1].IsActive && Main.tile[x + 1, y - 1].IsActive && Main.tile[x + 1, y].IsActive && Main.tile[x + 1, y + 1].IsActive && Main.tile[x, y + 1].IsActive && Main.tile[x - 1, y + 1].IsActive)
-                                    Main.tile[x, y].wall = WallID.SnowWallUnsafe;
+                                Main.tile[x, y].TileType = TileID.SnowBlock;
+                                if (Main.tile[x - 1, y].HasTile && Main.tile[x - 1, y - 1].HasTile && Main.tile[x, y - 1].HasTile && Main.tile[x + 1, y - 1].HasTile && Main.tile[x + 1, y].HasTile && Main.tile[x + 1, y + 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x - 1, y + 1].HasTile)
+                                    Main.tile[x, y].WallType = WallID.SnowWallUnsafe;
                             }
                         }
                         else if (Main.rand.NextFloat() > (y - (Main.worldSurface * 0.5)) / 50f)
                         {
-                            if (Main.tile[x, y].IsActive)
+                            if (Main.tile[x, y].HasTile)
                             {
-                                Main.tile[x, y].type = TileID.SnowBlock;
-                                if (Main.tile[x - 1, y].IsActive && Main.tile[x - 1, y - 1].IsActive && Main.tile[x, y - 1].IsActive && Main.tile[x + 1, y - 1].IsActive && Main.tile[x + 1, y].IsActive && Main.tile[x + 1, y + 1].IsActive && Main.tile[x, y + 1].IsActive && Main.tile[x - 1, y + 1].IsActive)
-                                    Main.tile[x, y].wall = WallID.SnowWallUnsafe;
+                                Main.tile[x, y].TileType = TileID.SnowBlock;
+                                if (Main.tile[x - 1, y].HasTile && Main.tile[x - 1, y - 1].HasTile && Main.tile[x, y - 1].HasTile && Main.tile[x + 1, y - 1].HasTile && Main.tile[x + 1, y].HasTile && Main.tile[x + 1, y + 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x - 1, y + 1].HasTile)
+                                    Main.tile[x, y].WallType = WallID.SnowWallUnsafe;
                             }
                         }
                     }
@@ -477,9 +479,9 @@ namespace TerraLeague.Common.ModSystems
                 for (int y = 0; y < (Main.worldSurface); y++)
                 {
                     Tile tile = Main.tile[x, y];
-                    if (tile.type == TileID.Silver || tile.type == TileID.Tungsten || tile.type == TileID.Gold || tile.type == TileID.Platinum)
+                    if (tile.TileType == TileID.Silver || tile.TileType == TileID.Tungsten || tile.TileType == TileID.Gold || tile.TileType == TileID.Platinum)
                     {
-                        Main.tile[x, y].type = (ushort)TileType<TargonGranite>();
+                        Main.tile[x, y].TileType = (ushort)TileType<TargonGranite>();
                     }
                 }
             }
@@ -498,7 +500,7 @@ namespace TerraLeague.Common.ModSystems
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 0 * 36 && Main.rand.Next(0, 4) == 0)
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 0 * 36 && Main.rand.Next(0, 4) == 0)
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
@@ -519,7 +521,13 @@ namespace TerraLeague.Common.ModSystems
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && (Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 1 * 36 || Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 8 * 36 || Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 11 * 36 || Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 50 * 36 || Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 51 * 36) && Main.rand.Next(0, 5) == 0)
+                if (chest != null && (
+                    Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 1 * 36 ||
+                    Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 8 * 36 ||
+                    Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 11 * 36 ||
+                    Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 50 * 36 ||
+                    Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 51 * 36) &&
+                    Main.rand.Next(0, 5) == 0)
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
@@ -538,7 +546,7 @@ namespace TerraLeague.Common.ModSystems
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 13 * 36)
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 13 * 36)
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
@@ -556,7 +564,7 @@ namespace TerraLeague.Common.ModSystems
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 17 * 36)
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 17 * 36)
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
@@ -574,7 +582,7 @@ namespace TerraLeague.Common.ModSystems
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers)
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers)
                 {
                     if (Main.rand.Next(3) == 0)
                     {
@@ -743,7 +751,7 @@ namespace TerraLeague.Common.ModSystems
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
                         int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200);
 
-                        if (Main.tile[X, Y].type == TileID.Mud)
+                        if (Main.tile[X, Y].TileType == TileID.Mud)
                         {
                             WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(4, 5), WorldGen.genRand.Next(3, 8), (ushort)TileType<ManaStone>());
                         }
@@ -755,9 +763,6 @@ namespace TerraLeague.Common.ModSystems
             {
                 if (!VoidOreSpawned)
                 {
-
-                    
-
                     GenerateVoid();
 
                     //for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.000005); k++)
@@ -829,24 +834,24 @@ namespace TerraLeague.Common.ModSystems
                     ushort wall = 0;
                     Tile tile = Main.tile[x, y];
 
-                    if (tile.type == TileID.RollingCactus)
+                    if (tile.TileType == TileID.RollingCactus)
                     {
                         type = (ushort)TileType<Tiles.CrystalBomb>();
                     }
-                    else if (tile.type == TileID.DesertFossil)
+                    else if (tile.TileType == TileID.DesertFossil)
                     {
                         type = (ushort)TileType<Tiles.VoidFragment>();
                     }
-                    else if (TileID.Sets.isDesertBiomeSand[tile.type])
+                    else if (TileID.Sets.isDesertBiomeSand[tile.TileType])
                     {
                         type = (ushort)TileType<Tiles.VoidStone>();
                     }
 
-                    if (tile.wall == WallID.HardenedSand || tile.wall == WallID.CorruptHardenedSand || tile.wall == WallID.CrimsonHardenedSand || tile.wall == WallID.HallowHardenedSand)
+                    if (tile.WallType == WallID.HardenedSand || tile.WallType == WallID.CorruptHardenedSand || tile.WallType == WallID.CrimsonHardenedSand || tile.WallType == WallID.HallowHardenedSand)
                     {
                         wall = (ushort)WallType<Walls.HardendVoidWall>();
                     }
-                    else if (tile.wall == WallID.Sandstone || tile.wall == WallID.CorruptSandstone || tile.wall == WallID.CrimsonSandstone || tile.wall == WallID.HallowSandstone)
+                    else if (tile.WallType == WallID.Sandstone || tile.WallType == WallID.CorruptSandstone || tile.WallType == WallID.CrimsonSandstone || tile.WallType == WallID.HallowSandstone)
                     {
                         wall = (ushort)WallType<Walls.VoidWall>();
                     }
@@ -855,13 +860,13 @@ namespace TerraLeague.Common.ModSystems
                     {
                         if (type != 0)
                         {
-                            Main.tile[x, y].type = type;
+                            Main.tile[x, y].TileType = type;
                             WorldGen.SquareTileFrame(x, y, true);
                         }
 
                         if (wall != 0)
                         {
-                            Main.tile[x, y].wall = wall;
+                            Main.tile[x, y].WallType = wall;
                             WorldGen.SquareWallFrame(x, y, true);
                         }
 
@@ -927,7 +932,7 @@ namespace TerraLeague.Common.ModSystems
                 int num4 = 5;
                 while ((double)num4 < Main.worldSurface)
                 {
-                    if (Main.tile[j, num4].IsActive && Main.tile[j, num4].type == (ushort)TileType<TargonGranite>())
+                    if (Main.tile[j, num4].HasTile && Main.tile[j, num4].TileType == (ushort)TileType<TargonGranite>())
                     {
                         num++;
                         if (num > num3)
@@ -950,7 +955,7 @@ namespace TerraLeague.Common.ModSystems
                 int k = (int)(Main.worldSurface * 0.3);
                 while (k < Main.maxTilesY)
                 {
-                    if (Main.tile[num7, k].IsActive && Main.tileSolid[(int)Main.tile[num7, k].type])
+                    if (Main.tile[num7, k].HasTile && Main.tileSolid[(int)Main.tile[num7, k].TileType])
                     {
                         int num8 = 0;
                         int num9 = 15;
@@ -961,7 +966,7 @@ namespace TerraLeague.Common.ModSystems
                                 if (WorldGen.SolidTile(l, m))
                                 {
                                     num8++;
-                                    if (Main.tile[l, m].type == 189 || Main.tile[l, m].type == 202)
+                                    if (Main.tile[l, m].TileType == 189 || Main.tile[l, m].TileType == 202)
                                     {
                                         num8 -= 100;
                                     }
@@ -1036,7 +1041,7 @@ namespace TerraLeague.Common.ModSystems
             {
                 for (int n = j - num; n < j + num; n++)
                 {
-                    if (Main.tile[m, n].IsActive && TileID.Sets.BasicChest[(int)Main.tile[m, n].type])
+                    if (Main.tile[m, n].HasTile && TileID.Sets.BasicChest[(int)Main.tile[m, n].TileType])
                     {
                         return false;
                     }
@@ -1054,11 +1059,11 @@ namespace TerraLeague.Common.ModSystems
                         float num5 = (float)Math.Abs(j - num3);
                         if ((double)((float)Math.Sqrt((double)(num4 * num4 + num5 * num5))) < (double)num * 0.9 + (double)Main.rand.Next(-4, 5))
                         {
-                            if (!Main.tileSolid[(int)Main.tile[num2, num3].type])
+                            if (!Main.tileSolid[(int)Main.tile[num2, num3].TileType])
                             {
-                                Main.tile[num2, num3].IsActive = false;
+                                Main.tile[num2, num3].ClearTile();
                             }
-                            Main.tile[num2, num3].type = TargonID;
+                            Main.tile[num2, num3].TileType = TargonID;
                         }
                     }
                 }
@@ -1074,7 +1079,7 @@ namespace TerraLeague.Common.ModSystems
                         float num9 = (float)Math.Abs(j - num7);
                         if ((double)((float)Math.Sqrt((double)(num8 * num8 + num9 * num9))) < (double)num * 0.8 + (double)Main.rand.Next(-3, 4))
                         {
-                            Main.tile[num6, num7].IsActive = false;
+                            Main.tile[num6, num7].ClearTile();
                         }
                     }
                 }
@@ -1088,21 +1093,21 @@ namespace TerraLeague.Common.ModSystems
                     float num13 = (float)Math.Abs(j - num11);
                     if ((double)((float)Math.Sqrt((double)(num12 * num12 + num13 * num13))) < (double)num * 0.7)
                     {
-                        if (Main.tile[num10, num11].type == 5 || Main.tile[num10, num11].type == 32 || Main.tile[num10, num11].type == 352)
+                        if (Main.tile[num10, num11].TileType == 5 || Main.tile[num10, num11].TileType == 32 || Main.tile[num10, num11].TileType == 352)
                         {
                             WorldGen.KillTile(num10, num11, false, false, false);
                         }
-                        Main.tile[num10, num11].LiquidType = 0;
+                        Main.tile[num10, num11].LiquidAmount = 0;
                     }
-                    if (Main.tile[num10, num11].type == TargonID)
+                    if (Main.tile[num10, num11].TileType == TargonID)
                     {
                         if (!WorldGen.SolidTile(num10 - 1, num11) && !WorldGen.SolidTile(num10 + 1, num11) && !WorldGen.SolidTile(num10, num11 - 1) && !WorldGen.SolidTile(num10, num11 + 1))
                         {
-                            Main.tile[num10, num11].IsActive = false;
+                            Main.tile[num10, num11].ClearTile();
                         }
                         else if ((Main.tile[num10, num11].IsHalfBlock || Main.tile[num10 - 1, num11].Slope == SlopeType.SlopeUpRight || Main.tile[num10 - 1, num11].Slope == SlopeType.SlopeUpLeft) && !WorldGen.SolidTile(num10, num11 + 1))
                         {
-                            Main.tile[num10, num11].IsActive = false;
+                            Main.tile[num10, num11].ClearTile();
                         }
                     }
                     WorldGen.SquareTileFrame(num10, num11, true);
@@ -1114,17 +1119,17 @@ namespace TerraLeague.Common.ModSystems
             {
                 for (int num15 = j - num; num15 < j + num; num15++)
                 {
-                    if (num15 > j + WorldGen.genRand.Next(-3, 4) - 3 && Main.tile[num14, num15].IsActive && Main.rand.Next(10) == 0)
+                    if (num15 > j + WorldGen.genRand.Next(-3, 4) - 3 && Main.tile[num14, num15].HasTile && Main.rand.Next(10) == 0)
                     {
                         float num16 = (float)Math.Abs(i - num14);
                         float num17 = (float)Math.Abs(j - num15);
                         if ((double)((float)Math.Sqrt((double)(num16 * num16 + num17 * num17))) < (double)num * 0.8)
                         {
-                            if (Main.tile[num14, num15].type == 5 || Main.tile[num14, num15].type == 32 || Main.tile[num14, num15].type == 352)
+                            if (Main.tile[num14, num15].TileType == 5 || Main.tile[num14, num15].TileType == 32 || Main.tile[num14, num15].TileType == 352)
                             {
                                 WorldGen.KillTile(num14, num15, false, false, false);
                             }
-                            Main.tile[num14, num15].type = TargonID;
+                            Main.tile[num14, num15].TileType = TargonID;
                             WorldGen.SquareTileFrame(num14, num15, true);
                         }
                     }
@@ -1135,17 +1140,17 @@ namespace TerraLeague.Common.ModSystems
             {
                 for (int num19 = j - num; num19 < j + num; num19++)
                 {
-                    if (num19 > j + WorldGen.genRand.Next(-2, 3) && Main.tile[num18, num19].IsActive && Main.rand.Next(20) == 0)
+                    if (num19 > j + WorldGen.genRand.Next(-2, 3) && Main.tile[num18, num19].HasTile && Main.rand.Next(20) == 0)
                     {
                         float num20 = (float)Math.Abs(i - num18);
                         float num21 = (float)Math.Abs(j - num19);
                         if ((double)((float)Math.Sqrt((double)(num20 * num20 + num21 * num21))) < (double)num * 0.85)
                         {
-                            if (Main.tile[num18, num19].type == 5 || Main.tile[num18, num19].type == 32 || Main.tile[num18, num19].type == 352)
+                            if (Main.tile[num18, num19].TileType == 5 || Main.tile[num18, num19].TileType == 32 || Main.tile[num18, num19].TileType == 352)
                             {
                                 WorldGen.KillTile(num18, num19, false, false, false);
                             }
-                            Main.tile[num18, num19].type = TargonID;
+                            Main.tile[num18, num19].TileType = TargonID;
                             WorldGen.SquareTileFrame(num18, num19, true);
                         }
                     }
@@ -1217,7 +1222,7 @@ namespace TerraLeague.Common.ModSystems
                         int num596 = 200;
                         while ((double)num596 < Main.worldSurface)
                         {
-                            if (!Main.tile[num593, num596].IsActive)
+                            if (!Main.tile[num593, num596].HasTile)
                             {
                                 num596++;
                                 continue;
@@ -1280,10 +1285,11 @@ namespace TerraLeague.Common.ModSystems
                     int wallThickness = 5;
                     if (x < wallThickness || x > targonArenaHeight - (1 + wallThickness) || y < wallThickness || y > targonArenaHeight - (1 + wallThickness))
                     {
-                        Main.tile[worldX, worldY].type = (ushort)TileType<TargonStone_Arena>();
-                        Main.tile[worldX, worldY].IsActive = true;
-                        Main.tile[worldX, worldY].Slope = SlopeType.Solid;
-                        Main.tile[worldX, worldY].IsHalfBlock = false;
+                        Main.tile[worldX, worldY].ResetToType((ushort)TileType<TargonStone_Arena>());
+                        //Main.tile[worldX, worldY].TileType = (ushort)TileType<TargonStone_Arena>();
+                        //Main.tile[worldX, worldY].HasTile = true;
+                        //Main.tile[worldX, worldY].Slope = SlopeType.Solid;
+                        //Main.tile[worldX, worldY].IsHalfBlock = false;
                     }
                     else
                     {
@@ -1292,46 +1298,46 @@ namespace TerraLeague.Common.ModSystems
 
                         if (onXLine || onYLine)
                         {
-                            Main.tile[worldX, worldY].type = TileID.Platforms;
-                            Main.tile[worldX, worldY].IsActive = true;
-                            Main.tile[worldX, worldY].Slope = SlopeType.Solid;
-                            Main.tile[worldX, worldY].IsHalfBlock = false;
-                            Main.tile[worldX, worldY].frameY = 29 * 18;
+                            Main.tile[worldX, worldY].ResetToType(TileID.Platforms);
+                            Main.tile[worldX, worldY].TileFrameY = 29 * 18;
+                            //Main.tile[worldX, worldY].type = TileID.Platforms;
+                            //Main.tile[worldX, worldY].IsActive = true;
+                            //Main.tile[worldX, worldY].Slope = SlopeType.Solid;
+                            //Main.tile[worldX, worldY].IsHalfBlock = false;
 
                             if (onXLine && !onYLine)
                             {
                                 if (x - wallThickness == 0)
-                                    Main.tile[worldX, worldY].frameX = 6 * 18;
+                                    Main.tile[worldX, worldY].TileFrameX = 6 * 18;
                                 else if (x - wallThickness == 89)
-                                    Main.tile[worldX, worldY].frameX = 7 * 18;
+                                    Main.tile[worldX, worldY].TileFrameX = 7 * 18;
                                 else
-                                    Main.tile[worldX, worldY].frameX = 5 * 18;
+                                    Main.tile[worldX, worldY].TileFrameX = 5 * 18;
                             }
                             else if (!onXLine && onYLine)
                             {
-                                Main.tile[worldX, worldY].frameX = 0;
+                                Main.tile[worldX, worldY].TileFrameX = 0;
                             }
                             else
                             {
                                 if (x - wallThickness == 0)
-                                    Main.tile[worldX, worldY].frameX = 3 * 18;
+                                    Main.tile[worldX, worldY].TileFrameX = 3 * 18;
                                 else if (x - wallThickness == 89)
-                                    Main.tile[worldX, worldY].frameX = 4 * 18;
+                                    Main.tile[worldX, worldY].TileFrameX = 4 * 18;
                                 else
-                                    Main.tile[worldX, worldY].frameX = 0;
+                                    Main.tile[worldX, worldY].TileFrameX = 0;
                             }
 
                         }
                         else
                         {
-                            Main.tile[worldX, worldY].type = (ushort)0;
-                            Main.tile[worldX, worldY].IsActive = false;
+                            Main.tile[worldX, worldY].ClearTile();
                         }
 
                     }
 
-                    Main.tile[worldX, worldY].wall = (ushort)WallType<TargonStoneWall_Arena>();
-                    Main.tile[worldX, worldY].LiquidType = 0;
+                    Main.tile[worldX, worldY].WallType = (ushort)WallType<TargonStoneWall_Arena>();
+                    //Main.tile[worldX, worldY].LiquidType = 0;
                     Main.tile[worldX, worldY].LiquidAmount = 0;
                 }
             }

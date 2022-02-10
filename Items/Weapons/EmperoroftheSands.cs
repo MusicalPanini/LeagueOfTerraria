@@ -66,7 +66,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     for (int y = (int)((Main.mouseY + Main.screenPosition.Y) / 16) - 1; y <= (int)((Main.mouseY + Main.screenPosition.Y) / 16) + 1; y++)
                     {
-                        if (Main.tile[x, y].CollisionType > 0)
+                        if (Main.tileSolid[Main.tile[x, y].TileType])
                         {
                             pathBlocked = true;
                             break;

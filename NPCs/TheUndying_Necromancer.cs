@@ -117,7 +117,7 @@ namespace TerraLeague.NPCs
                     for (int num91 = num90; num91 < playerBlockY + extraDistance; num2 = num91, num91 = num2 + 1)
                     {
                         bool flag5;
-                        if ((num91 < playerBlockY - 4 || num91 > playerBlockY + 4 || num89 < playerBlockX - 4 || num89 > playerBlockX + 4) && (num91 < npcBlockY - 1 || num91 > npcBlockY + 1 || num89 < npcBlockX - 1 || num89 > npcBlockX + 1) && !Main.tile[num89, num91].IsActive)
+                        if ((num91 < playerBlockY - 4 || num91 > playerBlockY + 4 || num89 < playerBlockX - 4 || num89 > playerBlockX + 4) && (num91 < npcBlockY - 1 || num91 > npcBlockY + 1 || num89 < npcBlockX - 1 || num89 > npcBlockX + 1) && !Main.tile[num89, num91].HasTile)
                         {
                             flag5 = true;
                             if (Main.tile[num89, num91 - 1].LiquidType == LiquidID.Lava)
@@ -125,7 +125,7 @@ namespace TerraLeague.NPCs
                                 flag5 = false;
                             }
 
-                            if (flag5 && Main.tileSolid[Main.tile[num89, num91].type] && !Collision.SolidTiles(num89 - 1, num89 + 1, num91 - 4, num91 - 1))
+                            if (flag5 && Main.tileSolid[Main.tile[num89, num91].TileType] && !Collision.SolidTiles(num89 - 1, num89 + 1, num91 - 4, num91 - 1))
                             {
                                 NPC.ai[1] = 20f;
                                 NPC.ai[2] = (float)num89;
@@ -183,7 +183,7 @@ namespace TerraLeague.NPCs
                 for (int i = randY; i < NpcBlockY + extraDistance; num2 = i, i = num2 + 1)
                 {
                     bool flag5;
-                    if ((i < NpcBlockY - 4 || i > NpcBlockY + 4 || randX < NpcBlockX - 4 || randX > NpcBlockX + 4) && (i < boyBlockY - 1 || i > boyBlockY + 1 || randX < boyBlockX - 1 || randX > boyBlockX + 1) && !Main.tile[randX, i].IsActive)
+                    if ((i < NpcBlockY - 4 || i > NpcBlockY + 4 || randX < NpcBlockX - 4 || randX > NpcBlockX + 4) && (i < boyBlockY - 1 || i > boyBlockY + 1 || randX < boyBlockX - 1 || randX > boyBlockX + 1) && !Main.tile[randX, i].HasTile)
                     {
                         flag5 = true;
                         if (Main.tile[randX, i - 1].LiquidType == LiquidID.Lava)
@@ -191,7 +191,7 @@ namespace TerraLeague.NPCs
                             flag5 = false;
                         }
 
-                        if (flag5 && Main.tileSolid[Main.tile[randX, i].type] && !Collision.SolidTiles(randX - 1, randX + 1, i - 4, i - 1))
+                        if (flag5 && Main.tileSolid[Main.tile[randX, i].TileType] && !Collision.SolidTiles(randX - 1, randX + 1, i - 4, i - 1))
                         {
                             Vector2 boyPos = new Vector2(((randX * 16f) - (float)(NPC.width / 2) + 8f), (int)(i * 16f));
 

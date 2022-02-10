@@ -37,7 +37,7 @@ namespace TerraLeague.Tiles
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			int num = Main.tile[i, j].frameY;
+			int num = Main.tile[i, j].TileFrameY;
 			//Main.NewText(Main.time + " - " + num);
 			if (num >= 56)
 			{
@@ -97,25 +97,25 @@ namespace TerraLeague.Tiles
 
 		public override void HitWire(int i, int j)
 		{
-			int x = i - Main.tile[i, j].frameX / 18 % 2;
-			int y = j - Main.tile[i, j].frameY / 18 % 3;
+			int x = i - Main.tile[i, j].TileFrameX / 18 % 2;
+			int y = j - Main.tile[i, j].TileFrameY / 18 % 3;
 			for (int l = x; l < x + 2; l++)
 			{
 				for (int m = y; m < y + 3; m++)
 				{
-					if (Main.tile[l, m] == null)
+					//if (Main.tile[l, m] == null)
+					//{
+					//	Main.tile[l, m] = new Tile();
+					//}
+					if (Main.tile[l, m].HasTile && Main.tile[l, m].TileType == Type)
 					{
-						Main.tile[l, m] = new Tile();
-					}
-					if (Main.tile[l, m].IsActive && Main.tile[l, m].type == Type)
-					{
-						if (Main.tile[l, m].frameY < 56)
+						if (Main.tile[l, m].TileFrameY < 56)
 						{
-							Main.tile[l, m].frameY += 56;
+							Main.tile[l, m].TileFrameY += 56;
 						}
 						else
 						{
-							Main.tile[l, m].frameY -= 56;
+							Main.tile[l, m].TileFrameY -= 56;
 						}
 					}
 				}

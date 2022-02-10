@@ -42,7 +42,7 @@ namespace TerraLeague.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.rand.Next(20) == 0)
+            if (!Framing.GetTileSafely(i, j - 1).HasTile && Main.rand.Next(20) == 0)
             {
                 int style = Main.rand.Next(22);
                 if (WorldGen.PlaceObject(i, j - 1, TileType<PetrifiedFlora>(), false, style))
@@ -55,10 +55,10 @@ namespace TerraLeague.Tiles
                 {
                     for (int y = j - 1; y <= j + 1; y++)
                     {
-                        if ((x != i || j != y) && Main.tile[x, y].IsActive && Main.tile[x, y].type == TileID.Dirt)
+                        if ((x != i || j != y) && Main.tile[x, y].HasTile && Main.tile[x, y].TileType == TileID.Dirt)
                         {
-                            WorldGen.SpreadGrass(x, y, TileID.Dirt, Type, false, Main.tile[i, j].Color);
-                            if ((int)Main.tile[x, y].type == Type)
+                            WorldGen.SpreadGrass(x, y, TileID.Dirt, Type, false, Main.tile[i, j].TileColor);
+                            if ((int)Main.tile[x, y].TileType == Type)
                             {
                                 WorldGen.SquareTileFrame(x, y, true);
                             }
@@ -80,7 +80,7 @@ namespace TerraLeague.Tiles
             if (!effectOnly)
             {
                 fail = true;
-                Main.tile[i, j].type = TileID.Dirt;
+                Main.tile[i, j].TileType = TileID.Dirt;
                 WorldGen.SquareTileFrame(i, j, true);
             }
         }

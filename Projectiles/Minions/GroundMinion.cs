@@ -464,8 +464,8 @@ namespace TerraLeague.Projectiles.Minions
                         Main.tile[cTile.X, cTile.Y].IsHalfBlock ||
                         Main.tile[cTile.X, cTile.Y].Slope != SlopeType.Solid ||
                         (
-                            TileID.Sets.Platforms[(int)Main.tile[cTile.X, cTile.Y].type] &&
-                            Main.tile[cTile.X, cTile.Y].IsActive && !Main.tile[cTile.X, cTile.Y].IsActuated
+                            TileID.Sets.Platforms[(int)Main.tile[cTile.X, cTile.Y].TileType] &&
+                            Main.tile[cTile.X, cTile.Y].HasTile && !Main.tile[cTile.X, cTile.Y].IsActuated
                             ))
                     {
                         try

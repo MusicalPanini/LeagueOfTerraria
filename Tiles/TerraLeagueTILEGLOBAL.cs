@@ -37,7 +37,7 @@ namespace TerraLeague.Tiles
 
         public override bool CanPlace(int i, int j, int type)
         {
-            if (Main.tile[i, j].wall == WallType<Walls.TargonStoneWall_Arena>() && !Common.ModSystems.DownedBossSystem.downedTargonBoss)
+            if (Main.tile[i, j].WallType == WallType<Walls.TargonStoneWall_Arena>() && !Common.ModSystems.DownedBossSystem.downedTargonBoss)
                 return false;
             return base.CanPlace(i, j, type);
         }

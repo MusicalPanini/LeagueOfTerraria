@@ -36,7 +36,7 @@ namespace TerraLeague.Items.Placeable
             int X = Main.MouseWorld.ToTileCoordinates().X;
             int Y = Main.MouseWorld.ToTileCoordinates().Y;
 
-            if (Main.tile[X, Y].type == TileID.Dirt && Main.tile[X, Y].IsActive)
+            if (Main.tile[X, Y].TileType == TileID.Dirt && Main.tile[X, Y].HasTile)
             {
                 WorldGen.KillTile(X, Y, false, false, true);
                 return base.CanUseItem(player);

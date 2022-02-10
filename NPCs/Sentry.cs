@@ -249,7 +249,7 @@ namespace TerraLeague.NPCs
         {
             for (int i = (int)(NPC.Center.Y/16); i < Main.mapMaxY; i++)
             {
-                if (Main.tile[(int)(NPC.Center.X/16), i].IsActive)
+                if (Main.tile[(int)(NPC.Center.X/16), i].HasTile)
                 {
                     return i;
                 }

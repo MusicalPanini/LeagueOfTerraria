@@ -114,7 +114,7 @@ public abstract class WormClass : ModNPC
             {
                 for (int y = NPCYTile_Up; y < NPCTile_Down; y++)
                 {
-                    if (Main.tile[x, y] != null && (Main.tile[x, y].IsActiveUnactuated && (Main.tileSolid[(int)Main.tile[x, y].type] || Main.tileSolidTop[(int)Main.tile[x, y].type] && Main.tile[x, y].frameY == 0) || Main.tile[x, y].LiquidAmount > 64))
+                    if (Main.tile[x, y] != null && (Main.tile[x, y].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[x, y].TileType] || Main.tileSolidTop[(int)Main.tile[x, y].TileType] && Main.tile[x, y].TileFrameY == 0) || Main.tile[x, y].LiquidAmount > 64))
                     {
                         //if (NPC.position.X + (float)NPC.width > tilePosition.X && NPC.position.X < tilePosition.X + 16f && NPC.position.Y + (float)NPC.height > tilePosition.Y && NPC.position.Y < tilePosition.Y + 16f)
                         if (NPC.Hitbox.Intersects(new Rectangle(x * 16, y * 16, 16, 16)))

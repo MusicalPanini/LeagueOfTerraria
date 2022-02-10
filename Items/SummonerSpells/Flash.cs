@@ -41,11 +41,11 @@ namespace TerraLeague.Items.SummonerSpells
         public override void DoEffect(Player player, int spellSlot)
         {
             bool pathBlocked = false;
-            for (int x = (int)((Main.mouseX + Main.screenPosition.X) / 16) - 1; x < (int)((Main.mouseX + Main.screenPosition.X) / 16) + 1; x++)
+            for (int x = (int)(Main.MouseWorld.X / 16) - 1; x < (int)((Main.mouseX + Main.screenPosition.X) / 16) + 1; x++)
             {
                 for (int y = (int)((Main.mouseY + Main.screenPosition.Y) / 16) - 1; y <= (int)((Main.mouseY + Main.screenPosition.Y) / 16) + 1; y++)
                 {
-                    if (Main.tile[x, y].CollisionType > 0 || Main.tile[x, y].wall == WallID.LihzahrdBrickUnsafe && !NPC.downedPlantBoss)
+                    if (Main.tileSolid[Main.tile[x, y].TileType] && Main.tile[x, y].HasTile || Main.tile[x, y].WallType == WallID.LihzahrdBrickUnsafe && !NPC.downedPlantBoss)
                     {
                         pathBlocked = true;
                         break;
