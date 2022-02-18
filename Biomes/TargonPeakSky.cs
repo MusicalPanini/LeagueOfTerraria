@@ -34,11 +34,11 @@ namespace TerraLeague.Biomes
         {
             //_bgTexture = ModContent.Request<Texture2D>("TerraLeague/Backgrounds/Targon_Back").Value;
             _starTextures = new Texture2D[7];
-            for (int i = 1; i < _starTextures.Length + 1; i++)
-            {
-                this._starTextures[i - 1] = null;
-                TerraLeague.GetTextureIfNull(ref this._starTextures[i - 1], "TerraLeague/Gores/Star_" + i.ToString());
-            }
+            //for (int i = 1; i < _starTextures.Length + 1; i++)
+            //{
+            //    this._starTextures[i - 1] = null;
+            //    TerraLeague.GetTextureIfNull(ref this._starTextures[i - 1], "TerraLeague/Gores/Star_" + i.ToString());
+            //}
 
             base.OnLoad();
         }
@@ -83,6 +83,12 @@ namespace TerraLeague.Biomes
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
+            for (int i = 1; i < _starTextures.Length + 1; i++)
+            {
+                //this._starTextures[i - 1] = null;
+                TerraLeague.GetTextureIfNull(ref this._starTextures[i - 1], "TerraLeague/Gores/Star_" + i.ToString());
+            }
+
             //Update(Main.gameTimeCache);
             if (!(minDepth < 1f) && maxDepth != 3.40282347E+38f)
             {
@@ -117,8 +123,8 @@ namespace TerraLeague.Biomes
                     vector2.Y -= 720;
                     if (rectangle.Contains((int)vector2.X, (int)vector2.Y))
                     {
-                        float value4 = (float)Math.Sin((double)(this._stars[j].AlphaFrequency * Main.timeForVisualEffects + this._stars[j].SinOffset)) * this._stars[j].AlphaAmplitude + this._stars[j].AlphaAmplitude;
-                        float num3 = (float)Math.Sin((double)(this._stars[j].AlphaFrequency * Main.timeForVisualEffects * 5f + this._stars[j].SinOffset)) * 0.1f - 0.1f;
+                        float value4 = (float)Math.Sin((double)(this._stars[j].AlphaFrequency * Main.GlobalTimeWrappedHourly + this._stars[j].SinOffset)) * this._stars[j].AlphaAmplitude + this._stars[j].AlphaAmplitude;
+                        float num3 = (float)Math.Sin((double)(this._stars[j].AlphaFrequency * Main.GlobalTimeWrappedHourly * 5f + this._stars[j].SinOffset)) * 0.1f - 0.1f;
                         value4 = MathHelper.Clamp(value4, 0f, 1f);
                         Texture2D texture2D = this._starTextures[this._stars[j].TextureIndex];
                         
