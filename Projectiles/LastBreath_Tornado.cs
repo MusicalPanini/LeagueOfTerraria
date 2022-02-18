@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,13 +18,12 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tornado");
-            Main.projFrames[Projectile.type] = 6;
         }
 
         public override void SetDefaults()
         {
             Projectile.width = 30;
-            Projectile.height = 30;
+            Projectile.height = 150;
             Projectile.timeLeft = 90;
             Projectile.penetrate = 100;
             Projectile.friendly = true;
@@ -30,8 +31,7 @@ namespace TerraLeague.Projectiles
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.scale = 1.5f;
-            AIType = 0;
+            Projectile.alpha = 255;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (!NPCID.Sets.ShouldBeCountedAsBoss[target.type])
+            if (!NPCID.Sets.ShouldBeCountedAsBoss[target.type] && target.type != NPCID.TargetDummy)
             {
                 target.velocity.Y = -12;
             }
@@ -56,24 +56,44 @@ namespace TerraLeague.Projectiles
                 Projectile.velocity.X *= .98f;
                 Projectile.velocity.Y *= .98f;
             }
-            
 
-            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Cloud);
+            for (int i = 0; i < 2; i++)
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X, Projectile.velocity.Y, 150);
+                dust.velocity.Y *= 0.1f;
+                dust.scale = (Projectile.Bottom.Y - dust.position.Y) / 150f;
+                dust.scale += 0.25f;
+                dust.velocity.X *= dust.scale;
+            }
             if (Projectile.timeLeft < 30)
             {
                 Projectile.alpha += 9;
             }
-            AnimateProjectile();
         }
 
-        public void AnimateProjectile()
+        public override void PostDraw(Color lightColor)
         {
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter >= 3)
+            float rotation = MathHelper.ToRadians(Projectile.timeLeft * 15);
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+
+            for (int i = 1; i <= 30; i++)
             {
-                Projectile.frame++;
-                Projectile.frame %= 6; 
-                Projectile.frameCounter = 0;
+                Main.spriteBatch.Draw
+                (
+                    texture,
+                    new Vector2
+                    (
+                        Projectile.position.X - Main.screenPosition.X + Projectile.width * 0.5f,
+                        Projectile.position.Y - Main.screenPosition.Y + Projectile.height - (125 * (i - 1) / 30)
+                    ),
+                    new Rectangle(0, 0, texture.Width, texture.Height),
+                    Color.LightSteelBlue * (0.7f + (0.7f *  (1 -(Projectile.alpha / 255f)))) ,
+                    rotation + (MathHelper.PiOver4 * i/3f),
+                    new Vector2(texture.Width, texture.Width) * 0.5f,
+                    i / 20f,
+                    SpriteEffects.None,
+                    0f
+                );
             }
         }
     }

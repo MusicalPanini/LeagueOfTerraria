@@ -154,10 +154,10 @@ namespace TerraLeague.NPCs
 
             if (Main.rand.Next(2) == 0)
             {
-                Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Electric, 0f, 0f, 0, new Color(5, 245, 150), 1f);
+                Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Cloud, 0f, 0f, 0, new Color(5, 245, 150), 1f);
                 dust.velocity.X *= 0.5f;
                 dust.velocity.Y *= 0.5f;
-                dust.fadeIn = 3;
+                dust.fadeIn = 1.5f;
                 dust.noGravity = true;
             }
 

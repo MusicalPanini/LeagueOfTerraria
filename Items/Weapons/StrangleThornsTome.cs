@@ -15,6 +15,7 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Strangle Thorn Tome");
             Tooltip.SetDefault("");
+            ItemID.Sets.SummonerWeaponThatScalesWithAttackSpeed[Type] = true;
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -27,21 +28,37 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 30;
-            Item.width = 56;
-            Item.height = 56;       
             Item.DamageType = DamageClass.Summon;
-            Item.noMelee = true;
+            Item.damage = 20;
+            Item.knockBack = 2;
+            Item.rare = ItemRarityID.Green;
+
+            Item.shoot = ModContent.ProjectileType<StrangleThorn_Whip>();
+            Item.shootSpeed = 4;
+
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 30;
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.Shoot;
-            Item.knockBack = 1;
-            Item.value = 140000;
-            Item.rare = ItemRarityID.Lime;
-            Item.UseSound = SoundID.Item8;
-            Item.mana = 16;
-            Item.shootSpeed = 32;
-            Item.shoot = ProjectileType<StrangleThornsTome_StrangleThorns>();
+            Item.UseSound = SoundID.Item152;
+            //Item.channel = true; // This is used for the charging functionality. Remove it if your whip shouldn't be chargeable.
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+
+            //Item.damage = 30;
+            //Item.width = 56;
+            //Item.height = 56;       
+            //Item.DamageType = DamageClass.Summon;
+            //Item.noMelee = true;
+            //Item.useTime = 30;
+            //Item.useAnimation = 30;
+            //Item.useStyle = ItemUseStyleID.Shoot;
+            //Item.knockBack = 1;
+            //Item.value = 140000;
+            //Item.rare = ItemRarityID.Lime;
+            //Item.UseSound = SoundID.Item8;
+            //Item.mana = 16;
+            //Item.shootSpeed = 32;
+            //Item.shoot = ProjectileType<StrangleThornsTome_StrangleThorns>();
 
             AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new RampantGrowth(this));

@@ -97,28 +97,31 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanBeCastWhileUsingItem()
         {
-            return true;
+            return false;
         }
 
         public override void DoEffect(Player player, AbilityType type)
         {
             if (CheckIfNotOnCooldown(player, type))
             {
+                player.itemAnimationMax = TerraLeague.ScaleWithUseTimeMulti(abilityItem.Item.useAnimation / 2, abilityItem.Item, player);
+
                 if (player.GetModPlayer<PLAYERGLOBAL>().gathering3)
                 {
                     DoEfx(player, type);
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
-                    int projType = 704;
+                    int projType = ProjectileType<LastBreath_Tornado>();//704;
                     int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MEL);
-                    int knockback = 12;
+                    int knockback = 6;
                     player.ClearBuff(BuffType<LastBreath3>());
 
                     Projectile proj = Projectile.NewProjectileDirect(player.GetProjectileSource_Item(abilityItem.Item), position, velocity, projType, damage, knockback, player.whoAmI);
                     proj.DamageType = Terraria.ModLoader.DamageClass.Melee;
-                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity / 4, ProjectileType<LastBreath_SteelTempest>(), damage, knockback, player.whoAmI, 0, 1);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(abilityItem.Item), position, velocity / 4, ProjectileType<LastBreath_SteelTempest>(), damage, knockback, player.whoAmI, 1);
 
                     SetCooldowns(player, type);
+                    
                 }
                 else
                 {

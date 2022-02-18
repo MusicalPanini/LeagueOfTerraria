@@ -41,9 +41,9 @@ namespace TerraLeague.Projectiles
                     Projectile.spriteDirection = -1;
                 }
 
-                if (Projectile.alpha < 0)
+                if (Projectile.alpha < 85)
                 {
-                    Projectile.alpha = 0;
+                    Projectile.alpha = 85;
                     Projectile.friendly = true;
                     Projectile.timeLeft = 54;
                     Projectile.velocity = new Vector2(-10 * (int)Projectile.ai[0], -10);
@@ -51,8 +51,11 @@ namespace TerraLeague.Projectiles
                     Projectile.ai[1] = 1;
                     TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 71, -0.5f);
                 }
+                else
+                {
+                    Projectile.alpha -= 10;
+                }
 
-                Projectile.alpha -= 15;
             }
 
             if (Projectile.timeLeft <= 30 && (int)Projectile.ai[1] == 1)
@@ -60,7 +63,7 @@ namespace TerraLeague.Projectiles
                 Projectile.velocity *= 0;
                 Projectile.extraUpdates = 0;
                 Projectile.friendly = false;
-                Projectile.alpha += 255 / 30;
+                Projectile.alpha += 255 / 20;
             }
 
             if (Main.rand.Next(0, 3) == 0)
@@ -94,6 +97,12 @@ namespace TerraLeague.Projectiles
         public override bool? CanCutTiles()
         {
             return false;
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            int alpha = 255 - Projectile.alpha;
+            return new Color(alpha, alpha, alpha, alpha);
         }
     }
 }

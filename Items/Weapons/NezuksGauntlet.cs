@@ -30,11 +30,11 @@ namespace TerraLeague.Items.Weapons
             Item.height = 34;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.Rapier;
             Item.knockBack = 4f;
             Item.value = 55000;
             Item.rare = ItemRarityID.LightRed;
-            Item.shootSpeed = 10f;
+            Item.shootSpeed = 16f;
             Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 73);
             Item.shoot = ProjectileType<NezuksGauntlet_MysticShot>();
 

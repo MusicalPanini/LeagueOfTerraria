@@ -24,8 +24,8 @@ namespace TerraLeague.Projectiles
             Projectile.timeLeft = 240;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.extraUpdates = 60;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = -1;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = -1;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;

@@ -14,6 +14,7 @@ namespace TerraLeague.Projectiles
 {
     class FishBones_SMDR : ExplosiveProjectile
     {
+        float savedSpeed = 0;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Super Mega Death Rocket");
@@ -33,17 +34,17 @@ namespace TerraLeague.Projectiles
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            Projectile.scale = 1.5f;
+            Projectile.scale = 1;
             Projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
         {
             Lighting.AddLight(Projectile.Center, 1f, 0.34f, 0.9f);
-            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             if (Projectile.velocity.X < 0)
             {
-                Projectile.scale = -1.5f;
+                //Projectile.scale = -1f;
                 Projectile.spriteDirection = -1;
             }
 
@@ -52,14 +53,17 @@ namespace TerraLeague.Projectiles
                 Projectile.velocity.X *= 1.05f;
                 Projectile.velocity.Y *= 1.05f;
             }
+            if (Projectile.penetrate != -1)
+                savedSpeed = Projectile.velocity.Length();
 
+            Vector2 dustPos = Projectile.position - (Projectile.velocity.SafeNormalize(Vector2.Zero) * 40);
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height/2, 6);
+                Dust dust = Dust.NewDustDirect(dustPos, Projectile.width, Projectile.height, 6);
                 dust.scale = 2 * (Projectile.velocity.Length() / 25);
                 dust.noGravity = true;
 
-                dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height/2, 6);
+                dust = Dust.NewDustDirect(dustPos, Projectile.width, Projectile.height, 6);
                 dust.scale = 2 * (Projectile.velocity.Length() / 50);
                 dust.noGravity = true;
             }
@@ -114,7 +118,7 @@ namespace TerraLeague.Projectiles
         {
             hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
 
-            damage = (int)(damage * Projectile.velocity.Length() / 25);
+            damage = (int)(damage * savedSpeed / 25);
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }

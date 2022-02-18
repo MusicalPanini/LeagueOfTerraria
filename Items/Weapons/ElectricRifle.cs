@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            Item.damage = 8;
+            Item.damage = 10;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 76;
             Item.height = 46;
@@ -36,7 +36,7 @@ namespace TerraLeague.Items.Weapons
             Item.noMelee = true;
             Item.knockBack = 0;
             Item.value = 60000;
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Green;
             Item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 31);
             Item.shoot = ProjectileType<ElectricRifle_ElectricShot>();
             Item.autoReuse = true;
@@ -45,8 +45,8 @@ namespace TerraLeague.Items.Weapons
             Item.mana = 6;
 
             AbilityItemGLOBAL abilityItem = Item.GetGlobalItem<AbilityItemGLOBAL>();
-            //abilityItem.SetAbility(AbilityType.E, new Zap(this));
-            abilityItem.ChampQuote = "lightning go brrrrr";
+            abilityItem.SetAbility(AbilityType.W, new UltrashockLaser(this));
+            abilityItem.ChampQuote = "Sparks Ready!";
             abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
@@ -82,11 +82,6 @@ namespace TerraLeague.Items.Weapons
             }
         }
 
-        public override bool CanConsumeAmmo(Player player)
-        {
-            return !(player.itemAnimation < (player.itemAnimationMax) - 2);
-        }
-
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(0, 0);
@@ -96,11 +91,9 @@ namespace TerraLeague.Items.Weapons
         {
             CreateRecipe()
             .AddIngredient(ItemID.IllegalGunParts, 1)
-            .AddIngredient(ItemID.Minishark, 1)
-            .AddIngredient(ItemID.ClockworkAssaultRifle, 1)
-            .AddIngredient(ItemID.SoulofSight, 10)
-            .AddIngredient(ItemID.PinkPaint, 3)
-            .AddTile(TileID.MythrilAnvil)
+            .AddIngredient(ItemType<PrototypeHexCore>(), 1)
+            .AddIngredient(ItemID.Handgun, 1)
+            .AddTile(TileID.Anvils)
             .Register();
         }
     }

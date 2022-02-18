@@ -32,13 +32,13 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(Projectile.Left, 0.09f, 0.40f, 0.60f);
 
 
-            if (Projectile.alpha > 0)
+            if (Projectile.alpha > 50)
             {
                 Projectile.alpha -= 15;
             }
-            if (Projectile.alpha < 0)
+            if (Projectile.alpha < 50)
             {
-                Projectile.alpha = 0;
+                Projectile.alpha = 50;
             }
 
             for (int i = 0; i < 1; i++)

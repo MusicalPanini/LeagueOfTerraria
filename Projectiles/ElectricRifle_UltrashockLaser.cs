@@ -8,18 +8,18 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Projectiles
 {
-    public class ElectricRifle_ElectricShot : ModProjectile
+    public class ElectricRifle_UltrashockLaser : ModProjectile
     {
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 4;
-            DisplayName.SetDefault("Electric Shot");
+            DisplayName.SetDefault("Ultrashock Laser");
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 10;
-            Projectile.height = 10;
+            Projectile.width = 8;
+            Projectile.height = 8;
             Projectile.friendly = true;
             Projectile.penetrate = 1;
             Projectile.alpha = 255;
@@ -48,12 +48,33 @@ namespace TerraLeague.Projectiles
             {
                 Projectile.velocity.Y = 16f;
             }
+
+            if (Main.rand.NextBool(3))
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 264, 0, 0, 100, new Color(110, 254, 125), 0.75f);
+                dust.noGravity = true;
+                dust.velocity *= 2.5f;
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-            return true;
+            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ElectricRifle_UltrashockBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner, -1, Projectile.rotation + 1.57f);
+
+            return base.OnTileCollide(oldVelocity);
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ElectricRifle_UltrashockBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner, target.whoAmI, Projectile.rotation + 1.57f);
+
+            base.OnHitNPC(target, damage, knockback, crit);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            target.AddBuff(ModContent.BuffType<Buffs.Slowed>(), 2 * 60);
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
         public override void Kill(int timeLeft)

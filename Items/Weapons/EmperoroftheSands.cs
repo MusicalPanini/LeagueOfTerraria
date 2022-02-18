@@ -59,28 +59,28 @@ namespace TerraLeague.Items.Weapons
         {
             position = Main.MouseWorld;
 
-            if (player.altFunctionUse != 2)
-            {
-                bool pathBlocked = false;
-                for (int x = (int)((Main.mouseX + Main.screenPosition.X) / 16) - 1; x < (int)((Main.mouseX + Main.screenPosition.X) / 16) + 1; x++)
-                {
-                    for (int y = (int)((Main.mouseY + Main.screenPosition.Y) / 16) - 1; y <= (int)((Main.mouseY + Main.screenPosition.Y) / 16) + 1; y++)
-                    {
-                        if (Main.tileSolid[Main.tile[x, y].TileType])
-                        {
-                            pathBlocked = true;
-                            break;
-                        }
-                    }
-                }
+            //if (player.altFunctionUse != 2)
+            //{
+            //    bool pathBlocked = false;
+            //    for (int x = (int)((Main.mouseX + Main.screenPosition.X) / 16) - 1; x < (int)((Main.mouseX + Main.screenPosition.X) / 16) + 1; x++)
+            //    {
+            //        for (int y = (int)((Main.mouseY + Main.screenPosition.Y) / 16) - 1; y <= (int)((Main.mouseY + Main.screenPosition.Y) / 16) + 1; y++)
+            //        {
+            //            if (Main.tileSolid[Main.tile[x, y].TileType])
+            //            {
+            //                pathBlocked = true;
+            //                break;
+            //            }
+            //        }
+            //    }
 
-                if (!pathBlocked)
-                {
-                    Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
-                    proj.originalDamage = Item.damage;
-                }
-            }
-
+            //    if (!pathBlocked)
+            //    {
+                    
+            //    }
+            //}
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
+            proj.originalDamage = Item.damage;
             return false;
         }
 

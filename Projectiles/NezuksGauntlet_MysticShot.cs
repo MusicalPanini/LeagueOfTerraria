@@ -28,7 +28,7 @@ namespace TerraLeague.Projectiles
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            Projectile.extraUpdates = 1;
+            Projectile.extraUpdates = 0;
         }
 
         public override void AI()
@@ -46,9 +46,9 @@ namespace TerraLeague.Projectiles
                 dust.position.Y -= Projectile.velocity.Y / 3f * (float)i;
             }
 
-            Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1f);
-            dust2.noGravity = true;
-            dust2.velocity *= 0.6f;
+            //Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1f);
+            //dust2.noGravity = true;
+            //dust2.velocity *= 0.6f;
         }
 
         public override void Kill(int timeLeft)

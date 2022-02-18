@@ -1883,6 +1883,17 @@ namespace TerraLeague
                     }
                 }
             }
+            if (deadlyPlumage)
+            {
+                    //for (int i = 0; i < 3; i++)
+                if ((int)Main.timeForVisualEffects % 10 == 0)
+                {
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.WitherLightning, 0, 0, 0, default, 0.75f);
+                    dust.noLight = true;
+                    dust.noGravity = true;
+                    dust.velocity *= 2;
+                }
+            }
             if (tidecallersBlessing)
             {
                 if ((Main.time % 2) == 0)

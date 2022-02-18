@@ -63,6 +63,13 @@ namespace TerraLeague.Items.Weapons
             return true;
         }
 
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(3));
+
+            velocity = perturbedSpeed;
+        }
+
         public override bool CanConsumeAmmo(Player player)
         {
             return Main.rand.Next(0, 100) < 33;

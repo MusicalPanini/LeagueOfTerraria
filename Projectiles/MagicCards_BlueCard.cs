@@ -51,7 +51,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 12; i++)
             {
-                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.AncientLight, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0, new Color(0, 0, 255));
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.AncientLight, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 0, new Color(0, 0, 255), 0.5f);
             }
             base.Kill(timeLeft);
         }

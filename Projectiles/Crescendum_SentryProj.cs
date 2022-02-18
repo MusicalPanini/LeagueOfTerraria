@@ -15,7 +15,20 @@ namespace TerraLeague.Projectiles
             DisplayName.SetDefault("Crescendum Sentry");
         }
 
-        Projectile sentry { get { return Main.projectile[Projectile.GetByUUID(Projectile.owner, Projectile.ai[0])]; } }
+        Projectile sentry
+        {
+            get
+            {
+                try
+                {
+                    return Main.projectile[Projectile.GetByUUID(Projectile.owner, Projectile.ai[0])];
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
 
         public override void SetDefaults()
         {
