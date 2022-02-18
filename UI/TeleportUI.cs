@@ -345,13 +345,13 @@ namespace TerraLeague.UI
             switch (type)
             {
                 case TeleportType.LeftBeach:
-                    TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.LeftBeach());
+                    //TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.LeftBeach());
                     break;
                 case TeleportType.RightBeach:
-                    TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.RightBeach());
+                    //TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.RightBeach());
                     break;
                 case TeleportType.Dungeon:
-                    TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.Dungeon());
+                    //TeleportRune.DoTP(Main.LocalPlayer, TeleportRune.Dungeon());
                     break;
                 case TeleportType.Hell:
                     Main.LocalPlayer.DemonConch();

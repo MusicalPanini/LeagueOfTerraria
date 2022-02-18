@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TerraLeague.UI;
 using Terraria;
 using Terraria.Chat;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,9 +21,75 @@ namespace TerraLeague.Items.SummonerSpells
         {
 			IL.Terraria.Player.HasUnityPotion += HookHasUnityPotion;
 			IL.Terraria.Player.TakeUnityPotion += HookTakeUnityPotion;
-			IL.Terraria.Player.InInteractionRange += HookInteractionRange;
-			IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookIsNearPylon;
-			IL.Terraria.GameContent.TeleportPylonsSystem.HowManyNPCsDoesPylonNeed += HookEnoughtNPCS;
+
+			IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += HookHandleTeleportRequest;
+			IL.Terraria.Map.TeleportPylonsMapLayer.Draw += HookDrawPylon;
+		}
+
+		private static void HookHandleTeleportRequest(ILContext il)
+		{
+			ILCursor c = new ILCursor(il);
+
+			//Define a lable
+			var label = il.DefineLabel();
+
+			// Push Player (this) onto the stack
+			c.Emit(OpCodes.Ldarg_2);
+
+			// Check if Player has teleport and push result onto stack
+			c.EmitDelegate<Func<int, bool>>(playerIndex => TeleportRune.CheckForTeleportSum(Main.player[playerIndex]));
+
+			// If player does not have teleport, branch to label
+			c.Emit(OpCodes.Brfalse, label);
+
+			c.Emit(OpCodes.Ldarg_1);
+
+			c.Emit(OpCodes.Ldarg_2);
+
+			c.EmitDelegate<Action<TeleportPylonInfo, int>>((info, playerIndex) =>
+			{
+				Player player = Main.player[playerIndex];
+				Vector2 newPos = info.PositionInTiles.ToWorldCoordinates(8f, 8f) - new Vector2(0f, (float)player.HeightOffsetBoost);
+				int num2 = 9;
+				int typeOfPylon = (int)info.TypeOfPylon;
+				int number = 0;
+				player.Teleport(newPos, num2, typeOfPylon);
+				player.velocity = Vector2.Zero;
+				if (Main.netMode == 2)
+				{
+					RemoteClient.CheckSection(player.whoAmI, player.position, 1);
+					NetMessage.SendData(65, -1, -1, null, 0, (float)player.whoAmI, newPos.X, newPos.Y, num2, number, typeOfPylon);
+					return;
+				}
+			});
+
+			// Return
+			c.Emit(OpCodes.Ret);
+
+			// The defined label branching point
+			c.MarkLabel(label);
+		}
+
+		private static void HookDrawPylon(ILContext il)
+        {
+			ILCursor c = new ILCursor(il);
+
+			if (!c.TryGotoNext(i => i.MatchLdcI4(0)))
+			{
+				return; // Patch unable to be applied
+			}
+
+			//c.Emit(OpCodes.Ldloc_S, 4);
+
+			c.EmitDelegate<Func</*Color,*/ Color>>((/*originalValue*/) => {
+				if (TeleportRune.CheckForTeleportSum(Main.LocalPlayer))
+				{
+					return Color.White;
+				}
+				return Color.Gray * 0.5f;
+			});
+
+			c.Emit(OpCodes.Stloc, 4);
 		}
 
 		private static void HookTakeUnityPotion(ILContext il)
@@ -70,90 +137,11 @@ namespace TerraLeague.Items.SummonerSpells
 			// Call a delegate using the int and Player from the stack.
 			c.EmitDelegate<Func<bool, Player, bool>>((returnValue, player) => {
 				// Regular c# code
-				if (Main.netMode == NetmodeID.Server)
-					Console.WriteLine("HookHasUnityPotion");
+				Console.WriteLine("HookHasUnityPotion");
 				return TeleportRune.CheckForTeleportSum(player);
 			});
 
 		}
-
-		private static void HookIsNearPylon(ILContext il)
-		{
-			ILCursor c = new ILCursor(il);
-
-			if (!c.TryGotoNext(i => i.MatchRet()))
-			{
-				return; // Patch unable to be applied
-			}
-
-			// Push the Player instance onto the stack
-			c.Emit(OpCodes.Ldarg_0);
-			// Call a delegate using the int and Player from the stack.
-			c.EmitDelegate<Func<bool, Player, bool>>((returnValue, player) => {
-				if (Main.netMode == NetmodeID.Server)
-					Console.WriteLine("HookIsNearPylon");
-				if (TeleportRune.CheckForTeleportSum(player))
-				{
-					return true;
-				}
-				return player.IsTileTypeInInteractionRange(597);
-			});
-
-		}
-
-		private static void HookInteractionRange(ILContext il)
-		{
-            ILCursor c = new ILCursor(il);
-
-            if (!c.TryGotoNext(i => i.MatchRet()))
-            {
-                return; // Patch unable to be applied
-            }
-
-            // returnvalue already pushed
-            // Push the Player instance onto the stack
-            c.Emit(OpCodes.Ldloc_2);
-			// Call a delegate using the int and Player from the stack.
-			c.Emit(OpCodes.Ldarg_0);
-            c.EmitDelegate<Func<bool, Tile, Player, bool>>((returnValue, tile, player) =>
-            {
-				if (Main.netMode == NetmodeID.Server)
-					Console.WriteLine("HookInteractionRange");
-				if (tile.TileType == 597 && TeleportRune.CheckForTeleportSum(player))
-                {
-                    return true;
-                }
-                return false;
-                //return num >= interactX - Player.tileRangeX && num <= interactX + Player.tileRangeX + 1 && num2 >= interactY - Player.tileRangeY && num2 <= interactY + Player.tileRangeY + 1;
-            });
-
-        }
-
-		private static void HookEnoughtNPCS(ILContext il)
-		{
-			ILCursor c = new ILCursor(il);
-
-            if (!c.TryGotoNext(i => i.MatchRet()))
-            {
-                return; // Patch unable to be applied
-            }
-
-            // returnvalue already pushed
-            // Call a delegate using the int and Player from the stack.
-            c.Emit(OpCodes.Ldarg_2);
-            c.EmitDelegate<Func<int, Player, int>>((returnValue, player) =>
-            {
-				//ChatHelper.SendChatMessageToClient(Terraria.Localization.NetworkText.FromLiteral(), new Color(255, 240, 20), player.whoAmI);
-				if (Main.netMode == NetmodeID.Server)
-					Console.WriteLine(player.name + " HookEnoughtNPCS");
-				if (TeleportRune.CheckForTeleportSum(player))
-                {
-                    return 0;
-                }
-                return returnValue;
-            });
-
-        }
 
 		public static bool CheckForTeleportSum(Player player)
 		{
@@ -253,13 +241,13 @@ namespace TerraLeague.Items.SummonerSpells
                 switch (type)
                 {
                     case TeleportType.LeftBeach:
-						DoTP(player, LeftBeach());
+						//DoTP(player, LeftBeach());
                         break;
                     case TeleportType.RightBeach:
-						DoTP(player, RightBeach());
+						//DoTP(player, RightBeach());
 						break;
                     case TeleportType.Dungeon:
-						DoTP(player, Dungeon());
+						//DoTP(player, Dungeon());
 						break;
       //              case TeleportType.Hell:
 						//DoTP(player, Hell(player));
@@ -285,82 +273,7 @@ namespace TerraLeague.Items.SummonerSpells
 			}
 		}
 
-		public static Vector2 RandomTP()
-        {
-            return Vector2.Zero;
-        }
-        public static Vector2 LeftBeach()
-        {
-            int x = 300;
-            for (int y = 0; y < Main.maxTilesY; y++)
-            {
-				var s= Main.tile[x, y];
-                if (Collision.SolidTiles(x, x, y, y))
-                {
-                    return new Vector2(x * 16, (y - 3) * 16);
-                }
-            }
-
-            return Main.LocalPlayer.position;
-        }
-        public static Vector2 RightBeach()
-        {
-            int x = Main.maxTilesX - 300;
-            for (int y = 0; y < Main.maxTilesY; y++)
-            {
-                if (Collision.SolidTiles(x, x, y, y))
-                {
-                    return new Vector2(x * 16, (y - 3) * 16);
-                }
-            }
-
-            return Main.LocalPlayer.position;
-        }
-        public static Vector2 Hell(Player player)
-        {
-			
-			return Vector2.Zero;
-			//bool flag = false;
-			//int num = Main.maxTilesX / 2;
-			//int num2 = 100;
-			//int num3 = num2 / 2;
-			//int teleportStartY = Main.maxTilesY - 200 + 20;
-			//int teleportRangeY = 80;
-			//RandomTeleportationAttemptSettings settings = new RandomTeleportationAttemptSettings
-			//{
-			//	mostlySolidFloor = true,
-			//	avoidAnyLiquid = true,
-			//	avoidLava = true,
-			//	avoidHurtTiles = true,
-			//	avoidWalls = true,
-			//	attemptsBeforeGivingUp = 1000,
-			//	maximumFallDistanceFromOrignalPoint = 30
-			//};
-			//Vector2 vector = CheckForGoodTeleportationSpot(player, ref flag, num - num3, num2, teleportStartY, teleportRangeY, settings);
-			//if (!flag)
-			//{
-			//	vector = CheckForGoodTeleportationSpot(player, ref flag, num - num2, num3, teleportStartY, teleportRangeY, settings);
-			//}
-			//if (!flag)
-			//{
-			//	vector = CheckForGoodTeleportationSpot(player, ref flag, num + num3, num3, teleportStartY, teleportRangeY, settings);
-			//}
-			//if (flag)
-			//{
-			//	Vector2 vector2 = vector;
-			//	return vector2;
-			//}
-			//else
-			//{
-			//	Vector2 position = player.position;
-			//	return position;
-			//}
-        }
-        public static Vector2 Dungeon()
-        {
-            return new Vector2(Main.dungeonX * 16, Main.dungeonY * 16 - 48);
-        }
-
+		
         public static void DoTP(Player player, Vector2 teleportPoint)
         {
 			if (Main.LocalPlayer.whoAmI == player.whoAmI)
@@ -385,23 +298,6 @@ namespace TerraLeague.Items.SummonerSpells
 					return;
 				}
 			}
-		}
-
-		private class RandomTeleportationAttemptSettings
-		{
-			public bool mostlySolidFloor;
-
-			public bool avoidLava;
-
-			public bool avoidAnyLiquid;
-
-			public bool avoidHurtTiles;
-
-			public bool avoidWalls;
-
-			public int attemptsBeforeGivingUp;
-
-			public int maximumFallDistanceFromOrignalPoint;
 		}
 	}
 }

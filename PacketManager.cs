@@ -1555,19 +1555,19 @@ namespace TerraLeague
                 switch (type)
                 {
                     case TeleportType.LeftBeach:
-                        originalPosition = TeleportRune.LeftBeach();
+                        //originalPosition = TeleportRune.LeftBeach();
                         break;
                     case TeleportType.RightBeach:
-                        originalPosition = TeleportRune.RightBeach();
+                        //originalPosition = TeleportRune.RightBeach();
                         break;
                     case TeleportType.Dungeon:
-                        originalPosition = TeleportRune.Dungeon();
+                        //originalPosition = TeleportRune.Dungeon();
                         break;
                     case TeleportType.Hell:
-                        originalPosition = TeleportRune.Hell(Main.player[fromWho]);
+                        //originalPosition = TeleportRune.Hell(Main.player[fromWho]);
                         break;
                     case TeleportType.Random:
-                        originalPosition = TeleportRune.RandomTP();
+                        //originalPosition = TeleportRune.RandomTP();
                         break;
                     default:
                         break;
