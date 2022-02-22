@@ -22,7 +22,7 @@ namespace TerraLeague.Tiles
 
             SoundType = SoundID.Tink;
             DustType = DustID.Stone;
-            ItemDrop = ItemType<TargonStoneBlock>(); 
+            //ItemDrop = ItemType<TargonStoneBlock>(); 
             AddMapEntry(new Color(100, 0, 100)); 
             MinPick = 65; 
         }
