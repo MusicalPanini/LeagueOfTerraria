@@ -21,13 +21,16 @@ namespace TerraLeague.NPCs.TargonBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Protector's Gem");
+            NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
+            NPCID.Sets.NeedsExpertScaling[NPC.type] = true;
         }
         public override void SetDefaults()
         {
+            NPCID.Sets.NeedsExpertScaling[NPC.type] = true;
             NPC.width = 20;
             NPC.height = 42;
             NPC.defense = 0;
-            NPC.lifeMax = 10;
+            NPC.lifeMax = 75;
 
             NPC.HitSound = new LegacySoundStyle(3, 5);
             NPC.DeathSound = new LegacySoundStyle(2, 27);
@@ -53,7 +56,7 @@ namespace TerraLeague.NPCs.TargonBoss
                 NPC.width = 40;
                 NPC.height = 84;
                 NPC.defense = 20;
-                NPC.lifeMax = 50 * (Main.expertMode ? 2 : 1);
+                NPC.lifeMax *= 2;
                 NPC.life = NPC.lifeMax;
                 NPC.netUpdate = true;
                 NPC.ai[0] = 2;
@@ -64,7 +67,17 @@ namespace TerraLeague.NPCs.TargonBoss
                 NPC.active = false;
             }
 
-            Lighting.AddLight(NPC.Center, TargonBossNPC.TaricColor.ToVector3());
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                NPC.ai[3]++;
+                if ((int)NPC.ai[3] % 60 == 0)
+                {
+                    NPC.life -= 15;
+                    NPC.netUpdate = true;
+                }
+            }
+
+            //Lighting.AddLight(NPC.Center, TargonBossNPC.TaricColor.ToVector3());
 
 
             return base.PreAI();
@@ -72,14 +85,17 @@ namespace TerraLeague.NPCs.TargonBoss
 
         public override void AI()
         {
-            NPC bossNPC = Main.npc.First(x => x.type == NPCType<TargonBossNPC>());
-
-            if (Main.time % 2 == 0)
+            if (NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
             {
-                if (NPC.lifeMax > 10)
-                    TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, NPC.Center, 128), NPC.Center, 263, Main.rand.NextFloat(0.08f, 0.2f), 1f, TargonBossNPC.TaricColor);
-                else
-                    TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, NPC.Center, 128), NPC.Center, 263, Main.rand.NextFloat(0.08f, 0.1f), 1, TargonBossNPC.TaricColor);
+                NPC bossNPC = Main.npc.First(x => x.type == NPCType<TargonBossNPC>());
+
+                if (Main.time % 2 == 0)
+                {
+                    if ((int)NPC.ai[0] != 0)
+                        TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, NPC.Center, 128), NPC.Center, 263, 0.05f, 1f, TargonBossNPC.TaricColor);
+                    else
+                        TerraLeague.DustLine(bossNPC.Center + TerraLeague.CalcVelocityToPoint(bossNPC.Center, NPC.Center, 128), NPC.Center, 263, 0.05f, 1, TargonBossNPC.TaricColor);
+                }
             }
         }
 
@@ -125,7 +141,7 @@ namespace TerraLeague.NPCs.TargonBoss
                 new Color(255, 255, 255, 255),
                 NPC.rotation,
                 texture.Size() * 0.5f,
-                NPC.lifeMax > 10 ? 2 : 1,
+                (int)NPC.ai[0] != 0 ? 2 : 1,
                 SpriteEffects.None,
                 0f
             );

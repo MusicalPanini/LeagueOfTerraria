@@ -18,34 +18,42 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            Projectile.arrow = true;
             Projectile.width = 30;
             Projectile.height = 30;
             Projectile.alpha = 0;
-            Projectile.timeLeft = 240;
+            Projectile.timeLeft = 50 + 30;
             Projectile.penetrate = -1;
             Projectile.hostile = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
             Lighting.AddLight(Projectile.Center, TargonBossNPC.PanthColor.ToVector3() * (1 - (Projectile.alpha / 255f)));
-
             if (Projectile.ai[0] == 0)
             {
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                if (Projectile.timeLeft > 50)
+                {
+                    if (Projectile.velocity.Length() > 0)
+                    {
+                        Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                        Projectile.velocity *= 0;
+                    }
+
+                    TerraLeague.DustLine(Projectile.Center, Projectile.Center + new Vector2(50 * 32, 0).RotatedBy(Projectile.rotation - MathHelper.PiOver2), DustID.PortalBolt, 0.05f, 1, TargonBossNPC.PanthColor);
+                }
+                else
+                {
+                    TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 1, -0.5f);
+                    Projectile.velocity = new Vector2(32, 0).RotatedBy(Projectile.rotation - MathHelper.PiOver2);
+                }
             }
             else
             {
-                //Projectile.ai[1]++;
-                //if ((int)Projectile.ai[1] == 90)
-                //    Prime();
-
-                if (Projectile.timeLeft < 51)
+                if (Projectile.timeLeft < 10)
                 {
-                    Projectile.alpha += 5;
+                    Projectile.alpha += 26;
                 }
             }
 
@@ -66,20 +74,6 @@ namespace TerraLeague.Projectiles
             //TerraLeague.PlaySoundWithPitch(Projectile.Center, 2, 14, 0);
 
             //TerraLeague.DustBorderRing(Projectile.width / 2, Projectile.Center, 6, default, 2);
-        }
-
-        public void Prime()
-        {
-            Projectile.tileCollide = false;
-            Projectile.velocity = Vector2.Zero;
-            Projectile.alpha = 255;
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 1280;
-            Projectile.height = 1280;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-            Projectile.timeLeft = 2;
         }
     }
 }

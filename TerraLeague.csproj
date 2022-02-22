@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Common\GlobalProjectiles\" />
     <Folder Include="Common\GlobalPlayers\" />
-    <Folder Include="Common\GlobalNPCs\" />
     <Folder Include="Common\GlobalBossBars\" />
     <Folder Include="Textures\AbilityImages\" />
     <Folder Include="Textures\UI\" />

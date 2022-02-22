@@ -17,9 +17,11 @@ namespace TerraLeague.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Targon Medallion");
-            Tooltip.SetDefault("Use in the Arena to summon the Gate Keeper");
+            Tooltip.SetDefault("Use at night to summon the Gate Keeper");
             base.SetStaticDefaults();
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            NPCID.Sets.MPAllowedEnemies[NPCType<TargonBossNPC>()] = true;
         }
 
         public override void SetDefaults()
@@ -37,27 +39,37 @@ namespace TerraLeague.Items
 
         public override bool CanUseItem(Player player)
         {
-            if (player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
+            // If you decide to use the below UseItem code, you have to include !NPC.AnyNPCs(id), as this is also the check the server does when receiving MessageID.SpawnBoss.
+            // If you want more constraints for the summon item, combine them as boolean expressions:
+            //    return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<MinionBossBody>()); would mean "not daytime and no MinionBossBody currently alive"
+            return !NPC.AnyNPCs(ModContent.NPCType<TargonBossNPC>()) && !Main.dayTime;
+        }
+
+        public override bool? UseItem(Player player)
+        {
+            if (player.whoAmI == Main.myPlayer)
             {
+                //SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
+
+                Vector2 position = player.Bottom;
+                position.Y -= 700;
+
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("Targon's Challenge has begun", 0, 200, 255);
 
-                    NPC.NewNPC(Common.ModSystems.WorldSystem.TargonCenterX, ((int)Main.worldSurface * 16) + 64, NPCType<TargonBossNPC>());
+                    NPC.NewNPC((int)position.X, (int)position.Y, NPCType<TargonBossNPC>());
                 }
                 else
                 {
                     ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Targon's Challenge has begun", new object[0]), new Color(0, 200, 255), -1);
 
-                    TerraLeagueNPCsGLOBAL.PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBossNPC>(), new Vector2(Common.ModSystems.WorldSystem.TargonCenterX, (float)(Main.worldSurface * 16) + 64));
+                    TerraLeagueNPCsGLOBAL.PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBossNPC>(), position);
                 }
-
-                Item.stack -= 1;
-
-                return base.CanUseItem(player);
             }
-            return false;
+
+            return true;
         }
 
         public override void OnConsumeItem(Player player)

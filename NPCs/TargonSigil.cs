@@ -22,32 +22,34 @@ namespace TerraLeague.NPCs
         int rerolls = 3;
         int currentBlessing = Main.rand.Next(0, 8);
 
-        public override void Load()
-        {
-            IL.Terraria.GameContent.ShopHelper.IsNotReallyTownNPC += HookNotReallyTownNPC;
-            //IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookInteractionRange;
-        }
-        private static void HookNotReallyTownNPC(ILContext il)
-        {
-            ILCursor c = new ILCursor(il);
+        //public override void Load()
+        //{
+        //    IL.Terraria.GameContent.ShopHelper.IsNotReallyTownNPC += HookNotReallyTownNPC;
+        //    //IL.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += HookInteractionRange;
+        //}
+        //private static void HookNotReallyTownNPC(ILContext il)
+        //{
+        //    ILCursor c = new ILCursor(il);
 
-            if (!c.TryGotoNext(i => i.MatchRet()))
-            {
-                return; // Patch unable to be applied
-            }
+        //    if (!c.TryGotoNext(i => i.MatchRet()))
+        //    {
+        //        return; // Patch unable to be applied
+        //    }
 
-            // Push the Int instance onto the stack
-            c.Emit(OpCodes.Ldloc_0);
-            // Call a delegate using the int and Player from the stack.
-            c.EmitDelegate<Func<bool, int, bool>>((returnValue, type) => {
-                // Regular c# code
-                return type == Terraria.ModLoader.ModContent.NPCType<TargonSigil>();
-            });
-        }
+        //    // Push the Int instance onto the stack
+        //    c.Emit(OpCodes.Ldloc_0);
+        //    // Call a delegate using the int and Player from the stack.
+        //    c.EmitDelegate<Func<bool, int, bool>>((returnValue, type) => {
+        //        // Regular c# code
+        //        return type == Terraria.ModLoader.ModContent.NPCType<TargonSigil>();
+        //    });
+        //}
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Targon's Peak");
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -132,22 +134,14 @@ namespace TerraLeague.NPCs
             }
             else if (!Common.ModSystems.DownedBossSystem.downedTargonBoss)
             {
-                if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
-                {
-                    return text + "\n\nThe whispers offer you a challenge with rewards of strength." +
-                        "\n\nBring a " + GetModItem(ItemType<TargonMedallion>()).Name + " to the Arena to initiate the challenge";
-                }
-                else
-                {
-                    return text + "\n\nThe challenge is currently in progress.";
-                }
+                return text + "\n\nThe whispers offer you a challenge with rewards of strength." +
+                    "\n\nUse a " + GetModItem(ItemType<TargonMedallion>()).Name + " to initiate the challenge.";
             }
             else
             {
                 string tip = Lang.GetBuffDescription(GetBuffID());
                 int rare = 0;
                 GetModBuff(GetBuffID()).ModifyBuffTip(ref tip, ref rare);
-                text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
                 if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
                 {
                     return text + "\n\nThe whipsers offer: The " + Lang.GetBuffName(GetBuffID())
@@ -167,11 +161,6 @@ namespace TerraLeague.NPCs
             {
 
             }
-            else if (Common.ModSystems.WorldSystem.TargonUnlocked && !Common.ModSystems.DownedBossSystem.downedTargonBoss)
-            {
-                if (NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
-                    button = "Teleport to Arena";
-            }
             else if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
             {
                 button = "Receive Blessing";
@@ -179,10 +168,11 @@ namespace TerraLeague.NPCs
             }
             else
             {
-                string seconds = "" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown % 3600 / 60;
-                seconds = seconds.Length == 1 ? "0" + seconds : seconds;
-                button = "Time Remaining: " + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown / 3600 + ":" + seconds;
-                button2 = "Teleport to Arena";
+                button = "";
+                button2 = "";
+                //string seconds = "" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown % 3600 / 60;
+                //seconds = seconds.Length == 1 ? "0" + seconds : seconds;
+                //button = "Time Remaining: " + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown / 3600 + ":" + seconds;
             }
         }
 
@@ -227,14 +217,14 @@ namespace TerraLeague.NPCs
             }
             else
             {
-                if (!firstButton)
-                {
-                    Vector2 teleportPos = new Vector2((Common.ModSystems.WorldSystem.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
+                //if (!firstButton)
+                //{
+                //    Vector2 teleportPos = new Vector2((Common.ModSystems.WorldSystem.TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
 
-                    Main.LocalPlayer.Teleport(teleportPos, 1, 0);
-                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, Main.LocalPlayer.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
-                }
-                else
+                //    Main.LocalPlayer.Teleport(teleportPos, 1, 0);
+                //    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, Main.LocalPlayer.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
+                //}
+                //else
                 {
                     shop = false;
                     Main.npcChatText = GetChat();

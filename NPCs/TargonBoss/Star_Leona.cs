@@ -75,6 +75,7 @@ namespace TerraLeague.NPCs.TargonBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shimmer of Dawn");
+            NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
         }
         public override void SetDefaults()
         {
@@ -115,18 +116,20 @@ namespace TerraLeague.NPCs.TargonBoss
             if (CurrentState == State_Charging)
             {
                 Charge++;
-                AltScale = 2 * Charge / 300f;
+                int chargeTime = TargonBossNPC.GetStarChargeTime(NPC.ai[2] != 0);
+
+                AltScale = 2 * (float)Charge / chargeTime;
 
                 if (Charge < 51)
                 {
                     AltAlpha += 5;
                 }
-                if (Charge == 60 * 4)
+                if (Charge == chargeTime - 60)
                 {
                     NPC.TargetClosest();
                     NPC.netUpdate = true;
                 }
-                if (Charge == 60 * 5)
+                if (Charge == chargeTime)
                 {
                     CurrentState = State_Attack;
                 }
@@ -135,12 +138,21 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, 1), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, -1), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(1, 0), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(-1, 0), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
-                    //Projectile.NewProjectile(NPC.Center, Vector2.Zero, ProjectileType<TargonBoss_SmallFlareControl>(), TargonBossAttack.LeonaDamage, 0);
+                    NPC npc = Main.npc[NPC.FindFirstNPC(NPCType<TargonBossNPC>())];
+
+                    Vector2 pos = npc.Center;
+
+                    Projectile proj = Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), pos, TerraLeague.CalcVelocityToPoint(pos, NPC.position, 1), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
                 }
+
+                //if (Main.netMode != NetmodeID.MultiplayerClient)
+                //{
+                //    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, 1), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
+                //    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, -1), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
+                //    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(1, 0), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
+                //    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(-1, 0), ProjectileType<TargonBoss_SolarBeam>(), TargonBossNPC.LeonaDamage, 0);
+                //    //Projectile.NewProjectile(NPC.Center, Vector2.Zero, ProjectileType<TargonBoss_SmallFlareControl>(), TargonBossAttack.LeonaDamage, 0);
+                //}
                 TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 27, 0);
                 NPC.active = false;
 

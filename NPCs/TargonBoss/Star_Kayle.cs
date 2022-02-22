@@ -75,6 +75,7 @@ namespace TerraLeague.NPCs.TargonBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shimmer of Justice");
+            NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
         }
         public override void SetDefaults()
         {
@@ -115,18 +116,20 @@ namespace TerraLeague.NPCs.TargonBoss
             if (CurrentState == State_Charging)
             {
                 Charge++;
-                AltScale = 2 * Charge / 300f;
+                int chargeTime = TargonBossNPC.GetStarChargeTime(NPC.ai[2] != 0);
+
+                AltScale = 2 * (float)Charge / chargeTime;
 
                 if (Charge < 51)
                 {
                     AltAlpha += 5;
                 }
-                if (Charge == 60 * 4)
+                if (Charge == chargeTime - 60)
                 {
                     NPC.TargetClosest();
                     NPC.netUpdate = true;
                 }
-                if (Charge == 60 * 5)
+                if (Charge == chargeTime)
                 {
                     CurrentState = State_Attack;
                 }

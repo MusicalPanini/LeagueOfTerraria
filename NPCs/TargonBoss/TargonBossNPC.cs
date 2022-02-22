@@ -21,6 +21,15 @@ namespace TerraLeague.NPCs.TargonBoss
     [AutoloadBossHead]
     public class TargonBossNPC : ModNPC
     {
+        public static int arenaWidth = 750;
+        public static int GetStarChargeTime(bool fastCharge)
+        {
+            int num = 60 * 3;
+            if (fastCharge)
+                num /= 2;
+            return num;
+        }
+
         public int StateTimer { get { if (NPC.ai[0] < 0) { return 0; } else { return (int)NPC.ai[0]; } } set { NPC.ai[0] = value; } }
         public int State { get { return (int)NPC.ai[1]; } set { NPC.ai[1] = value; } }
         public float FloatyTimer { get { return NPC.ai[2]; } set { NPC.ai[2] = value; } }
@@ -133,23 +142,23 @@ namespace TerraLeague.NPCs.TargonBoss
         const int State_ZoeIdle = 72;
 
         readonly int Timer_DrawStars = 80;
-        readonly int Timer_PanthAttack = 120;
-        readonly int Timer_PanthAttackInterval = 20;
-        readonly int Timer_MorgAttack = 240;
+        readonly int Timer_PanthAttack = 135;
+        readonly int Timer_PanthAttackInterval = 15;
+        readonly int Timer_MorgAttack = 60;
         readonly int Timer_MorgAttackInterval = 60;
         readonly int Timer_KayleAttack = 60;
         readonly int Timer_KayleAttackInterval = 20;
         readonly int Timer_LeonaAttack = 270;
         readonly int Timer_DianaAttack = 150;
-        readonly int Timer_TaricAttack = 60;
+        readonly int Timer_TaricAttack = 30;
         readonly int Timer_ZoeAttack = 30;
 
         // Projectile deal 2x damage (4x in expert)
-        public static int PanthDamage = 22 / 2;
-        public static int MorgDamage = 25 / 2;
-        public static int LeonaDamage = 24 / 2;
-        public static int DianaDamage = 50 / 2;
-        public static int ZoeDamage = 25 / 2;
+        public static int PanthDamage = 35 / 2;
+        public static int MorgDamage = 35 / 2;
+        public static int LeonaDamage = 40 / 2;
+        public static int DianaDamage = 100 / 2;
+        public static int ZoeDamage = 28 / 2;
         readonly int starGoreLifeExt = 30;
 
         public override void SetStaticDefaults()
@@ -157,14 +166,15 @@ namespace TerraLeague.NPCs.TargonBoss
             DisplayName.SetDefault("The Celestial Gate Keeper");
             Main.npcFrameCount[NPC.type] = 14;
             NPCID.Sets.ShouldBeCountedAsBoss[NPC.type] = true;
+            NPCID.Sets.NeedsExpertScaling[NPC.type] = true;
         }
         public override void SetDefaults()
         {
             NPC.width = 128;
             NPC.height = 128;
-            NPC.damage = 20;
-            NPC.defense = 10;
-            NPC.lifeMax = 4400;
+            NPC.damage = 0;
+            NPC.defense = 20;
+            NPC.lifeMax = 4850;
             NPC.HitSound = new Terraria.Audio.LegacySoundStyle(3, 5);
             NPC.DeathSound = new Terraria.Audio.LegacySoundStyle(4, 7);
             NPC.scale = 1f;
@@ -252,7 +262,7 @@ namespace TerraLeague.NPCs.TargonBoss
 
         void CheckForNearbyPlayers()
         {
-            if (!Main.player[NPC.target].HasBuff(BuffType<InTargonArena>()))
+            if (!Main.player[NPC.target].HasBuff(BuffType<InTargonArena>()) || Main.dayTime)
             {
                 NPC.localAI[0]++;
                 if (NPC.localAI[0] > 10)
@@ -311,7 +321,7 @@ namespace TerraLeague.NPCs.TargonBoss
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 float healthScale = ((Main.expertMode ? 1.25f : 1.5f) - (1 - (NPC.life / (float)NPC.lifeMax)));
-                StateTimer = (int)(Main.rand.Next(90, 150) * healthScale);
+                StateTimer = (int)(Main.rand.Next(60, 120) * healthScale);
                 NPC.netUpdate = true;
             }
         }
@@ -482,7 +492,6 @@ namespace TerraLeague.NPCs.TargonBoss
             }
         }
 
-
         void GemInvincibilityCheck()
         {
             if (NPC.CountNPCS(NPCType<TargonBoss_Gem>()) > 0)
@@ -601,10 +610,7 @@ namespace TerraLeague.NPCs.TargonBoss
 
                     for (int i = 0; i < count; i++)
                     {
-                        int X = Main.rand.NextBool() ? Main.rand.Next((int)NPC.Center.X - 500, (int)NPC.Center.X - 172) : Main.rand.Next((int)NPC.Center.X + 172, (int)NPC.Center.X + 500);
-                        int Y = Main.rand.NextBool() ? Main.rand.Next((int)NPC.Center.Y - 500, (int)NPC.Center.Y - 172) : Main.rand.Next((int)NPC.Center.Y + 172, (int)NPC.Center.Y + 500);
-
-                        NPC.NewNPC(X, Y, npcType);
+                        PlaceStar(npcType);
                     }
 
                     if (State == State_Frenzy)
@@ -614,9 +620,9 @@ namespace TerraLeague.NPCs.TargonBoss
                     else
                     {
                         if (Main.expertMode)
-                            StarSpawnTimer = (int)(30 + (int)((NPC.life / (float)NPC.lifeMax) * 90) * starMultiplier);
+                            StarSpawnTimer = (int)(30 + (int)((NPC.life / (float)NPC.lifeMax) * 60) * starMultiplier);
                         else
-                            StarSpawnTimer = (int)(60 + (int)((NPC.life / (float)NPC.lifeMax) * 90) * starMultiplier);
+                            StarSpawnTimer = (int)(60 + (int)((NPC.life / (float)NPC.lifeMax) * 60) * starMultiplier);
                     }
                 }
             }
@@ -625,9 +631,27 @@ namespace TerraLeague.NPCs.TargonBoss
                 StarSpawnTimer--;
         }
 
+        void PlaceStar(int npcType)
+        {
+            int X = Main.rand.NextBool() ? Main.rand.Next((int)NPC.Center.X - 500, (int)NPC.Center.X - 172) : Main.rand.Next((int)NPC.Center.X + 172, (int)NPC.Center.X + 500);
+            int Y = Main.rand.NextBool() ? Main.rand.Next((int)NPC.Center.Y - 500, (int)NPC.Center.Y - 172) : Main.rand.Next((int)NPC.Center.Y + 172, (int)NPC.Center.Y + 500);
+
+            NPC.NewNPC(X, Y, npcType, 0, 0, 0, State == State_Frenzy ? 1 : 0);
+        }
+
+        public static Rectangle GetArenaRectangle(Vector2 Center)
+        {
+            return new Rectangle((int)Center.X - arenaWidth, (int)Center.Y - arenaWidth, arenaWidth * 2 + 1, arenaWidth * 2 + 1);
+        }
+
         void Animations()
         {
-            if (Common.ModSystems.WorldSystem.TargonCenterX != 0)
+            //TerraLeague.DustLine(NPC.Center + new Vector2(-arenaWidth, -arenaWidth), NPC.Center + new Vector2(arenaWidth, -arenaWidth), DustID.PortalBolt, 0.05f, 1, GetAttackColor, true);
+            //TerraLeague.DustLine(NPC.Center + new Vector2(arenaWidth, -arenaWidth), NPC.Center + new Vector2(arenaWidth, arenaWidth), DustID.PortalBolt, 0.05f, 1, GetAttackColor, true);
+            //TerraLeague.DustLine(NPC.Center + new Vector2(arenaWidth, arenaWidth), NPC.Center + new Vector2(-arenaWidth, arenaWidth), DustID.PortalBolt, 0.05f, 1, GetAttackColor, true);
+            //TerraLeague.DustLine(NPC.Center + new Vector2(-arenaWidth, arenaWidth), NPC.Center + new Vector2(-arenaWidth, -arenaWidth), DustID.PortalBolt, 0.05f, 1, GetAttackColor, true);
+
+            if (WorldSystem.TargonCenterX != 0)
             {
                 FloatyTimer += (int)(1 * RotationSpeed);
                 if (FloatyTimer > 360)
@@ -635,8 +659,8 @@ namespace TerraLeague.NPCs.TargonBoss
                     FloatyTimer -= 360;
                     NPC.netUpdate = true;
                 }
-                NPC.Center = new Vector2(Common.ModSystems.WorldSystem.TargonCenterX * 16, (float)(Main.worldSurface + 50) * 16);
-                NPC.position.Y += 16 * (float)System.Math.Sin(MathHelper.ToRadians(FloatyTimer));
+                //NPC.Center = new Vector2(Common.ModSystems.WorldSystem.TargonCenterX * 16, (float)(Main.worldSurface + 50) * 16);
+                //NPC.position.Y += /*16 **/ (float)System.Math.Sin(MathHelper.ToRadians(FloatyTimer)) * 0.5f;
             }
 
             Lighting.AddLight(NPC.Center, GetAttackColor.ToVector3());
@@ -711,11 +735,32 @@ namespace TerraLeague.NPCs.TargonBoss
         {
             if (StateTimer % Timer_PanthAttackInterval == 0)
             {
+                PlaceStar(NPCType<Star_Panth>());
+
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, TerraLeague.CalcVelocityToPoint(NPC.Center, Main.player[NPC.target].MountedCenter, 16), ProjectileType<TargonBoss_Spear>(), PanthDamage, 2);
+                    Vector2 position = NPC.Center;
+                    switch (Main.rand.Next(0, 3))
+                    {
+                        case 0:
+                            position = new Vector2(NPC.Center.X + arenaWidth, Main.rand.NextFloat(NPC.Center.Y - arenaWidth, NPC.Center.Y + arenaWidth));
+                            break;
+                        case 1:
+                            position = new Vector2(Main.rand.NextFloat(NPC.Center.X - arenaWidth, NPC.Center.X + arenaWidth), NPC.Center.Y + arenaWidth);
+                            break;
+                        case 2:
+                            position = new Vector2(NPC.Center.X - arenaWidth, Main.rand.NextFloat(NPC.Center.Y - arenaWidth, NPC.Center.Y + arenaWidth));
+                            break;
+                        case 3:
+                            position = new Vector2(Main.rand.NextFloat(NPC.Center.X - arenaWidth, NPC.Center.X + arenaWidth), NPC.Center.Y - arenaWidth);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), position, TerraLeague.CalcVelocityToPoint(position, Main.player[NPC.target].MountedCenter, 16), ProjectileType<TargonBoss_Spear>(), PanthDamage, 2);
                 }
-                TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 1, -0.5f);
+                //TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 1, -0.5f);
             }
         }
 
@@ -723,9 +768,17 @@ namespace TerraLeague.NPCs.TargonBoss
         {
             if (StateTimer == Timer_MorgAttack)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (Main.expertMode)
                 {
                     for (int i = 0; i < 6; i++)
+                    {
+                        PlaceStar(NPCType<Star_Morg>());
+                    }
+                }
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < 10; i++)
                     {
                         Vector2 vel = new Vector2(16, 0).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi));
 
@@ -776,10 +829,28 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, 1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, -1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(1, 0), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(-1, 0), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                    if (Main.expertMode)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            PlaceStar(NPCType<Star_Leona>());
+                        }
+                    }
+
+                    if (Main.rand.NextBool(2))
+                    {
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, 1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(0, -1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(1, 0), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(-1, 0), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                    }
+                    else
+                    {
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(1, 1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(1, -1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(-1, 1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(-1, -1), ProjectileType<TargonBoss_LargeSolarBeam>(), LeonaDamage, 0);
+                    }
                 }
                 TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 34, 0);
             }
@@ -791,7 +862,27 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ProjectileType<TargonBoss_Moonfall>(), DianaDamage, 2);
+                    if (Main.expertMode)
+                    {
+                        for (int i = 0; i < 6; i++)
+                        {
+                            PlaceStar(NPCType<Star_Diana>());
+                        }
+                    }
+
+                    if (Main.rand.NextBool(2))
+                    {
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ProjectileType<TargonBoss_Moonfall>(), DianaDamage, 2);
+                    }
+                    else
+                    {
+                        float dist = arenaWidth * 0.85f;
+
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center + new Vector2(dist, dist), Vector2.Zero, ProjectileType<TargonBoss_Moonfall>(), DianaDamage, 2);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center + new Vector2(-dist, dist), Vector2.Zero, ProjectileType<TargonBoss_Moonfall>(), DianaDamage, 2);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center + new Vector2(dist, -dist), Vector2.Zero, ProjectileType<TargonBoss_Moonfall>(), DianaDamage, 2);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center + new Vector2(-dist, -dist), Vector2.Zero, ProjectileType<TargonBoss_Moonfall>(), DianaDamage, 2);
+                    }
                 }
             }
         }
@@ -816,10 +907,12 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    for (int i = 0; i < 8; i++)
+                    float dis = Main.rand.NextFloat(3.1415f);
+                    int count = 6;
+                    for (int i = 0; i < count; i++)
                     {
-                        int speed = Main.rand.Next(6, 10);
-                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(speed, 0).RotatedBy((0.5f + i) * MathHelper.TwoPi / 8f), ProjectileType<TargonBoss_PaddleStar>(), ZoeDamage, 0);
+                        float speed = Main.rand.NextFloat(6, 10);
+                        Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), NPC.Center, new Vector2(speed, 0).RotatedBy(((0.5f + i) * MathHelper.TwoPi / (float)count) + dis), ProjectileType<TargonBoss_PaddleStar>(), ZoeDamage, 0);
                     }
                 }
                 TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 9, 0f);
@@ -1418,6 +1511,11 @@ namespace TerraLeague.NPCs.TargonBoss
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            TerraLeague.DrawLine(NPC.Center + new Vector2(-arenaWidth, -arenaWidth), NPC.Center + new Vector2(arenaWidth, -arenaWidth), GetAttackColor);
+            TerraLeague.DrawLine(NPC.Center + new Vector2(arenaWidth, -arenaWidth), NPC.Center + new Vector2(arenaWidth, arenaWidth), GetAttackColor);
+            TerraLeague.DrawLine(NPC.Center + new Vector2(arenaWidth, arenaWidth), NPC.Center + new Vector2(-arenaWidth, arenaWidth), GetAttackColor);
+            TerraLeague.DrawLine(NPC.Center + new Vector2(-arenaWidth, arenaWidth), NPC.Center + new Vector2(-arenaWidth, -arenaWidth), GetAttackColor);
+
             if (NPC.CountNPCS(NPCType<TargonBoss_Gem>()) > 0)
             {
                 TerraLeague.DrawCircle(NPC.Center, 128, new Color(100, 100, 255));

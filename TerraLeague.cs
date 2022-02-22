@@ -448,7 +448,8 @@ namespace TerraLeague
             for (int i = 0; i < dustCount; i++)
             {
                 Vector2 position = new Vector2(pointA.X + (xDif * (i / (float)dustCount)), pointA.Y + (yDif * (i / (float)dustCount)));
-                position += new Vector2(Main.rand.NextFloat(xDif / dustCount), Main.rand.NextFloat(yDif / dustCount));
+                float offsetScale = Main.rand.NextFloat(1);
+                position += new Vector2(xDif / dustCount * offsetScale, yDif / dustCount * offsetScale);
                 Dust dust = Dust.NewDustPerfect(position, dustType, null, 0, color, scale);
                 dust.velocity = velocity;
                 dust.noGravity = true;
@@ -774,6 +775,28 @@ namespace TerraLeague
                 //Dust.NewDustPerfect((center + point2), DustID.Dirt);
             }
             //Main.spriteBatch.End();
+        }
+
+        public static void DrawLine(Vector2 Point1, Vector2 Point2, Color color = default)
+        {
+            Texture2D texture = Terraria.GameContent.TextureAssets.FishingLine.Value;
+            Rectangle rectangle = texture.Frame(1, 1, 0, 0, 0, 0);
+            Vector2 origin = new Vector2((float)(rectangle.Width / 2), 0);
+
+
+            List<Vector2> pointList = new List<Vector2>();
+
+
+            Vector2 value2 = Point1;
+            //Main.spriteBatch.Begin();
+
+            Vector2 vector = Point1;
+            Vector2 vector2 = Point2 - vector;
+            float rotation = vector2.ToRotation() - 1.57079637f;
+            //rotation -= 0.04f;
+            //Microsoft.Xna.Framework.Color Color = Lighting.GetColor(vector.ToTileCoordinates(), color);
+            Vector2 scale = new Vector2(1f, (vector2.Length() + 2f) / (float)rectangle.Height);
+            Main.spriteBatch.Draw(texture, value2 - Main.screenPosition, rectangle, color, rotation, origin, scale, SpriteEffects.None, 0f);
         }
     }
 }

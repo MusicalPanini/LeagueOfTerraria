@@ -24,7 +24,7 @@ namespace TerraLeague.Projectiles
             Projectile.timeLeft = 600;
             Projectile.penetrate = -1;
             Projectile.hostile = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.netImportant = true;
         }
@@ -40,6 +40,21 @@ namespace TerraLeague.Projectiles
             }
 
             Projectile.rotation += 0.02f * Projectile.velocity.Length();
+
+            if (NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
+            {
+                NPC TargonBoss = Main.npc[NPC.FindFirstNPC(NPCType<TargonBossNPC>())];
+                if (Projectile.Center.X <= TargonBoss.Center.X - TargonBossNPC.arenaWidth && Projectile.velocity.X < 0 || Projectile.Center.X >= TargonBoss.Center.X + TargonBossNPC.arenaWidth && Projectile.velocity.X > 0)
+                {
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 10);
+                    Projectile.velocity.X *= -1;
+                }
+                if (Projectile.Center.Y <= TargonBoss.Center.Y - TargonBossNPC.arenaWidth && Projectile.velocity.Y < 0 || Projectile.Center.Y >= TargonBoss.Center.Y + TargonBossNPC.arenaWidth && Projectile.velocity.Y > 0)
+                {
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 10);
+                    Projectile.velocity.Y *= -1;
+                }
+            }
 
             base.AI();
         }

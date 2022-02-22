@@ -16,6 +16,7 @@ namespace TerraLeague.NPCs.TargonBoss
         {
             DisplayName.SetDefault("Starfire Spellblade");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.EnchantedSword];
+            NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
             { // Influences how the NPC looks in the Bestiary
@@ -30,7 +31,7 @@ namespace TerraLeague.NPCs.TargonBoss
             NPC.aiStyle = 23;
             NPC.damage = 20;
             NPC.defense = 0;
-            NPC.lifeMax = 15;
+            NPC.lifeMax = 25;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.value = 0;
@@ -70,6 +71,13 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 NPC.TargetClosest(true);
             }
+
+            if (NPC.justHit)
+            {
+                NPC.ai[0] = 2f;
+                NPC.ai[1] = 0f;
+            }
+
             if (NPC.ai[0] == 0f)
             {
                 //float num298 = 9f;

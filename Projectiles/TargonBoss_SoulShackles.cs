@@ -28,7 +28,7 @@ namespace TerraLeague.Projectiles
             Projectile.alpha = 255;
             Projectile.scale = 1f;
             Projectile.timeLeft = 1000;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.hostile = true;
             Projectile.netImportant = true;
@@ -60,7 +60,23 @@ namespace TerraLeague.Projectiles
             }
 
             if (-1 != (int)Projectile.ai[1])
+            {
                 DustChain(npc, (int)Projectile.Distance(npc.Center) / 16, 1f);
+            }
+            else
+            {
+                if (NPC.CountNPCS(NPCType<NPCs.TargonBoss.TargonBossNPC>()) > 0)
+                {
+                    if (!Projectile.Hitbox.Intersects(NPCs.TargonBoss.TargonBossNPC.GetArenaRectangle(npc.Center)))
+                    {
+                        TerraLeague.PlaySoundWithPitch(Projectile.Center, 3, 4, -0.5f);
+                        ChainBreak(npc.Center);
+                        Projectile.Kill();
+                    }
+                }
+            }
+
+            
 
             if (Main.netMode == NetmodeID.Server)
             {
@@ -110,13 +126,13 @@ namespace TerraLeague.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (-1 != (int)Projectile.ai[1])
-            {
-                NPC npc = Main.npc[(int)Projectile.ai[0]];
-                float point = 0f;
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), npc.Center,
-                    Projectile.Center, 12, ref point);
-            }
+            //if (-1 != (int)Projectile.ai[1])
+            //{
+            //    NPC npc = Main.npc[(int)Projectile.ai[0]];
+            //    float point = 0f;
+            //    return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), npc.Center,
+            //        Projectile.Center, 12, ref point);
+            //}
 
             return base.Colliding(projHitbox, targetHitbox);
         }
@@ -182,6 +198,21 @@ namespace TerraLeague.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
+            return true;
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCs.Add(index);
+        }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
+        public override bool PreDrawExtras()
+        {
             Texture2D texture = ModContent.Request<Texture2D>("TerraLeague/Projectiles/TargonBoss_SoulShackles_Chain").Value;
 
             Vector2 mountedCenter = Main.npc[(int)Projectile.ai[0]].Center;
@@ -208,7 +239,7 @@ namespace TerraLeague.Projectiles
                     Vector2 vector2_1 = vector2_4;
                     vector2_1.Normalize();
                     position += vector2_1 * num1;
-                    Lighting.AddLight(position, 178 / 255f, 0, 1);
+                    //Lighting.AddLight(position, 178 / 255f, 0, 1);
                     vector2_4 = mountedCenter - position;
                     Color color2 = Color.White;
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation + MathHelper.Pi, origin, 1f, SpriteEffects.None, 0.0f);
@@ -216,16 +247,6 @@ namespace TerraLeague.Projectiles
             }
 
             return true;
-        }
-
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            behindNPCs.Add(index);
-        }
-
-        public override bool? CanCutTiles()
-        {
-            return false;
         }
     }
 }

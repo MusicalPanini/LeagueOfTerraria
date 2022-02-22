@@ -13,6 +13,7 @@ using TerraLeague.Dusts;
 using Terraria.Audio;
 using System.Linq;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 
 namespace TerraLeague.NPCs.TargonBoss
 {
@@ -76,6 +77,7 @@ namespace TerraLeague.NPCs.TargonBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shimmer of Redemption");
+            NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
         }
         public override void SetDefaults()
         {
@@ -117,18 +119,20 @@ namespace TerraLeague.NPCs.TargonBoss
             if (CurrentState == State_Charging)
             {
                 Charge++;
-                AltScale = 2 * Charge / 300f;
+                int chargeTime = TargonBossNPC.GetStarChargeTime(NPC.ai[2] != 0);
+
+                AltScale = 2 * (float)Charge / chargeTime;
 
                 if (Charge < 51)
                 {
                     AltAlpha += 5;
                 }
-                if (Charge == 60 * 4)
+                if (Charge == chargeTime - 60)
                 {
                     NPC.TargetClosest();
                     NPC.netUpdate = true;
                 }
-                if (Charge == 60 * 5)
+                if (Charge == chargeTime)
                 {
                     CurrentState = State_Attack;
                 }
@@ -137,14 +141,16 @@ namespace TerraLeague.NPCs.TargonBoss
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 pos = new Vector2(Common.ModSystems.WorldSystem.TargonCenterX * 16 + 8, (float)(Main.worldSurface + 50) * 16);
+                    NPC npc = Main.npc.First(x => x.type == NPCType<TargonBossNPC>());
+
+                    Vector2 pos = npc.Center;
 
                     Projectile proj = Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), pos, TerraLeague.CalcVelocityToPoint(pos, NPC.position, 24), ProjectileType<TargonBoss_SoulShackles>(), TargonBossNPC.MorgDamage, 0, 255, Main.npc.First(x => x.type == NPCType<TargonBossNPC>()).whoAmI, -1);
-                    proj.ai[0] = Main.npc.First(x => x.type == NPCType<TargonBossNPC>()).whoAmI;
+                    proj.ai[0] = npc.whoAmI;
                     proj.ai[1] = -1;
                     proj.netUpdate = true;
                 }
-                    NPC.active = false;
+                NPC.active = false;
                 TerraLeague.PlaySoundWithPitch(NPC.Center, 2, 27, 0);
 
                 for (int i = 0; i < 10; i++)

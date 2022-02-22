@@ -26,7 +26,7 @@ namespace TerraLeague.Projectiles
             effectRadius = 16 * 40;
             Projectile.width = effectRadius * 2;
             Projectile.height = effectRadius * 2;
-            Projectile.timeLeft = (150);
+            Projectile.timeLeft = (120);
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
@@ -64,7 +64,7 @@ namespace TerraLeague.Projectiles
         public override void PostDraw(Color lightColor)
         {
             TerraLeague.DrawCircle(Projectile.Center, effectRadius, TargonBossNPC.DianaColor);
-            TerraLeague.DrawCircle(Projectile.Center, effectRadius - (effectRadius * Projectile.timeLeft / 150f), TargonBossNPC.DianaColor);
+            TerraLeague.DrawCircle(Projectile.Center, effectRadius - (effectRadius * Projectile.timeLeft / 120f), TargonBossNPC.DianaColor);
 
             base.PostDraw(lightColor);
         }

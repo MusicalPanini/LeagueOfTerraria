@@ -145,12 +145,12 @@ namespace TerraLeague.Common.ModSystems
                 tasks[floatingIslandHouse] = new PassLegacy("Modified Floating Island Houses", GenerateFloatingIslandHouse);
             }
 
-            int microBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
-            if (genIndex == -1)
-            {
-                return;
-            }
-            tasks.Insert(microBiome + 1, new PassLegacy("Targon Arena", GenerateTargonArena));
+            //int microBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
+            //if (genIndex == -1)
+            //{
+            //    return;
+            //}
+            //tasks.Insert(microBiome + 1, new PassLegacy("Targon Arena", GenerateTargonArena));
         }
 
         private void GenerateFerrospike(GenerationProgress progress, GameConfiguration gameConfiguration)
@@ -816,7 +816,7 @@ namespace TerraLeague.Common.ModSystems
         void GenerateVoid()
         {
             //int x = CurrentWorldGenX;
-            int MaxX = CurrentWorldGenX + 100;
+            int MaxX = CurrentWorldGenX + 10;
             if (MaxX > Main.maxTilesX)
                 MaxX = Main.maxTilesX;
 

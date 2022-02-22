@@ -20,7 +20,7 @@ namespace TerraLeague.Biomes
 
         public override string BestiaryIcon => "Textures/Bestiary/Biomes/Icon_TargonPeak";
         public override string BackgroundPath => "Textures/Bestiary/Biomes/Background_TargonPeak";
-        public override Color? BackgroundColor => new Color(43, 247, 165);
+        public override Color? BackgroundColor => base.BackgroundColor;/*new Color(43, 247, 165)*/
         public override int Music => MusicID.OtherworldlySpace;
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override void SetStaticDefaults()

@@ -1171,18 +1171,18 @@ namespace TerraLeague
                 nPCSpawnInfo.marble = true;
             }
 
-            if (Main.tile[(int)Player.MountedCenter.X / 16, (int)Player.MountedCenter.Y / 16].WallType == (ushort)WallType<Walls.TargonStoneWall_Arena>())
-            {
-                Player.AddBuff(BuffType<InTargonArena>(), 5);
-            }
-            else if (Player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
-            {
-                var ded = new PlayerDeathReason
-                {
-                    SourceCustomReason = Player.name + " tried to run from Targon's Challenge"
-                };
-                Player.KillMe(ded, 999999, 0);
-            }
+            //if (Main.tile[(int)Player.MountedCenter.X / 16, (int)Player.MountedCenter.Y / 16].WallType == (ushort)WallType<Walls.TargonStoneWall_Arena>())
+            //{
+            //    Player.AddBuff(BuffType<InTargonArena>(), 5);
+            //}
+            //else if (Player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
+            //{
+            //    var ded = new PlayerDeathReason
+            //    {
+            //        SourceCustomReason = Player.name + " tried to run from Targon's Challenge"
+            //    };
+            //    Player.KillMe(ded, 999999, 0);
+            //}
         }
 
         #region Multiplayer Stuff
@@ -1340,13 +1340,32 @@ namespace TerraLeague
                 else
                     Player.lifeRegen = -20;
             }
-            if (targonArena && !DownedBossSystem.downedTargonBoss && NPC.CountNPCS(NPCType<TargonBossNPC>()) <= 0)
+
+            if (NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
             {
-                Player.lifeRegenTime = 0;
-                if (Player.lifeRegen < 0)
-                    Player.lifeRegen -= 100;
+                if (targonArena)
+                {
+                    NPC TargonBoss = Main.npc[NPC.FindFirstNPC(NPCType<TargonBossNPC>())];
+                    if (!Player.Hitbox.Intersects(TargonBossNPC.GetArenaRectangle(TargonBoss.Center)))
+                    {
+                        Player.lifeRegenTime = 0;
+                        if (Player.lifeRegen < 0)
+                            Player.lifeRegen -= 50;
+                        else
+                            Player.lifeRegen = -50;
+
+                        Player.mount.Dismount(Player);
+                    }
+                    else
+                    {
+                        Player.mount.SetMount(MountType<Mounts.TargonBossFlight>(), Player);
+                        Player.position.Y += -0.001f;
+                    }
+                }
                 else
-                    Player.lifeRegen = -100;
+                {
+                    Player.AddBuff(BuffType<InTargonArena>(), 60);
+                }
             }
 
             if (invincible && Player.lifeRegen < 0)
@@ -3181,6 +3200,8 @@ namespace TerraLeague
                 drawInfo.weaponOverFrontArm = true;
             }
 
+            
+
             //base.ModifyDrawInfo(ref drawInfo);
         }
 
@@ -3191,6 +3212,20 @@ namespace TerraLeague
             if (requiemChannel || finalsparkChannel || rightoftheArcaneChannel)
             {
                 Player.bodyFrame.Y = Player.bodyFrame.Height * 5;
+            }
+
+            if (NPC.CountNPCS(NPCType<TargonBossNPC>()) > 0)
+            {
+                if (targonArena)
+                {
+                    NPC TargonBoss = Main.npc[NPC.FindFirstNPC(NPCType<TargonBossNPC>())];
+                    if (Player.Hitbox.Intersects(TargonBossNPC.GetArenaRectangle(TargonBoss.Center)))
+                    {
+                        Player.legFrame.Y = Player.legFrame.Height * 5;
+                        //if (Player.ItemTimeIsZero)
+                        //    Player.bodyFrame.Y = Player.bodyFrame.Height * 5;
+                    }
+                }
             }
 
             //if (Player.armor.FirstOrDefault(x => x.type == ItemType<Items.Armor.HextechEvolutionMask>()) != null)

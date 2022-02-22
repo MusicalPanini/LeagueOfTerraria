@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TerraLeague.Common.ItemDropRules;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
@@ -44,7 +45,12 @@ namespace TerraLeague.Items.SummonerSpells
     {
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
-            globalLoot.Add(ItemDropRule.Common(ItemType<RawMagic>(), 8));
+            RawMagicDropRule keyDropRule = new RawMagicDropRule();
+            IItemDropRule conditionalRule = new LeadingConditionRule(keyDropRule);
+            IItemDropRule rule = ItemDropRule.Common(ItemType<RawMagic>(), chanceDenominator: 8);
+
+            conditionalRule.OnSuccess(rule);
+            globalLoot.Add(conditionalRule);
         }
     }
 }

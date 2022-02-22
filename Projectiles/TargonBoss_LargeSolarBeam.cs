@@ -27,7 +27,7 @@ namespace TerraLeague.Projectiles
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.hide = false;
-            Projectile.timeLeft = 240;
+            Projectile.timeLeft = 270;
 
             dust1 = DustID.AmberBolt;
             dust2 = DustID.AmberBolt;
@@ -40,22 +40,33 @@ namespace TerraLeague.Projectiles
             SpriteMid = new Rectangle(0, 24, 42, 34);
             SpriteEnd = new Rectangle(0, 56, 42, 22);
 
-            MaxDistance = 2000;
+            MaxDistance = 1000;
             maxCharge = 60;
             moveDistance = 30;
             lightColor = Color.Yellow;
+            tileCollision = false;
         }
 
         public override void AI()
         {
             Projectile.velocity.Normalize();
 
-            if (Projectile.timeLeft < 150 && Projectile.timeLeft >= 30 )
+            if (Projectile.timeLeft >= 180)
             {
-                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver2 / 120f * RotationDir);
+                TerraLeague.DustLine(Projectile.Center, Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitX) * MaxDistance, DustID.AmberBolt, 0.05f, 1, default, false);
+            }
+            else if (Projectile.timeLeft < 180 && Projectile.timeLeft >= 30 )
+            {
+                Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver2 / 150f * RotationDir);
             }
 
             BeamAI(Projectile.Center);
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCs.Add(index);
+            base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
         }
     }
 }

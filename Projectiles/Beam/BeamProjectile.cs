@@ -35,6 +35,7 @@ namespace TerraLeague.Projectiles.Beam
 
 		protected float maxCharge = 0;
 		protected float moveDistance = 60f;
+		protected bool tileCollision = true;
 
 		public float Distance
 		{
@@ -150,7 +151,7 @@ namespace TerraLeague.Projectiles.Beam
 				var start = Center + Projectile.velocity * Distance;
 				//var point = start.ToTileCoordinates();
 				//if (Collision.SolidTiles(point.X, point.X, point.Y, point.Y))
-				if (!Collision.CanHitLine(Center, 1, 1, start, 1, 1) )
+				if (!Collision.CanHitLine(Center, 1, 1, start, 1, 1) && tileCollision)
 				{
 					Distance -= 5f;
 					break;
