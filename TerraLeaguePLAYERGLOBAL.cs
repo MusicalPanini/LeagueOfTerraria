@@ -464,6 +464,8 @@ namespace TerraLeague
         #endregion
 
         #region Lifesteal and Healing
+        public int lifestealCooldown = 0;
+        public int lifestealMaxCooldown { get { return 10; } }
         /// <summary>
         /// Melee lifesteel percent
         /// </summary>
@@ -1460,7 +1462,7 @@ namespace TerraLeague
                     lifeStealCharge = lifestealMax;
 
                 int heal = ScaleValueWithHealPower((float)lifeStealCharge);
-                
+
                 if (bloodShield && GetRealHeathWithoutShield() >= GetRealHeathWithoutShield(true))
                 {
                     Player.AddBuff(BuffType<Buffs.BloodShield>(), 180);
@@ -1470,10 +1472,11 @@ namespace TerraLeague
                 {
                     Player.statLife += heal;
                 }
-                Player.HealEffect(heal);
 
+                Player.HealEffect(heal);
                 lifeStealCharge = 0;
             }
+            
             if (feastStacks >= 500 && feastStacks < 2500)
             {
                 Player.AddBuff(BuffType<FeastStack1>(), 2);
@@ -1655,6 +1658,9 @@ namespace TerraLeague
             {
                 Main.NewText("Celestial voices call out to you. Another blessing is ready", 0, 200, 255);
             }
+
+            if (lifestealCooldown > 0)
+                lifestealCooldown--;
 
             //if (sunAmulet)
             //{
@@ -2563,7 +2569,7 @@ namespace TerraLeague
                 }
 
                 // Modify lifesteal
-                if (LifeCharge > 0 && !target.immortal)
+                if (LifeCharge > 0 && !target.immortal && lifestealCooldown <= 0)
                 {
                     //if (ProjectileID.Sets.Homing[proj.type])
                     //    LifeCharge /= 3;
@@ -2572,6 +2578,7 @@ namespace TerraLeague
                     if (grievousWounds)
                         LifeCharge = 0;
                     lifeStealCharge += LifeCharge;
+                    lifestealCooldown = lifestealMaxCooldown;
                 }
 
                 // On Hit Damage Calculation
@@ -2695,7 +2702,7 @@ namespace TerraLeague
             FlashOfBrillianceEffect(Player, target);
 
             // Lifesteal calculation
-            if (lifeStealMelee > 0 && !target.immortal)
+            if (lifeStealMelee > 0 && !target.immortal && lifestealCooldown <= 0)
             {
                 double LifeCharge = lifeStealMelee;// * (damage - (target.defense * 0.5));
 
@@ -2703,6 +2710,8 @@ namespace TerraLeague
                     LifeCharge = 0;
                 if (LifeCharge > 0)
                     lifeStealCharge += LifeCharge;
+
+                lifestealCooldown = lifestealMaxCooldown;
             }
 
             // On Hit Damage Calculation
